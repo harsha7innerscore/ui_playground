@@ -61,11 +61,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   return (
     <Flex
       minH="100vh"
+      w="100vw"
       align="center"
       justify="center"
       bg="linear-gradient(135deg, #a8e6cf 0%, #dcedc8 50%, #f8ffd6 100%)"
-      py={8}
-      px={4}
       position="relative"
       _before={{
         content: '""',
@@ -78,9 +77,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({
         zIndex: 0
       }}
     >
-      <Box width="100%" maxW="100vw" position="relative" zIndex={1}>
+      <VStack gap={12} position="relative" zIndex={1}>
         {/* Coschool Branding - Outside the card */}
-        <VStack gap={6} textAlign="center" mb={12}>
+        <VStack gap={6} textAlign="center">
           <Box
             w={16}
             h={16}
@@ -112,42 +111,42 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           </Heading>
         </VStack>
 
-        {/* Login Card - Now taking full width */}
-        <Container maxW="sm">
-          <Box
-            bg="rgba(255, 255, 255, 0.25)"
-            backdropFilter="blur(20px)"
-            borderRadius="3xl"
-            border="1px solid rgba(255, 255, 255, 0.3)"
-            boxShadow="0 25px 50px -12px rgba(0, 0, 0, 0.25)"
-            p={12}
-            position="relative"
-            width="100%"
-            _before={{
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%)',
-              borderRadius: '3xl',
-              pointerEvents: 'none'
-            }}
-          >
-            <VStack gap={8} align="stretch" position="relative" zIndex={2}>
-              {/* Login Form */}
-              <Box>
-                <LoginForm
-                  onLoginSuccess={onLoginSuccess}
-                  onLoginError={onLoginError}
-                  showForgotPassword={true}
-                />
-              </Box>
-            </VStack>
-          </Box>
-        </Container>
-      </Box>
+        {/* Login Card - Centered */}
+        <Box
+          bg="rgba(255, 255, 255, 0.25)"
+          backdropFilter="blur(20px)"
+          borderRadius="3xl"
+          border="1px solid rgba(255, 255, 255, 0.3)"
+          boxShadow="0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+          p={12}
+          position="relative"
+          maxW="sm"
+          w="full"
+          mx="auto"
+          _before={{
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%)',
+            borderRadius: '3xl',
+            pointerEvents: 'none'
+          }}
+        >
+          <VStack gap={8} align="stretch" position="relative" zIndex={2}>
+            {/* Login Form */}
+            <Box>
+              <LoginForm
+                onLoginSuccess={onLoginSuccess}
+                onLoginError={onLoginError}
+                showForgotPassword={true}
+              />
+            </Box>
+          </VStack>
+        </Box>
+      </VStack>
     </Flex>
   );
 };
