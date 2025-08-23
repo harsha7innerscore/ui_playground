@@ -1,4 +1,5 @@
-import type { MicrofrontendConfig, User, AuthEventPayload } from '../types';
+import type { MicrofrontendConfig, User } from '../types';
+import { logout as authLogout, isAuthenticated as checkIsAuthenticated, getCurrentUser as getUser } from '../services/authPresenter';
 
 export interface MicrofrontendAPI {
   // Configuration
@@ -45,8 +46,9 @@ export const createMicrofrontendAPI = (): MicrofrontendAPI => {
       currentConfig = config;
       
       // Configure HTTP service with new config
-      const { httpService } = require('../services/http');
-      httpService.setConfig(config);
+      import('../services/http').then(({ httpService }) => {
+        httpService.setConfig(config);
+      });
     },
 
     login: async (username: string, password: string): Promise<boolean> => {
@@ -69,21 +71,18 @@ export const createMicrofrontendAPI = (): MicrofrontendAPI => {
     },
 
     logout: () => {
-      const { logout } = require('../services/authPresenter');
-      logout();
+      authLogout();
       
       // Notify parent application
       eventCallbacks.onLogout.forEach(callback => callback());
     },
 
     isAuthenticated: () => {
-      const { isAuthenticated } = require('../services/authPresenter');
-      return isAuthenticated();
+      return checkIsAuthenticated();
     },
 
     getCurrentUser: () => {
-      const { getCurrentUser } = require('../services/authPresenter');
-      return getCurrentUser();
+      return getUser();
     },
 
     onLoginSuccess: (callback: (user: User) => void) => {
@@ -146,8 +145,7 @@ export const createMicrofrontendAPI = (): MicrofrontendAPI => {
           {},
           React.createElement(
             ChakraProvider,
-            { value: system },
-            React.createElement(App)
+            { value: system, children: React.createElement(App) }
           )
         )
       );
@@ -155,9 +153,9 @@ export const createMicrofrontendAPI = (): MicrofrontendAPI => {
       mountedContainer = container;
     },
 
-    unmount: () => {
+    unmount: async () => {
       if (mountedContainer) {
-        const ReactDOM = require('react-dom/client');
+        const ReactDOM = await import('react-dom/client');
         const root = ReactDOM.createRoot(mountedContainer);
         root.unmount();
         mountedContainer = null;

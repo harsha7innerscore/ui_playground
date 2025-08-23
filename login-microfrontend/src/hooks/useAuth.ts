@@ -4,10 +4,6 @@ import {
   subscribeToStateChanges,
   login as authLogin,
   logout as authLogout,
-  getCurrentUser,
-  isAuthenticated,
-  isLoading,
-  getError,
   clearError,
 } from '../services/authPresenter';
 import type { LoginCredentials, User, FormValidationErrors } from '../types';

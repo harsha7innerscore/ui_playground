@@ -54,7 +54,7 @@ export interface LoginFormData {
 }
 
 export interface FormValidationErrors {
-  email?: string;
+  username?: string;
   password?: string;
   general?: string;
 }
@@ -65,13 +65,13 @@ export interface ApiError {
   field?: string;
 }
 
-export enum AuthEvents {
-  LOGIN_SUCCESS = 'onLoginSuccess',
-  LOGIN_ERROR = 'onLoginError',
-  LOGOUT = 'onLogout',
-  TOKEN_REFRESH = 'onTokenRefresh',
-  SESSION_EXPIRED = 'onSessionExpired'
-}
+export const AuthEvents = {
+  LOGIN_SUCCESS: 'onLoginSuccess',
+  LOGIN_ERROR: 'onLoginError',
+  LOGOUT: 'onLogout',
+  TOKEN_REFRESH: 'onTokenRefresh',
+  SESSION_EXPIRED: 'onSessionExpired'
+} as const;
 
 export interface MicrofrontendConfig {
   apiGateway: string;
@@ -94,4 +94,4 @@ export interface AuthEventPayload {
   tokens?: AuthTokens;
 }
 
-export type AuthEventHandler = (event: AuthEvents, payload?: AuthEventPayload) => void;
+export type AuthEventHandler = (event: keyof typeof AuthEvents, payload?: AuthEventPayload) => void;

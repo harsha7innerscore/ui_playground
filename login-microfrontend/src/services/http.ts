@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance, AxiosResponse } from 'axios';
 import type { MicrofrontendConfig } from '../types';
 
 const STATES = {
@@ -18,6 +19,8 @@ interface APICallParams {
   options?: any;
   client?: AxiosInstance;
   error?: any;
+  data?: any;
+  status?: number;
 }
 
 interface APIResponse {
@@ -31,14 +34,12 @@ interface APIResponse {
 class HttpService {
   private client: AxiosInstance;
   private baseURL: string = '';
-  private config: MicrofrontendConfig | null = null;
   
   // State machine variables
   private prePrevState: StateType | null = null;
   private prevState: StateType | null = null;
   private currState: StateType | null = null;
   private nextState: StateType = STATES.EXCEPTION_ERROR;
-  private refreshTokenCallCount: number = 0;
 
   constructor(config?: MicrofrontendConfig) {
     this.client = axios.create({
@@ -54,7 +55,6 @@ class HttpService {
   }
 
   public setConfig(config: MicrofrontendConfig): void {
-    this.config = config;
     this.baseURL = config.apiGateway;
     this.client.defaults.baseURL = this.baseURL;
   }
@@ -80,7 +80,7 @@ class HttpService {
       case STATES.API_SUCCESS:
         return this.handleSuccess(params);
       case STATES.EXCEPTION_ERROR:
-        return this.handleExceptionError(params);
+        return await this.handleExceptionError(params);
       default:
         throw new Error(`Unknown state: ${state}`);
     }
@@ -110,7 +110,7 @@ class HttpService {
   private async handleAPIResponse(response: AxiosResponse, params: APICallParams) {
     if (response?.status >= 200 && response?.status < 300) {
       this.nextState = STATES.API_SUCCESS;
-      params = { ...params, ...response };
+      params = { ...params, data: response.data, status: response.status };
       return { nextState: this.nextState, params };
     } else {
       this.nextState = STATES.EXCEPTION_ERROR;
@@ -144,7 +144,7 @@ class HttpService {
     };
   }
 
-  private handleExceptionError(params: APICallParams): APIResponse {
+  private async handleExceptionError(params: APICallParams): Promise<APIResponse> {
     const error = params.error;
     
     if (axios.isAxiosError(error)) {
@@ -170,7 +170,7 @@ class HttpService {
             
             const { error: _, ...newParams } = params;
             this.nextState = STATES.CALL_REFRESH_TOKEN;
-            return this.handleStateMachine(this.nextState, newParams);
+            return await this.handleStateMachine(this.nextState, newParams);
             
           default:
             return {

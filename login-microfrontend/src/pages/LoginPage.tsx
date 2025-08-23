@@ -5,7 +5,6 @@ import {
   Heading,
   Text,
   VStack,
-  useColorModeValue,
   Flex,
   Image,
 } from '@chakra-ui/react';
@@ -29,9 +28,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 }) => {
   const { isAuthenticated } = useAuth();
   
-  const bgColor = useColorModeValue('gray.50', 'gray.900');
-  const cardBg = useColorModeValue('white', 'gray.800');
-  const borderColor = useColorModeValue('gray.200', 'gray.700');
+  const bgColor = 'gray.50';
+  const cardBg = 'white';
+  const borderColor = 'gray.200';
 
   // If already authenticated, show success message or redirect
   if (isAuthenticated) {

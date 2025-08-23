@@ -101,7 +101,7 @@ export const validateLoginForm = (credentials: LoginCredentials): FormValidation
   const errors: FormValidationErrors = {};
 
   if (!credentials.username?.trim()) {
-    errors.email = 'Username is required';
+    errors.username = 'Username is required';
   }
 
   if (!credentials.password?.trim()) {

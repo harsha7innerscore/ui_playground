@@ -87,7 +87,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </Box>
         )}
 
-        <Field.Root invalid={!!errors.email}>
+        <Field.Root invalid={!!errors.username}>
           <Field.Label htmlFor="username">Username</Field.Label>
           <Input
             id="username"
@@ -98,9 +98,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             placeholder="Enter your username"
             disabled={isLoading}
           />
-          {errors.email && (
+          {errors.username && (
             <Field.ErrorText id="username-error">
-              {errors.email}
+              {errors.username}
             </Field.ErrorText>
           )}
         </Field.Root>
