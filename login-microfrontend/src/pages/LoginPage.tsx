@@ -3,26 +3,19 @@ import {
   Box,
   Container,
   Heading,
-  Text,
   VStack,
   Flex,
-  Image,
+  Text,
 } from '@chakra-ui/react';
 import { LoginForm } from '../components';
 import { useAuth } from '../hooks';
 
 export interface LoginPageProps {
-  logo?: string;
-  companyName?: string;
-  subtitle?: string;
   onLoginSuccess?: () => void;
   onLoginError?: (error: string) => void;
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({
-  logo,
-  companyName = 'Your Company',
-  subtitle = 'Sign in to your account',
   onLoginSuccess,
   onLoginError,
 }) => {
@@ -122,11 +115,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                 boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
               >
                 <Box
-                  fontSize="2xl"
+                  fontSize="xl"
                   fontWeight="bold"
                   color="gray.700"
                 >
-                  →
+                  C
                 </Box>
               </Box>
               
@@ -136,7 +129,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                 color="gray.800"
                 letterSpacing="tight"
               >
-                Sign in
+                Coschool
               </Heading>
             </VStack>
 
