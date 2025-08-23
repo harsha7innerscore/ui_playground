@@ -78,70 +78,66 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <VStack gap={6} align="stretch">
         {error && (
           <Box 
-            bg="red.50" 
+            bg="rgba(239, 68, 68, 0.1)" 
             color="red.700" 
             p={4} 
-            borderRadius="lg" 
+            borderRadius="xl" 
             borderWidth="1px"
-            borderColor="red.200"
+            borderColor="rgba(239, 68, 68, 0.2)"
+            backdropFilter="blur(10px)"
             width="100%"
           >
             <Text fontSize="sm" fontWeight="medium">{error}</Text>
           </Box>
         )}
 
-        <VStack gap={5} align="stretch">
+        <VStack gap={4} align="stretch">
           <Field.Root invalid={!!errors.username}>
-            <Field.Label 
-              htmlFor="username"
-              fontSize="sm"
-              fontWeight="medium"
-              color="gray.700"
-              mb={2}
-            >
-              Username
-            </Field.Label>
-            <Input
-              id="username"
-              type="text"
-              value={credentials.username || ''}
-              onChange={handleInputChange('username')}
-              onFocus={handleFocus}
-              placeholder="Enter your username"
-              disabled={isLoading}
-              size="lg"
-              borderColor="gray.300"
-              borderRadius="lg"
-              bg="white"
-              _hover={{
-                borderColor: "gray.400"
-              }}
-              _focus={{
-                borderColor: "blue.500",
-                boxShadow: "0 0 0 1px #3182ce"
-              }}
-              _disabled={{
-                bg: "gray.50",
-                opacity: 0.6
-              }}
-            />
+            <Box position="relative">
+              <Input
+                id="username"
+                type="text"
+                value={credentials.username || ''}
+                onChange={handleInputChange('username')}
+                onFocus={handleFocus}
+                placeholder="Username"
+                disabled={isLoading}
+                size="lg"
+                bg="rgba(255, 255, 255, 0.2)"
+                backdropFilter="blur(10px)"
+                border="1px solid rgba(255, 255, 255, 0.3)"
+                borderRadius="xl"
+                color="gray.800"
+                fontSize="md"
+                py={6}
+                pl={6}
+                pr={6}
+                _placeholder={{
+                  color: "gray.500"
+                }}
+                _hover={{
+                  bg: "rgba(255, 255, 255, 0.3)",
+                  borderColor: "rgba(255, 255, 255, 0.4)"
+                }}
+                _focus={{
+                  bg: "rgba(255, 255, 255, 0.3)",
+                  borderColor: "rgba(99, 102, 241, 0.4)",
+                  boxShadow: "0 0 0 3px rgba(99, 102, 241, 0.1)",
+                  outline: "none"
+                }}
+                _disabled={{
+                  opacity: 0.6
+                }}
+              />
+            </Box>
             {errors.username && (
-              <Field.ErrorText id="username-error" fontSize="sm" mt={1}>
+              <Field.ErrorText id="username-error" fontSize="sm" mt={1} color="red.600">
                 {errors.username}
               </Field.ErrorText>
             )}
           </Field.Root>
 
           <Field.Root invalid={!!errors.password}>
-            <Field.Label 
-              htmlFor="password"
-              fontSize="sm"
-              fontWeight="medium"
-              color="gray.700"
-              mb={2}
-            >
-              Password
-            </Field.Label>
             <Box position="relative">
               <Input
                 id="password"
@@ -149,28 +145,38 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 value={credentials.password || ''}
                 onChange={handleInputChange('password')}
                 onFocus={handleFocus}
-                placeholder="Enter your password"
+                placeholder="Password"
                 disabled={isLoading}
                 size="lg"
-                borderColor="gray.300"
-                borderRadius="lg"
-                bg="white"
-                pr="3.5rem"
+                bg="rgba(255, 255, 255, 0.2)"
+                backdropFilter="blur(10px)"
+                border="1px solid rgba(255, 255, 255, 0.3)"
+                borderRadius="xl"
+                color="gray.800"
+                fontSize="md"
+                py={6}
+                pl={6}
+                pr={14}
+                _placeholder={{
+                  color: "gray.500"
+                }}
                 _hover={{
-                  borderColor: "gray.400"
+                  bg: "rgba(255, 255, 255, 0.3)",
+                  borderColor: "rgba(255, 255, 255, 0.4)"
                 }}
                 _focus={{
-                  borderColor: "blue.500",
-                  boxShadow: "0 0 0 1px #3182ce"
+                  bg: "rgba(255, 255, 255, 0.3)",
+                  borderColor: "rgba(99, 102, 241, 0.4)",
+                  boxShadow: "0 0 0 3px rgba(99, 102, 241, 0.1)",
+                  outline: "none"
                 }}
                 _disabled={{
-                  bg: "gray.50",
                   opacity: 0.6
                 }}
               />
               <Box
                 position="absolute"
-                right="12px"
+                right="16px"
                 top="50%"
                 transform="translateY(-50%)"
                 zIndex={2}
@@ -182,22 +188,47 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   onClick={togglePasswordVisibility}
                   disabled={isLoading}
                   color="gray.500"
-                  _hover={{ color: "gray.700" }}
+                  _hover={{ 
+                    color: "gray.700",
+                    bg: "rgba(255, 255, 255, 0.2)"
+                  }}
+                  borderRadius="lg"
                   fontSize="lg"
                 >
-                  {showPassword ? '🙈' : '👁'}
+                  👁
                 </IconButton>
               </Box>
             </Box>
             {errors.password && (
-              <Field.ErrorText id="password-error" fontSize="sm" mt={1}>
+              <Field.ErrorText id="password-error" fontSize="sm" mt={1} color="red.600">
                 {errors.password}
               </Field.ErrorText>
             )}
           </Field.Root>
         </VStack>
 
-        <VStack gap={4} align="stretch">
+        <VStack gap={3} align="stretch">
+          {showForgotPassword && (
+            <Box textAlign="right">
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={isLoading}
+                color="gray.600"
+                fontWeight="medium"
+                fontSize="sm"
+                p={1}
+                h="auto"
+                _hover={{
+                  color: "gray.800",
+                  bg: "rgba(255, 255, 255, 0.2)"
+                }}
+              >
+                Forgot password?
+              </Button>
+            </Box>
+          )}
+
           <Button
             type="submit"
             size="lg"
@@ -205,46 +236,32 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             loading={isLoading}
             loadingText="Signing in..."
             disabled={!isValid || isLoading}
-            bg="blue.600"
+            bg="gray.800"
             color="white"
-            borderRadius="lg"
+            borderRadius="xl"
             fontWeight="semibold"
+            fontSize="md"
+            py={6}
             _hover={{
-              bg: "blue.700",
+              bg: "gray.700",
               transform: "translateY(-1px)",
-              boxShadow: "lg"
+              boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)"
             }}
             _active={{
               transform: "translateY(0)",
-              boxShadow: "md"
+              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)"
             }}
             _disabled={{
-              bg: "gray.300",
-              color: "gray.500",
+              bg: "gray.400",
+              color: "gray.200",
               cursor: "not-allowed",
               transform: "none",
               boxShadow: "none"
             }}
-            transition="all 0.2s"
+            transition="all 0.2s ease"
           >
-            Sign In
+            Login
           </Button>
-
-          {showForgotPassword && (
-            <Button
-              variant="ghost"
-              size="sm"
-              disabled={isLoading}
-              color="blue.600"
-              fontWeight="medium"
-              _hover={{
-                color: "blue.700",
-                bg: "blue.50"
-              }}
-            >
-              Forgot Password?
-            </Button>
-          )}
         </VStack>
       </VStack>
     </Box>
