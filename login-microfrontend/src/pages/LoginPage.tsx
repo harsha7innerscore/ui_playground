@@ -52,7 +52,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             borderColor={borderColor}
             textAlign="center"
           >
-            <VStack spacing={4}>
+            <VStack gap={4}>
               <Heading size="lg" color="green.500">
                 Welcome Back!
               </Heading>
@@ -84,9 +84,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           border="1px"
           borderColor={borderColor}
         >
-          <VStack spacing={6}>
+          <VStack gap={6}>
             {/* Logo and Branding */}
-            <VStack spacing={3} textAlign="center">
+            <VStack gap={3} textAlign="center">
               {logo && (
                 <Image
                   src={logo}
@@ -113,7 +113,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             </Box>
 
             {/* Footer */}
-            <VStack spacing={2} textAlign="center">
+            <VStack gap={2} textAlign="center">
               <Text fontSize="sm" color="gray.500">
                 By signing in, you agree to our Terms of Service and Privacy Policy
               </Text>

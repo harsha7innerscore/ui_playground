@@ -2,33 +2,23 @@ import React from 'react';
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
+  Field,
   Input,
-  InputGroup,
-  InputRightElement,
-  IconButton,
   VStack,
-  Alert,
-  AlertIcon,
   Text,
 } from '@chakra-ui/react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useAuth, useLoginForm } from '../hooks';
 
 export interface LoginFormProps {
   onLoginSuccess?: () => void;
   onLoginError?: (error: string) => void;
   showForgotPassword?: boolean;
-  showRememberMe?: boolean;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   onLoginSuccess,
   onLoginError,
   showForgotPassword = false,
-  showRememberMe = false,
 }) => {
   const { login, isLoading, error, clearError } = useAuth();
   const {
@@ -84,16 +74,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <Box as="form" onSubmit={handleSubmit} width="100%" maxWidth="400px">
-      <VStack spacing={4}>
+      <VStack gap={4}>
         {error && (
-          <Alert status="error" borderRadius="md">
-            <AlertIcon />
+          <Box 
+            bg="red.500" 
+            color="white" 
+            p={3} 
+            borderRadius="md" 
+            width="100%"
+          >
             <Text fontSize="sm">{error}</Text>
-          </Alert>
+          </Box>
         )}
 
-        <FormControl isInvalid={!!errors.email}>
-          <FormLabel htmlFor="username">Username</FormLabel>
+        <Field.Root invalid={!!errors.email}>
+          <Field.Label htmlFor="username">Username</Field.Label>
           <Input
             id="username"
             type="text"
@@ -101,17 +96,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onChange={handleInputChange('username')}
             onFocus={handleFocus}
             placeholder="Enter your username"
-            aria-describedby={errors.email ? 'username-error' : undefined}
             disabled={isLoading}
           />
-          <FormErrorMessage id="username-error">
-            {errors.email}
-          </FormErrorMessage>
-        </FormControl>
+          {errors.email && (
+            <Field.ErrorText id="username-error">
+              {errors.email}
+            </Field.ErrorText>
+          )}
+        </Field.Root>
 
-        <FormControl isInvalid={!!errors.password}>
-          <FormLabel htmlFor="password">Password</FormLabel>
-          <InputGroup>
+        <Field.Root invalid={!!errors.password}>
+          <Field.Label htmlFor="password">Password</Field.Label>
+          <Box position="relative">
             <Input
               id="password"
               type={showPassword ? 'text' : 'password'}
@@ -119,31 +115,41 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               onChange={handleInputChange('password')}
               onFocus={handleFocus}
               placeholder="Enter your password"
-              aria-describedby={errors.password ? 'password-error' : undefined}
               disabled={isLoading}
+              pr="3rem"
             />
-            <InputRightElement>
-              <IconButton
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={togglePasswordVisibility}
+            <Box
+              position="absolute"
+              right="0.75rem"
+              top="50%"
+              transform="translateY(-50%)"
+            >
+              <Button
                 variant="ghost"
                 size="sm"
+                onClick={togglePasswordVisibility}
                 disabled={isLoading}
-              />
-            </InputRightElement>
-          </InputGroup>
-          <FormErrorMessage id="password-error">
-            {errors.password}
-          </FormErrorMessage>
-        </FormControl>
+                p={1}
+                h="auto"
+                minW="auto"
+              >
+                {showPassword ? '🙈' : '👁'}
+              </Button>
+            </Box>
+          </Box>
+          {errors.password && (
+            <Field.ErrorText id="password-error">
+              {errors.password}
+            </Field.ErrorText>
+          )}
+        </Field.Root>
 
         <Button
           type="submit"
           colorScheme="blue"
           size="lg"
           width="100%"
-          isLoading={isLoading}
+          loading={isLoading}
           loadingText="Signing in..."
           disabled={!isValid || isLoading}
         >
@@ -152,7 +158,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
         {showForgotPassword && (
           <Button
-            variant="link"
+            variant="plain"
             size="sm"
             disabled={isLoading}
           >
