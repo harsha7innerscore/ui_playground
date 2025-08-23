@@ -31,199 +31,227 @@ interface APIResponse {
   message?: string;
 }
 
-class HttpService {
-  private client: AxiosInstance;
-  private baseURL: string = '';
-  
-  // State machine variables
-  private prePrevState: StateType | null = null;
-  private prevState: StateType | null = null;
-  private currState: StateType | null = null;
-  private nextState: StateType = STATES.EXCEPTION_ERROR;
+interface HttpState {
+  client: AxiosInstance;
+  baseURL: string;
+  prePrevState: StateType | null;
+  prevState: StateType | null;
+  currState: StateType | null;
+  nextState: StateType;
+}
 
-  constructor(config?: MicrofrontendConfig) {
-    this.client = axios.create({
-      timeout: 30000,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+// Create default http state
+const createHttpState = (config?: MicrofrontendConfig): HttpState => {
+  const client = axios.create({
+    timeout: 30000,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const state: HttpState = {
+    client,
+    baseURL: '',
+    prePrevState: null,
+    prevState: null,
+    currState: null,
+    nextState: STATES.EXCEPTION_ERROR,
+  };
+
+  if (config) {
+    state.baseURL = config.apiGateway;
+    state.client.defaults.baseURL = config.apiGateway;
+  }
+
+  return state;
+};
+
+// Global state instance
+let httpState = createHttpState();
+
+const setConfig = (config: MicrofrontendConfig): void => {
+  httpState.baseURL = config.apiGateway;
+  httpState.client.defaults.baseURL = config.apiGateway;
+};
+
+const setAuthToken = (token?: string): void => {
+  if (token) {
+    httpState.client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete httpState.client.defaults.headers.common['Authorization'];
+  }
+};
+
+const handleStateMachine = async (state: StateType, params: APICallParams): Promise<APIResponse> => {
+  httpState.prePrevState = httpState.prevState;
+  httpState.prevState = httpState.currState;
+  httpState.currState = state;
+
+  switch (state) {
+    case STATES.CALL_API:
+      return await handleApiCall(params);
+    case STATES.CALL_REFRESH_TOKEN:
+      return await handleRefreshToken(params);
+    case STATES.API_SUCCESS:
+      return handleSuccess(params);
+    case STATES.EXCEPTION_ERROR:
+      return await handleExceptionError(params);
+    default:
+      throw new Error(`Unknown state: ${state}`);
+  }
+};
+
+const handleApiCall = async (params: APICallParams): Promise<APIResponse> => {
+  try {
+    const response = await httpState.client.request({
+      url: params.url,
+      method: params.method,
+      data: params.body,
+      headers: params.headers,
+      ...params.options,
     });
-    
-    if (config) {
-      this.setConfig(config);
-    }
+
+    const result = await handleAPIResponse(response, params);
+    httpState.nextState = result.nextState;
+    params = result.params;
+  } catch (error) {
+    httpState.nextState = STATES.EXCEPTION_ERROR;
+    params = { ...params, error };
   }
 
-  public setConfig(config: MicrofrontendConfig): void {
-    this.baseURL = config.apiGateway;
-    this.client.defaults.baseURL = this.baseURL;
+  return httpState.nextState ? await handleStateMachine(httpState.nextState, params) : { success: false, errorMessage: 'Unknown error' };
+};
+
+const handleAPIResponse = async (response: AxiosResponse, params: APICallParams) => {
+  if (response?.status >= 200 && response?.status < 300) {
+    httpState.nextState = STATES.API_SUCCESS;
+    params = { ...params, data: response.data, status: response.status };
+    return { nextState: httpState.nextState, params };
+  } else {
+    httpState.nextState = STATES.EXCEPTION_ERROR;
+    return { nextState: httpState.nextState, params };
   }
+};
 
-  public setAuthToken(token?: string): void {
-    if (token) {
-      this.client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-      delete this.client.defaults.headers.common['Authorization'];
-    }
-  }
+// Comment out refresh token functionality as requested
+const handleRefreshToken = async (params: APICallParams): Promise<APIResponse> => {
+  // TODO: Refresh token functionality commented out as per requirements
+  // const mainParams = params;
+  
+  // try {
+  //   const refreshToken = localStorage.getItem('refreshToken');
+  //   if (!refreshToken) {
+  //     throw new Error('No refresh token available');
+  //   }
 
-  private async handleStateMachine(state: StateType, params: APICallParams): Promise<APIResponse> {
-    this.prePrevState = this.prevState;
-    this.prevState = this.currState;
-    this.currState = state;
+  //   params = { ...mainParams, client: httpState.client };
+  //   return await callApi(params.url, params.method, params.body, params.headers, params.options);
+  // } catch (error) {
+  //   return {
+  //     success: false,
+  //     errorMessage: 'Session expired. Please login again.',
+  //   };
+  // }
 
-    switch (state) {
-      case STATES.CALL_API:
-        return await this.handleApiCall(params);
-      case STATES.CALL_REFRESH_TOKEN:
-        return await this.handleRefreshToken(params);
-      case STATES.API_SUCCESS:
-        return this.handleSuccess(params);
-      case STATES.EXCEPTION_ERROR:
-        return await this.handleExceptionError(params);
-      default:
-        throw new Error(`Unknown state: ${state}`);
-    }
-  }
+  return {
+    success: false,
+    errorMessage: 'Refresh token functionality is currently disabled.',
+  };
+};
 
-  private async handleApiCall(params: APICallParams): Promise<APIResponse> {
-    try {
-      const response = await this.client.request({
-        url: params.url,
-        method: params.method,
-        data: params.body,
-        headers: params.headers,
-        ...params.options,
-      });
+const handleSuccess = (params: any): APIResponse => {
+  return {
+    success: true,
+    data: params.data,
+  };
+};
 
-      const result = await this.handleAPIResponse(response, params);
-      this.nextState = result.nextState;
-      params = result.params;
-    } catch (error) {
-      this.nextState = STATES.EXCEPTION_ERROR;
-      params = { ...params, error };
-    }
-
-    return this.nextState ? await this.handleStateMachine(this.nextState, params) : { success: false, errorMessage: 'Unknown error' };
-  }
-
-  private async handleAPIResponse(response: AxiosResponse, params: APICallParams) {
-    if (response?.status >= 200 && response?.status < 300) {
-      this.nextState = STATES.API_SUCCESS;
-      params = { ...params, data: response.data, status: response.status };
-      return { nextState: this.nextState, params };
-    } else {
-      this.nextState = STATES.EXCEPTION_ERROR;
-      return { nextState: this.nextState, params };
-    }
-  }
-
-  private async handleRefreshToken(params: APICallParams): Promise<APIResponse> {
-    const mainParams = params;
-    
-    try {
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (!refreshToken) {
-        throw new Error('No refresh token available');
-      }
-
-      params = { ...mainParams, client: this.client };
-      return await this.callApi(params.url, params.method, params.body, params.headers, params.options);
-    } catch (error) {
+const handleExceptionError = async (params: APICallParams): Promise<APIResponse> => {
+  const error = params.error;
+  
+  if (axios.isAxiosError(error)) {
+    if (error?.message === 'Network Error') {
       return {
         success: false,
-        errorMessage: 'Session expired. Please login again.',
+        errorMessage: 'Network Error. Please check your internet connection.',
       };
     }
-  }
 
-  private handleSuccess(params: any): APIResponse {
-    return {
-      success: true,
-      data: params.data,
-    };
-  }
+    if (error?.response) {
+      const { status, data } = error.response;
 
-  private async handleExceptionError(params: APICallParams): Promise<APIResponse> {
-    const error = params.error;
-    
-    if (axios.isAxiosError(error)) {
-      if (error?.message === 'Network Error') {
-        return {
-          success: false,
-          errorMessage: 'Network Error. Please check your internet connection.',
-        };
-      }
-
-      if (error?.response) {
-        const { status, data } = error.response;
-
-        switch (status) {
-          case 401:
-            if (this.prePrevState === STATES.CALL_REFRESH_TOKEN) {
-              return {
-                success: false,
-                errorMessage: 'Authentication failed. Please login again.',
-                statusCode: status,
-              };
-            }
-            
-            const { error: _, ...newParams } = params;
-            this.nextState = STATES.CALL_REFRESH_TOKEN;
-            return await this.handleStateMachine(this.nextState, newParams);
-            
-          default:
-            return {
-              success: false,
-              errorMessage: data?.message || 'An error occurred',
-              statusCode: status,
-            };
-        }
+      switch (status) {
+        case 401:
+          // Comment out refresh token logic as requested
+          // if (httpState.prePrevState === STATES.CALL_REFRESH_TOKEN) {
+          //   return {
+          //     success: false,
+          //     errorMessage: 'Authentication failed. Please login again.',
+          //     statusCode: status,
+          //   };
+          // }
+          
+          // const { error: _, ...newParams } = params;
+          // httpState.nextState = STATES.CALL_REFRESH_TOKEN;
+          // return await handleStateMachine(httpState.nextState, newParams);
+          
+          return {
+            success: false,
+            errorMessage: 'Authentication failed. Please login again.',
+            statusCode: status,
+          };
+          
+        default:
+          return {
+            success: false,
+            errorMessage: data?.message || 'An error occurred',
+            statusCode: status,
+          };
       }
     }
-
-    return {
-      success: false,
-      errorMessage: error?.message || 'Unknown error occurred',
-    };
   }
 
-  private async callApi(url: string, method: 'get' | 'post' | 'put' | 'delete' | 'patch', body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      this.setAuthToken(authToken);
-    }
+  return {
+    success: false,
+    errorMessage: error?.message || 'Unknown error occurred',
+  };
+};
 
-    if (headers) {
-      Object.assign(this.client.defaults.headers, headers);
-    }
-
-    this.nextState = STATES.CALL_API;
-    const params: APICallParams = { url, method, body, options, client: this.client };
-
-    return await this.handleStateMachine(this.nextState, params);
+const callApi = async (url: string, method: 'get' | 'post' | 'put' | 'delete' | 'patch', body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> => {
+  const authToken = localStorage.getItem('authToken');
+  if (authToken) {
+    setAuthToken(authToken);
   }
 
-  public async get(url: string, params?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> {
-    return this.callApi(url, 'get', { params }, headers, options);
+  if (headers) {
+    Object.assign(httpState.client.defaults.headers, headers);
   }
 
-  public async post(url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> {
-    return this.callApi(url, 'post', body, headers, options);
-  }
+  httpState.nextState = STATES.CALL_API;
+  const params: APICallParams = { url, method, body, options, client: httpState.client };
 
-  public async put(url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> {
-    return this.callApi(url, 'put', body, headers, options);
-  }
+  return await handleStateMachine(httpState.nextState, params);
+};
 
-  public async delete(url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> {
-    return this.callApi(url, 'delete', body, headers, options);
-  }
+const get = async (url: string, params?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> => {
+  return callApi(url, 'get', { params }, headers, options);
+};
 
-  public async patch(url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> {
-    return this.callApi(url, 'patch', body, headers, options);
-  }
-}
+const post = async (url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> => {
+  return callApi(url, 'post', body, headers, options);
+};
+
+const put = async (url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> => {
+  return callApi(url, 'put', body, headers, options);
+};
+
+const deleteRequest = async (url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> => {
+  return callApi(url, 'delete', body, headers, options);
+};
+
+const patch = async (url: string, body?: any, headers?: Record<string, string>, options?: any): Promise<APIResponse> => {
+  return callApi(url, 'patch', body, headers, options);
+};
 
 const getEnvironmentConfig = (): MicrofrontendConfig => {
   const environment = (import.meta.env.VITE_ENVIRONMENT as 'dev' | 'staging' | 'prod') || 'dev';
@@ -246,5 +274,17 @@ const getEnvironmentConfig = (): MicrofrontendConfig => {
   return configs[environment];
 };
 
-export const httpService = new HttpService(getEnvironmentConfig());
+// Initialize with environment config
+setConfig(getEnvironmentConfig());
+
+export const httpService = {
+  setConfig,
+  setAuthToken,
+  get,
+  post,
+  put,
+  delete: deleteRequest,
+  patch,
+};
+
 export default httpService;
