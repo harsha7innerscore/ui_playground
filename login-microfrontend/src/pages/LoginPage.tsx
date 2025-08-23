@@ -70,40 +70,62 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       minH="100vh"
       align="center"
       justify="center"
-      bg={bgColor}
-      py={12}
+      bg="gray.100"
+      py={8}
       px={4}
     >
-      <Container maxW="md">
+      <Container maxW="sm">
         <Box
           bg={cardBg}
-          p={8}
-          rounded="lg"
-          shadow="md"
+          p={10}
+          rounded="2xl"
+          shadow="xl"
           border="1px"
-          borderColor={borderColor}
+          borderColor="gray.200"
+          backdropFilter="blur(10px)"
         >
-          <VStack gap={6}>
+          <VStack gap={8} align="stretch">
             {/* Logo and Branding */}
-            <VStack gap={3} textAlign="center">
+            <VStack gap={4} textAlign="center">
               {logo && (
-                <Image
-                  src={logo}
-                  alt={`${companyName} logo`}
-                  h={12}
-                  objectFit="contain"
-                />
+                <Box
+                  p={3}
+                  bg="blue.50"
+                  borderRadius="xl"
+                  display="inline-flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Image
+                    src={logo}
+                    alt={`${companyName} logo`}
+                    h={10}
+                    w={10}
+                    objectFit="contain"
+                  />
+                </Box>
               )}
-              <Heading size="lg" fontWeight="bold">
-                {companyName}
-              </Heading>
-              <Text color="gray.600" fontSize="md">
-                {subtitle}
-              </Text>
+              <VStack gap={2}>
+                <Heading 
+                  size="xl" 
+                  fontWeight="bold"
+                  color="gray.900"
+                  letterSpacing="tight"
+                >
+                  {companyName}
+                </Heading>
+                <Text 
+                  color="gray.600" 
+                  fontSize="md"
+                  fontWeight="medium"
+                >
+                  {subtitle}
+                </Text>
+              </VStack>
             </VStack>
 
             {/* Login Form */}
-            <Box width="100%">
+            <Box>
               <LoginForm
                 onLoginSuccess={onLoginSuccess}
                 onLoginError={onLoginError}
@@ -112,11 +134,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             </Box>
 
             {/* Footer */}
-            <VStack gap={2} textAlign="center">
-              <Text fontSize="sm" color="gray.500">
-                By signing in, you agree to our Terms of Service and Privacy Policy
+            <Box textAlign="center" pt={4}>
+              <Text fontSize="xs" color="gray.500" lineHeight="1.5">
+                By signing in, you agree to our{' '}
+                <Text as="span" color="blue.600" textDecoration="underline" cursor="pointer" _hover={{ color: "blue.700" }}>
+                  Terms of Service
+                </Text>
+                {' '}and{' '}
+                <Text as="span" color="blue.600" textDecoration="underline" cursor="pointer" _hover={{ color: "blue.700" }}>
+                  Privacy Policy
+                </Text>
               </Text>
-            </VStack>
+            </Box>
           </VStack>
         </Box>
       </Container>
