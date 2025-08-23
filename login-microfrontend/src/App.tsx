@@ -1,4 +1,3 @@
-import React from 'react';
 import { LoginPage } from './pages';
 import { useAuth } from './hooks';
 import { Box, Heading, Text, VStack, Button } from '@chakra-ui/react';
@@ -22,7 +21,7 @@ function App() {
   if (isAuthenticated && user) {
     return (
       <Box textAlign="center" py={10} px={6}>
-        <VStack spacing={6}>
+        <VStack gap={6}>
           <Heading size="xl" color="green.500">
             Welcome, {user.userName}!
           </Heading>
