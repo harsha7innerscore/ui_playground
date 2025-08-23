@@ -6,7 +6,6 @@ import {
   Input,
   VStack,
   Text,
-  IconButton,
 } from '@chakra-ui/react';
 import { useAuth, useLoginForm } from '../hooks';
 
@@ -32,7 +31,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     clearErrors,
   } = useLoginForm();
 
-  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,9 +54,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const handleInputChange = (field: 'username' | 'password') => (
     e: React.ChangeEvent<HTMLInputElement>
@@ -141,7 +136,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <Box position="relative">
               <Input
                 id="password"
-                type={showPassword ? 'text' : 'password'}
+                type="password"
                 value={credentials.password || ''}
                 onChange={handleInputChange('password')}
                 onFocus={handleFocus}
@@ -156,7 +151,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 fontSize="md"
                 py={6}
                 pl={6}
-                pr={14}
+                pr={6}
                 _placeholder={{
                   color: "gray.500"
                 }}
@@ -174,30 +169,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   opacity: 0.6
                 }}
               />
-              <Box
-                position="absolute"
-                right="16px"
-                top="50%"
-                transform="translateY(-50%)"
-                zIndex={2}
-              >
-                <IconButton
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  variant="ghost"
-                  size="sm"
-                  onClick={togglePasswordVisibility}
-                  disabled={isLoading}
-                  color="gray.500"
-                  _hover={{ 
-                    color: "gray.700",
-                    bg: "rgba(255, 255, 255, 0.2)"
-                  }}
-                  borderRadius="lg"
-                  fontSize="lg"
-                >
-                  👁
-                </IconButton>
-              </Box>
             </Box>
             {errors.password && (
               <Field.ErrorText id="password-error" fontSize="sm" mt={1} color="red.600">
