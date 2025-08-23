@@ -70,58 +70,74 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       minH="100vh"
       align="center"
       justify="center"
-      bg="gray.100"
+      bg="linear-gradient(135deg, #a8e6cf 0%, #dcedc8 50%, #f8ffd6 100%)"
       py={8}
       px={4}
+      position="relative"
+      _before={{
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='3'/%3E%3Ccircle cx='53' cy='53' r='3'/%3E%3Ccircle cx='23' cy='43' r='2'/%3E%3Ccircle cx='37' cy='17' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        zIndex: 0
+      }}
     >
-      <Container maxW="sm">
+      <Container maxW="sm" position="relative" zIndex={1}>
         <Box
-          bg={cardBg}
-          p={10}
-          rounded="2xl"
-          shadow="xl"
-          border="1px"
-          borderColor="gray.200"
-          backdropFilter="blur(10px)"
+          bg="rgba(255, 255, 255, 0.25)"
+          backdropFilter="blur(20px)"
+          borderRadius="3xl"
+          border="1px solid rgba(255, 255, 255, 0.3)"
+          boxShadow="0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+          p={12}
+          position="relative"
+          _before={{
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%)',
+            borderRadius: '3xl',
+            pointerEvents: 'none'
+          }}
         >
-          <VStack gap={8} align="stretch">
+          <VStack gap={8} align="stretch" position="relative" zIndex={2}>
             {/* Logo and Branding */}
-            <VStack gap={4} textAlign="center">
-              {logo && (
+            <VStack gap={6} textAlign="center">
+              <Box
+                w={16}
+                h={16}
+                bg="rgba(255, 255, 255, 0.4)"
+                backdropFilter="blur(10px)"
+                borderRadius="2xl"
+                border="1px solid rgba(255, 255, 255, 0.3)"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
+              >
                 <Box
-                  p={3}
-                  bg="blue.50"
-                  borderRadius="xl"
-                  display="inline-flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Image
-                    src={logo}
-                    alt={`${companyName} logo`}
-                    h={10}
-                    w={10}
-                    objectFit="contain"
-                  />
-                </Box>
-              )}
-              <VStack gap={2}>
-                <Heading 
-                  size="xl" 
+                  fontSize="2xl"
                   fontWeight="bold"
-                  color="gray.900"
-                  letterSpacing="tight"
+                  color="gray.700"
                 >
-                  {companyName}
-                </Heading>
-                <Text 
-                  color="gray.600" 
-                  fontSize="md"
-                  fontWeight="medium"
-                >
-                  {subtitle}
-                </Text>
-              </VStack>
+                  →
+                </Box>
+              </Box>
+              
+              <Heading 
+                size="xl" 
+                fontWeight="bold"
+                color="gray.800"
+                letterSpacing="tight"
+              >
+                Sign in
+              </Heading>
             </VStack>
 
             {/* Login Form */}
@@ -131,20 +147,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                 onLoginError={onLoginError}
                 showForgotPassword={true}
               />
-            </Box>
-
-            {/* Footer */}
-            <Box textAlign="center" pt={4}>
-              <Text fontSize="xs" color="gray.500" lineHeight="1.5">
-                By signing in, you agree to our{' '}
-                <Text as="span" color="blue.600" textDecoration="underline" cursor="pointer" _hover={{ color: "blue.700" }}>
-                  Terms of Service
-                </Text>
-                {' '}and{' '}
-                <Text as="span" color="blue.600" textDecoration="underline" cursor="pointer" _hover={{ color: "blue.700" }}>
-                  Privacy Policy
-                </Text>
-              </Text>
             </Box>
           </VStack>
         </Box>
