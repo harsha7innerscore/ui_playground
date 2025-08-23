@@ -11,10 +11,34 @@ This workspace contains multiple UI/UX projects for experimentation and developm
 
 ### Task Management & Git Integration
 When todos are created for any task:
-1. After each todo item is completed, create a git commit
+1. After each todo item is completed, create a git commit immediately
 2. Use the completed todo text as the commit message
 3. Follow conventional commit format when appropriate
 4. Maintain clean, atomic commits for better project history
+5. NEVER batch multiple completed todos before committing - commit after each completion
+
+### Node.js Compatibility Requirements
+- **Target Node Version**: Node.js 18.20.4 (or latest stable 18.x)
+- All frameworks, build tools, and dependencies MUST be compatible with the target Node version
+- When version conflicts arise, downgrade to compatible versions rather than upgrading Node
+- Always verify compatibility before installing new packages
+- Document version constraints in project-specific claude.md files
+
+### Project Creation Standards
+- **MANDATORY**: Every new repository/project MUST have its own `claude.md` file
+- Local `claude.md` files should include:
+  - Technology stack and version constraints
+  - Development commands and workflows
+  - Project-specific coding standards
+  - Architecture decisions and patterns
+  - Integration requirements (if microfrontend/microservice)
+- Create the local `claude.md` immediately after project initialization
+
+### Context Management
+- ALWAYS read and consider both global (`/CLAUDE.md`) AND local (`/project/claude.md`) files for each task
+- Local project configurations override global settings when conflicts exist
+- Maintain awareness of both global workspace standards and project-specific requirements
+- Reference both files when making architectural or technical decisions
 
 ### Code Quality Standards
 - Follow industry best practices for all languages and frameworks
