@@ -134,7 +134,7 @@ const handleAPIResponse = async (response: AxiosResponse, params: APICallParams)
 };
 
 // Comment out refresh token functionality as requested
-const handleRefreshToken = async (params: APICallParams): Promise<APIResponse> => {
+const handleRefreshToken = async (_params: APICallParams): Promise<APIResponse> => {
   // TODO: Refresh token functionality commented out as per requirements
   // const mainParams = params;
   
