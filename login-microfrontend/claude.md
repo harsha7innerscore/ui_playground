@@ -11,6 +11,13 @@ A React + TypeScript + Vite microfrontend application with Chakra UI for styling
 
 ## Development Workflow
 
+### Task Management & Git Integration
+When todos are created for any task:
+1. After each todo item is completed, create a git commit
+2. Use the completed todo text as the commit message
+3. Follow conventional commit format when appropriate
+4. Maintain clean, atomic commits for better project history
+
 ### Local Development Commands
 ```bash
 npm run dev      # Start development server
