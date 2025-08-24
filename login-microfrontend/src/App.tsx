@@ -1,6 +1,5 @@
 import { LoginPage } from './pages';
 import { useAuth } from './hooks';
-import { Box, Heading, Text, VStack, Button } from '@chakra-ui/react';
 
 function App() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -20,33 +19,34 @@ function App() {
   // If authenticated, show a simple dashboard
   if (isAuthenticated && user) {
     return (
-      <Box textAlign="center" py={10} px={6}>
-        <VStack gap={6}>
-          <Heading size="xl" color="green.500">
+      <div className="text-center py-10 px-6">
+        <div className="flex flex-col gap-6 items-center">
+          <h1 className="text-3xl font-bold text-green-500">
             Welcome, {user.userName}!
-          </Heading>
-          <Text color="gray.600">
+          </h1>
+          <p className="text-gray-600">
             You are successfully logged in to the microfrontend.
-          </Text>
-          <Text fontSize="sm" color="gray.500">
+          </p>
+          <p className="text-sm text-gray-500">
             Email: {user.email}
-          </Text>
-          <Text fontSize="sm" color="gray.500">
+          </p>
+          <p className="text-sm text-gray-500">
             Role: {user.roleName}
-          </Text>
-          <Button colorScheme="red" onClick={handleLogout}>
+          </p>
+          <button 
+            onClick={handleLogout}
+            className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors"
+          >
             Logout
-          </Button>
-        </VStack>
-      </Box>
+          </button>
+        </div>
+      </div>
     );
   }
 
   // Show login page
   return (
     <LoginPage
-      companyName="Login Microfrontend"
-      subtitle="Welcome to the authentication module"
       onLoginSuccess={handleLoginSuccess}
       onLoginError={handleLoginError}
     />
