@@ -133,8 +133,6 @@ export const createMicrofrontendAPI = (): MicrofrontendAPI => {
       // Dynamically import React and ReactDOM
       const React = await import('react');
       const ReactDOM = await import('react-dom/client');
-      const { ChakraProvider } = await import('@chakra-ui/react');
-      const { system } = await import('../theme');
       const App = (await import('../App')).default;
 
       // Create root and render
@@ -143,10 +141,7 @@ export const createMicrofrontendAPI = (): MicrofrontendAPI => {
         React.createElement(
           React.StrictMode,
           {},
-          React.createElement(
-            ChakraProvider,
-            { value: system, children: React.createElement(App) }
-          )
+          React.createElement(App)
         )
       );
 
