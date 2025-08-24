@@ -1,13 +1,12 @@
 # Login Microfrontend
 
-A React + TypeScript + Vite microfrontend application with Chakra UI for styling, focused on authentication and login functionality.
+A React + TypeScript + Vite microfrontend application with Tailwind CSS for styling, focused on authentication and login functionality.
 
 ## Technology Stack
 - **Framework**: React 19.1.1 with TypeScript
 - **Build Tool**: Vite 5.4.2 (compatible with Node 18.20.4)
-- **UI Library**: Chakra UI 3.25.0
-- **Animation**: Framer Motion
-- **Styling**: Emotion (React + Styled)
+- **UI/Styling**: Tailwind CSS 4.1.12
+- **HTTP Client**: Axios 1.11.0
 
 ## Development Workflow
 
@@ -17,6 +16,7 @@ When todos are created for any task:
 2. Use the completed todo text as the commit message
 3. Follow conventional commit format when appropriate
 4. Maintain clean, atomic commits for better project history
+5. After each task is completed, run `npm run build` to ensure no build errors
 
 ### Local Development Commands
 ```bash
@@ -29,12 +29,12 @@ npm run preview  # Preview production build
 ### Code Quality Standards
 - TypeScript strict mode enabled
 - ESLint configuration for React + TypeScript
-- Follow Chakra UI component patterns and design system
+- Follow Tailwind CSS utility-first approach
 - Maintain responsive design principles
 - Ensure accessibility compliance (ARIA labels, semantic HTML)
 
 ### Component Architecture
-- Use Chakra UI components as building blocks
+- Use native HTML elements with Tailwind CSS styling
 - Create reusable authentication components
 - Implement proper form validation and error handling
 - Follow React best practices (hooks, functional components)
@@ -49,11 +49,11 @@ npm run preview  # Preview production build
 - Security best practices (HTTPS, secure tokens)
 
 ### Design Guidelines
-- Follow Chakra UI design tokens and theming
+- Follow Tailwind CSS design system and utility classes
 - Implement responsive design (mobile-first approach)
-- Use consistent spacing and typography
+- Use consistent spacing and typography with Tailwind utilities
 - Maintain high contrast ratios for accessibility
-- Create smooth animations with Framer Motion
+- Use Tailwind's transition and animation utilities
 
 ### Testing Strategy
 - Component testing with React Testing Library
@@ -61,6 +61,7 @@ npm run preview  # Preview production build
 - Authentication flow testing
 - Accessibility testing
 - Cross-browser compatibility
+- **UI Testing**: Use design-review agent along with Playwright MCP for comprehensive UI testing
 
 ### Deployment Considerations
 - Microfrontend architecture compatibility
@@ -84,8 +85,7 @@ src/
 ├── hooks/              # Custom React hooks
 ├── utils/              # Utility functions
 ├── types/              # TypeScript type definitions
-├── services/           # API service layers
-└── theme/              # Chakra UI theme customization
+└── services/           # API service layers
 ```
 
 ## Integration Notes
