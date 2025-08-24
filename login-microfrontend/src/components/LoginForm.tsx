@@ -1,12 +1,4 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  Field,
-  Input,
-  VStack,
-  Text,
-} from '@chakra-ui/react';
 import { useAuth, useLoginForm } from '../hooks';
 
 export interface LoginFormProps {
@@ -69,27 +61,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <Box as="form" onSubmit={handleSubmit} width="100%">
-      <VStack gap={6} align="stretch">
+    <form onSubmit={handleSubmit} className="w-full">
+      <div className="flex flex-col gap-6">
         {error && (
-          <Box 
-            bg="rgba(239, 68, 68, 0.1)" 
-            color="red.700" 
-            p={4} 
-            borderRadius="xl" 
-            borderWidth="1px"
-            borderColor="rgba(239, 68, 68, 0.2)"
-            backdropFilter="blur(10px)"
-            width="100%"
-          >
-            <Text fontSize="sm" fontWeight="medium">{error}</Text>
-          </Box>
+          <div className="bg-red-50 bg-opacity-10 text-red-700 p-4 rounded-xl border border-red-200 border-opacity-20 backdrop-blur-sm w-full">
+            <p className="text-sm font-medium">{error}</p>
+          </div>
         )}
 
-        <VStack gap={4} align="stretch">
-          <Field.Root invalid={!!errors.username}>
-            <Box position="relative">
-              <Input
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col">
+            <div className="relative">
+              <input
                 id="username"
                 type="text"
                 value={credentials.username || ''}
@@ -97,44 +80,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 onFocus={handleFocus}
                 placeholder="Username"
                 disabled={isLoading}
-                size="lg"
-                bg="rgba(255, 255, 255, 0.2)"
-                backdropFilter="blur(10px)"
-                border="1px solid rgba(255, 255, 255, 0.3)"
-                borderRadius="xl"
-                color="gray.800"
-                fontSize="md"
-                py={6}
-                pl={6}
-                pr={6}
-                _placeholder={{
-                  color: "gray.500"
-                }}
-                _hover={{
-                  bg: "rgba(255, 255, 255, 0.3)",
-                  borderColor: "rgba(255, 255, 255, 0.4)"
-                }}
-                _focus={{
-                  bg: "rgba(255, 255, 255, 0.3)",
-                  borderColor: "rgba(99, 102, 241, 0.4)",
-                  boxShadow: "0 0 0 3px rgba(99, 102, 241, 0.1)",
-                  outline: "none"
-                }}
-                _disabled={{
-                  opacity: 0.6
-                }}
+                className="w-full py-6 px-6 text-md text-gray-800 bg-white bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 rounded-xl placeholder-gray-500 hover:bg-white hover:bg-opacity-30 hover:border-white hover:border-opacity-40 focus:bg-white focus:bg-opacity-30 focus:border-indigo-400 focus:border-opacity-40 focus:ring-4 focus:ring-indigo-100 focus:outline-none disabled:opacity-60 transition-all duration-200"
               />
-            </Box>
+            </div>
             {errors.username && (
-              <Field.ErrorText id="username-error" fontSize="sm" mt={1} color="red.600">
-                {errors.username}
-              </Field.ErrorText>
+              <p className="text-sm text-red-600 mt-1">{errors.username}</p>
             )}
-          </Field.Root>
+          </div>
 
-          <Field.Root invalid={!!errors.password}>
-            <Box position="relative">
-              <Input
+          <div className="flex flex-col">
+            <div className="relative">
+              <input
                 id="password"
                 type="password"
                 value={credentials.password || ''}
@@ -142,99 +98,37 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 onFocus={handleFocus}
                 placeholder="Password"
                 disabled={isLoading}
-                size="lg"
-                bg="rgba(255, 255, 255, 0.2)"
-                backdropFilter="blur(10px)"
-                border="1px solid rgba(255, 255, 255, 0.3)"
-                borderRadius="xl"
-                color="gray.800"
-                fontSize="md"
-                py={6}
-                pl={6}
-                pr={6}
-                _placeholder={{
-                  color: "gray.500"
-                }}
-                _hover={{
-                  bg: "rgba(255, 255, 255, 0.3)",
-                  borderColor: "rgba(255, 255, 255, 0.4)"
-                }}
-                _focus={{
-                  bg: "rgba(255, 255, 255, 0.3)",
-                  borderColor: "rgba(99, 102, 241, 0.4)",
-                  boxShadow: "0 0 0 3px rgba(99, 102, 241, 0.1)",
-                  outline: "none"
-                }}
-                _disabled={{
-                  opacity: 0.6
-                }}
+                className="w-full py-6 px-6 text-md text-gray-800 bg-white bg-opacity-20 backdrop-blur-sm border border-white border-opacity-30 rounded-xl placeholder-gray-500 hover:bg-white hover:bg-opacity-30 hover:border-white hover:border-opacity-40 focus:bg-white focus:bg-opacity-30 focus:border-indigo-400 focus:border-opacity-40 focus:ring-4 focus:ring-indigo-100 focus:outline-none disabled:opacity-60 transition-all duration-200"
               />
-            </Box>
+            </div>
             {errors.password && (
-              <Field.ErrorText id="password-error" fontSize="sm" mt={1} color="red.600">
-                {errors.password}
-              </Field.ErrorText>
+              <p className="text-sm text-red-600 mt-1">{errors.password}</p>
             )}
-          </Field.Root>
-        </VStack>
+          </div>
+        </div>
 
-        <VStack gap={3} align="stretch">
+        <div className="flex flex-col gap-3">
           {showForgotPassword && (
-            <Box textAlign="right">
-              <Button
-                variant="ghost"
-                size="sm"
+            <div className="text-right">
+              <button
+                type="button"
                 disabled={isLoading}
-                color="gray.600"
-                fontWeight="medium"
-                fontSize="sm"
-                p={1}
-                h="auto"
-                _hover={{
-                  color: "gray.800",
-                  bg: "rgba(255, 255, 255, 0.2)"
-                }}
+                className="text-sm font-medium text-gray-600 p-1 hover:text-gray-800 hover:bg-white hover:bg-opacity-20 rounded transition-colors"
               >
                 Forgot password?
-              </Button>
-            </Box>
+              </button>
+            </div>
           )}
 
-          <Button
+          <button
             type="submit"
-            size="lg"
-            width="100%"
-            loading={isLoading}
-            loadingText="Signing in..."
             disabled={!isValid || isLoading}
-            bg="gray.800"
-            color="white"
-            borderRadius="xl"
-            fontWeight="semibold"
-            fontSize="md"
-            py={6}
-            _hover={{
-              bg: "gray.700",
-              transform: "translateY(-1px)",
-              boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)"
-            }}
-            _active={{
-              transform: "translateY(0)",
-              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)"
-            }}
-            _disabled={{
-              bg: "gray.400",
-              color: "gray.200",
-              cursor: "not-allowed",
-              transform: "none",
-              boxShadow: "none"
-            }}
-            transition="all 0.2s ease"
+            className="w-full py-6 px-6 bg-gray-800 text-white font-semibold text-md rounded-xl hover:bg-gray-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:shadow-md disabled:bg-gray-400 disabled:text-gray-200 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none transition-all duration-200"
           >
-            Login
-          </Button>
-        </VStack>
-      </VStack>
-    </Box>
+            {isLoading ? 'Signing in...' : 'Login'}
+          </button>
+        </div>
+      </div>
+    </form>
   );
 };
