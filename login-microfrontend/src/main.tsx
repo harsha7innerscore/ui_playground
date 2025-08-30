@@ -1,11 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { initializeMicrofrontend, createMicrofrontendAPI } from './utils'
+import { createMicrofrontendAPI } from './utils'
 import './index.css'
 import App from './App.tsx'
 
-// Initialize microfrontend API and expose it globally
-initializeMicrofrontend();
+// Create the API instance
+const api = createMicrofrontendAPI();
+
+// Expose the API globally for UMD usage
+if (typeof window !== 'undefined') {
+  window.LoginMicrofrontend = api;
+}
 
 // Render the app to the #root element if it exists
 const rootElement = document.getElementById('root');
@@ -17,5 +22,5 @@ if (rootElement) {
   );
 }
 
-// Export the microfrontend API for direct imports
-export { createMicrofrontendAPI }
+// Export the API for ES module usage
+export default api;

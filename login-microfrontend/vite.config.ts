@@ -1,15 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  define: {
+    // Disable React refresh for production
+    'process.env.NODE_ENV': JSON.stringify('production')
+  },
   build: {
     lib: {
       // The entry point for the library
-      entry: path.resolve('./src/main.tsx'),
-      name: 'LoginMicrofrontend',
+      entry: resolve('./src/main.tsx'),
+      name: 'LoginMicrofrontendLib',
       // The file formats to generate
       formats: ['es', 'umd'],
       fileName: (format) => `login-microfrontend.${format}.js`
