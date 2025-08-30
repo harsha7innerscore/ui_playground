@@ -22,8 +22,8 @@ npm install login-microfrontend
 ### Using a CDN
 
 ```html
-<script src="https://unpkg.com/react@19/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@19/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://your-cdn-url/login-microfrontend.umd.js"></script>
 ```
 
@@ -37,8 +37,8 @@ The login microfrontend can be used in two ways:
 
 ```html
 <!-- Include React dependencies -->
-<script src="https://unpkg.com/react@19/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@19/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
 
 <!-- Include the login microfrontend script -->
 <script src="./dist/login-microfrontend.umd.js"></script>
@@ -187,8 +187,18 @@ npm run preview
 To test the integration with a parent application, you can use the included `integration-test.html` file:
 
 1. Build the microfrontend: `npm run build`
-2. Open `integration-test.html` in a browser
-3. Test the login functionality and API methods
+2. Serve the project directory using a local server:
+   ```bash
+   # Using npx serve (recommended)
+   npx serve
+   
+   # OR using Python's HTTP server
+   python -m http.server
+   ```
+3. Navigate to the integration-test.html in your browser (e.g., http://localhost:3000/integration-test.html)
+4. Test the login functionality and API methods
+
+**Note:** The integration test expects the UMD bundle to be in the `dist/` directory relative to the project root. Running a local server is important to avoid CORS issues with the script loading.
 
 ## License
 
