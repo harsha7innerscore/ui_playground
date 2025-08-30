@@ -70,6 +70,22 @@ npm run preview  # Preview production build
 - Performance optimization for login flows
 - Bundle size optimization
 
+### Environment Variables
+The application uses the following environment variables:
+```
+VITE_API_URL                    # Main API endpoint for authentication and data
+VITE_BROWSER_URL                # Frontend URL for browser navigation
+VITE_STUDENT_API_URL            # Student-specific API endpoint
+VITE_GRAPHQL_API_URL            # GraphQL API endpoint
+VITE_CKEDITOR_FILE_UPLOAD_BASE_URL  # File upload endpoint for rich text editor
+VITE_S3_BUCKET                  # S3 bucket URL for static assets
+VITE_DEV_TEST1_BROWSER_URL      # Development test environment 1
+VITE_DEV_TEST2_BROWSER_URL      # Development test environment 2
+VITE_ALLOW_ADD_TABLE            # Feature flag for table functionality
+```
+
+Variables are loaded from `.env`, `.env.local`, or `.env.[mode]` files following Vite's environment loading precedence.
+
 ### Security Requirements
 - Input sanitization and validation
 - Secure token storage
