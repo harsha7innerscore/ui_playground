@@ -56,21 +56,6 @@ function App() {
   );
 }
 
-// Add global type for LoginMicrofrontend
-declare global {
-  interface Window {
-    LoginMicrofrontend?: {
-      login: (username: string, password: string) => Promise<boolean>;
-      logout: () => void;
-      isAuthenticated: () => boolean;
-      getCurrentUser: () => User | null;
-      render: (containerId: string, config?: any) => void;
-      configure: (config: any) => void;
-      onLoginSuccess: (callback: (user: User) => void) => () => void;
-      onLoginError: (callback: (error: string) => void) => () => void;
-      onLogout: (callback: () => void) => () => void;
-    };
-  }
-}
+// Global types are defined in types.d.ts
 
 export default App;
