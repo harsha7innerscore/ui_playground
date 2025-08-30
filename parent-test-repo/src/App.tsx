@@ -1,20 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
+import useAuth from './hooks/useAuth';
 import './App.css';
 
-// Define user type
-interface User {
-  userId?: number;
-  userName?: string;
-  email?: string;
-  roleId?: number;
-  roleName?: string;
-}
-
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  // Use our custom auth hook for consistent authentication state management
+  const { user, setUser } = useAuth();
 
   // Check if user is authenticated on app load
   useEffect(() => {
@@ -22,16 +15,26 @@ function App() {
     const checkAuth = () => {
       console.log('Checking authentication status');
       if (window.LoginMicrofrontend?.isAuthenticated()) {
-        console.log('User is authenticated');
+        console.log('User is authenticated via microfrontend');
         const currentUser = window.LoginMicrofrontend.getCurrentUser();
-        console.log('Current user:', currentUser);
-        setUser(currentUser);
+        console.log('Current user from microfrontend:', currentUser);
+        
+        // Only update user state if it's different from what we already have
+        if (currentUser && (!user || currentUser.userId !== user.userId)) {
+          console.log('Updating user state from microfrontend');
+          setUser(currentUser);
+        }
+      } else if (user) {
+        console.log('User exists in state but not authenticated in microfrontend');
+        // If we have a user in state but microfrontend says not authenticated,
+        // keep the user state as is (from localStorage) since we trust that more
       } else {
         console.log('User is not authenticated');
       }
     };
 
-    // Check if LoginMicrofrontend is already loaded
+    // Always check localStorage first (already done in useState initializer)
+    // Then check microfrontend when available
     if (window.LoginMicrofrontend) {
       console.log('LoginMicrofrontend is already loaded');
       checkAuth();
@@ -49,7 +52,7 @@ function App() {
       // Clean up interval
       return () => clearInterval(checkInterval);
     }
-  }, []);
+  }, [user]);
 
   console.log('App rendering with user:', user);
 

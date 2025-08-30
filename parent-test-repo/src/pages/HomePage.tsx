@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 interface User {
   userId?: number;
@@ -14,7 +15,9 @@ interface HomePageProps {
   setUser: (user: User | null) => void;
 }
 
-function HomePage({ user, setUser }: HomePageProps) {
+function HomePage(props: HomePageProps) {
+  // Use our custom hook for consistent auth state
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
   const loginContainerRef = useRef<HTMLDivElement>(null);
   const loginScriptRef = useRef<HTMLScriptElement | null>(null);
@@ -58,10 +61,17 @@ function HomePage({ user, setUser }: HomePageProps) {
 
                   // Set user state and force navigation to dashboard
                   setUser(loggedInUser);
+                  
+                  // Make sure it's also stored in localStorage right away
+                  localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
+                  
+                  // Also update props.setUser for compatibility
+                  props.setUser?.(loggedInUser);
 
                   // Add a small delay to ensure state is updated before navigation
                   setTimeout(() => {
                     console.log('Navigation triggered after delay');
+                    console.log('LocalStorage contains:', localStorage.getItem('currentUser'));
 
                     // Manually unmount the login component before navigation
                     try {
@@ -144,6 +154,12 @@ function HomePage({ user, setUser }: HomePageProps) {
       console.log('HomePage cleanup complete');
     };
   }, [setUser, navigate, user]);
+
+  // If user is already authenticated, don't render the login form at all
+  // This helps prevent flickering when refreshing the page
+  if (user) {
+    return null; // Will redirect to dashboard via useEffect
+  }
 
   return (
     <div className="layout">
