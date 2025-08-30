@@ -18,6 +18,8 @@ When todos are created for any task:
 4. Maintain clean, atomic commits for better project history
 5. After each task is completed, run `npm run build` to ensure no build errors
 
+**IMPORTANT**: Always commit changes to git after completing each todo item. This ensures a clean, traceable history and makes reverting changes easier if needed.
+
 ### Local Development Commands
 ```bash
 npm run dev      # Start development server
