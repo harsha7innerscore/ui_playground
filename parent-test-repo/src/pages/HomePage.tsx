@@ -68,15 +68,19 @@ function HomePage(props: HomePageProps) {
                   // Also update props.setUser for compatibility
                   props.setUser?.(loggedInUser);
 
-                  // Add a small delay to ensure state is updated before navigation
-                  setTimeout(() => {
-                    console.log('Navigation triggered after delay');
+                  // Use Promise.resolve().then() to ensure state updates complete
+                  // This leverages the JavaScript event loop to ensure React state updates
+                  // have been processed before we continue
+                  Promise.resolve().then(async () => {
+                    console.log('Navigation triggered after state update');
                     console.log('LocalStorage contains:', localStorage.getItem('currentUser'));
 
                     // Manually unmount the login component before navigation
                     try {
                       console.log('Manually unmounting LoginMicrofrontend before navigation');
                       if (window.LoginMicrofrontend) {
+                        // Call unmount and handle as a regular function
+                        // Since the type definition doesn't mark it as returning a Promise
                         window.LoginMicrofrontend.unmount();
                       }
                     } catch (error) {
@@ -86,7 +90,7 @@ function HomePage(props: HomePageProps) {
                     // Now navigate to dashboard
                     navigate('/dashboard', { replace: true });
                     console.log('Navigate command issued');
-                  }, 100);
+                  });
                 });
 
                 const unsubscribeError = window.LoginMicrofrontend.onLoginError((error) => {

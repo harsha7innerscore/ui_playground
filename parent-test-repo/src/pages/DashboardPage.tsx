@@ -46,18 +46,17 @@ function DashboardPage({ setUser: propSetUser }: DashboardPageProps) {
     // Use our centralized logout function
     logout();
     
-    // Navigate to home page
-    console.log('Navigating to home page');
-    navigate('/', { replace: true });
-    
-    // Final check
-    setTimeout(() => {
-      console.log('Final localStorage check:', localStorage.getItem('currentUser'));
-      console.log('Logout complete');
-    }, 100);
+    // Log the localStorage state immediately after logout
+    console.log('After logout, localStorage contains:', localStorage.getItem('currentUser'));
     
     // Also call the prop setUser for compatibility
     propSetUser(null);
+    
+    // Navigate to home page - do this last to ensure all logout processing is complete
+    console.log('Navigating to home page');
+    navigate('/', { replace: true });
+    
+    console.log('Logout complete');
   };
 
   // Don't render anything if user is not logged in

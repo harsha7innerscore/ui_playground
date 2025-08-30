@@ -39,18 +39,64 @@ function App() {
       console.log('LoginMicrofrontend is already loaded');
       checkAuth();
     } else {
-      console.log('LoginMicrofrontend is not loaded, waiting...');
-      // Wait for microfrontend to be loaded
-      const checkInterval = setInterval(() => {
+      console.log('LoginMicrofrontend is not loaded, setting up listener...');
+      
+      // Use a more modern approach with MutationObserver to detect when the script is loaded
+      // This is more efficient than polling with setInterval
+      const waitForMicrofrontend = async () => {
+        // Create a promise that resolves when LoginMicrofrontend becomes available
+        const microfrontendPromise = new Promise<void>((resolve) => {
+          // Check if it's already available (race condition handling)
+          if (window.LoginMicrofrontend) {
+            resolve();
+            return;
+          }
+          
+          // Set up a listener for script loads
+          observerRef.current = new MutationObserver(() => {
+            if (window.LoginMicrofrontend) {
+              if (observerRef.current) {
+                observerRef.current.disconnect();
+              }
+              resolve();
+            }
+          });
+          
+          // Watch for changes to the DOM that might include our script loading
+          observerRef.current.observe(document.documentElement, {
+            childList: true,
+            subtree: true
+          });
+          
+          // We'll handle cleanup in the useEffect return function
+          // This is safer than using a timeout and prevents memory leaks
+        });
+        
+        // Wait for the microfrontend to be available
+        await microfrontendPromise;
+        
+        // If we got here and the microfrontend is available, check auth
         if (window.LoginMicrofrontend) {
           console.log('LoginMicrofrontend loaded');
           checkAuth();
-          clearInterval(checkInterval);
         }
-      }, 100);
-
-      // Clean up interval
-      return () => clearInterval(checkInterval);
+      };
+      
+      // Start the async process
+      const observerRef = { current: null as MutationObserver | null };
+      
+      // Store the observer reference for cleanup
+      waitForMicrofrontend().catch(error => {
+        console.error('Error waiting for microfrontend:', error);
+      });
+      
+      // Return cleanup function
+      return () => {
+        // Disconnect the observer if it exists
+        if (observerRef.current) {
+          observerRef.current.disconnect();
+        }
+      }
     }
   }, [user]);
 
