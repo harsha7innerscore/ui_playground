@@ -1,8 +1,20 @@
 {
   "name": "login-microfrontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "main": "./dist/login-microfrontend.umd.js",
+  "module": "./dist/login-microfrontend.es.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/login-microfrontend.es.js",
+      "require": "./dist/login-microfrontend.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -69,10 +69,7 @@ const createHttpState = (config?: MicrofrontendConfig): HttpState => {
 // Global state instance
 let httpState = createHttpState();
 
-const setConfig = (config: MicrofrontendConfig): void => {
-  httpState.baseURL = config.apiGateway;
-  httpState.client.defaults.baseURL = config.apiGateway;
-};
+// Function removed as it's no longer needed for external configuration
 
 const setAuthToken = (token?: string): void => {
   if (token) {
@@ -253,41 +250,11 @@ const patch = async (url: string, body?: any, headers?: Record<string, string>, 
   return callApi(url, 'patch', body, headers, options);
 };
 
-const getEnvironmentConfig = (): MicrofrontendConfig => {
-  const environment = (import.meta.env.VITE_ENVIRONMENT as 'dev' | 'staging' | 'prod') || 'dev';
-  
-  // Use the directly provided API_URL if available
-  if (import.meta.env.VITE_API_URL) {
-    return {
-      apiGateway: import.meta.env.VITE_API_URL,
-      environment: environment,
-    };
-  }
-  
-  // Fallback to the previous configuration method
-  const configs = {
-    dev: {
-      apiGateway: import.meta.env.VITE_API_GATEWAY_DEV || '',
-      environment: 'dev' as const,
-    },
-    staging: {
-      apiGateway: import.meta.env.VITE_API_GATEWAY_STAGING || '',
-      environment: 'staging' as const,
-    },
-    prod: {
-      apiGateway: import.meta.env.VITE_API_GATEWAY_PROD || '',
-      environment: 'prod' as const,
-    },
-  };
-
-  return configs[environment];
-};
-
-// Initialize with environment config
-setConfig(getEnvironmentConfig());
+// Initialize with API URL from environment variables
+httpState.baseURL = import.meta.env.VITE_API_URL || '';
+httpState.client.defaults.baseURL = import.meta.env.VITE_API_URL || '';
 
 export const httpService = {
-  setConfig,
   setAuthToken,
   get,
   post,

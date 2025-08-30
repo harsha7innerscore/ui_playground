@@ -1,6 +1,5 @@
 import React from 'react';
 import { LoginForm } from '../components';
-import { useAuth } from '../hooks';
 
 export interface LoginPageProps {
   onLoginSuccess?: () => void;
@@ -11,27 +10,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   onLoginSuccess,
   onLoginError,
 }) => {
-  const { isAuthenticated } = useAuth();
+  // No longer using authentication state
 
-  // If already authenticated, show success message or redirect
-  if (isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-md w-full mx-auto">
-          <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200 text-center">
-            <div className="flex flex-col gap-4">
-              <h1 className="text-2xl font-bold text-green-500">
-                Welcome Back!
-              </h1>
-              <p className="text-gray-600">
-                You are already signed in.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Don't show a message if already authenticated - just show the login form anyway
 
   return (
     <div 
