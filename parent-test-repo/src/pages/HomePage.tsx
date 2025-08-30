@@ -37,10 +37,10 @@ function HomePage({ user, setUser }: HomePageProps) {
         // This is required because the microfrontend was built with external React dependencies
         import('react').then(React => {
           window.React = React;
-          
+
           import('react-dom').then(ReactDOM => {
             window.ReactDOM = ReactDOM;
-            
+
             // Now load the microfrontend script after providing React dependencies
             const script = document.createElement('script');
             script.src = 'http://localhost:5173/dist/login-microfrontend.umd.js';
@@ -51,17 +51,29 @@ function HomePage({ user, setUser }: HomePageProps) {
                 // Register event handlers
                 const unsubscribeSuccess = window.LoginMicrofrontend.onLoginSuccess((loggedInUser) => {
                   console.log('Login successful:', loggedInUser);
-                  
+
                   // Add detailed debugging to verify the login process
                   console.log('Setting user state and navigating to dashboard');
                   console.log('Current path:', window.location.pathname);
-                  
+
                   // Set user state and force navigation to dashboard
                   setUser(loggedInUser);
-                  
+
                   // Add a small delay to ensure state is updated before navigation
                   setTimeout(() => {
                     console.log('Navigation triggered after delay');
+
+                    // Manually unmount the login component before navigation
+                    try {
+                      console.log('Manually unmounting LoginMicrofrontend before navigation');
+                      if (window.LoginMicrofrontend) {
+                        window.LoginMicrofrontend.unmount();
+                      }
+                    } catch (error) {
+                      console.error('Error unmounting LoginMicrofrontend:', error);
+                    }
+
+                    // Now navigate to dashboard
                     navigate('/dashboard', { replace: true });
                     console.log('Navigate command issued');
                   }, 100);
@@ -94,21 +106,42 @@ function HomePage({ user, setUser }: HomePageProps) {
 
     // Clean up function
     return () => {
+      console.log('HomePage cleanup - unmounting login microfrontend');
+
+      // First, unmount the login component if it exists
+      if (window.LoginMicrofrontend) {
+        try {
+          console.log('Calling unmount on LoginMicrofrontend');
+          window.LoginMicrofrontend.unmount();
+        } catch (error) {
+          console.error('Error unmounting LoginMicrofrontend:', error);
+        }
+      }
+
+      // Clean up event subscriptions
       if (unsubscribeRef.current) {
+        console.log('Unsubscribing from login events');
         unsubscribeRef.current();
       }
+
+      // Remove the script element
       if (loginScriptRef.current) {
+        console.log('Removing login script from DOM');
         document.body.removeChild(loginScriptRef.current);
       }
-      
+
       // Clean up global React references by using the any type to bypass type checking
       const win = window as any;
       if ('React' in win) {
+        console.log('Removing global React reference');
         delete win.React;
       }
       if ('ReactDOM' in win) {
+        console.log('Removing global ReactDOM reference');
         delete win.ReactDOM;
       }
+
+      console.log('HomePage cleanup complete');
     };
   }, [setUser, navigate, user]);
 
