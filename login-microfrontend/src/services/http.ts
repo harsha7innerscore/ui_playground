@@ -69,10 +69,7 @@ const createHttpState = (config?: MicrofrontendConfig): HttpState => {
 // Global state instance
 let httpState = createHttpState();
 
-const setConfig = (config: MicrofrontendConfig): void => {
-  httpState.baseURL = config.apiGateway;
-  httpState.client.defaults.baseURL = config.apiGateway;
-};
+// Function removed as it's no longer needed for external configuration
 
 const setAuthToken = (token?: string): void => {
   if (token) {
@@ -254,13 +251,10 @@ const patch = async (url: string, body?: any, headers?: Record<string, string>, 
 };
 
 // Initialize with API URL from environment variables
-setConfig({
-  apiGateway: import.meta.env.VITE_API_URL || '',
-  environment: 'dev',
-});
+httpState.baseURL = import.meta.env.VITE_API_URL || '';
+httpState.client.defaults.baseURL = import.meta.env.VITE_API_URL || '';
 
 export const httpService = {
-  setConfig,
   setAuthToken,
   get,
   post,

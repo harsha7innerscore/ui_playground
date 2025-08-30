@@ -43,12 +43,9 @@ export const createMicrofrontendAPI = (): MicrofrontendAPI => {
 
   return {
     configure: (config: MicrofrontendConfig) => {
+      // Store configuration for UI customization only
       currentConfig = config;
-      
-      // Configure HTTP service with new config
-      import('../services/http').then(({ httpService }) => {
-        httpService.setConfig(config);
-      });
+      // No longer configuring HTTP service - using environment variables directly
     },
 
     login: async (username: string, password: string): Promise<boolean> => {
