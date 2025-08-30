@@ -9,5 +9,20 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Global event listener for login success
+      window.addEventListener('storage', function(event) {
+        // Check if the event is for currentUser being set
+        if (event.key === 'currentUser' && event.newValue) {
+          console.log('Global storage event detected for login!');
+          
+          // Hard redirect to dashboard on storage change
+          if (window.location.pathname !== '/dashboard') {
+            console.log('Global redirect to dashboard triggered');
+            window.location.href = '/dashboard';
+          }
+        }
+      });
+    </script>
   </body>
 </html>
