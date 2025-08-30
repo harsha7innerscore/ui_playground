@@ -26,8 +26,24 @@ function HomePage(props: HomePageProps) {
   // Redirect to dashboard if already logged in
   useEffect(() => {
     if (user) {
-      console.log('User is authenticated, redirecting to dashboard', user);
-      navigate('/dashboard', { replace: true });
+      // Check if we're already in the middle of a login navigation
+      const isLoginNavigation = (window as any).__loginSuccessNavigation;
+      
+      console.log('User is authenticated, checking if we need to redirect to dashboard', {
+        user,
+        currentPath: window.location.pathname,
+        isLoginNavigation
+      });
+      
+      // Only navigate if we're not already navigating from login success
+      if (!isLoginNavigation && window.location.pathname !== '/dashboard') {
+        console.log('Redirecting to dashboard from useEffect');
+        navigate('/dashboard', { replace: true });
+      } else if (isLoginNavigation) {
+        console.log('Navigation already in progress from login success, not navigating again');
+      } else {
+        console.log('Already on dashboard, no need to navigate');
+      }
     }
   }, [user, navigate]);
 
@@ -63,30 +79,55 @@ function HomePage(props: HomePageProps) {
                   setUser(loggedInUser);
                   
                   // Make sure it's also stored in localStorage right away
+                  // We need to use this special pattern to ensure the storage event is triggered
+                  localStorage.removeItem('currentUser');
                   localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
                   
                   // Also update props.setUser for compatibility
                   props.setUser?.(loggedInUser);
+                  
+                  // Manually trigger localStorage event for cross-tab/window support
+                  try {
+                    // Try to use the Window.postMessage approach to trigger
+                    // This helps with events in the same window
+                    window.dispatchEvent(new StorageEvent('storage', {
+                      key: 'currentUser',
+                      newValue: JSON.stringify(loggedInUser),
+                      url: window.location.href,
+                      storageArea: localStorage
+                    }));
+                    
+                    console.log('Dispatched storage event manually');
+                  } catch (error) {
+                    console.error('Error dispatching storage event:', error);
+                  }
 
-                  // Add a small delay to ensure state is updated before navigation
-                  setTimeout(() => {
-                    console.log('Navigation triggered after delay');
-                    console.log('LocalStorage contains:', localStorage.getItem('currentUser'));
-
-                    // Manually unmount the login component before navigation
-                    try {
-                      console.log('Manually unmounting LoginMicrofrontend before navigation');
-                      if (window.LoginMicrofrontend) {
-                        window.LoginMicrofrontend.unmount();
-                      }
-                    } catch (error) {
-                      console.error('Error unmounting LoginMicrofrontend:', error);
+                  // Add a flag to indicate navigation is happening from login success
+                  // This will help us debug and ensure we're not running into navigation conflicts
+                  (window as any).__loginSuccessNavigation = true;
+                  
+                  console.log('IMPORTANT: Login successful, forcing immediate navigation to dashboard');
+                  
+                  // Force navigation immediately from the event handler
+                  // We'll skip the async/await pattern to make navigation more reliable
+                  try {
+                    console.log('Unmounting LoginMicrofrontend immediately');
+                    if (window.LoginMicrofrontend) {
+                      window.LoginMicrofrontend.unmount();
                     }
-
-                    // Now navigate to dashboard
-                    navigate('/dashboard', { replace: true });
-                    console.log('Navigate command issued');
-                  }, 100);
+                  } catch (error) {
+                    console.error('Error unmounting LoginMicrofrontend:', error);
+                  }
+                  
+                  // SKIP React Router navigation and use direct browser navigation
+                  // This is a hard fallback that will guarantee the page changes
+                  console.log('Using DIRECT window.location navigation for reliability');
+                  
+                  // Use the most direct way to navigate
+                  window.location.href = '/dashboard';
+                  
+                  // Log navigation attempt
+                  console.log('Hard navigation to dashboard initiated');
                 });
 
                 const unsubscribeError = window.LoginMicrofrontend.onLoginError((error) => {

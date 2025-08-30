@@ -37,4 +37,7 @@ interface Window {
   // React and ReactDOM needed for the microfrontend
   React?: typeof import('react');
   ReactDOM?: typeof import('react-dom');
+  
+  // Flag for login navigation tracking
+  __loginSuccessNavigation?: boolean;
 }
