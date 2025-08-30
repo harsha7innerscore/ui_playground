@@ -23,7 +23,8 @@ function HomePage({ user, setUser }: HomePageProps) {
   // Redirect to dashboard if already logged in
   useEffect(() => {
     if (user) {
-      navigate('/dashboard');
+      console.log('User is authenticated, redirecting to dashboard', user);
+      navigate('/dashboard', { replace: true });
     }
   }, [user, navigate]);
 
@@ -50,8 +51,20 @@ function HomePage({ user, setUser }: HomePageProps) {
                 // Register event handlers
                 const unsubscribeSuccess = window.LoginMicrofrontend.onLoginSuccess((loggedInUser) => {
                   console.log('Login successful:', loggedInUser);
+                  
+                  // Add detailed debugging to verify the login process
+                  console.log('Setting user state and navigating to dashboard');
+                  console.log('Current path:', window.location.pathname);
+                  
+                  // Set user state and force navigation to dashboard
                   setUser(loggedInUser);
-                  navigate('/dashboard');
+                  
+                  // Add a small delay to ensure state is updated before navigation
+                  setTimeout(() => {
+                    console.log('Navigation triggered after delay');
+                    navigate('/dashboard', { replace: true });
+                    console.log('Navigate command issued');
+                  }, 100);
                 });
 
                 const unsubscribeError = window.LoginMicrofrontend.onLoginError((error) => {

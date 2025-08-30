@@ -19,8 +19,12 @@ function DashboardPage({ user, setUser }: DashboardPageProps) {
 
   // Redirect to home if not logged in
   useEffect(() => {
+    console.log('DashboardPage useEffect - user:', user);
     if (!user) {
+      console.log('No user found, redirecting to home page');
       navigate('/');
+    } else {
+      console.log('User is authenticated, staying on dashboard');
     }
   }, [user, navigate]);
 

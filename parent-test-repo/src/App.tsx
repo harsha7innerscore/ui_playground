@@ -20,19 +20,27 @@ function App() {
   useEffect(() => {
     // This will be updated to use LoginMicrofrontend when it's loaded
     const checkAuth = () => {
+      console.log('Checking authentication status');
       if (window.LoginMicrofrontend?.isAuthenticated()) {
+        console.log('User is authenticated');
         const currentUser = window.LoginMicrofrontend.getCurrentUser();
+        console.log('Current user:', currentUser);
         setUser(currentUser);
+      } else {
+        console.log('User is not authenticated');
       }
     };
 
     // Check if LoginMicrofrontend is already loaded
     if (window.LoginMicrofrontend) {
+      console.log('LoginMicrofrontend is already loaded');
       checkAuth();
     } else {
+      console.log('LoginMicrofrontend is not loaded, waiting...');
       // Wait for microfrontend to be loaded
       const checkInterval = setInterval(() => {
         if (window.LoginMicrofrontend) {
+          console.log('LoginMicrofrontend loaded');
           checkAuth();
           clearInterval(checkInterval);
         }
@@ -42,6 +50,8 @@ function App() {
       return () => clearInterval(checkInterval);
     }
   }, []);
+
+  console.log('App rendering with user:', user);
 
   return (
     <Router>
