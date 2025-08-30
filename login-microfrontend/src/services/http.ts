@@ -253,17 +253,11 @@ const patch = async (url: string, body?: any, headers?: Record<string, string>, 
   return callApi(url, 'patch', body, headers, options);
 };
 
-const getEnvironmentConfig = (): MicrofrontendConfig => {
-  const environment = (import.meta.env.VITE_ENVIRONMENT as 'dev' | 'staging' | 'prod') || 'dev';
-  
-  return {
-    apiGateway: import.meta.env.VITE_API_URL || '',
-    environment: environment,
-  };
-};
-
-// Initialize with environment config
-setConfig(getEnvironmentConfig());
+// Initialize with API URL from environment variables
+setConfig({
+  apiGateway: import.meta.env.VITE_API_URL || '',
+  environment: 'dev',
+});
 
 export const httpService = {
   setConfig,
