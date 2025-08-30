@@ -17,7 +17,7 @@ interface DashboardPageProps {
 
 function DashboardPage({ setUser: propSetUser }: DashboardPageProps) {
   // Use our custom hook for consistent auth state
-  const { user, logout } = useAuth();
+  const { user, setUser, logout } = useAuth();
   const navigate = useNavigate();
 
   // Redirect to home if not logged in
@@ -27,17 +27,36 @@ function DashboardPage({ setUser: propSetUser }: DashboardPageProps) {
     // Check if we have user in state or in localStorage
     const storedUser = localStorage.getItem('currentUser');
     
+    // Clear any login navigation flag when we're on the dashboard
+    if ((window as any).__loginSuccessNavigation) {
+      console.log('Clearing login navigation flag now that we are on dashboard');
+      (window as any).__loginSuccessNavigation = false;
+    }
+    
+    // If the URL contains a hash fragment (#) from a direct navigation, remove it
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    
     if (!user && !storedUser) {
       console.log('No user found in state or localStorage, redirecting to home page');
       navigate('/', { replace: true });
     } else if (!user && storedUser) {
       // We have user in localStorage but not in state
-      // This can happen on page refresh - let App.tsx handle updating the state
-      console.log('User found in localStorage but not in state, waiting for state update');
+      // This can happen on page refresh - let's update the state directly here
+      try {
+        console.log('User found in localStorage but not in state, updating state directly');
+        const parsedUser = JSON.parse(storedUser);
+        // Update the useAuth hook's state
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parsing stored user', error);
+        navigate('/', { replace: true });
+      }
     } else {
       console.log('User is authenticated, staying on dashboard');
     }
-  }, [user, navigate]);
+  }, [user, navigate, setUser]);
 
   // Handle logout
   const handleLogout = () => {
