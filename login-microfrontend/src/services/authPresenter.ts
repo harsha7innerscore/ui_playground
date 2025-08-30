@@ -125,8 +125,8 @@ export const login = async (credentials: LoginCredentials): Promise<{ success: b
   updateState({ isLoading: true, error: null });
 
   try {
-    const response = await httpService.post('/login', {
-      username: credentials.username,
+    const response = await httpService.post('/admin/newlogin', {
+      userName: credentials.username,
       password: credentials.password,
     });
 

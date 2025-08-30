@@ -256,6 +256,15 @@ const patch = async (url: string, body?: any, headers?: Record<string, string>, 
 const getEnvironmentConfig = (): MicrofrontendConfig => {
   const environment = (import.meta.env.VITE_ENVIRONMENT as 'dev' | 'staging' | 'prod') || 'dev';
   
+  // Use the directly provided API_URL if available
+  if (import.meta.env.VITE_API_URL) {
+    return {
+      apiGateway: import.meta.env.VITE_API_URL,
+      environment: environment,
+    };
+  }
+  
+  // Fallback to the previous configuration method
   const configs = {
     dev: {
       apiGateway: import.meta.env.VITE_API_GATEWAY_DEV || '',
