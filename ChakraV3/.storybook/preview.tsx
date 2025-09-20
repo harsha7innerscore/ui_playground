@@ -1,7 +1,5 @@
 import type { Preview } from '@storybook/react';
-import React from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
-import system from '../src/theme';
+import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 
 const preview: Preview = {
   parameters: {
@@ -15,7 +13,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <ChakraProvider value={system}>
+      <ChakraProvider value={defaultSystem}>
         <Story />
       </ChakraProvider>
     ),
