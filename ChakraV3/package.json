@@ -16,21 +16,24 @@
   "dependencies": {
     "@chakra-ui/react": "^3.27.0",
     "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
     "@vitejs/plugin-react": "^5.0.3",
-    "framer-motion": "^12.23.16",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "typescript": "^5.9.2",
     "vite": "^7.1.6"
   },
   "devDependencies": {
-    "@storybook/addon-links": "^9.1.7",
-    "@storybook/addon-onboarding": "^9.1.7",
-    "@storybook/builder-vite": "^9.1.7",
-    "@storybook/react": "^9.1.7",
+    "@storybook/addon-actions": "^9.0.6",
+    "@storybook/addon-controls": "^9.0.6",
+    "@storybook/addon-docs": "^9.0.6",
+    "@storybook/addon-links": "^9.0.6",
+    "@storybook/addon-onboarding": "^9.0.6",
+    "@storybook/addon-viewport": "^9.0.6",
+    "@storybook/builder-vite": "^9.0.6",
+    "@storybook/react": "^9.0.6",
+    "@storybook/react-vite": "^9.0.6",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
-    "storybook": "^9.1.7"
+    "storybook": "^9.0.6"
   }
 }
