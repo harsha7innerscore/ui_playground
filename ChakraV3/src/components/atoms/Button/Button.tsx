@@ -13,7 +13,7 @@ export interface ButtonProps extends Omit<ChakraButtonProps, 'size'> {
   /**
    * Button variant
    */
-  variant?: 'solid' | 'outline' | 'ghost' | 'link';
+  variant?: 'solid' | 'outline' | 'ghost' | 'plain';
   /**
    * Color scheme
    */
