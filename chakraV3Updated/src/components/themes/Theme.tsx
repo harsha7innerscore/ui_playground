@@ -1,0 +1,60 @@
+export default {
+  PRIMARY: "#A299D4",
+  PRIMARYBRAND: {
+    PURPLE: "#A299D4",
+    PURPLE2: "#ABA3D8",
+    PURPLE3: "#B4ADDC",
+    PURPLE4: "#C7C1E5",
+    PURPLE5: "#D9D6ED",
+    PURPLE6: "#ECEAF6",
+    PURPLE7: "#F5F4FA",
+    PURPLE8: "#8F82D7",
+    PURPLE9: "#786AC5",
+  },
+  SECONDARY: "#FFBFB7",
+  SECONDARYBRAND: {
+    MELON: "#FFBFB7",
+    MELON2: "#FFC5BE",
+    MELON3: "#FFD2CC",
+    MELON4: "#FFDFDB",
+    MELON5: "#FFE5E2",
+    MELON6: "#FFF2F0",
+    MELON7: "#FFF8F7",
+  },
+  TERTIARY: {
+    GREEN: "#7ABC40",
+  },
+  BODY_COLOURS: {
+    DARK_PURPLE: "#130159",
+    WHITE: "#FFFFFF",
+  },
+  SUPPORTED_COLOURS: {
+    RED: "#FF0022",
+    GREEN: "#7ABC40",
+  },
+  GRAY: {
+    GRAY: "#828282",
+    GRAY1: "#9D9D9D",
+    GRAY2: "#9D9D9D",
+    GRAY3: "#D5D5D5",
+    GRAY4: "#E8E8E8",
+    GRAY5: "#F2F2F2",
+  },
+  GRADIENT: {
+    PRIMARY_GRADIENT: ["#A299D4", "#786AC5"],
+    SECONDARY_GRADIENT: ["#FFBFB7", "#FFA599"],
+  },
+  FONT_COLOURS: {
+    HEADER_COLOUR: "#000000",
+    BODY_COLOUR: "#6F7379",
+    GREY: "#B3B3B3",
+  },
+  BUTTONCOLORS: {
+    ENABLED: "#5F4DC7",
+    HOVERED: "#132C9E",
+    HOVERED_TERTIARY: "#E5E3F6",
+    SELECTED: "#8F82D7",
+    SELECTED_TERTIARY: "#F3F1FB",
+    DISABLED: "#ECECEC",
+  },
+};
