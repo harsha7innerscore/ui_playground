@@ -62,7 +62,7 @@ const Styles = {
           backgroundColor: Theme.BUTTONCOLORS.SELECTED,
           border: "none",
         },
-        "&:disabled": {
+        "&[data-disabled]": {
           color: Theme.FONT_COLOURS.GREY,
           backgroundColor: Theme.BUTTONCOLORS.DISABLED,
           border: "none",
@@ -88,7 +88,7 @@ const Styles = {
           color: Theme.BUTTONCOLORS.SELECTED,
           border: "1px solid " + Theme.BUTTONCOLORS.SELECTED,
         },
-        "&:disabled": {
+        "&[data-disabled]": {
           color: Theme.FONT_COLOURS.GREY,
           border: "1px solid " + Theme.FONT_COLOURS.GREY,
           cursor: "not-allowed",
@@ -113,7 +113,7 @@ const Styles = {
           backgroundColor: Theme.BUTTONCOLORS.SELECTED_TERTIARY,
           border: "none",
         },
-        "&:disabled": {
+        "&[data-disabled]": {
           color: Theme.FONT_COLOURS.GREY,
           border: "none",
           cursor: "not-allowed",

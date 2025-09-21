@@ -2,27 +2,30 @@ import React from "react";
 import {
   Button as ChakraButtonV2,
   Image,
-  ButtonProps,
-  ChakraProvider,
 } from "@chakra-ui/react";
 import { getButtonStyles } from "./getButtonStyles";
 
-export interface GlobalButtonV2Props extends ButtonProps {
+export interface GlobalButtonV2Props {
   buttonText: string;
   leftImg?: string | React.ReactNode;
   rightImg?: string | React.ReactNode;
   onClick?: () => void;
 
   // Style logic props
-  buttonType?: string;   
-  size?: string;         
-  imageSize?: string;    
-  state?: string;        
+  buttonType?: string;
+  size?: string;
+  imageSize?: string;
+  state?: string;
 
   // Optional overrides
-  buttonSx?: any;
-  leftImgSx?: any;
-  rightImgSx?: any;
+  buttonCss?: any;
+  leftImgCss?: any;
+  rightImgCss?: any;
+
+  // Additional props from ButtonProps that we want to support
+  isDisabled?: boolean;
+  className?: string;
+  id?: string;
 }
 
 const GlobalButtonV2: React.FC<GlobalButtonV2Props> = ({
@@ -34,42 +37,43 @@ const GlobalButtonV2: React.FC<GlobalButtonV2Props> = ({
   size = "Medium",
   imageSize = "Medium",
   state = "Enabled",
-  buttonSx,
-  leftImgSx,
-  rightImgSx,
-  ...rest
+  buttonCss,
+  leftImgCss,
+  rightImgCss,
+  className,
+  id
 }) => {
-  const { buttonSx: finalButtonSx, leftImgSx: finalLeftImgSx, rightImgSx: finalRightImgSx } =
+  const { buttonCss: finalButtonCss, leftImgCss: finalLeftImgCss, rightImgCss: finalRightImgCss } =
     getButtonStyles({
       buttonType,
       size,
       imageSize,
       state,
-      buttonSxOverride: buttonSx,
-      leftImgSxOverride: leftImgSx,
-      rightImgSxOverride: rightImgSx,
+      buttonCssOverride: buttonCss,
+      leftImgCssOverride: leftImgCss,
+      rightImgCssOverride: rightImgCss,
     });
 
-  const renderImage = (img: string | React.ReactNode, sx: any) => {
+  const renderImage = (img: string | React.ReactNode, css: any) => {
     if (typeof img === "string") {
-      return <Image src={img} alt="button-icon" sx={sx} />;
+      return <Image src={img} alt="button-icon" css={css} />;
     }
     return img;
   };
 
   return (
-    <ChakraProvider>
       <ChakraButtonV2
         onClick={state === "Disabled" ? undefined : onClick}
-        variant="unstyled"
-        sx={finalButtonSx}
-        {...rest}
+        variant="plain"
+        css={finalButtonCss}
+        disabled={state === "Disabled"}
+        className={className}
+        id={id}
       >
-        {leftImg && renderImage(leftImg, finalLeftImgSx)}
+        {leftImg && renderImage(leftImg, finalLeftImgCss)}
         {buttonText}
-        {rightImg && renderImage(rightImg, finalRightImgSx)}
+        {rightImg && renderImage(rightImg, finalRightImgCss)}
       </ChakraButtonV2>
-    </ChakraProvider>
   );
 };
 

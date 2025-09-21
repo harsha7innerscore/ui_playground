@@ -8,6 +8,9 @@ interface GetButtonStylesParams {
   buttonSxOverride?: any;
   leftImgSxOverride?: any;
   rightImgSxOverride?: any;
+  buttonCssOverride?: any;
+  leftImgCssOverride?: any;
+  rightImgCssOverride?: any;
 }
 
 export const getButtonStyles = ({
@@ -15,9 +18,13 @@ export const getButtonStyles = ({
   size,
   imageSize,
   state,
-  buttonSxOverride,
-  leftImgSxOverride,
-  rightImgSxOverride,
+  // Keeping these for backward compatibility
+  buttonSxOverride = {},
+  leftImgSxOverride = {},
+  rightImgSxOverride = {},
+  buttonCssOverride = {},
+  leftImgCssOverride = {},
+  rightImgCssOverride = {},
 }: GetButtonStylesParams) => {
     const baseButtonStyle = { ...(Styles as any)[buttonType] };
     const sizeStyle = (sizes as any)[size] || sizes.medium;
@@ -30,32 +37,32 @@ export const getButtonStyles = ({
   } else if (state === "Selected" ) {
     stateOverrides = baseButtonStyle["&:active"];
   } else if (state === "Disabled" ) {
-    stateOverrides = baseButtonStyle["&:disabled"];
+    stateOverrides = baseButtonStyle["&[data-disabled]"];
   }
 
-  const buttonSx = {
+  const buttonCss = {
     ...baseButtonStyle,
     ...stateOverrides,
-    ...sizeStyle,              
-    ...buttonSxOverride,
+    ...sizeStyle,
+    ...buttonCssOverride,
   };
 
   if (state === "Disabled") {
-    buttonSx["&:hover"] = {
-      ...baseButtonStyle["&:disabled"]
+    buttonCss["&:hover"] = {
+      ...baseButtonStyle["&[data-disabled]"]
     };
   }
 
 
-  const leftImgSx = {
+  const leftImgCss = {
     ...imageStyle,
-    ...leftImgSxOverride,
+    ...leftImgCssOverride,
   };
 
-  const rightImgSx = {
+  const rightImgCss = {
     ...imageStyle,
-    ...rightImgSxOverride,
+    ...rightImgCssOverride,
   };
 
-  return { buttonSx, leftImgSx, rightImgSx };
+  return { buttonCss, leftImgCss, rightImgCss };
 };
