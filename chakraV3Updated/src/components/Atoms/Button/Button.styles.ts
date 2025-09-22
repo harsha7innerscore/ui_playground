@@ -102,20 +102,82 @@ const userStyles = {
     },
   },
   TeacherLight: {
-    color: "red.500",
-    bg: "white",
-    border: "1px solid",
-    borderColor: "red.500",
-    "&:hover": {
-      filter: "brightness(0.95)",
+    primary: {
+      color: "#F1F1F1",
+      bg: "#265728",
+      padding: "8px 16px",
+      border: "none",
+      "&:hover": {
+        bg: "#357A38",
+        boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.25)",
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "4px solid #173418",
+        outlineOffset: "4px",
+        borderRadius: "4px",
+        bg: "#357A38"
+      },
+      "&[data-selected=true]": {
+        bg: "#419544",
+        border: "none",
+        boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.25) inset",
+      },
     },
-    "&:focus": {
-      outline: "none",
-      boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
+    secondary: {
+      color: "#265728",
+      bg: "transparent",
+      border: "1px solid",
+      borderColor: "#265728",
+      padding: "8px 16px",
+      "&:hover": {
+        bg: "#CAE7CB",
+        color: "#173418",
+        borderColor: "#173418",
+        filter: "none",
+        boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.25)",
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "4px solid #173418",
+        outlineOffset: "4px",
+        borderRadius: "8px",
+        bg: "#CAE7CB",
+        color: "#173418",
+      },
+      "&[data-selected=true]": {
+        color: "#173418",
+        borderColor: "#173418",
+        border: "1px solid",
+        bg: "#A6D7A8",
+        boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.25) inset",
+      },
     },
-    "&[data-selected=true]": {
-      border: "2px solid",
-      borderColor: "red.500",
+    tertiary: {
+      color: "#265728",
+      bg: "transparent",
+      border: "none",
+      padding: "0px",
+      "&:hover": {
+        bg: "#CAE7CB",
+        color: "#173418",
+        filter: "none",
+        boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.25)",
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "none",
+        outlineOffset: "4px",
+        borderRadius: "6px",
+        bg: "#CAE7CB",
+        color: "#173418",
+      },
+      "&[data-selected=true]": {
+        color: "#173418",
+        bg: "#A6D7A8",
+        border: "none",
+        boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.25) inset",
+      },
     },
   },
   TeacherDark: {
@@ -432,6 +494,48 @@ const userDisabledStyles = {
     tertiary: {
       bg: "transparent",
       color: "#707070",
+      border: "none",
+      padding: "0px",
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+      },
+    },
+  },
+  TeacherLight: {
+    primary: {
+      bg: "#A0A0A0",
+      color: "#707070",
+      border: "none",
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+      },
+    },
+    secondary: {
+      bg: "transparent",
+      color: "#A0A0A0",
+      border: "1px solid",
+      borderColor: "#A0A0A0",
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+        borderColor: "#707070",
+      },
+    },
+    tertiary: {
+      bg: "transparent",
+      color: "#A0A0A0",
       border: "none",
       padding: "0px",
       opacity: 1,
