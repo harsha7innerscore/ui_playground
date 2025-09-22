@@ -39,10 +39,10 @@ export const Button: React.FC<ButtonProps> = ({
   // Merge styles in order of precedence
   const mergedStyles = {
     ...base,
+    ...(buttonType && buttonTypes[buttonType]),
     ...(user && userStyles[user]),
     // Check if user-specific overrides exist for the button type
     ...(user && buttonType && (userStyles[user] as any)?.[buttonType]),
-    ...(buttonType && buttonTypes[buttonType]),
     ...(size && sizes[size]),
     ...(buttonState && states[buttonState]),
     ...(buttonState === "disabled" && disabledStyle),
