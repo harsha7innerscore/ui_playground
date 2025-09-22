@@ -20,9 +20,10 @@ const roles = {
       textDecoration: "underline",
     },
     "&:focus": {
-      outline: "2px solid",
-      outlineColor: "#3366CC", // Using student color explicitly
-      outlineOffset: "2px",
+      outline: "none", // Remove default outline
+      border: "1px solid #3366CC", // 1px border as shown in Figma
+      borderRadius: "2px", // Rounded corners
+      padding: "2px 4px", // Vertical and horizontal padding from Figma
     },
     "&:visited": {
       opacity: 0.8,
