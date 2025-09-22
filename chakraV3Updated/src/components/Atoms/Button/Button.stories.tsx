@@ -197,6 +197,26 @@ export const TeacherDarkFigmaExample: Story = {
   }
 };
 
+export const TeacherDarkHoveredFigmaExample: Story = {
+  args: {
+    user: "TeacherDark",
+    size: "small",
+    buttonType: "primary",
+    buttonState: "default",
+    text: "P. Hovered",
+    leftImage: <FiPlus />,
+    rightImage: <FiArrowRight />,
+  },
+  parameters: {
+    pseudo: { hover: true },
+    docs: {
+      description: {
+        story: "TeacherDark button in hover state as shown in the Figma design (Success/Dark/400: #9ccc65). The hover effect is visible when previewing this story in Storybook."
+      }
+    }
+  }
+};
+
 // Danger Variant
 export const DangerButton: Story = {
   args: {
