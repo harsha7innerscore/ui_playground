@@ -39,9 +39,10 @@ const roles = {
       textDecoration: "underline",
     },
     "&:focus": {
-      outline: "2px solid",
-      outlineColor: "#F8F8F8", // Using teacher color explicitly
-      outlineOffset: "2px",
+      outline: "none", // Remove default outline
+      border: "1px solid #EEF1F8", // 1px border as shown in Figma
+      borderRadius: "2px", // Rounded corners
+      padding: "2px 4px", // Vertical and horizontal padding from Figma
     },
     "&:visited": {
       opacity: 0.8,

@@ -241,7 +241,7 @@ export const VisitableLinks: Story = {
   }
 };
 
-export const FocusableLink: Story = {
+export const FocusableStudentLink: Story = {
   args: {
     label: "focused/link/small.com",
     user: "student",
@@ -254,7 +254,26 @@ export const FocusableLink: Story = {
   parameters: {
     docs: {
       description: {
-        story: "This link shows the focus state with a 1px border, rounded corners, and padding. Tab to this link to see the focus state."
+        story: "This link shows the student focus state with a 1px border, rounded corners, and padding. Tab to this link to see the focus state."
+      }
+    }
+  }
+};
+
+export const FocusableTeacherLink: Story = {
+  args: {
+    label: "focused/link/small.com",
+    user: "teacher",
+    size: "small",
+    isUnderlined: false,
+    state: "default",
+    href: "#",
+    isExternal: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "This link shows the teacher focus state with a 1px border, rounded corners, and padding. Tab to this link to see the focus state."
       }
     }
   }
