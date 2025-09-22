@@ -148,6 +148,31 @@ const userStyles = {
         bg: "#293a16", // Success/Dark/900 from Figma
       },
     },
+    // Tertiary button type overrides for TeacherDark
+    tertiary: {
+      color: "#8bc34a", // Success/Dark/Main from Figma
+      bg: "transparent",
+      border: "none",
+      padding: "0px", // Remove padding for tertiary buttons
+      "&:hover": {
+        bg: "transparent",
+        color: "#9ccc65", // Success/Dark/400 from Figma
+        filter: "none", // Override default filter to ensure no brightness change
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "4px solid #c5e1a5", // Success/Dark/200 from Figma
+        outlineOffset: "4px",
+        borderRadius: "8px", // Maintain rounded corners for outline
+        bg: "transparent",
+        color: "#8bc34a", // Keep text color as Success/Dark/Main
+      },
+      "&[data-selected=true]": {
+        color: "#79ba40", // Success/Dark/600 from Figma
+        bg: "transparent",
+        border: "none",
+      },
+    },
   },
   Danger: {
     // Danger variant
