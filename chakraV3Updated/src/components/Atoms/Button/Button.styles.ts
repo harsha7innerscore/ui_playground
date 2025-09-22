@@ -92,31 +92,34 @@ const userStyles = {
     },
   },
   TeacherDark: {
-    // Teacher dark mode variant - updated from Figma
-    color: "#171717", // Text color from Figma (Neutral/850)
-    bg: "#8bc34a", // Success/Dark/Main from Figma
-    // Pseudo states
-    "&:hover": {
-      // Using the specific hover color from Figma (Success/Dark/400: #9ccc65)
-      // instead of brightness filter
-      bg: "#9ccc65",
-    },
-    "&:focus": {
-      ...pseudoStates.focus["&:focus"],
-      // Replace box-shadow with Figma's border approach
-      boxShadow: "none",
-      // From Figma: 4px border with color #c5e1a5 (Success/Dark/200)
-      // Using outline instead of box-shadow for cleaner appearance
-      outline: "4px solid #c5e1a5",
-      outlineOffset: "4px", // Space between button and outline
-      borderRadius: "4px", // Maintain rounded corners
-    },
-    "&[data-selected=true]": {
-      // Using the specific selected color from Figma (Success/Dark/600: #79ba40)
-      // instead of adding a border
-      bg: "#79ba40",
-      // Remove the default 2px border from pseudoStates.selected
-      border: "none",
+    // Teacher dark mode variant
+    primary: {
+      // Primary button style for TeacherDark - updated from Figma
+      color: "#171717", // Text color from Figma (Neutral/850)
+      bg: "#8bc34a", // Success/Dark/Main from Figma
+      // Pseudo states
+      "&:hover": {
+        // Using the specific hover color from Figma (Success/Dark/400: #9ccc65)
+        // instead of brightness filter
+        bg: "#9ccc65",
+      },
+      "&:focus": {
+        ...pseudoStates.focus["&:focus"],
+        // Replace box-shadow with Figma's border approach
+        boxShadow: "none",
+        // From Figma: 4px border with color #c5e1a5 (Success/Dark/200)
+        // Using outline instead of box-shadow for cleaner appearance
+        outline: "4px solid #c5e1a5",
+        outlineOffset: "4px", // Space between button and outline
+        borderRadius: "4px", // Maintain rounded corners
+      },
+      "&[data-selected=true]": {
+        // Using the specific selected color from Figma (Success/Dark/600: #79ba40)
+        // instead of adding a border
+        bg: "#79ba40",
+        // Remove the default 2px border from pseudoStates.selected
+        border: "none",
+      },
     },
     // Secondary button type overrides for TeacherDark
     secondary: {
