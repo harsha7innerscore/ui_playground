@@ -3,7 +3,7 @@
 
 // Base styles applied to all links
 const base = {
-  fontFamily: "Arial, sans-serif",
+  fontFamily: "Inter, sans-serif", // Updated to Inter font family from Figma
   textDecoration: "none",
   cursor: "pointer",
   transition: "all 0.2s ease-in-out",
@@ -15,16 +15,10 @@ const base = {
 // Role-based styles
 const roles = {
   student: {
-    color: "#3366CC",
-    "&:hover": {
-      color: "#254D99", // Darker blue
-    },
+    color: "#3366CC", // Already matches Figma specs
   },
   teacher: {
     color: "#F8F8F8",
-    "&:hover": {
-      color: "#D9D9D9", // Slightly darker
-    },
   },
 };
 
@@ -32,7 +26,8 @@ const roles = {
 const sizes = {
   small: {
     fontSize: "12px",
-    lineHeight: "16px",
+    lineHeight: "14px", // Updated to match Figma specs
+    fontWeight: 600, // Semi Bold as per Figma specs
   },
   smallIcon: {
     width: "14px",
