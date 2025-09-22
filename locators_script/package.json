@@ -1,0 +1,21 @@
+{
+  "name": "chakra-testid-adder",
+  "version": "1.0.0",
+  "description": "Add data-testid attributes to Chakra UI elements",
+  "main": "add_chakra_testids.js",
+  "scripts": {
+    "start": "node add_chakra_testids.js",
+    "test": "node add_chakra_testids.js test.jsx"
+  },
+  "dependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/generator": "^7.22.5",
+    "@babel/parser": "^7.22.5",
+    "@babel/traverse": "^7.22.5",
+    "@babel/types": "^7.22.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "private": true
+}
