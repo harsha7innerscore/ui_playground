@@ -1,7 +1,3 @@
-// Button.styles.ts
-// Styles for the Button component
-
-// Base styles for all buttons
 const base = {
   fontFamily: "Inter, sans-serif",
   transition: "all 0.2s ease-in-out",
@@ -12,20 +8,15 @@ const base = {
   fontWeight: 600,
   borderRadius: "4px",
   opacity: 1,
-  cursor: "pointer", // Added from states.default
+  cursor: "pointer",
 };
 
-// The common pseudo states have been removed and inlined directly into each user style
-
-// User specific styles (without duplicated pseudo states)
 const userStyles = {
   StudentLight: {
-    // Student light mode variant
     color: "green.500",
     bg: "white",
     border: "1px solid",
     borderColor: "green.500",
-    // Pseudo states
     "&:hover": {
       filter: "brightness(0.95)",
     },
@@ -39,38 +30,30 @@ const userStyles = {
     },
   },
   StudentDark: {
-    // Student dark mode variant - updated from Figma
     primary: {
-      // Primary button style for StudentDark
-      color: "#171717", // Text color from Figma (Neutral/850)
-      bg: "#ffbfb7", // Secondary/Default from Figma
+      color: "#171717",
+      bg: "#ffbfb7",
       border: "none",
-      padding: "8px 16px", // From Figma design
-      // Pseudo states
+      padding: "8px 16px",
       "&:hover": {
         bg: "#FFCCC5",
       },
       "&:focus": {
         boxShadow: "none",
-        // From Figma: 4px border with color #c5e1a5 (Success/Dark/200)
-        // Using outline instead of box-shadow for cleaner appearance
         outline: "4px solid #FFDFDB",
-        outlineOffset: "4px", // Space between button and outline
-        borderRadius: "4px", // Maintain rounded corners
+        outlineOffset: "4px",
+        borderRadius: "4px",
       },
       "&[data-selected=true]": {
         bg: "#D9A39C",
-        // Remove the default 2px border from pseudoStates.selected
         border: "none",
       },
     },
-    // Keep existing styles as secondary for now
     secondary: {
       color: "green.200",
       bg: "gray.800",
       border: "1px solid",
       borderColor: "green.200",
-      // Pseudo states
       "&:hover": {
         filter: "brightness(0.95)",
       },
@@ -83,13 +66,11 @@ const userStyles = {
         borderColor: "green.200",
       },
     },
-    // Add tertiary style placeholder
     tertiary: {
       color: "green.200",
       bg: "transparent",
       border: "none",
       padding: "0px",
-      // Pseudo states
       "&:hover": {
         filter: "brightness(0.95)",
       },
@@ -104,12 +85,10 @@ const userStyles = {
     },
   },
   TeacherLight: {
-    // Teacher light mode variant
     color: "red.500",
     bg: "white",
     border: "1px solid",
     borderColor: "red.500",
-    // Pseudo states
     "&:hover": {
       filter: "brightness(0.95)",
     },
@@ -123,97 +102,81 @@ const userStyles = {
     },
   },
   TeacherDark: {
-    // Teacher dark mode variant
     primary: {
-      // Primary button style for TeacherDark - updated from Figma
-      color: "#171717", // Text color from Figma (Neutral/850)
-      bg: "#8bc34a", // Success/Dark/Main from Figma
+      color: "#171717",
+      bg: "#8bc34a",
       padding: "8px 16px",
       border: "none",
-      // Pseudo states
       "&:hover": {
-        // Using the specific hover color from Figma (Success/Dark/400: #9ccc65)
-        // instead of brightness filter
         bg: "#9ccc65",
       },
       "&:focus": {
-        // Replace box-shadow with Figma's border approach
         boxShadow: "none",
-        // From Figma: 4px border with color #c5e1a5 (Success/Dark/200)
-        // Using outline instead of box-shadow for cleaner appearance
         outline: "4px solid #c5e1a5",
-        outlineOffset: "4px", // Space between button and outline
-        borderRadius: "4px", // Maintain rounded corners
+        outlineOffset: "4px",
+        borderRadius: "4px",
       },
       "&[data-selected=true]": {
-        // Using the specific selected color from Figma (Success/Dark/600: #79ba40)
-        // instead of adding a border
         bg: "#79ba40",
-        // Remove the default 2px border from pseudoStates.selected
         border: "none",
       },
     },
-    // Secondary button type overrides for TeacherDark
     secondary: {
-      color: "#8bc34a", // Success/Dark/Main from Figma
+      color: "#8bc34a",
       bg: "transparent",
       border: "1px solid",
       borderColor: "#8bc34a",
       "&:hover": {
         bg: "transparent",
-        color: "#9ccc65", // Success/Dark/400 from Figma
+        color: "#9ccc65",
         borderColor: "#9ccc65",
-        filter: "none", // Override default filter to ensure no brightness change
+        filter: "none",
       },
       "&:focus": {
         boxShadow: "none",
-        outline: "4px solid #c5e1a5", // Success/Dark/200 from Figma
+        outline: "4px solid #c5e1a5",
         outlineOffset: "4px",
-        borderRadius: "8px", // Maintain rounded corners for outline
-        bg: "transparent", // Keep transparent background in focused state
-        color: "#8bc34a", // Keep text color as Success/Dark/Main
+        borderRadius: "8px",
+        bg: "transparent",
+        color: "#8bc34a",
       },
       "&[data-selected=true]": {
-        color: "#79ba40", // Success/Dark/600 from Figma
+        color: "#79ba40",
         borderColor: "#79ba40",
         border: "1px solid",
-        bg: "#293a16", // Success/Dark/900 from Figma
+        bg: "#293a16",
       },
     },
-    // Tertiary button type overrides for TeacherDark
     tertiary: {
-      color: "#8bc34a", // Success/Dark/Main from Figma
+      color: "#8bc34a",
       bg: "transparent",
       border: "none",
-      padding: "0px", // Remove padding for tertiary buttons
+      padding: "0px",
       "&:hover": {
         bg: "transparent",
-        color: "#aed581", // Success/Dark/300 from Figma
-        filter: "none", // Override default filter to ensure no brightness change
+        color: "#aed581",
+        filter: "none",
       },
       "&:focus": {
         boxShadow: "none",
-        outline: "4px solid #c5e1a5", // Success/Dark/200 from Figma
+        outline: "4px solid #c5e1a5",
         outlineOffset: "4px",
-        borderRadius: "6px", // Rounded corners for outline from Figma (slightly less rounded)
+        borderRadius: "6px",
         bg: "transparent",
-        color: "#8bc34a", // Keep text color as Success/Dark/Main
-        // Tertiary focused has no background color
+        color: "#8bc34a",
       },
       "&[data-selected=true]": {
-        color: "#79ba40", // Success/Dark/600 from Figma
+        color: "#79ba40",
         bg: "transparent",
         border: "none",
       },
     },
   },
   Danger: {
-    // Danger variant
     color: "white",
     bg: "red.600",
     border: "1px solid",
     borderColor: "red.600",
-    // Pseudo states
     "&:hover": {
       filter: "brightness(0.95)",
     },
@@ -228,16 +191,11 @@ const userStyles = {
   },
 };
 
-// Hover state is now added directly to each user style
-
-// Button types have been removed. All button type styling is now defined directly in each user variant.
-
-// Size-specific styles
 const sizes = {
   small: {
-    fontSize: "12px", // Font Size/button/xs from Figma
+    fontSize: "12px",
     padding: "0px 8px",
-    lineHeight: "16px", // Line Height/body/xs from Figma
+    lineHeight: "16px",
   },
   medium: {
     fontSize: "14px",
@@ -256,11 +214,10 @@ const sizes = {
   },
 };
 
-// Image/icon sizes
 const imageSizes = {
   small: {
-    width: "16px", // From Figma (size 16px)
-    height: "16px", // From Figma (size 16px)
+    width: "16px",
+    height: "16px",
   },
   medium: {
     width: "20px",
@@ -276,9 +233,7 @@ const imageSizes = {
   },
 };
 
-// User-specific disabled styles
 const userDisabledStyles = {
-  // Default disabled style for most variants
   default: {
     opacity: 0.5,
     cursor: "not-allowed",
@@ -287,25 +242,24 @@ const userDisabledStyles = {
       filter: "none",
     },
   },
-  // StudentDark disabled styles (matching TeacherDark)
   StudentDark: {
     primary: {
-      bg: "#707070", // Neutral/500 from Figma
-      color: "#a0a0a0", // Neutral/400 from Figma
+      bg: "#707070",
+      color: "#a0a0a0",
       border: "none",
-      opacity: 1, // No opacity change, uses specific colors instead
+      opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
       "&:hover": {
         filter: "none",
-        bg: "#707070", // Ensure hover doesn't change background
+        bg: "#707070",
       },
     },
     secondary: {
-      bg: "transparent", // Keep transparent background
-      color: "#707070", // Neutral/500 from Figma
+      bg: "transparent",
+      color: "#707070",
       border: "1px solid",
-      borderColor: "#707070", // Neutral/500 from Figma
+      borderColor: "#707070",
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
@@ -317,10 +271,10 @@ const userDisabledStyles = {
       },
     },
     tertiary: {
-      bg: "transparent", // Keep transparent background
-      color: "#707070", // Neutral/500 from Figma
+      bg: "transparent",
+      color: "#707070",
       border: "none",
-      padding: "0px", // Keep the zero padding from default tertiary style
+      padding: "0px",
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
@@ -331,27 +285,24 @@ const userDisabledStyles = {
       },
     },
   },
-  // Specific TeacherDark disabled style from Figma
   TeacherDark: {
     primary: {
-
-      bg: "#707070", // Neutral/500 from Figma
-      color: "#a0a0a0", // Neutral/400 from Figma
+      bg: "#707070",
+      color: "#a0a0a0",
       border: "none",
-      opacity: 1, // No opacity change, uses specific colors instead
+      opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
       "&:hover": {
         filter: "none",
-        bg: "#707070", // Ensure hover doesn't change background
+        bg: "#707070",
       },
     },
-    // Secondary button specific disabled style
     secondary: {
-      bg: "transparent", // Keep transparent background
-      color: "#707070", // Neutral/500 from Figma
+      bg: "transparent",
+      color: "#707070",
       border: "1px solid",
-      borderColor: "#707070", // Neutral/500 from Figma
+      borderColor: "#707070",
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
@@ -362,12 +313,11 @@ const userDisabledStyles = {
         borderColor: "#707070",
       },
     },
-    // Tertiary button specific disabled style
     tertiary: {
-      bg: "transparent", // Keep transparent background
-      color: "#707070", // Neutral/500 from Figma
+      bg: "transparent",
+      color: "#707070",
       border: "none",
-      padding: "0px", // Keep the zero padding from default tertiary style
+      padding: "0px",
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
@@ -379,10 +329,6 @@ const userDisabledStyles = {
     },
   },
 };
-
-// The states object has been removed.
-// - Default state properties have been moved to the base object.
-// - Disabled state is handled by userDisabledStyles.
 
 export {
   base,
