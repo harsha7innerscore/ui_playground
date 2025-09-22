@@ -95,8 +95,6 @@ const userStyles = {
     // Teacher dark mode variant - updated from Figma
     color: "#171717", // Text color from Figma (Neutral/850)
     bg: "#8bc34a", // Success/Dark/Main from Figma
-    border: "none",
-    position: "relative", // Needed for the absolute positioning of the focus border
     // Pseudo states
     "&:hover": {
       // Using the specific hover color from Figma (Success/Dark/400: #9ccc65)
@@ -130,6 +128,7 @@ const userStyles = {
         bg: "transparent",
         color: "#9ccc65", // Success/Dark/400 from Figma
         borderColor: "#9ccc65",
+        filter: "none", // Override default filter to ensure no brightness change
       },
       "&:focus": {
         boxShadow: "none",
@@ -171,11 +170,16 @@ const buttonTypes = {
   primary: {
     // Primary button style (solid)
     fontWeight: 700,
+    border: "none",
+    position: "relative", // Needed for the absolute positioning of the focus border
     // Colors defined by userStyles
   },
   secondary: {
     // Secondary button style (outlined)
     bg: "transparent",
+    border: "1px solid",
+    borderColor: "currentColor", // Border color matches text color from userStyles
+    position: "relative", // For focus outline positioning
     // Colors defined by userStyles
   },
   tertiary: {
