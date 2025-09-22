@@ -314,7 +314,7 @@ const userStyles = {
       },
     },
   },
-  Danger: {
+  Error: {
     primary: {
       color: "#171717",
       bg: "#F44336",
@@ -492,7 +492,7 @@ const userDisabledStyles = {
       pointerEvents: "none",
     },
   },
-  Danger: {
+  Error: {
     primary: {
       bg: "#707070",
       color: "#a0a0a0",
