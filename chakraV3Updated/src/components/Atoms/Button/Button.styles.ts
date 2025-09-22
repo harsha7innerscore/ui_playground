@@ -96,6 +96,7 @@ const userStyles = {
     color: "#171717", // Text color from Figma (Neutral/850)
     bg: "#8bc34a", // Success/Dark/Main from Figma
     border: "none",
+    position: "relative", // Needed for the absolute positioning of the focus border
     // Pseudo states
     "&:hover": {
       // Using the specific hover color from Figma (Success/Dark/400: #9ccc65)
@@ -104,7 +105,13 @@ const userStyles = {
     },
     "&:focus": {
       ...pseudoStates.focus["&:focus"],
-      boxShadow: "0 0 0 3px rgba(139, 195, 74, 0.6)", // Focus ring matching the green color
+      // Replace box-shadow with Figma's border approach
+      boxShadow: "none",
+      // From Figma: 4px border with color #c5e1a5 (Success/Dark/200)
+      // Using outline instead of box-shadow for cleaner appearance
+      outline: "4px solid #c5e1a5",
+      outlineOffset: "4px", // Space between button and outline
+      borderRadius: "4px", // Maintain rounded corners
     },
     "&[data-selected=true]": {
       // Using the specific selected color from Figma (Success/Dark/600: #79ba40)
