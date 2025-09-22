@@ -1,4 +1,3 @@
-import Theme from "../../../components/themes/Theme";
 
 // Styles for the Links component
 
@@ -16,15 +15,15 @@ const base = {
 // Role-based styles
 const roles = {
   student: {
-    color: Theme.TERTIARY.GREEN,
+    color: "#3366CC",
     "&:hover": {
-      color: "#5E9B2C", // Darker green
+      color: "#254D99", // Darker blue
     },
   },
   teacher: {
-    color: Theme.SUPPORTED_COLOURS.RED,
+    color: "#F8F8F8",
     "&:hover": {
-      color: "#CC001B", // Darker red
+      color: "#D9D9D9", // Slightly darker
     },
   },
 };
