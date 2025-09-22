@@ -8,7 +8,8 @@ export interface LinksProps extends Omit<ChakraLinkProps, "size"> {
   size?: "small" | "medium";
   isUnderlined?: boolean;
   icon?: React.ReactNode;
-  state?: "default" | "hovered" | "focused" | "selected" | "visited" | "disabled";
+  state?: "default" | "visited" | "disabled"; // Removed hovered, focused, selected as they're handled by CSS
+  isSelected?: boolean; // Added for explicit selected state if needed
   styleOverrides?: Record<string, any>;
   isExternal?: boolean;
 }
@@ -21,6 +22,7 @@ export const Links: React.FC<LinksProps> = ({
   isUnderlined = false,
   icon,
   state = "default",
+  isSelected = false,
   isExternal = false,
   styleOverrides = {},
   ...props
@@ -43,6 +45,7 @@ export const Links: React.FC<LinksProps> = ({
     <ChakraLink
       css={mergedStyles}
       data-disabled={isDisabled || undefined}
+      data-selected={isSelected || undefined}
       tabIndex={isDisabled ? -1 : undefined}
       aria-disabled={isDisabled || undefined}
       {...props}

@@ -10,6 +10,18 @@ const base = {
   display: "flex",
   alignItems: "center",
   width: "fit-content",
+  "&:hover": {
+    textDecoration: "underline", // Automatic hover state from Figma
+  },
+  "&:focus": {
+    outline: "2px solid",
+    outlineColor: "currentColor",
+    outlineOffset: "2px",
+  },
+  "&[data-selected=true]": {
+    fontWeight: "bold",
+    textDecoration: "underline",
+  },
 };
 
 // Role-based styles
@@ -49,33 +61,15 @@ const sizes = {
 const underline = {
   underlined: {
     textDecoration: "underline",
-    "&:hover": {
-      textDecoration: "underline",
-    },
   },
   notUnderlined: {
     textDecoration: "none",
-    "&:hover": {
-      textDecoration: "underline",
-    },
   },
 };
 
-// State-based styles
+// State-based styles - only keeping disabled and visited as explicit states
 const states = {
   default: {},
-  hovered: {
-    textDecoration: "underline",
-  },
-  focused: {
-    outline: "2px solid",
-    outlineColor: "currentColor",
-    outlineOffset: "2px",
-  },
-  selected: {
-    fontWeight: "bold",
-    textDecoration: "underline",
-  },
   visited: {
     opacity: 0.8,
   },

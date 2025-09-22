@@ -8,6 +8,11 @@ const meta: Meta<LinksProps> = {
   component: Links,
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: "Link component with automatic state transitions. Hover and focus states are handled automatically through CSS."
+      }
+    }
   },
   tags: ["autodocs"],
   argTypes: {
@@ -41,8 +46,12 @@ const meta: Meta<LinksProps> = {
     },
     state: {
       control: { type: "select" },
-      options: ["default", "hovered", "focused", "selected", "visited", "disabled"],
+      options: ["default", "visited", "disabled"],
       description: "Visual state of the link",
+    },
+    isSelected: {
+      control: "boolean",
+      description: "Set link as selected",
     },
     href: {
       control: "text",
@@ -116,6 +125,13 @@ export const SmallSize: Story = {
     href: "#",
     isExternal: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Small link with 12px font size and 14px line height. Hover to see the underline effect."
+      }
+    }
+  }
 };
 
 export const MediumSize: Story = {
@@ -167,28 +183,43 @@ export const LinkWithRightIcon: Story = {
   },
 };
 
-export const HoveredState: Story = {
+export const HoverableLink: Story = {
   args: {
-    label: "Hovered State Link",
+    label: "hovered/link/small.com",
     user: "student",
-    size: "medium",
+    size: "small",
     isUnderlined: false,
-    state: "hovered",
+    state: "default",
     href: "#",
     isExternal: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "This link will show underline on hover automatically. Try hovering over it."
+      }
+    }
+  }
 };
 
-export const FocusedState: Story = {
+export const SelectedLink: Story = {
   args: {
-    label: "Focused State Link",
+    label: "Selected Link",
     user: "student",
     size: "medium",
     isUnderlined: false,
-    state: "focused",
+    state: "default",
+    isSelected: true,
     href: "#",
     isExternal: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "This link has the selected state applied (bold and underlined)."
+      }
+    }
+  }
 };
 
 export const VisitedState: Story = {
