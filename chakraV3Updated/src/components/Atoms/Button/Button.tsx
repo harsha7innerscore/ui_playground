@@ -1,6 +1,6 @@
 import React from "react";
 import { Button as ChakraButton, ButtonProps as ChakraButtonProps } from "@chakra-ui/react";
-import { base, userStyles, buttonTypes, sizes, imageSizes, userDisabledStyles } from "./Button.styles";
+import { base, userStyles, sizes, imageSizes, userDisabledStyles } from "./Button.styles";
 
 export interface ButtonProps extends Omit<ChakraButtonProps, "size"> {
   user: "StudentLight" | "StudentDark" | "TeacherLight" | "TeacherDark" | "Danger";
@@ -47,7 +47,6 @@ export const Button: React.FC<ButtonProps> = ({
   // Merge styles in order of precedence
   const mergedStyles = {
     ...base,
-    ...(buttonType && buttonTypes[buttonType]),
     ...(user && userStyles[user]),
     // Check if user-specific overrides exist for the button type
     ...(user && buttonType && (userStyles[user] as any)?.[buttonType]),

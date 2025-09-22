@@ -182,29 +182,7 @@ const userStyles = {
 
 // Hover state is now added directly to each user style
 
-// Button types
-const buttonTypes = {
-  primary: {
-    // Primary button style (solid)
-    fontWeight: 700,
-    border: "none",
-    position: "relative", // Needed for the absolute positioning of the focus border
-    // Colors defined by userStyles
-  },
-  secondary: {
-    // Secondary button style (outlined)
-    bg: "transparent",
-    border: "1px solid",
-    borderColor: "currentColor", // Border color matches text color from userStyles
-    position: "relative", // For focus outline positioning
-    // Colors defined by userStyles
-  },
-  tertiary: {
-    // Tertiary button style (ghost)
-    bg: "transparent",
-    border: "none",
-  },
-};
+// Button types have been removed. All button type styling is now defined directly in each user variant.
 
 // Size-specific styles
 const sizes = {
@@ -317,7 +295,6 @@ const userDisabledStyles = {
 export {
   base,
   userStyles,
-  buttonTypes,
   sizes,
   imageSizes,
   userDisabledStyles,
