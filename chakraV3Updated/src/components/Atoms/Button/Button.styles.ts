@@ -98,7 +98,9 @@ const userStyles = {
     border: "none",
     // Pseudo states
     "&:hover": {
-      filter: "brightness(0.95)",
+      // Using the specific hover color from Figma (Success/Dark/400: #9ccc65)
+      // instead of brightness filter
+      bg: "#9ccc65",
     },
     "&:focus": {
       ...pseudoStates.focus["&:focus"],
