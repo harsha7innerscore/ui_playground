@@ -47,7 +47,6 @@ const sizes = {
   smallIcon: {
     width: "14px",
     height: "14px",
-    marginLeft: "4px",
   },
   medium: {
     fontSize: "14px",
@@ -56,7 +55,6 @@ const sizes = {
   mediumIcon: {
     width: "18px",
     height: "18px",
-    marginLeft: "6px",
   },
 };
 
@@ -88,7 +86,7 @@ const layout = {
   withIcon: {
     display: "flex",
     alignItems: "center",
-    gap: "4px",
+    gap: "8px", // Updated gap to 8px as requested
   },
 };
 
