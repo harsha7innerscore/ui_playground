@@ -178,6 +178,45 @@ export const TeacherDarkPrimary: Story = {
   },
 };
 
+export const TeacherDarkSecondary: Story = {
+  args: {
+    user: "TeacherDark",
+    size: "small",
+    buttonType: "secondary",
+    buttonState: "default",
+    text: "S. Default",
+    leftImage: <FiPlus />,
+    rightImage: <FiArrowRight />,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "TeacherDark secondary button as shown in the Figma design, with small size, plus icon on the left, and arrow icon on the right."
+      }
+    }
+  }
+};
+
+export const TeacherDarkSecondaryHovered: Story = {
+  args: {
+    user: "TeacherDark",
+    size: "small",
+    buttonType: "secondary",
+    buttonState: "default",
+    text: "S. Hovered",
+    leftImage: <FiPlus />,
+    rightImage: <FiArrowRight />,
+  },
+  parameters: {
+    pseudo: { hover: true },
+    docs: {
+      description: {
+        story: "TeacherDark secondary button in hover state as shown in the Figma design. The hover effect is visible when previewing this story in Storybook."
+      }
+    }
+  }
+};
+
 export const TeacherDarkFigmaExample: Story = {
   args: {
     user: "TeacherDark",

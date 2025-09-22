@@ -120,6 +120,28 @@ const userStyles = {
       // Remove the default 2px border from pseudoStates.selected
       border: "none",
     },
+    // Secondary button type overrides for TeacherDark
+    secondary: {
+      color: "#8bc34a", // Success/Dark/Main from Figma
+      bg: "transparent",
+      border: "1px solid",
+      borderColor: "#8bc34a",
+      "&:hover": {
+        bg: "transparent",
+        color: "#9ccc65", // Success/Dark/400 from Figma
+        borderColor: "#9ccc65",
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "4px solid #c5e1a5", // Success/Dark/200 from Figma
+        outlineOffset: "4px",
+      },
+      "&[data-selected=true]": {
+        color: "#79ba40", // Success/Dark/600 from Figma
+        borderColor: "#79ba40",
+        border: "1px solid",
+      },
+    },
   },
   Danger: {
     // Danger variant
