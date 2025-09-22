@@ -435,9 +435,6 @@ const userDisabledStyles = {
     opacity: 0.5,
     cursor: "not-allowed",
     pointerEvents: "none",
-    "&:hover": {
-      filter: "none",
-    },
   },
   StudentDark: {
     primary: {
@@ -447,10 +444,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "#707070",
-      },
     },
     secondary: {
       bg: "transparent",
@@ -460,12 +453,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-        borderColor: "#707070",
-      },
     },
     tertiary: {
       bg: "transparent",
@@ -475,11 +462,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-      },
     },
   },
   TeacherDark: {
@@ -490,10 +472,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "#707070",
-      },
     },
     secondary: {
       bg: "transparent",
@@ -503,12 +481,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-        borderColor: "#707070",
-      },
     },
     tertiary: {
       bg: "transparent",
@@ -518,11 +490,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-      },
     },
   },
   Danger: {
@@ -533,10 +500,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "#707070",
-      },
     },
     secondary: {
       bg: "transparent",
@@ -546,12 +509,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-        borderColor: "#707070",
-      },
     },
     tertiary: {
       bg: "transparent",
@@ -561,11 +518,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-      },
     },
   },
   TeacherLight: {
@@ -576,9 +528,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-      },
     },
     secondary: {
       bg: "transparent",
@@ -588,12 +537,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-        borderColor: "#707070",
-      },
     },
     tertiary: {
       bg: "transparent",
@@ -603,11 +546,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-      },
     },
   },
   StudentLight: {
@@ -618,9 +556,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-      },
     },
     secondary: {
       bg: "transparent",
@@ -630,12 +565,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-        borderColor: "#707070",
-      },
     },
     tertiary: {
       bg: "transparent",
@@ -645,11 +574,6 @@ const userDisabledStyles = {
       opacity: 1,
       cursor: "not-allowed",
       pointerEvents: "none",
-      "&:hover": {
-        filter: "none",
-        bg: "transparent",
-        color: "#707070",
-      },
     },
   },
 };
