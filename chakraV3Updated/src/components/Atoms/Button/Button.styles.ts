@@ -8,7 +8,7 @@ const base = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: "8px",
+  gap: "0px",
   fontWeight: 600,
   borderRadius: "4px",
 };
@@ -167,24 +167,23 @@ const buttonTypes = {
 const sizes = {
   small: {
     fontSize: "12px", // Font Size/button/xs from Figma
-    padding: "8px 16px", // Updated padding from Figma
-    height: "32px", // Height adjusted to match Figma
+    padding: "0px 8px",
     lineHeight: "16px", // Line Height/body/xs from Figma
   },
   medium: {
     fontSize: "14px",
-    padding: "8px 16px",
-    height: "36px",
+    padding: "0px 8px",
+    lineHeight: "20px",
   },
   large: {
     fontSize: "16px",
-    padding: "10px 20px",
-    height: "44px",
+    padding: "0px 8px",
+    lineHeight: "24px",
   },
   "extra-large": {
-    fontSize: "18px",
-    padding: "12px 24px",
-    height: "52px",
+    fontSize: "20px",
+    padding: "0px 8px",
+    lineHeight: "28px",
   },
 };
 
