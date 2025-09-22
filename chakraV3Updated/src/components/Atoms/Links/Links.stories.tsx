@@ -70,6 +70,18 @@ export const Default: Story = {
   },
 };
 
+export const FigmaDefault: Story = {
+  args: {
+    label: "default/link/small.com",
+    user: "student",
+    size: "small",
+    isUnderlined: false,
+    state: "default",
+    href: "#",
+    isExternal: false,
+  },
+};
+
 export const TeacherRole: Story = {
   args: {
     label: "Teacher Link",
@@ -96,7 +108,7 @@ export const StudentRole: Story = {
 
 export const SmallSize: Story = {
   args: {
-    label: "Small Link",
+    label: "default/link/small.com",
     user: "student",
     size: "small",
     isUnderlined: false,
