@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Script v6: Add data-testid attributes to Chakra UI components in JSX files.
-This version properly handles JSX syntax to ensure correct attribute placement.
+Fixed Script: Add data-testid attributes to Chakra UI components in JSX files.
+This version correctly handles attribute placement for all components.
 """
 import re
 import sys
+import os
 from pathlib import Path
 
 class ChakraTestIdAdder:
@@ -27,8 +28,8 @@ class ChakraTestIdAdder:
         self.component_counts = {}
         # Added test IDs
         self.added_test_ids = []
-        # Component hierarchy
-        self.path_stack = []
+        # Track component types
+        self.component_types = {}
 
     def extract_chakra_imports(self, content):
         """Extract Chakra UI component names from import statements."""
@@ -72,133 +73,122 @@ class ChakraTestIdAdder:
         # Add custom components to the list
         self.chakra_components.update(self.custom_components)
 
-    def _get_component_description(self, jsx_tag, component_name):
+    def _get_component_description(self, attributes, component_name):
         """Extract meaningful description from component attributes."""
         description = component_name.lower()
 
         # Check for className prop
-        class_match = re.search(r'className=\{(?:[\w\.]+\.)?(\w+)\}', jsx_tag)
+        class_match = re.search(r'className=\{(?:[\w\.]+\.)?(\w+)\}', attributes)
         if class_match:
             return f"{description}-{class_match.group(1)}"
 
         # Check for string className
-        string_class_match = re.search(r'className=["\']([^"\']+)["\']', jsx_tag)
+        string_class_match = re.search(r'className=["\']([^"\']+)["\']', attributes)
         if string_class_match:
             class_name = re.sub(r'\s+', '-', string_class_match.group(1)).lower()
             return f"{description}-{class_name}"
 
         # Check for id prop
-        id_match = re.search(r'id=["\']([^"\']+)["\']', jsx_tag) or re.search(r'id=\{["\']?([^}"\']+)["\']?\}', jsx_tag)
+        id_match = re.search(r'id=["\']([^"\']+)["\']', attributes) or re.search(r'id=\{["\']?([^}"\']+)["\']?\}', attributes)
         if id_match:
             return f"{description}-{id_match.group(1)}"
 
-        # Check for key prop for list items
-        key_match = re.search(r'key=\{([^}]+)\}', jsx_tag)
-        if key_match:
-            return f"{description}-item"
-
-        # Use parent component context if available
-        if self.path_stack:
-            parent = self.path_stack[-1].split('-')[0]  # Get base component type
-            return f"{parent}-{description}"
+        # Check for src prop for images
+        if component_name.lower() == 'image':
+            src_match = re.search(r'src=\{([^}]+)\}', attributes)
+            if src_match:
+                src_var = src_match.group(1).strip()
+                if '.' in src_var:
+                    src_parts = src_var.split('.')
+                    return f"{description}-{src_parts[-1]}"
+                return f"{description}-{src_var.replace(' ', '-')}"
 
         return description
 
-    def _generate_unique_test_id(self, base_id):
-        """Generate a unique test ID based on the component description."""
+    def _generate_test_id(self, component_name, attributes):
+        """Generate a unique test ID for a component."""
+        base_id = self._get_component_description(attributes, component_name)
+
         if base_id in self.component_counts:
             self.component_counts[base_id] += 1
         else:
             self.component_counts[base_id] = 1
 
-        return f"{base_id}-{self.component_counts[base_id]}"
+        test_id = f"{base_id}-{self.component_counts[base_id]}"
+        self.added_test_ids.append(test_id)
+
+        # Track component types
+        component_type = component_name.lower()
+        self.component_types[component_type] = self.component_types.get(component_type, 0) + 1
+
+        return test_id
 
     def process_file(self, file_path):
-        """Process a JSX file to add data-testid attributes to Chakra components."""
+        """Process a JSX file to add data-testid attributes to all Chakra UI components."""
         print(f"\nProcessing file: {file_path}")
 
-        # Reset state for this file
+        # Reset state
         self.component_counts = {}
         self.added_test_ids = []
-        self.path_stack = []
-        self.chakra_components = set()
-        self.custom_components = set()
+        self.component_types = {}
 
         # Read the file content
         with open(file_path, 'r') as f:
             content = f.read()
 
-        # Extract Chakra UI components from imports
+        # Extract Chakra UI components
         self.extract_chakra_imports(content)
 
-        # If no components were found, nothing to do
         if not self.chakra_components:
             print("No Chakra UI components found to process.")
             return 0
 
-        # Create regex pattern for JSX tags with more careful handling
+        # Simple regex approach using line-by-line processing to avoid issues with complex JSX
+        lines = content.split('\n')
+        modified_lines = []
+
+        # Pattern to find component opening tags
         component_pattern = '|'.join(map(re.escape, self.chakra_components))
+        tag_pattern = re.compile(r'(<(' + component_pattern + r')\s+[^>]*?)(/?>)')
 
-        # This is the key improvement - we're using a much more careful pattern
-        # that won't match inside other attributes
-        # We look for the tag opening with spaces, newlines, or braces preceding it
-        jsx_tag_pattern = r'([\s{(])<(' + component_pattern + r')((?:\s+[a-zA-Z0-9_\-:]+(?:=(?:"[^"]*"|\'[^\']*\'|\{(?:\{[^{}]*\}|[^{}])*\}))?)*)\s*(/?)>'
+        for line in lines:
+            # Find all component tags in this line
+            matches = list(tag_pattern.finditer(line))
 
-        # First, let's join opening multiline tags by temporarily replacing newlines
-        # This helps us handle multiline components correctly
-        content = re.sub(r'<(' + component_pattern + r')([^>]*?\n)([^<]*?)(/?)>',
-                        lambda m: '<' + m.group(1) + m.group(2).replace('\n', '___NEWLINE___') +
-                                 m.group(3).replace('\n', '___NEWLINE___') + m.group(4) + '>',
-                        content)
-
-        # Process all JSX components in content
-        matches = list(re.finditer(jsx_tag_pattern, content))
-
-        # Process the matches in reverse order to avoid messing up string indices
-        for match in reversed(matches):
-            prefix = match.group(1)  # The character before the tag
-            component_name = match.group(2)
-            attributes = match.group(3)
-            self_closing = match.group(4)  # "/" for self-closing tags
-
-            # Skip if already has a data-testid
-            if 'data-testid=' in attributes:
+            if not matches:
+                # No components on this line
+                modified_lines.append(line)
                 continue
 
-            # Generate test ID
-            base_id = self._get_component_description(attributes, component_name)
-            test_id = self._generate_unique_test_id(base_id)
-            self.added_test_ids.append(test_id)
+            # Process matches in reverse to avoid messing up positions
+            for match in reversed(matches):
+                full_match = match.group(0)  # The entire tag
+                opening = match.group(1)     # Everything before the closing '>' or '/>'
+                component = match.group(2)   # The component name
+                closing = match.group(3)     # The closing '>' or '/>'
 
-            # Create the new tag with data-testid
-            if self_closing:
-                # Self-closing tag: <Component ... />
-                new_tag = f"{prefix}<{component_name}{attributes} data-testid=\"{test_id}\" />"
-            else:
-                # Opening tag: <Component ...>
-                new_tag = f"{prefix}<{component_name}{attributes} data-testid=\"{test_id}\">"
-                # Track for hierarchy
-                self.path_stack.append(test_id)
+                # Skip if already has a data-testid
+                if 'data-testid=' in full_match:
+                    continue
 
-            # Replace the matched part in the content
-            start, end = match.span()
-            content = content[:start] + new_tag + content[end:]
+                # Generate test ID
+                test_id = self._generate_test_id(component, opening)
 
-        # Restore newlines
-        modified_content = content.replace('___NEWLINE___', '\n')
+                # Insert data-testid attribute before closing tag
+                modified_tag = f"{opening} data-testid=\"{test_id}\"{closing}"
 
-        # Handle closing tags to maintain hierarchy - This is just for stack maintenance,
-        # we don't actually need to modify the closing tags
-        closing_pattern = r'</(' + component_pattern + r')>'
-        closing_matches = list(re.finditer(closing_pattern, modified_content))
-        for match in closing_matches:
-            component_name = match.group(1)
-            if component_name in self.chakra_components and self.path_stack:
-                self.path_stack.pop()
+                # Replace in the line
+                start, end = match.span()
+                line = line[:start] + modified_tag + line[end:]
 
-        # Write modified content to output file
+            modified_lines.append(line)
+
+        # Join lines back together
+        modified_content = '\n'.join(modified_lines)
+
+        # Write the modified content to output file
         file_name = Path(file_path).stem
-        output_path = Path(file_path).parent / f"{file_name}_v6_result.jsx"
+        output_path = Path(file_path).parent / f"{file_name}_fixed_result.jsx"
 
         with open(output_path, 'w') as f:
             f.write(modified_content)
@@ -211,17 +201,12 @@ class ChakraTestIdAdder:
     def print_summary(self):
         """Print summary of added test IDs."""
         print("\nSummary of added test IDs by component type:")
-        component_types = {}
 
-        for test_id in self.added_test_ids:
-            component_type = test_id.split('-')[0]
-            component_types[component_type] = component_types.get(component_type, 0) + 1
-
-        for component, count in sorted(component_types.items()):
+        for component, count in sorted(self.component_types.items()):
             print(f"  {component}: {count}")
 
         print("\nSample of added test IDs:")
-        for i, test_id in enumerate(self.added_test_ids[:10]):  # Show first 10
+        for i, test_id in enumerate(self.added_test_ids[:10]):
             print(f"  {i+1}. {test_id}")
 
         if len(self.added_test_ids) > 10:
@@ -234,7 +219,6 @@ def main():
     # Path to the JSX file
     jsx_file = script_dir / "test.jsx"
 
-    # Check if file exists
     if not jsx_file.exists():
         print(f"Error: File not found: {jsx_file}")
         return 1
@@ -244,7 +228,6 @@ def main():
     num_added = processor.process_file(jsx_file)
 
     if num_added > 0:
-        # Print summary
         processor.print_summary()
 
     return 0

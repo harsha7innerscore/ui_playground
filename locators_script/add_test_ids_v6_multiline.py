@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Script v6: Add data-testid attributes to Chakra UI components in JSX files.
-This version properly handles JSX syntax to ensure correct attribute placement.
+Script v6 (multiline): Add data-testid attributes to Chakra UI components in JSX files.
+This version handles both single-line and multi-line JSX elements.
 """
 import re
 import sys
+import os
 from pathlib import Path
 
 class ChakraTestIdAdder:
@@ -97,6 +98,15 @@ class ChakraTestIdAdder:
         if key_match:
             return f"{description}-item"
 
+        # Check for src prop (for Image components)
+        src_match = re.search(r'src=\{([^}]+)\}', jsx_tag)
+        if src_match and component_name.lower() == 'image':
+            src_var = src_match.group(1)
+            if '.' in src_var:
+                src_parts = src_var.split('.')
+                return f"{description}-{src_parts[-1]}"
+            return f"{description}-src"
+
         # Use parent component context if available
         if self.path_stack:
             parent = self.path_stack[-1].split('-')[0]  # Get base component type
@@ -126,79 +136,110 @@ class ChakraTestIdAdder:
 
         # Read the file content
         with open(file_path, 'r') as f:
-            content = f.read()
+            original_content = f.read()
 
         # Extract Chakra UI components from imports
-        self.extract_chakra_imports(content)
+        self.extract_chakra_imports(original_content)
 
         # If no components were found, nothing to do
         if not self.chakra_components:
             print("No Chakra UI components found to process.")
             return 0
 
-        # Create regex pattern for JSX tags with more careful handling
+        # Process multi-line components as a special case
+        # This approach is more thorough and handles components that span multiple lines
+
+        # Build a regex pattern for all components
         component_pattern = '|'.join(map(re.escape, self.chakra_components))
 
-        # This is the key improvement - we're using a much more careful pattern
-        # that won't match inside other attributes
-        # We look for the tag opening with spaces, newlines, or braces preceding it
-        jsx_tag_pattern = r'([\s{(])<(' + component_pattern + r')((?:\s+[a-zA-Z0-9_\-:]+(?:=(?:"[^"]*"|\'[^\']*\'|\{(?:\{[^{}]*\}|[^{}])*\}))?)*)\s*(/?)>'
+        # Function to process a matched component
+        def process_component(match_text, component_name):
+            # Skip if it already has a data-testid
+            if 'data-testid=' in match_text:
+                return match_text
 
-        # First, let's join opening multiline tags by temporarily replacing newlines
-        # This helps us handle multiline components correctly
-        content = re.sub(r'<(' + component_pattern + r')([^>]*?\n)([^<]*?)(/?)>',
-                        lambda m: '<' + m.group(1) + m.group(2).replace('\n', '___NEWLINE___') +
-                                 m.group(3).replace('\n', '___NEWLINE___') + m.group(4) + '>',
-                        content)
-
-        # Process all JSX components in content
-        matches = list(re.finditer(jsx_tag_pattern, content))
-
-        # Process the matches in reverse order to avoid messing up string indices
-        for match in reversed(matches):
-            prefix = match.group(1)  # The character before the tag
-            component_name = match.group(2)
-            attributes = match.group(3)
-            self_closing = match.group(4)  # "/" for self-closing tags
-
-            # Skip if already has a data-testid
-            if 'data-testid=' in attributes:
-                continue
-
-            # Generate test ID
-            base_id = self._get_component_description(attributes, component_name)
+            # Generate the test ID
+            base_id = self._get_component_description(match_text, component_name)
             test_id = self._generate_unique_test_id(base_id)
             self.added_test_ids.append(test_id)
 
-            # Create the new tag with data-testid
-            if self_closing:
-                # Self-closing tag: <Component ... />
-                new_tag = f"{prefix}<{component_name}{attributes} data-testid=\"{test_id}\" />"
-            else:
-                # Opening tag: <Component ...>
-                new_tag = f"{prefix}<{component_name}{attributes} data-testid=\"{test_id}\">"
+            # Add the data-testid attribute to the component
+            if '/>' in match_text:  # Self-closing tag
+                return match_text.replace('/>', f' data-testid="{test_id}" />')
+            else:  # Opening tag
                 # Track for hierarchy
                 self.path_stack.append(test_id)
+                return match_text.replace('>', f' data-testid="{test_id}">')
 
-            # Replace the matched part in the content
-            start, end = match.span()
-            content = content[:start] + new_tag + content[end:]
+        # Process the content line by line to handle both single and multi-line components
+        lines = original_content.split('\n')
+        in_component = False
+        current_component = None
+        component_lines = []
+        result_lines = []
 
-        # Restore newlines
-        modified_content = content.replace('___NEWLINE___', '\n')
+        i = 0
+        while i < len(lines):
+            line = lines[i]
 
-        # Handle closing tags to maintain hierarchy - This is just for stack maintenance,
-        # we don't actually need to modify the closing tags
-        closing_pattern = r'</(' + component_pattern + r')>'
-        closing_matches = list(re.finditer(closing_pattern, modified_content))
-        for match in closing_matches:
-            component_name = match.group(1)
-            if component_name in self.chakra_components and self.path_stack:
-                self.path_stack.pop()
+            # Check for component start
+            component_start_match = re.search(r'<(' + component_pattern + r')([\s>])', line)
+
+            if not in_component and component_start_match:
+                # Found a new component start
+                component_name = component_start_match.group(1)
+
+                # Check if the component ends on this line
+                if '/>' in line:
+                    # Self-closing tag - process the entire component on this line
+                    component_text = line[component_start_match.start():line.find('/>') + 2]
+                    processed_text = process_component(component_text, component_name)
+                    result_lines.append(line.replace(component_text, processed_text))
+                elif '>' in line[component_start_match.end():]:
+                    # Opening tag ends on this line
+                    component_text = line[component_start_match.start():line.find('>', component_start_match.end()) + 1]
+                    processed_text = process_component(component_text, component_name)
+                    result_lines.append(line.replace(component_text, processed_text))
+                else:
+                    # Start of a multi-line component
+                    in_component = True
+                    current_component = component_name
+                    component_lines = [line]
+                    i += 1  # Move to the next line
+
+                    # Collect all lines of this component
+                    while i < len(lines):
+                        line = lines[i]
+                        component_lines.append(line)
+
+                        if '/>' in line:
+                            # Found end of self-closing tag
+                            break
+                        elif '>' in line:
+                            # Found end of opening tag
+                            break
+
+                        i += 1
+
+                    # Process the complete multi-line component
+                    component_text = '\n'.join(component_lines)
+                    processed_text = process_component(component_text, current_component)
+
+                    # Add the processed lines
+                    result_lines.extend(processed_text.split('\n'))
+                    in_component = False
+            else:
+                # Not a component start or already inside a component
+                result_lines.append(line)
+
+            i += 1
+
+        # Join all lines back together
+        modified_content = '\n'.join(result_lines)
 
         # Write modified content to output file
         file_name = Path(file_path).stem
-        output_path = Path(file_path).parent / f"{file_name}_v6_result.jsx"
+        output_path = Path(file_path).parent / f"{file_name}_v6_multiline_result.jsx"
 
         with open(output_path, 'w') as f:
             f.write(modified_content)

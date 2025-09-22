@@ -60,12 +60,12 @@ const SchoolUpdatesView = ({
 
   return (
     <>
-      <Box className={Styles?.globalContainer} data-testid="box-box-7">
-        <Box className={Styles?.globalSubContainer} data-testid="box-box-6">
+      <Box className={Styles?.globalContainer} data-testid="box-1">
+        <Box className={Styles?.globalSubContainer} data-testid="box-box-1">
           <Flex flexDir={"row"} alignItems={"flex-start"} data-testid="box-flex-1">
-            <Box className={Styles?.globalSubbContainer} data-testid="box-box-5">
+            <Box className={Styles?.globalSubbContainer} data-testid="box-box-2">
               {
-                <Box className={Styles?.vinImage} data-testid="box-box-4">
+                <Box className={Styles?.vinImage} data-testid="box-box-3">
                   <img
                     className={Styles?.vinImageInternal}
                     alt="Vin"
@@ -73,7 +73,7 @@ const SchoolUpdatesView = ({
                   />
                 </Box>
               }
-              <Box className={Styles?.optionRightContainer} data-testid="box-box-3">
+              <Box className={Styles?.optionRightContainer} data-testid="box-box-4">
                 <LearningCreditsContainer
                   userAdditionalDetails={userAdditionalDetails}
                   isTaskScreen={false}
@@ -85,7 +85,7 @@ const SchoolUpdatesView = ({
                   setNudgeObject={setNudgeObject}
                   isNudgeLoading={isNudgeLoading}
                 />
-                <Box className={Styles?.optionRightTopContainer} data-testid="box-box-2">
+                <Box className={Styles?.optionRightTopContainer} data-testid="box-box-5">
                   <OptionContainer
                     isMobile={isMobile}
                     userAdditionalDetails={userAdditionalDetails}
@@ -233,9 +233,9 @@ const SchoolUpdatesView = ({
         </Box>
         {/* PLAIN INPUT */}
         {isMobile && (
-          <Box sx={TaskScreenStyles(isMobile)?.bottomInput} data-testid="box-box-1">
+          <Box sx={TaskScreenStyles(isMobile)?.bottomInput} data-testid="box-box-6">
             {editor()}
-            <Box sx={TaskScreenStyles()?.bottomBox} data-testid="box-1"></Box>
+            <Box sx={TaskScreenStyles()?.bottomBox} data-testid="box-box-7"></Box>
           </Box>
         )}
       </Box>

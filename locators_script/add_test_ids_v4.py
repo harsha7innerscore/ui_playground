@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Script v6: Add data-testid attributes to Chakra UI components in JSX files.
-This version properly handles JSX syntax to ensure correct attribute placement.
+Script v4: Add data-testid attributes to Chakra UI components in JSX files.
+This version dynamically detects Chakra UI imports rather than using a fixed list.
 """
 import re
 import sys
+import os
 from pathlib import Path
 
 class ChakraTestIdAdder:
@@ -113,6 +114,44 @@ class ChakraTestIdAdder:
 
         return f"{base_id}-{self.component_counts[base_id]}"
 
+    def _add_test_id_to_tag(self, match):
+        """Add a data-testid attribute to a component opening tag."""
+        full_tag = match.group(0)
+        component_name = match.group(1)
+
+        # Skip if already has a data-testid
+        if 'data-testid=' in full_tag:
+            # If this is an opening tag, track it for hierarchy
+            if not full_tag.rstrip().endswith('/>'):
+                existing_id = re.search(r'data-testid=["\']([^"\']+)["\']', full_tag)
+                if existing_id:
+                    self.path_stack.append(existing_id.group(1))
+            return full_tag
+
+        # Generate component description based on props and context
+        base_id = self._get_component_description(full_tag, component_name)
+        test_id = self._generate_unique_test_id(base_id)
+
+        # Add to tracking
+        self.added_test_ids.append(test_id)
+
+        # Add the test ID attribute to the tag
+        if full_tag.rstrip().endswith('/>'):  # Self-closing tag
+            result = full_tag.rstrip()[:-2] + f' data-testid="{test_id}" />'
+        else:  # Opening tag
+            result = full_tag.rstrip()[:-1] + f' data-testid="{test_id}">'
+            # Add to path stack for nested components
+            self.path_stack.append(test_id)
+
+        return result
+
+    def _process_closing_tag(self, match):
+        """Process a closing JSX tag and maintain the component hierarchy."""
+        component_name = match.group(1)
+        if component_name in self.chakra_components and self.path_stack:
+            self.path_stack.pop()
+        return match.group(0)
+
     def process_file(self, file_path):
         """Process a JSX file to add data-testid attributes to Chakra components."""
         print(f"\nProcessing file: {file_path}")
@@ -136,69 +175,23 @@ class ChakraTestIdAdder:
             print("No Chakra UI components found to process.")
             return 0
 
-        # Create regex pattern for JSX tags with more careful handling
-        component_pattern = '|'.join(map(re.escape, self.chakra_components))
+        # Regex patterns for opening and closing tags
+        component_pattern = '|'.join(self.chakra_components)
+        opening_tag_pattern = r'<(' + component_pattern + r')([\s\n][^>]*?)(?:>|/>)'
+        closing_tag_pattern = r'</(' + component_pattern + r')>'
 
-        # This is the key improvement - we're using a much more careful pattern
-        # that won't match inside other attributes
-        # We look for the tag opening with spaces, newlines, or braces preceding it
-        jsx_tag_pattern = r'([\s{(])<(' + component_pattern + r')((?:\s+[a-zA-Z0-9_\-:]+(?:=(?:"[^"]*"|\'[^\']*\'|\{(?:\{[^{}]*\}|[^{}])*\}))?)*)\s*(/?)>'
+        # First process all opening tags
+        modified_content = re.sub(opening_tag_pattern, self._add_test_id_to_tag, content)
 
-        # First, let's join opening multiline tags by temporarily replacing newlines
-        # This helps us handle multiline components correctly
-        content = re.sub(r'<(' + component_pattern + r')([^>]*?\n)([^<]*?)(/?)>',
-                        lambda m: '<' + m.group(1) + m.group(2).replace('\n', '___NEWLINE___') +
-                                 m.group(3).replace('\n', '___NEWLINE___') + m.group(4) + '>',
-                        content)
+        # Reset path stack for second pass
+        self.path_stack = []
 
-        # Process all JSX components in content
-        matches = list(re.finditer(jsx_tag_pattern, content))
-
-        # Process the matches in reverse order to avoid messing up string indices
-        for match in reversed(matches):
-            prefix = match.group(1)  # The character before the tag
-            component_name = match.group(2)
-            attributes = match.group(3)
-            self_closing = match.group(4)  # "/" for self-closing tags
-
-            # Skip if already has a data-testid
-            if 'data-testid=' in attributes:
-                continue
-
-            # Generate test ID
-            base_id = self._get_component_description(attributes, component_name)
-            test_id = self._generate_unique_test_id(base_id)
-            self.added_test_ids.append(test_id)
-
-            # Create the new tag with data-testid
-            if self_closing:
-                # Self-closing tag: <Component ... />
-                new_tag = f"{prefix}<{component_name}{attributes} data-testid=\"{test_id}\" />"
-            else:
-                # Opening tag: <Component ...>
-                new_tag = f"{prefix}<{component_name}{attributes} data-testid=\"{test_id}\">"
-                # Track for hierarchy
-                self.path_stack.append(test_id)
-
-            # Replace the matched part in the content
-            start, end = match.span()
-            content = content[:start] + new_tag + content[end:]
-
-        # Restore newlines
-        modified_content = content.replace('___NEWLINE___', '\n')
-
-        # Handle closing tags to maintain hierarchy - This is just for stack maintenance,
-        # we don't actually need to modify the closing tags
-        closing_pattern = r'</(' + component_pattern + r')>'
-        closing_matches = list(re.finditer(closing_pattern, modified_content))
-        for match in closing_matches:
-            component_name = match.group(1)
-            if component_name in self.chakra_components and self.path_stack:
-                self.path_stack.pop()
+        # Process closing tags to maintain hierarchy
+        modified_content = re.sub(closing_tag_pattern, self._process_closing_tag, modified_content)
 
         # Write modified content to output file
         file_name = Path(file_path).stem
-        output_path = Path(file_path).parent / f"{file_name}_v6_result.jsx"
+        output_path = Path(file_path).parent / f"{file_name}_v4_result.jsx"
 
         with open(output_path, 'w') as f:
             f.write(modified_content)

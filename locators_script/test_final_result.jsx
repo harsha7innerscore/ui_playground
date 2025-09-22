@@ -60,12 +60,12 @@ const SchoolUpdatesView = ({
 
   return (
     <>
-      <Box className={Styles?.globalContainer} data-testid="box-box-7">
-        <Box className={Styles?.globalSubContainer} data-testid="box-box-6">
-          <Flex flexDir={"row"} alignItems={"flex-start"} data-testid="box-flex-1">
-            <Box className={Styles?.globalSubbContainer} data-testid="box-box-5">
+      <Box className={Styles?.globalContainer} data-testid="box-1">
+        <Box className={Styles?.globalSubContainer} data-testid="box-2">
+          <Flex flexDir={"row"} alignItems={"flex-start"} data-testid="flex-1">
+            <Box className={Styles?.globalSubbContainer} data-testid="box-3">
               {
-                <Box className={Styles?.vinImage} data-testid="box-box-4">
+                <Box className={Styles?.vinImage} data-testid="box-4">
                   <img
                     className={Styles?.vinImageInternal}
                     alt="Vin"
@@ -73,7 +73,7 @@ const SchoolUpdatesView = ({
                   />
                 </Box>
               }
-              <Box className={Styles?.optionRightContainer} data-testid="box-box-3">
+              <Box className={Styles?.optionRightContainer} data-testid="box-5">
                 <LearningCreditsContainer
                   userAdditionalDetails={userAdditionalDetails}
                   isTaskScreen={false}
@@ -84,15 +84,15 @@ const SchoolUpdatesView = ({
                   nudgeObject={nudgeObject}
                   setNudgeObject={setNudgeObject}
                   isNudgeLoading={isNudgeLoading}
-                />
-                <Box className={Styles?.optionRightTopContainer} data-testid="box-box-2">
+                / data-testid="learningcreditscontainer-1">
+                <Box className={Styles?.optionRightTopContainer} data-testid="box-6">
                   <OptionContainer
                     isMobile={isMobile}
                     userAdditionalDetails={userAdditionalDetails}
                     isTaskScreen={false}
                     emotionalMessage={emotionalMessage}
                     hasUpdates={isNotEmptyOrNull(data)}
-                  />
+                  / data-testid="optioncontainer-1">
                 </Box>
                 <Box className={Styles.mainContainer} data-testid="box-mainContainer-1">
                   {isMobile && (
@@ -108,8 +108,7 @@ const SchoolUpdatesView = ({
                           className={Styles.individualContainer}
                           key={index}
                           cursor={"pointer"}
-                          onClick={() => onhandleUpdateClick(item)}
-                        >
+                          onClick={() => onhandleUpdateClick(item)} data-testid="box-individualContainer-1">
                           <Box className={Styles.leftContainer} data-testid="box-leftContainer-1">
                             <Box className={Styles.updateIcon} data-testid="box-updateIcon-1">
                               {/* EVENT TYPE ICON */}
@@ -131,14 +130,13 @@ const SchoolUpdatesView = ({
                                   src={getEventTypeIcon(item)}
                                   width={isMobile ? "24px" : "42px"}
                                   height={isMobile ? "24px" : "42px"}
-                                />
+                                / data-testid="image-getEventTypeIcon(item)-1">
                               )}
                             </Box>
                             <VStack
                               className={Styles.updateContentBox}
                               spacing={"8px"}
-                              align={"start"}
-                            >
+                              align={"start"} data-testid="vstack-updateContentBox-1">
                               <Box className={Styles.updateEventType} data-testid="box-updateEventType-1">
                                 {/* UNLOCK ICON */}
                                 {!isMobile &&
@@ -147,7 +145,7 @@ const SchoolUpdatesView = ({
                                       src={getUnlockIcon(item)}
                                       width={"24px"}
                                       height={"24px"}
-                                    />
+                                    / data-testid="image-getUnlockIcon(item)-1">
                                   )}
                                 {/* UPDATE TITLE */}
                                 <Box className={Styles.updateTypeText} data-testid="box-updateTypeText-1">
@@ -169,8 +167,7 @@ const SchoolUpdatesView = ({
                                     dueDateColor === "red"
                                       ? Styles.dueDate
                                       : Styles.completedDate
-                                  }
-                                >
+                                  } data-testid="box-7">
                                   {/* DUE DATE */}
                                   {dueDateColor === "red" ||
                                   dueDateColor === "inProgressGrey"
@@ -191,7 +188,7 @@ const SchoolUpdatesView = ({
                                   src={getUnlockIcon(item)}
                                   width={"16px"}
                                   height={"16px"}
-                                />
+                                / data-testid="image-getUnlockIcon(item)-2">
                               )}
 
                             {/* TASK TYPE ICON */}
@@ -203,7 +200,7 @@ const SchoolUpdatesView = ({
                                   src={getUpdatesTaskTypeIcons(item)}
                                   width={isMobile ? "20px" : "70px"}
                                   height={isMobile ? "20px" : "68px"}
-                                />
+                                / data-testid="image-getUpdatesTaskTypeIcons(item)-1">
                               )}
                             {!isMobile && (
                               <Box className={Styles.taskTypeName} data-testid="box-taskTypeName-1">
@@ -220,7 +217,7 @@ const SchoolUpdatesView = ({
                       <Image
                         src={accordion_images.noUpdates}
                         className={Styles.noUpdatesImage}
-                      />
+                      / data-testid="image-noUpdatesImage-1">
                       <Box className={Styles.noUpdatesContent} data-testid="box-noUpdatesContent-1">
                         You don't have any updates now!
                       </Box>
@@ -233,9 +230,9 @@ const SchoolUpdatesView = ({
         </Box>
         {/* PLAIN INPUT */}
         {isMobile && (
-          <Box sx={TaskScreenStyles(isMobile)?.bottomInput} data-testid="box-box-1">
+          <Box sx={TaskScreenStyles(isMobile)?.bottomInput} data-testid="box-8">
             {editor()}
-            <Box sx={TaskScreenStyles()?.bottomBox} data-testid="box-1"></Box>
+            <Box sx={TaskScreenStyles()?.bottomBox} data-testid="box-9"></Box>
           </Box>
         )}
       </Box>
