@@ -163,9 +163,10 @@ const userStyles = {
         boxShadow: "none",
         outline: "4px solid #c5e1a5", // Success/Dark/200 from Figma
         outlineOffset: "4px",
-        borderRadius: "8px", // Maintain rounded corners for outline
+        borderRadius: "6px", // Rounded corners for outline from Figma (slightly less rounded)
         bg: "transparent",
         color: "#8bc34a", // Keep text color as Success/Dark/Main
+        // Tertiary focused has no background color
       },
       "&[data-selected=true]": {
         color: "#79ba40", // Success/Dark/600 from Figma
