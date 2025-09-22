@@ -3,7 +3,7 @@ import { Button as ChakraButton, ButtonProps as ChakraButtonProps } from "@chakr
 import { base, userStyles, sizes, imageSizes, userDisabledStyles } from "./Button.styles";
 
 export interface ButtonProps extends Omit<ChakraButtonProps, "size"> {
-  user: "StudentLight" | "StudentDark" | "TeacherLight" | "TeacherDark" | "Danger";
+  user: "StudentLight" | "StudentDark" | "TeacherLight" | "TeacherDark" | "Error";
   size: "small" | "medium" | "large" | "extra-large";
   buttonType: "primary" | "secondary" | "tertiary";
   buttonState: "default" | "disabled";
