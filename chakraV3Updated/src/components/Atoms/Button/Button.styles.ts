@@ -208,13 +208,10 @@ const imageSizes = {
   },
 };
 
-// Button states
-const states = {
+// User-specific disabled styles
+const userDisabledStyles = {
+  // Default disabled style for most variants
   default: {
-    opacity: 1,
-    cursor: "pointer",
-  },
-  disabled: {
     opacity: 0.5,
     cursor: "not-allowed",
     pointerEvents: "none",
@@ -222,6 +219,28 @@ const states = {
       filter: "none",
     },
   },
+  // Specific TeacherDark disabled style from Figma
+  TeacherDark: {
+    bg: "#707070", // Neutral/500 from Figma
+    color: "#a0a0a0", // Neutral/400 from Figma
+    border: "none",
+    opacity: 1, // No opacity change, uses specific colors instead
+    cursor: "not-allowed",
+    pointerEvents: "none",
+    "&:hover": {
+      filter: "none",
+      bg: "#707070", // Ensure hover doesn't change background
+    },
+  },
+};
+
+// Button states
+const states = {
+  default: {
+    opacity: 1,
+    cursor: "pointer",
+  },
+  disabled: {}, // Empty base state, will be populated in Button.tsx based on user type
 };
 
 export {
@@ -232,4 +251,5 @@ export {
   imageSizes,
   states,
   pseudoStates,
+  userDisabledStyles,
 };
