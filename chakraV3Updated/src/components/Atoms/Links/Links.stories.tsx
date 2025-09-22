@@ -46,7 +46,7 @@ const meta: Meta<LinksProps> = {
     },
     state: {
       control: { type: "select" },
-      options: ["default", "visited", "disabled"],
+      options: ["default", "disabled"],
       description: "Visual state of the link",
     },
     isSelected: {
@@ -222,16 +222,23 @@ export const SelectedLink: Story = {
   }
 };
 
-export const VisitedState: Story = {
+export const VisitableLinks: Story = {
   args: {
-    label: "Visited State Link",
+    label: "This link will appear visited after clicking",
     user: "student",
     size: "medium",
     isUnderlined: false,
-    state: "visited",
-    href: "#",
+    state: "default",
+    href: "#visited-demo", // Real href that can be visited
     isExternal: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "This link will show as visited after you click it. The :visited CSS pseudo-class is applied automatically by the browser."
+      }
+    }
+  }
 };
 
 export const DisabledState: Story = {

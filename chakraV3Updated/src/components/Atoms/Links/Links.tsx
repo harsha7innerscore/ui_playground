@@ -8,7 +8,7 @@ export interface LinksProps extends Omit<ChakraLinkProps, "size"> {
   size?: "small" | "medium";
   isUnderlined?: boolean;
   icon?: React.ReactNode;
-  state?: "default" | "visited" | "disabled"; // Removed hovered, focused, selected as they're handled by CSS
+  state?: "default" | "disabled"; // Removed visited state as it's now handled by CSS
   isSelected?: boolean; // Added for explicit selected state if needed
   styleOverrides?: Record<string, any>;
   isExternal?: boolean;

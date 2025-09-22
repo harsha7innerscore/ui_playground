@@ -18,6 +18,9 @@ const base = {
     outlineColor: "currentColor",
     outlineOffset: "2px",
   },
+  "&:visited": {
+    opacity: 0.8, // Automatic visited state using CSS pseudo-class
+  },
   "&[data-selected=true]": {
     fontWeight: "bold",
     textDecoration: "underline",
@@ -67,12 +70,9 @@ const underline = {
   },
 };
 
-// State-based styles - only keeping disabled and visited as explicit states
+// State-based styles - only keeping disabled as explicit state
 const states = {
   default: {},
-  visited: {
-    opacity: 0.8,
-  },
   disabled: {
     opacity: 0.5,
     cursor: "not-allowed",
