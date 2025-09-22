@@ -139,6 +139,7 @@ const userStyles = {
         color: "#79ba40", // Success/Dark/600 from Figma
         borderColor: "#79ba40",
         border: "1px solid",
+        bg: "#293a16", // Success/Dark/900 from Figma
       },
     },
   },
