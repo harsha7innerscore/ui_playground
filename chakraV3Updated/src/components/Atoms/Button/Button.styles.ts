@@ -195,16 +195,16 @@ const imageSizes = {
     height: "16px", // From Figma (size 16px)
   },
   medium: {
-    width: "16px",
-    height: "16px",
-  },
-  large: {
-    width: "18px",
-    height: "18px",
-  },
-  "extra-large": {
     width: "20px",
     height: "20px",
+  },
+  large: {
+    width: "24px",
+    height: "24px",
+  },
+  "extra-large": {
+    width: "28px",
+    height: "28px",
   },
 };
 
