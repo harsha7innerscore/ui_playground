@@ -54,6 +54,7 @@ const userStyles = {
       bg: "transparent",
       border: "1px solid",
       borderColor: "#FFBFB7",
+      padding: "8px 16px",
       "&:hover": {
         bg: "#332928",
         color: "#FFCCC5",
@@ -142,6 +143,7 @@ const userStyles = {
       bg: "transparent",
       border: "1px solid",
       borderColor: "#8bc34a",
+      padding: "8px 16px",
       "&:hover": {
         bg: "#1C270F",
         color: "#9ccc65",
@@ -189,20 +191,75 @@ const userStyles = {
     },
   },
   Danger: {
-    color: "white",
-    bg: "red.600",
-    border: "1px solid",
-    borderColor: "red.600",
-    "&:hover": {
-      filter: "brightness(0.95)",
+    primary: {
+      color: "#171717",
+      bg: "#F44336",
+      padding: "8px 16px",
+      border: "none",
+      "&:hover": {
+        bg: "#F65F54",
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "4px solid #FAA19B",
+        outlineOffset: "4px",
+        borderRadius: "4px",
+      },
+      "&[data-selected=true]": {
+        bg: "#D0392E",
+        border: "none",
+      },
     },
-    "&:focus": {
-      outline: "none",
-      boxShadow: "0 0 0 3px rgba(255, 99, 99, 0.6)",
+    secondary: {
+      color: "#F44336",
+      bg: "transparent",
+      border: "1px solid",
+      borderColor: "#F44336",
+      padding: "8px 16px",
+      "&:hover": {
+        bg: "#332928",
+        color: "#F65F54",
+        borderColor: "#F65F54",
+        filter: "none",
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "4px solid #FAA19B",
+        outlineOffset: "4px",
+        borderRadius: "8px",
+        bg: "transparent",
+        color: "#F44336",
+      },
+      "&[data-selected=true]": {
+        color: "#D0392E",
+        borderColor: "#D0392E",
+        border: "1px solid",
+        bg: "#4C3937",
+      },
     },
-    "&[data-selected=true]": {
-      border: "2px solid",
-      borderColor: "white",
+    tertiary: {
+      color: "#F44336",
+      bg: "transparent",
+      border: "none",
+      padding: "0px",
+      "&:hover": {
+        bg: "transparent",
+        color: "#F77C73",
+        filter: "none",
+      },
+      "&:focus": {
+        boxShadow: "none",
+        outline: "4px solid ##FAA19B",
+        outlineOffset: "4px",
+        borderRadius: "6px",
+        bg: "transparent",
+        color: "#F44336",
+      },
+      "&[data-selected=true]": {
+        color: "#D0392E",
+        bg: "transparent",
+        border: "none",
+      },
     },
   },
 };
@@ -302,6 +359,49 @@ const userDisabledStyles = {
     },
   },
   TeacherDark: {
+    primary: {
+      bg: "#707070",
+      color: "#a0a0a0",
+      border: "none",
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "#707070",
+      },
+    },
+    secondary: {
+      bg: "transparent",
+      color: "#707070",
+      border: "1px solid",
+      borderColor: "#707070",
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+        borderColor: "#707070",
+      },
+    },
+    tertiary: {
+      bg: "transparent",
+      color: "#707070",
+      border: "none",
+      padding: "0px",
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+      },
+    },
+  },
+  Danger: {
     primary: {
       bg: "#707070",
       color: "#a0a0a0",
