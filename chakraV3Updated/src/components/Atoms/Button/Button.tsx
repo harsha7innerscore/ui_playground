@@ -37,7 +37,7 @@ export const Button: React.FC<ButtonProps> = ({
     const userDisabledStyle = userDisabledStyles[user as keyof typeof userDisabledStyles] || userDisabledStyles.default;
 
     // Check if there's a button-type specific disabled style
-    if (user === "TeacherDark" && (userDisabledStyle as any)[buttonType]) {
+    if ((userDisabledStyle as any)[buttonType]) {
       disabledStyle = (userDisabledStyle as any)[buttonType];
     } else {
       disabledStyle = userDisabledStyle;
@@ -47,16 +47,17 @@ export const Button: React.FC<ButtonProps> = ({
   // Merge styles in order of precedence
   const mergedStyles = {
     ...base,
-    ...(user && userStyles[user]),
-    // Check if user-specific overrides exist for the button type
+    // Apply the user-specific button type style
     ...(user && buttonType && (userStyles[user] as any)?.[buttonType]),
+    // Apply size-specific styles
     ...(size && sizes[size]),
-    // States handling
+    // Apply disabled styles if button is disabled
     ...(buttonState === "disabled" && disabledStyle),
+    // Apply any custom style overrides last
     ...styleOverrides,
   };
 
-  // For disabled state, add data-disabled attribute (Chakra UI v3 compatibility)
+  // For disabled state, use data-disabled attribute for Chakra UI v3 compatibility
   const isDisabled = buttonState === "disabled";
 
   // Process left and right images/icons with appropriate sizing
