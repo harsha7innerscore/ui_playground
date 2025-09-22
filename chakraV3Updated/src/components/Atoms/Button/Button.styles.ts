@@ -48,15 +48,20 @@ const userStyles = {
       padding: "8px 16px", // From Figma design
       // Pseudo states
       "&:hover": {
-        filter: "brightness(0.95)",
+        bg: "#FFCCC5",
       },
       "&:focus": {
-        outline: "none",
-        boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
+        boxShadow: "none",
+        // From Figma: 4px border with color #c5e1a5 (Success/Dark/200)
+        // Using outline instead of box-shadow for cleaner appearance
+        outline: "4px solid #FFDFDB",
+        outlineOffset: "4px", // Space between button and outline
+        borderRadius: "4px", // Maintain rounded corners
       },
       "&[data-selected=true]": {
-        border: "2px solid",
-        borderColor: "#ffbfb7",
+        bg: "#D9A39C",
+        // Remove the default 2px border from pseudoStates.selected
+        border: "none",
       },
     },
     // Keep existing styles as secondary for now
@@ -123,6 +128,8 @@ const userStyles = {
       // Primary button style for TeacherDark - updated from Figma
       color: "#171717", // Text color from Figma (Neutral/850)
       bg: "#8bc34a", // Success/Dark/Main from Figma
+      padding: "8px 16px",
+      border: "none",
       // Pseudo states
       "&:hover": {
         // Using the specific hover color from Figma (Success/Dark/400: #9ccc65)
