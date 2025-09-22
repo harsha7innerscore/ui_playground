@@ -107,8 +107,11 @@ const userStyles = {
       boxShadow: "0 0 0 3px rgba(139, 195, 74, 0.6)", // Focus ring matching the green color
     },
     "&[data-selected=true]": {
-      ...pseudoStates.selected["&[data-selected=true]"],
-      borderColor: "white",
+      // Using the specific selected color from Figma (Success/Dark/600: #79ba40)
+      // instead of adding a border
+      bg: "#79ba40",
+      // Remove the default 2px border from pseudoStates.selected
+      border: "none",
     },
   },
   Danger: {
