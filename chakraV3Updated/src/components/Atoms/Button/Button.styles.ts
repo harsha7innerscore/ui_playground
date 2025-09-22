@@ -11,26 +11,11 @@ const base = {
   gap: "0px",
   fontWeight: 600,
   borderRadius: "4px",
+  opacity: 1,
+  cursor: "pointer", // Added from states.default
 };
 
-// Common pseudo states applied to all buttons
-const pseudoStates = {
-  hover: {
-    "&:hover": {
-      filter: "brightness(0.95)",
-    },
-  },
-  focus: {
-    "&:focus": {
-      outline: "none",
-    },
-  },
-  selected: {
-    "&[data-selected=true]": {
-      border: "2px solid",
-    },
-  },
-};
+// The common pseudo states have been removed and inlined directly into each user style
 
 // User specific styles (without duplicated pseudo states)
 const userStyles = {
@@ -45,11 +30,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
-      ...pseudoStates.focus["&:focus"],
+      outline: "none",
       boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
     },
     "&[data-selected=true]": {
-      ...pseudoStates.selected["&[data-selected=true]"],
+      border: "2px solid",
       borderColor: "green.500",
     },
   },
@@ -64,11 +49,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
-      ...pseudoStates.focus["&:focus"],
+      outline: "none",
       boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
     },
     "&[data-selected=true]": {
-      ...pseudoStates.selected["&[data-selected=true]"],
+      border: "2px solid",
       borderColor: "green.200",
     },
   },
@@ -83,11 +68,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
-      ...pseudoStates.focus["&:focus"],
+      outline: "none",
       boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
     },
     "&[data-selected=true]": {
-      ...pseudoStates.selected["&[data-selected=true]"],
+      border: "2px solid",
       borderColor: "red.500",
     },
   },
@@ -104,7 +89,6 @@ const userStyles = {
         bg: "#9ccc65",
       },
       "&:focus": {
-        ...pseudoStates.focus["&:focus"],
         // Replace box-shadow with Figma's border approach
         boxShadow: "none",
         // From Figma: 4px border with color #c5e1a5 (Success/Dark/200)
@@ -186,11 +170,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
-      ...pseudoStates.focus["&:focus"],
+      outline: "none",
       boxShadow: "0 0 0 3px rgba(255, 99, 99, 0.6)",
     },
     "&[data-selected=true]": {
-      ...pseudoStates.selected["&[data-selected=true]"],
+      border: "2px solid",
       borderColor: "white",
     },
   },
@@ -326,14 +310,9 @@ const userDisabledStyles = {
   },
 };
 
-// Button states
-const states = {
-  default: {
-    opacity: 1,
-    cursor: "pointer",
-  },
-  disabled: {}, // Empty base state, will be populated in Button.tsx based on user type
-};
+// The states object has been removed.
+// - Default state properties have been moved to the base object.
+// - Disabled state is handled by userDisabledStyles.
 
 export {
   base,
@@ -341,7 +320,5 @@ export {
   buttonTypes,
   sizes,
   imageSizes,
-  states,
-  pseudoStates,
   userDisabledStyles,
 };
