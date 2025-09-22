@@ -29,8 +29,8 @@ const roles = {
       opacity: 0.8,
     },
     "&[data-selected=true]": {
-      fontWeight: "bold",
-      textDecoration: "underline",
+      fontWeight: 600, // Semi bold weight as per Figma
+      color: "#233566", // Darker blue color as per Figma
     },
   },
   teacher: {

@@ -204,9 +204,9 @@ export const HoverableLink: Story = {
 
 export const SelectedLink: Story = {
   args: {
-    label: "Selected Link",
+    label: "selected/link/small.com",
     user: "student",
-    size: "medium",
+    size: "small",
     isUnderlined: false,
     state: "default",
     isSelected: true,
@@ -216,7 +216,7 @@ export const SelectedLink: Story = {
   parameters: {
     docs: {
       description: {
-        story: "This link has the selected state applied (bold and underlined)."
+        story: "This link has the selected state applied with semi-bold weight and darker color (#233566)."
       }
     }
   }
