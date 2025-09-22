@@ -308,6 +308,21 @@ const userDisabledStyles = {
         borderColor: "#707070",
       },
     },
+    // Tertiary button specific disabled style
+    tertiary: {
+      bg: "transparent", // Keep transparent background
+      color: "#707070", // Neutral/500 from Figma
+      border: "none",
+      padding: "0px", // Keep the zero padding from default tertiary style
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+      },
+    },
   },
 };
 

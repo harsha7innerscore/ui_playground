@@ -37,8 +37,8 @@ export const Button: React.FC<ButtonProps> = ({
     const userDisabledStyle = userDisabledStyles[user as keyof typeof userDisabledStyles] || userDisabledStyles.default;
 
     // Check if there's a button-type specific disabled style
-    if (buttonType === "secondary" && user === "TeacherDark" && (userDisabledStyle as any).secondary) {
-      disabledStyle = (userDisabledStyle as any).secondary;
+    if (user === "TeacherDark" && (userDisabledStyle as any)[buttonType]) {
+      disabledStyle = (userDisabledStyle as any)[buttonType];
     } else {
       disabledStyle = userDisabledStyle;
     }
