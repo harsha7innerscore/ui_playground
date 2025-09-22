@@ -31,10 +31,18 @@ export const Button: React.FC<ButtonProps> = ({
   // Default image size to match button size if not specified
   const effectiveImageSize = imageSize || size;
 
-  // Get appropriate disabled style based on user type
-  const disabledStyle = buttonState === "disabled"
-    ? userDisabledStyles[user as keyof typeof userDisabledStyles] || userDisabledStyles.default
-    : {};
+  // Get appropriate disabled style based on user type and button type
+  let disabledStyle = {};
+  if (buttonState === "disabled") {
+    const userDisabledStyle = userDisabledStyles[user as keyof typeof userDisabledStyles] || userDisabledStyles.default;
+
+    // Check if there's a button-type specific disabled style
+    if (buttonType === "secondary" && user === "TeacherDark" && (userDisabledStyle as any).secondary) {
+      disabledStyle = (userDisabledStyle as any).secondary;
+    } else {
+      disabledStyle = userDisabledStyle;
+    }
+  }
 
   // Merge styles in order of precedence
   const mergedStyles = {

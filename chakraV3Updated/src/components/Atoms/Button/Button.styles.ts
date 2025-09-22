@@ -253,15 +253,34 @@ const userDisabledStyles = {
   },
   // Specific TeacherDark disabled style from Figma
   TeacherDark: {
-    bg: "#707070", // Neutral/500 from Figma
-    color: "#a0a0a0", // Neutral/400 from Figma
-    border: "none",
-    opacity: 1, // No opacity change, uses specific colors instead
-    cursor: "not-allowed",
-    pointerEvents: "none",
-    "&:hover": {
-      filter: "none",
-      bg: "#707070", // Ensure hover doesn't change background
+    primary: {
+
+      bg: "#707070", // Neutral/500 from Figma
+      color: "#a0a0a0", // Neutral/400 from Figma
+      border: "none",
+      opacity: 1, // No opacity change, uses specific colors instead
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "#707070", // Ensure hover doesn't change background
+      },
+    },
+    // Secondary button specific disabled style
+    secondary: {
+      bg: "transparent", // Keep transparent background
+      color: "#707070", // Neutral/500 from Figma
+      border: "1px solid",
+      borderColor: "#707070", // Neutral/500 from Figma
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+        borderColor: "#707070",
+      },
     },
   },
 };
