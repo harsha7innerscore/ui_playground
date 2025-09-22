@@ -137,6 +137,9 @@ const userStyles = {
         boxShadow: "none",
         outline: "4px solid #c5e1a5", // Success/Dark/200 from Figma
         outlineOffset: "4px",
+        borderRadius: "8px", // Maintain rounded corners for outline
+        bg: "transparent", // Keep transparent background in focused state
+        color: "#8bc34a", // Keep text color as Success/Dark/Main
       },
       "&[data-selected=true]": {
         color: "#79ba40", // Success/Dark/600 from Figma
