@@ -10,30 +10,45 @@ const base = {
   display: "flex",
   alignItems: "center",
   width: "fit-content",
-  "&:hover": {
-    textDecoration: "underline", // Automatic hover state from Figma
-  },
-  "&:focus": {
-    outline: "2px solid",
-    outlineColor: "currentColor",
-    outlineOffset: "2px",
-  },
-  "&:visited": {
-    opacity: 0.8, // Automatic visited state using CSS pseudo-class
-  },
-  "&[data-selected=true]": {
-    fontWeight: "bold",
-    textDecoration: "underline",
-  },
 };
 
-// Role-based styles
+// Role-based styles with their respective interactive states
 const roles = {
   student: {
     color: "#3366CC", // Already matches Figma specs
+    "&:hover": {
+      textDecoration: "underline",
+    },
+    "&:focus": {
+      outline: "2px solid",
+      outlineColor: "#3366CC", // Using student color explicitly
+      outlineOffset: "2px",
+    },
+    "&:visited": {
+      opacity: 0.8,
+    },
+    "&[data-selected=true]": {
+      fontWeight: "bold",
+      textDecoration: "underline",
+    },
   },
   teacher: {
     color: "#F8F8F8",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+    "&:focus": {
+      outline: "2px solid",
+      outlineColor: "#F8F8F8", // Using teacher color explicitly
+      outlineOffset: "2px",
+    },
+    "&:visited": {
+      opacity: 0.8,
+    },
+    "&[data-selected=true]": {
+      fontWeight: "bold",
+      textDecoration: "underline",
+    },
   },
 };
 
