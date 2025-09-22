@@ -73,22 +73,21 @@ const userStyles = {
     },
   },
   TeacherDark: {
-    // Teacher dark mode variant
-    color: "red.200",
-    bg: "gray.800",
-    border: "1px solid",
-    borderColor: "red.200",
+    // Teacher dark mode variant - updated from Figma
+    color: "#171717", // Text color from Figma (Neutral/850)
+    bg: "#8bc34a", // Success/Dark/Main from Figma
+    border: "none",
     // Pseudo states
     "&:hover": {
       filter: "brightness(0.95)",
     },
     "&:focus": {
-      boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
+      boxShadow: "0 0 0 3px rgba(139, 195, 74, 0.6)", // Focus ring matching the green color
       outline: "none",
     },
     "&[data-selected=true]": {
       border: "2px solid",
-      borderColor: "red.200",
+      borderColor: "white",
     },
   },
   Danger: {
@@ -133,9 +132,10 @@ const buttonTypes = {
 // Size-specific styles
 const sizes = {
   small: {
-    fontSize: "12px",
-    padding: "6px 12px",
-    height: "28px",
+    fontSize: "12px", // Font Size/button/xs from Figma
+    padding: "8px 16px", // Updated padding from Figma
+    height: "32px", // Height adjusted to match Figma
+    lineHeight: "16px", // Line Height/body/xs from Figma
   },
   medium: {
     fontSize: "14px",
@@ -157,8 +157,8 @@ const sizes = {
 // Image/icon sizes
 const imageSizes = {
   small: {
-    width: "14px",
-    height: "14px",
+    width: "16px", // From Figma (size 16px)
+    height: "16px", // From Figma (size 16px)
   },
   medium: {
     width: "16px",

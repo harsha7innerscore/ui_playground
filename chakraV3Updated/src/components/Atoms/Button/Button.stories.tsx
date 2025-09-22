@@ -178,6 +178,25 @@ export const TeacherDarkPrimary: Story = {
   },
 };
 
+export const TeacherDarkFigmaExample: Story = {
+  args: {
+    user: "TeacherDark",
+    size: "small",
+    buttonType: "primary",
+    buttonState: "default",
+    text: "P. Default",
+    leftImage: <FiPlus />,
+    rightImage: <FiArrowRight />,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "TeacherDark button exactly as shown in the Figma design, with small size, plus icon on the left, and arrow icon on the right."
+      }
+    }
+  }
+};
+
 // Danger Variant
 export const DangerButton: Story = {
   args: {
