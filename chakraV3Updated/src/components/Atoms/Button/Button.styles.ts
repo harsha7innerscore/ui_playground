@@ -13,7 +13,26 @@ const base = {
   borderRadius: "4px",
 };
 
-// User specific styles with integrated pseudo states
+// Common pseudo states applied to all buttons
+const pseudoStates = {
+  hover: {
+    "&:hover": {
+      filter: "brightness(0.95)",
+    },
+  },
+  focus: {
+    "&:focus": {
+      outline: "none",
+    },
+  },
+  selected: {
+    "&[data-selected=true]": {
+      border: "2px solid",
+    },
+  },
+};
+
+// User specific styles (without duplicated pseudo states)
 const userStyles = {
   StudentLight: {
     // Student light mode variant
@@ -26,11 +45,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
+      ...pseudoStates.focus["&:focus"],
       boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
-      outline: "none",
     },
     "&[data-selected=true]": {
-      border: "2px solid",
+      ...pseudoStates.selected["&[data-selected=true]"],
       borderColor: "green.500",
     },
   },
@@ -45,11 +64,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
+      ...pseudoStates.focus["&:focus"],
       boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
-      outline: "none",
     },
     "&[data-selected=true]": {
-      border: "2px solid",
+      ...pseudoStates.selected["&[data-selected=true]"],
       borderColor: "green.200",
     },
   },
@@ -64,11 +83,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
+      ...pseudoStates.focus["&:focus"],
       boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
-      outline: "none",
     },
     "&[data-selected=true]": {
-      border: "2px solid",
+      ...pseudoStates.selected["&[data-selected=true]"],
       borderColor: "red.500",
     },
   },
@@ -82,11 +101,11 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
+      ...pseudoStates.focus["&:focus"],
       boxShadow: "0 0 0 3px rgba(139, 195, 74, 0.6)", // Focus ring matching the green color
-      outline: "none",
     },
     "&[data-selected=true]": {
-      border: "2px solid",
+      ...pseudoStates.selected["&[data-selected=true]"],
       borderColor: "white",
     },
   },
@@ -101,14 +120,17 @@ const userStyles = {
       filter: "brightness(0.95)",
     },
     "&:focus": {
+      ...pseudoStates.focus["&:focus"],
       boxShadow: "0 0 0 3px rgba(255, 99, 99, 0.6)",
-      outline: "none",
     },
     "&[data-selected=true]": {
-      border: "2px solid white",
+      ...pseudoStates.selected["&[data-selected=true]"],
+      borderColor: "white",
     },
   },
 };
+
+// Hover state is now added directly to each user style
 
 // Button types
 const buttonTypes = {
@@ -197,4 +219,5 @@ export {
   sizes,
   imageSizes,
   states,
+  pseudoStates,
 };
