@@ -156,7 +156,7 @@ const userStyles = {
       padding: "0px", // Remove padding for tertiary buttons
       "&:hover": {
         bg: "transparent",
-        color: "#9ccc65", // Success/Dark/400 from Figma
+        color: "#aed581", // Success/Dark/300 from Figma
         filter: "none", // Override default filter to ensure no brightness change
       },
       "&:focus": {
