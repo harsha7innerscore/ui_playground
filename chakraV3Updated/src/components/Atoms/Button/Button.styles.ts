@@ -39,22 +39,63 @@ const userStyles = {
     },
   },
   StudentDark: {
-    // Student dark mode variant
-    color: "green.200",
-    bg: "gray.800",
-    border: "1px solid",
-    borderColor: "green.200",
-    // Pseudo states
-    "&:hover": {
-      filter: "brightness(0.95)",
+    // Student dark mode variant - updated from Figma
+    primary: {
+      // Primary button style for StudentDark
+      color: "#171717", // Text color from Figma (Neutral/850)
+      bg: "#ffbfb7", // Secondary/Default from Figma
+      border: "none",
+      padding: "8px 16px", // From Figma design
+      // Pseudo states
+      "&:hover": {
+        filter: "brightness(0.95)",
+      },
+      "&:focus": {
+        outline: "none",
+        boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
+      },
+      "&[data-selected=true]": {
+        border: "2px solid",
+        borderColor: "#ffbfb7",
+      },
     },
-    "&:focus": {
-      outline: "none",
-      boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
-    },
-    "&[data-selected=true]": {
-      border: "2px solid",
+    // Keep existing styles as secondary for now
+    secondary: {
+      color: "green.200",
+      bg: "gray.800",
+      border: "1px solid",
       borderColor: "green.200",
+      // Pseudo states
+      "&:hover": {
+        filter: "brightness(0.95)",
+      },
+      "&:focus": {
+        outline: "none",
+        boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
+      },
+      "&[data-selected=true]": {
+        border: "2px solid",
+        borderColor: "green.200",
+      },
+    },
+    // Add tertiary style placeholder
+    tertiary: {
+      color: "green.200",
+      bg: "transparent",
+      border: "none",
+      padding: "0px",
+      // Pseudo states
+      "&:hover": {
+        filter: "brightness(0.95)",
+      },
+      "&:focus": {
+        outline: "none",
+        boxShadow: "0 0 0 3px rgba(66, 153, 225, 0.6)",
+      },
+      "&[data-selected=true]": {
+        border: "none",
+        color: "green.400",
+      },
     },
   },
   TeacherLight: {
@@ -237,6 +278,50 @@ const userDisabledStyles = {
     pointerEvents: "none",
     "&:hover": {
       filter: "none",
+    },
+  },
+  // StudentDark disabled styles (matching TeacherDark)
+  StudentDark: {
+    primary: {
+      bg: "#707070", // Neutral/500 from Figma
+      color: "#a0a0a0", // Neutral/400 from Figma
+      border: "none",
+      opacity: 1, // No opacity change, uses specific colors instead
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "#707070", // Ensure hover doesn't change background
+      },
+    },
+    secondary: {
+      bg: "transparent", // Keep transparent background
+      color: "#707070", // Neutral/500 from Figma
+      border: "1px solid",
+      borderColor: "#707070", // Neutral/500 from Figma
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+        borderColor: "#707070",
+      },
+    },
+    tertiary: {
+      bg: "transparent", // Keep transparent background
+      color: "#707070", // Neutral/500 from Figma
+      border: "none",
+      padding: "0px", // Keep the zero padding from default tertiary style
+      opacity: 1,
+      cursor: "not-allowed",
+      pointerEvents: "none",
+      "&:hover": {
+        filter: "none",
+        bg: "transparent",
+        color: "#707070",
+      },
     },
   },
   // Specific TeacherDark disabled style from Figma
