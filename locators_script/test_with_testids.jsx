@@ -55,7 +55,7 @@ const SchoolUpdatesView = ({
       isUpdatesDisplayed: true,
       wall_images
     });
-    return () => <MobileBottomNavMenu mobileBottomList={mobileBottomList} />;
+    return () => <MobileBottomNavMenu mobileBottomList={mobileBottomList} data-testid='mobilebottomnavmenu-1' />;
   }, []);
 
   return (
@@ -69,7 +69,7 @@ const SchoolUpdatesView = ({
                   <img
                   className={Styles?.vinImageInternal}
                   alt="Vin"
-                  src={AssistantImg} />
+                  src={AssistantImg} data-testid='img-AssistantImg-1' />
 
                 </Box>
               }
@@ -124,7 +124,7 @@ const SchoolUpdatesView = ({
                               isMobile ?
                               "UpdatesMobile" :
                               "UpdatesDesktop"
-                              } /> :
+                              } data-testid='customtooltip-1' /> :
 
 
                             <Image
@@ -245,10 +245,10 @@ const SchoolUpdatesView = ({
         isOpen={showRequestModal}
         onClose={() => setShowRequestModal(false)}
         isMobile={isMobile}
-        image={AssistantImg} />
+        image={AssistantImg} data-testid='requestsentmodal-1' />
 
       }
-      {showForbiddenLayout && <ForbiddenLayout isOpen={showForbiddenLayout} />}
+      {showForbiddenLayout && <ForbiddenLayout isOpen={showForbiddenLayout} data-testid='forbiddenlayout-1' />}
     </>);
 
 };
