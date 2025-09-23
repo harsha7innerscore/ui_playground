@@ -312,7 +312,22 @@ const componentTypesCount = {
 traverse(ast, {
   JSXOpeningElement(path) {
     const node = path.node;
-    const componentName = node.name.name;
+
+    // Handle different types of JSX elements (normal and namespaced)
+    let componentName;
+    let isNamespaced = false;
+
+    if (t.isJSXIdentifier(node.name)) {
+      // Normal JSX element like <div> or <Box>
+      componentName = node.name.name;
+    } else if (t.isJSXMemberExpression(node.name)) {
+      // Namespaced element like <Namespace.Element>
+      componentName = node.name.property.name;
+      isNamespaced = true;
+    } else {
+      // Skip other element types
+      return;
+    }
 
     // Determine if this is a Chakra component or HTML element we want to process
     const isChakraComponent = chakraComponents.has(componentName);
@@ -321,7 +336,8 @@ traverse(ast, {
     // Skip processing based on options
     if ((options.htmlOnly && !isHtmlElement) ||
         (options.chakraOnly && !isChakraComponent) ||
-        (!isChakraComponent && !isHtmlElement && !options.includeHtml)) {
+        (!isChakraComponent && !isHtmlElement && !options.includeHtml) ||
+        isNamespaced) { // Skip namespaced elements for now
       return;
     }
 
