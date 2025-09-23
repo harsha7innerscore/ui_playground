@@ -19,12 +19,12 @@ export default function UserText({
   let isDoubtScreen =
   location?.pathname.includes("/doubt") || playgroundMode === "Doubt";
   return (
-    <div data-testid='div-1'>
+    <div data-testid='container'>
       <div
         className={styles.container}
         style={{
           marginTop: !isClassifier || selectedIndex === 2 ? "0" : "40px"
-        }} data-testid='div-container-1'>
+        }} data-testid='div-container'>
 
         <div
           className={
@@ -35,16 +35,16 @@ export default function UserText({
           isDoubtScreen ?
           styles["user-text-doubt"] :
           styles["user-text"]
-          } data-testid='div-2'>
+          } data-testid='container-2'>
 
           {renderContent(text)}
           {descImageList?.length > 0 &&
           <React.Fragment>
-              <Divider borderColor={"#00000033"} my={2} data-testid='divider-1' />
-              <HStack justifyContent={"space-between"} pr={3} w={"full"} data-testid='hstack-1'>
+              <Divider borderColor={"#00000033"} my={2} data-testid='divider' />
+              <HStack justifyContent={"space-between"} pr={3} w={"full"} data-testid='hstack'>
                 <Text
                 fontSize={"14px"}
-                color={"#000000A6"} data-testid='text-1'>
+                color={"#000000A6"} data-testid='text-transcribed-response'>
                 {`Transcribed response`}</Text>
                 <HStack
                 cursor={"pointer"}
@@ -55,9 +55,9 @@ export default function UserText({
                   <Text
                   fontSize={"14px"}
                   fontWeight={"400"}
-                  color={"#5F4DC7"} data-testid='text-2'>
+                  color={"#5F4DC7"} data-testid='text-show-preview'>
                   {`Show Preview`}</Text>
-                  <LuMoveUpRight size={16} color="#5F4DC7" data-testid='lumoveupright-1' />
+                  <LuMoveUpRight size={16} color="#5F4DC7" data-testid='lumoveupright' />
                 </HStack>
               </HStack>
             </React.Fragment>

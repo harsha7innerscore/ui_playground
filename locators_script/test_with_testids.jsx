@@ -55,21 +55,21 @@ const SchoolUpdatesView = ({
       isUpdatesDisplayed: true,
       wall_images
     });
-    return () => <MobileBottomNavMenu mobileBottomList={mobileBottomList} data-testid='mobilebottomnavmenu-1' />;
+    return () => <MobileBottomNavMenu mobileBottomList={mobileBottomList} data-testid='mobilebottomnavmenu' />;
   }, []);
 
   return (
     <>
-      <Box className={Styles?.globalContainer} data-testid='box-1'>
+      <Box className={Styles?.globalContainer} data-testid='box'>
         <Box className={Styles?.globalSubContainer} data-testid='box-2'>
-          <Flex flexDir={"row"} alignItems={"flex-start"} data-testid='flex-1'>
+          <Flex flexDir={"row"} alignItems={"flex-start"} data-testid='flex'>
             <Box className={Styles?.globalSubbContainer} data-testid='box-3'>
               {
               <Box className={Styles?.vinImage} data-testid='box-4'>
                   <img
                   className={Styles?.vinImageInternal}
                   alt="Vin"
-                  src={AssistantImg} data-testid='img-AssistantImg-1' />
+                  src={AssistantImg} data-testid='img-AssistantImg' />
 
                 </Box>
               }
@@ -83,7 +83,7 @@ const SchoolUpdatesView = ({
                   onCreditsRequest={handleCreditsRequest}
                   nudgeObject={nudgeObject}
                   setNudgeObject={setNudgeObject}
-                  isNudgeLoading={isNudgeLoading} data-testid='learningcreditscontainer-1' />
+                  isNudgeLoading={isNudgeLoading} data-testid='learningcreditscontainer' />
 
                 <Box className={Styles?.optionRightTopContainer} data-testid='box-6'>
                   <OptionContainer
@@ -91,12 +91,12 @@ const SchoolUpdatesView = ({
                     userAdditionalDetails={userAdditionalDetails}
                     isTaskScreen={false}
                     emotionalMessage={emotionalMessage}
-                    hasUpdates={isNotEmptyOrNull(data)} data-testid='optioncontainer-1' />
+                    hasUpdates={isNotEmptyOrNull(data)} data-testid='optioncontainer' />
 
                 </Box>
-                <Box className={Styles.mainContainer} data-testid='box-mainContainer-1'>
+                <Box className={Styles.mainContainer} data-testid='box-mainContainer'>
                   {isMobile &&
-                  <Box paddingTop={"12px"} className={Styles.updatesTitle} data-testid='box-updatesTitle-1'>
+                  <Box paddingTop={"12px"} className={Styles.updatesTitle} data-testid='box-updatesTitle'>
                       Updates
                     </Box>
                   }
@@ -108,10 +108,10 @@ const SchoolUpdatesView = ({
                         className={Styles.individualContainer}
                         key={index}
                         cursor={"pointer"}
-                        onClick={() => onhandleUpdateClick(item)} data-testid='box-individualContainer-1'>
+                        onClick={() => onhandleUpdateClick(item)} data-testid='box-individualContainer'>
 
-                          <Box className={Styles.leftContainer} data-testid='box-leftContainer-1'>
-                            <Box className={Styles.updateIcon} data-testid='box-updateIcon-1'>
+                          <Box className={Styles.leftContainer} data-testid='box-leftContainer'>
+                            <Box className={Styles.updateIcon} data-testid='box-updateIcon'>
                               {/* EVENT TYPE ICON */}
                               {/* When custom assessment is assigned, tooltip will be shown for the icon
                               with the subtopics assgined, else the icon will be shown */}
@@ -124,41 +124,41 @@ const SchoolUpdatesView = ({
                               isMobile ?
                               "UpdatesMobile" :
                               "UpdatesDesktop"
-                              } data-testid='customtooltip-1' /> :
+                              } data-testid='customtooltip' /> :
 
 
                             <Image
                               src={getEventTypeIcon(item)}
                               width={isMobile ? "24px" : "42px"}
-                              height={isMobile ? "24px" : "42px"} data-testid='image-1' />
+                              height={isMobile ? "24px" : "42px"} data-testid='img' />
 
                             }
                             </Box>
                             <VStack
                             className={Styles.updateContentBox}
                             spacing={"8px"}
-                            align={"start"} data-testid='vstack-updateContentBox-1'>
+                            align={"start"} data-testid='vstack-updateContentBox'>
 
-                              <Box className={Styles.updateEventType} data-testid='box-updateEventType-1'>
+                              <Box className={Styles.updateEventType} data-testid='box-updateEventType'>
                                 {/* UNLOCK ICON */}
                                 {!isMobile &&
                               item?.update_type !== "sectionUnlocked" &&
                               <Image
                                 src={getUnlockIcon(item)}
                                 width={"24px"}
-                                height={"24px"} data-testid='image-2' />
+                                height={"24px"} data-testid='img-2' />
 
                               }
                                 {/* UPDATE TITLE */}
-                                <Box className={Styles.updateTypeText} data-testid='box-updateTypeText-1'>
+                                <Box className={Styles.updateTypeText} data-testid='box-updateTypeText'>
                                   {updateType(item?.update_type)}
                                 </Box>
                               </Box>
-                              <Box className={Styles.subjectTopic} data-testid='box-subjectTopic-1'>
+                              <Box className={Styles.subjectTopic} data-testid='box-subjectTopic'>
                                 {/* SUBJECT NAME : TOPIC NAME */}
                                 {getSubjectName(item)}: {getTopicName(item)}
                               </Box>
-                              <Box className={Styles.subtopic} data-testid='box-subtopic-1'>
+                              <Box className={Styles.subtopic} data-testid='box-subtopic'>
                                 {/* SUBTOPIC NAME */}
                                 {getSubtopicName(item)}
                               </Box>
@@ -183,14 +183,14 @@ const SchoolUpdatesView = ({
                             }
                             </VStack>
                           </Box>
-                          <Box className={Styles.rightContainer} data-testid='box-rightContainer-1'>
+                          <Box className={Styles.rightContainer} data-testid='box-rightContainer'>
                             {isMobile &&
                           item?.update_type !== "sectionUnlocked" &&
                           // EVENT TYPE ICON
                           <Image
                             src={getUnlockIcon(item)}
                             width={"16px"}
-                            height={"16px"} data-testid='image-3' />
+                            height={"16px"} data-testid='img-3' />
 
                           }
 
@@ -202,11 +202,11 @@ const SchoolUpdatesView = ({
                           <Image
                             src={getUpdatesTaskTypeIcons(item)}
                             width={isMobile ? "20px" : "70px"}
-                            height={isMobile ? "20px" : "68px"} data-testid='image-4' />
+                            height={isMobile ? "20px" : "68px"} data-testid='img-4' />
 
                           }
                             {!isMobile &&
-                          <Box className={Styles.taskTypeName} data-testid='box-taskTypeName-1'>
+                          <Box className={Styles.taskTypeName} data-testid='box-taskTypeName'>
                                 {/* TASK TYPE */}
                                 {getUpdatesTaskType(item)}
                               </Box>
@@ -216,12 +216,12 @@ const SchoolUpdatesView = ({
 
                   }) :
 
-                  <Box className={Styles.noUpdates} data-testid='box-noUpdates-1'>
+                  <Box className={Styles.noUpdates} data-testid='box-noUpdates'>
                       <Image
                       src={accordion_images.noUpdates}
-                      className={Styles.noUpdatesImage} data-testid='image-noUpdatesImage-1' />
+                      className={Styles.noUpdatesImage} data-testid='image-noUpdatesImage' />
 
-                      <Box className={Styles.noUpdatesContent} data-testid='box-noUpdatesContent-1'>
+                      <Box className={Styles.noUpdatesContent} data-testid='box-noUpdatesContent'>
                         You don't have any updates now!
                       </Box>
                     </Box>
@@ -245,10 +245,10 @@ const SchoolUpdatesView = ({
         isOpen={showRequestModal}
         onClose={() => setShowRequestModal(false)}
         isMobile={isMobile}
-        image={AssistantImg} data-testid='requestsentmodal-1' />
+        image={AssistantImg} data-testid='requestsentmodal' />
 
       }
-      {showForbiddenLayout && <ForbiddenLayout isOpen={showForbiddenLayout} data-testid='forbiddenlayout-1' />}
+      {showForbiddenLayout && <ForbiddenLayout isOpen={showForbiddenLayout} data-testid='forbiddenlayout' />}
     </>);
 
 };

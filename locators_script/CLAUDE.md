@@ -35,6 +35,23 @@ node add_chakra_testids_v2.js path/to/your-file.jsx --chakra-only  # Only proces
 node add_chakra_testids_v2.js path/to/your-file.jsx --html-only    # Only process HTML elements
 ```
 
+#### Version 3 (Meaningful Test IDs)
+
+Advanced script that generates more meaningful and descriptive test IDs by analyzing element content and context:
+
+```bash
+# Run the script with default options (extracts text content and uses comments)
+node add_chakra_testids_v3.js path/to/your-file.jsx
+
+# Run with specific options
+node add_chakra_testids_v3.js path/to/your-file.jsx --no-comment-based  # Don't use comments for naming
+node add_chakra_testids_v3.js path/to/your-file.jsx --no-text-based     # Don't use text content for naming
+
+# You can combine with v2 options
+node add_chakra_testids_v3.js path/to/your-file.jsx --chakra-only  # Only process Chakra components
+node add_chakra_testids_v3.js path/to/your-file.jsx --html-only    # Only process HTML elements
+```
+
 ### Python Implementations
 
 Various Python implementations are available, each with progressively improved capabilities:
@@ -84,6 +101,14 @@ This project consists of three main implementations:
    - Provides command-line options to control processing
    - Generates intelligent test IDs based on element attributes
    - Reports usage statistics by component type
+
+3. **JavaScript Implementation v3 (add_chakra_testids_v3.js)**
+   - Further enhanced version with smarter test ID generation
+   - Creates meaningful, readable test IDs instead of generic identifiers
+   - Extracts text content from elements for more descriptive IDs
+   - Uses nearby comments to determine element purpose
+   - Analyzes element attributes for semantic meaning
+   - Generates role-based IDs for improved testing clarity
 
 2. **Python Implementations**
    - Multiple iterations with progressive improvements
@@ -148,3 +173,54 @@ Version 2 of the JavaScript implementation (`add_chakra_testids_v2.js`) adds sup
 - Text elements: p, h1-h6, ul, ol, li
 
 These elements receive test IDs regardless of whether Chakra UI components are present in the file.
+
+## Meaningful Test ID Generation
+
+Version 3 of the JavaScript implementation (`add_chakra_testids_v3.js`) significantly improves the quality of generated test IDs by:
+
+### 1. Text Content Extraction
+
+Instead of generic names like `box-1`, `box-2`, the script now extracts text content from elements to create more meaningful identifiers:
+
+```jsx
+// Before
+<Text>Show Preview</Text>  =>  <Text data-testid="text-1">Show Preview</Text>
+
+// After
+<Text>Show Preview</Text>  =>  <Text data-testid="text-show-preview">Show Preview</Text>
+```
+
+### 2. Comment-Based Naming
+
+The script analyzes nearby comments to understand element purpose:
+
+```jsx
+// User profile section
+<div>...</div>  =>  <div data-testid="user-profile-section">...</div>
+```
+
+### 3. Attribute Analysis
+
+Intelligent analysis of attributes for more descriptive names:
+
+```jsx
+// Before
+<CustomButton label="Submit Form" />  =>  <CustomButton data-testid="custombutton-1" label="Submit Form" />
+
+// After
+<CustomButton label="Submit Form" />  =>  <CustomButton data-testid="custombutton-submit-form" label="Submit Form" />
+```
+
+### 4. Role-Based Naming
+
+Improved semantic naming based on element roles:
+
+```jsx
+// Before
+<div>...</div>  =>  <div data-testid="div-1">...</div>
+
+// After
+<div>...</div>  =>  <div data-testid="container">...</div>
+```
+
+These improvements make tests much more readable and maintainable by creating descriptive, purpose-indicating test IDs.
