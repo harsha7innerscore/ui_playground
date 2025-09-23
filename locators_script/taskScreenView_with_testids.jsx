@@ -101,7 +101,7 @@ const MemoizedTaskCard = React.memo(
     return (
       <WrapItem
         key={`taskcard-${title}${id}`}
-        sx={TaskScreenStyles()?.cardSuperContainer} data-testid='task-screen-view-wrapitem'>
+        sx={TaskScreenStyles()?.cardSuperContainer} data-testid='task-screen-view-taskcard-'>
 
         <TaskCard
           id={`taskcard-${taskselectedname}-${index}`}
@@ -179,7 +179,7 @@ const MemoizedMobileTaskCard = React.memo(
     return (
       <WrapItem
         key={`taskcard-${title}${id}`}
-        sx={TaskScreenStyles()?.cardSuperContainer} data-testid='task-screen-view-wrapitem-2'>
+        sx={TaskScreenStyles()?.cardSuperContainer} data-testid='task-screen-view-taskcard-'>
 
         <MobileTaskCard
           onClick={() => onCardClick(task)}
@@ -385,7 +385,7 @@ const TaskScreenView = ({
                       onCardClick={onCardClick}
                       customAssessmentList={customAssessmentList}
                       selectedOption={selectedOption}
-                      serverDate={serverDate} data-testid='task-screen-view-memoizedmobiletaskcard-wrap' />
+                      serverDate={serverDate} data-testid='task-screen-view-mobile-task-' />
 
                     )}
                         </Wrap>
@@ -398,10 +398,10 @@ const TaskScreenView = ({
                               {[...Array(4)].map((_, index) =>
                       <WrapItem
                         key={index}
-                        sx={TaskScreenStyles()?.cardSuperContainer} data-testid='task-screen-view-wrapitem-wrap'>
+                        sx={TaskScreenStyles()?.cardSuperContainer} data-testid='task-screen-view-index'>
 
                                   <MobileTaskCardSkeleton
-                          isInitialLoad={false} data-testid='task-screen-view-mobiletaskcardskeleton-wrapitem' />
+                          isInitialLoad={false} data-testid='task-screen-view-wrapitem-mobiletaskcardskeleton-1' />
 
                                 </WrapItem>
                       )}
@@ -447,7 +447,7 @@ const TaskScreenView = ({
                               onCardClick={onCardClick}
                               customAssessmentList={customAssessmentList}
                               selectedOption={selectedOption}
-                              serverDate={serverDate} data-testid='task-screen-view-memoizedtaskcard-wrap' />
+                              serverDate={serverDate} data-testid='task-screen-view-desktop-task-' />
 
                             )}
                               </Wrap>
@@ -557,7 +557,7 @@ const TaskScreenView = ({
                                 selectedOption={
                                 FILTER_OPTIONS?.missedOpportunity
                                 }
-                                serverDate={serverDate} data-testid='task-screen-view-memoizedtaskcard-wrap-2' />
+                                serverDate={serverDate} data-testid='task-screen-view-desktop-task-' />
 
                               )}
                                 </Wrap>
