@@ -20,14 +20,14 @@ const Player = ({}) => {
   };
 
   return (
-    <div className="modal" data-testid='div-modal'>
+    <div className="modal" data-testid='dashboard-div-modal'>
       <LearnDashBoard
         key={refreshKeyRef.current}
         content={learningStepData?.contents}
         factual_rule_set={learningStepData?.factual_rule_set}
         learningStepData={learningStepData}
         learning_mode={learningStepData?.learning_mode?.toLowerCase()}
-        handleButtonClick={handleFactual} data-testid='learndashboard' />
+        handleButtonClick={handleFactual} data-testid='dashboard-learndashboard-div-modal' />
 
       {displayPopUpRef.current &&
       <div
@@ -41,17 +41,17 @@ const Player = ({}) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center"
-        }} data-testid='container'>
+        }} data-testid='dashboard-div-modal-2'>
 
           <div
           style={{
             display: "flex"
-          }} data-testid='container-2'>
+          }} data-testid='dashboard-div'>
 
             <div
             style={{
               marginRight: "20px"
-            }} data-testid='container-3'>
+            }} data-testid='dashboard-div-2'>
 
               <CustomButton
               label={"Replay the video"}
@@ -59,7 +59,7 @@ const Player = ({}) => {
               handleClick={() => {
                 setRefreshKey(refreshKeyRef.current + 1);
                 setDisplayPopup(false);
-              }} data-testid='custombutton-replay-the-video' />
+              }} data-testid='dashboard-custombutton-replay-the-video' />
 
             </div>
             <CustomButton
@@ -68,7 +68,7 @@ const Player = ({}) => {
             handleClick={() => {
               setIsPlayerOpen(false);
               handleShowBottomSheet(false);
-            }} data-testid='custombutton-answer-the-questions' />
+            }} data-testid='dashboard-custombutton-answer-the-questions' />
 
           </div>
         </div>

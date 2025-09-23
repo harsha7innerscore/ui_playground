@@ -52,6 +52,26 @@ node add_chakra_testids_v3.js path/to/your-file.jsx --chakra-only  # Only proces
 node add_chakra_testids_v3.js path/to/your-file.jsx --html-only    # Only process HTML elements
 ```
 
+#### Version 4 (User-Specified Prefixes & Enhanced Class Name Usage)
+
+Further enhanced script that always prompts for a user-specified prefix and improves class name utilization:
+
+```bash
+# Run the script and provide prefix interactively
+node add_chakra_testids_v4.js path/to/your-file.jsx
+# The script will prompt: "Enter a prefix for test IDs (e.g., "task-page" or "user-profile"):"
+
+# You can pipe in a prefix
+echo "dashboard" | node add_chakra_testids_v4.js path/to/your-file.jsx
+
+# Additional options
+node add_chakra_testids_v4.js path/to/your-file.jsx --verbose  # Show detailed ID generation info
+
+# Supports all previous options
+echo "checkout" | node add_chakra_testids_v4.js path/to/your-file.jsx --chakra-only
+echo "dashboard" | node add_chakra_testids_v4.js path/to/your-file.jsx --html-only
+```
+
 ### Python Implementations
 
 Various Python implementations are available, each with progressively improved capabilities:
@@ -109,6 +129,14 @@ This project consists of three main implementations:
    - Uses nearby comments to determine element purpose
    - Analyzes element attributes for semantic meaning
    - Generates role-based IDs for improved testing clarity
+
+4. **JavaScript Implementation v4 (add_chakra_testids_v4.js)**
+   - ALWAYS prompts for user-specified prefix for all test IDs
+   - Greatly enhances class name utilization for better test ID generation
+   - Improves parent-child relationship context for nested elements
+   - Better analyzes component hierarchy for naming context
+   - Uses more intelligent fallbacks for generic elements
+   - Includes verbose mode to see detailed ID generation decisions
 
 2. **Python Implementations**
    - Multiple iterations with progressive improvements
@@ -224,3 +252,57 @@ Improved semantic naming based on element roles:
 ```
 
 These improvements make tests much more readable and maintainable by creating descriptive, purpose-indicating test IDs.
+
+## User-Specified Prefixes
+
+Version 4 of the JavaScript implementation (`add_chakra_testids_v4.js`) ALWAYS prompts for a user-specified prefix for all generated test IDs:
+
+### 1. Interactive Prompt
+
+The script will always prompt for a prefix when run:
+
+```bash
+node add_chakra_testids_v4.js your-file.jsx
+Enter a prefix for test IDs (e.g., "task-page" or "user-profile"): dashboard
+```
+
+### 2. Prefix via Piped Input
+
+You can also provide a prefix through piped input:
+
+```bash
+echo "task-page" | node add_chakra_testids_v4.js your-file.jsx
+```
+
+### 3. Applied to All Test IDs
+
+The prefix is consistently applied to all generated test IDs:
+
+```jsx
+// Output with prefix "dashboard-"
+<div>...</div>  =>  <div data-testid="dashboard-container">...</div>
+<Button>...</Button>  =>  <Button data-testid="dashboard-btn-submit">...</Button>
+```
+
+### 4. Improved Class Name Utilization
+
+Version 4 significantly enhances how class names are used for test ID generation:
+
+```jsx
+// Before (v3)
+<div className="user-profile-container">...</div>  =>  <div data-testid="div-1">...</div>
+
+// After (v4)
+<div className="user-profile-container">...</div>  =>  <div data-testid="div-user-profile-container">...</div>
+```
+
+### 5. Better Component Context
+
+The script now better uses parent-child relationships for more descriptive naming:
+
+```jsx
+// More context-aware naming
+<HStack>
+  <LuMoveUpRight/>  =>  <LuMoveUpRight data-testid="dashboard-lumoveupright-hstack"/>
+</HStack>
+```
