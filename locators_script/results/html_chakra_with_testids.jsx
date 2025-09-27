@@ -19,12 +19,12 @@ export default function UserText({
   let isDoubtScreen =
   location?.pathname.includes("/doubt") || playgroundMode === "Doubt";
   return (
-    <div data-testid='testing-prefix-container'>
+    <div data-testid='user-text-container'>
       <div
         className={styles.container}
         style={{
           marginTop: !isClassifier || selectedIndex === 2 ? "0" : "40px"
-        }} data-testid='testing-prefix-div-container'>
+        }} data-testid='user-text-div'>
 
         <div
           className={
@@ -35,29 +35,29 @@ export default function UserText({
           isDoubtScreen ?
           styles["user-text-doubt"] :
           styles["user-text"]
-          } data-testid='testing-prefix-div-container-2'>
+          } data-testid='user-text-div-2'>
 
           {renderContent(text)}
           {descImageList?.length > 0 &&
           <React.Fragment>
-              <Divider borderColor={"#00000033"} my={2} data-testid='testing-prefix-divider' />
-              <HStack justifyContent={"space-between"} pr={3} w={"full"} data-testid='testing-prefix-hstack'>
+              <Divider borderColor={"#00000033"} my={2} data-testid='user-text-divider-fragment' />
+              <HStack justifyContent={"space-between"} pr={3} w={"full"} data-testid='user-text-hstack-fragment'>
                 <Text
                 fontSize={"14px"}
-                color={"#000000A6"} data-testid='testing-prefix-text-transcribed-response'>
+                color={"#000000A6"} data-testid='user-text-text-hstack-transcribed-response'>
                 {`Transcribed response`}</Text>
                 <HStack
                 cursor={"pointer"}
                 onClick={() => {
                   onPreview(true);
-                }} data-testid='testing-prefix-hstack-2'>
+                }} data-testid='user-text-hstack-clickable'>
 
                   <Text
                   fontSize={"14px"}
                   fontWeight={"400"}
-                  color={"#5F4DC7"} data-testid='testing-prefix-text-show-preview'>
+                  color={"#5F4DC7"} data-testid='user-text-text-hstack-show-preview'>
                   {`Show Preview`}</Text>
-                  <LuMoveUpRight size={16} color="#5F4DC7" data-testid='testing-prefix-lumoveupright-hstack' />
+                  <LuMoveUpRight size={16} color="#5F4DC7" data-testid='user-text-lumoveupright-hstack' />
                 </HStack>
               </HStack>
             </React.Fragment>
