@@ -20,14 +20,14 @@ const Player = ({}) => {
   };
 
   return (
-    <div className="modal" data-testid='dashboard-div-modal'>
+    <div className="modal" data-testid='html-elements-div-modal'>
       <LearnDashBoard
         key={refreshKeyRef.current}
         content={learningStepData?.contents}
         factual_rule_set={learningStepData?.factual_rule_set}
         learningStepData={learningStepData}
         learning_mode={learningStepData?.learning_mode?.toLowerCase()}
-        handleButtonClick={handleFactual} data-testid='dashboard-learndashboard-div-modal' />
+        handleButtonClick={handleFactual} data-testid='html-elements-current' />
 
       {displayPopUpRef.current &&
       <div
@@ -41,17 +41,17 @@ const Player = ({}) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center"
-        }} data-testid='dashboard-div-modal-2'>
+        }} data-testid='html-elements-div'>
 
           <div
           style={{
             display: "flex"
-          }} data-testid='dashboard-div'>
+          }} data-testid='html-elements-div'>
 
             <div
             style={{
               marginRight: "20px"
-            }} data-testid='dashboard-div-2'>
+            }} data-testid='html-elements-div'>
 
               <CustomButton
               label={"Replay the video"}
@@ -59,7 +59,7 @@ const Player = ({}) => {
               handleClick={() => {
                 setRefreshKey(refreshKeyRef.current + 1);
                 setDisplayPopup(false);
-              }} data-testid='dashboard-custombutton-replay-the-video' />
+              }} data-testid='html-elements-custombutton-div-button' />
 
             </div>
             <CustomButton
@@ -68,7 +68,7 @@ const Player = ({}) => {
             handleClick={() => {
               setIsPlayerOpen(false);
               handleShowBottomSheet(false);
-            }} data-testid='dashboard-custombutton-answer-the-questions' />
+            }} data-testid='html-elements-custombutton-div-button' />
 
           </div>
         </div>
