@@ -131,7 +131,7 @@ const MemoizedTaskCard = React.memo(
             ...(customAssessmentSubtopic ? { customAssessmentSubtopic } : {}),
             assignedDate,
             serverDate
-          }} data-testid='task-screen-taskcard-wrapitem' />
+          }} data-testid='task-screen-taskcard-wrapitem-clickable' />
 
       </WrapItem>);
 
@@ -208,7 +208,7 @@ const MemoizedMobileTaskCard = React.memo(
             ...(customAssessmentSubtopic ? { customAssessmentSubtopic } : {}),
             assignedDate,
             serverDate
-          }} data-testid='task-screen-mobiletaskcard-wrapitem' />
+          }} data-testid='task-screen-mobiletaskcard-wrapitem-clickable' />
 
       </WrapItem>);
 
@@ -306,7 +306,7 @@ const TaskScreenView = ({
       wall_images
     });
 
-    return () => <MobileBottomNavMenu mobileBottomList={mobileBottomList} data-testid='task-screen-mobilebottomnavmenu' />;
+    return () => <MobileBottomNavMenu mobileBottomList={mobileBottomList} data-testid='task-screen-mobilebottomnavmenu-select' />;
   }, []);
 
   return (
@@ -317,7 +317,7 @@ const TaskScreenView = ({
         </Suspense>
       }
       {displayProductTour &&
-      <Suspense fallback={<></>} data-testid='task-screen-suspense-2'>
+      <Suspense fallback={<></>} data-testid='task-screen-suspense'>
           <TaskScreenTour
           onStep5={handleStep4}
           taskDataLength={filteredList}
@@ -329,20 +329,20 @@ const TaskScreenView = ({
         sx={TaskScreenStyles()?.mainContainer}
         style={displayProductTour ? { pointerEvents: "none" } : {}} data-testid='task-screen-box-2'>
 
-        <Box sx={TaskScreenStyles()?.subContainer} data-testid='task-screen-box-3'>
+        <Box sx={TaskScreenStyles()?.subContainer} data-testid='task-screen-box'>
           <Flex flexDir={"row"} alignItems={"flex-start"} data-testid='task-screen-flex-box'>
-            <Box sx={TaskScreenStyles()?.subbContainer} data-testid='task-screen-box-flex'>
+            <Box sx={TaskScreenStyles()?.subbContainer} data-testid='task-screen-box'>
               {
-              <Box sx={TaskScreenStyles()?.vinImage} data-testid='task-screen-box-4'>
+              <Box sx={TaskScreenStyles()?.vinImage} data-testid='task-screen-box'>
                   <Image
                 // className={styles["assistant-img-tasks"]}
                 sx={TaskScreenStyles()?.vinImageInternal}
                 alt="Vin"
-                src={AssistantImg} data-testid='task-screen-image-AssistantImg' />
+                src={AssistantImg} data-testid='task-screen-image-box' />
 
                 </Box>
               }
-              <Box sx={TaskScreenStyles()?.rightContainer} data-testid='task-screen-box-5'>
+              <Box sx={TaskScreenStyles()?.rightContainer} data-testid='task-screen-box'>
                 <LearningCreditsContainer
                   userAdditionalDetails={userAdditionalDetails}
                   isTaskScreen={true}
@@ -354,7 +354,7 @@ const TaskScreenView = ({
                   setNudgeObject={setNudgeObject}
                   isNudgeLoading={isNudgeLoading} data-testid='task-screen-learningcreditscontainer-box' />
 
-                <Box sx={TaskScreenStyles()?.rightTopContainer} data-testid='task-screen-box-6'>
+                <Box sx={TaskScreenStyles()?.rightTopContainer} data-testid='task-screen-box'>
                   <OptionContainer
                     isMobile={isMobile}
                     userAdditionalDetails={userAdditionalDetails}
@@ -375,7 +375,7 @@ const TaskScreenView = ({
                         {renderSubjectFilter}
                         <Wrap
                     id={"cardsData"}
-                    sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-cardsdata'>
+                    sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-box'>
 
                           {displayedTasks?.map((task, index) =>
                     <MemoizedMobileTaskCard
@@ -391,9 +391,9 @@ const TaskScreenView = ({
                         </Wrap>
                         {/* Move infinite scroll skeleton and sentinel outside the main Wrap */}
                         {isFetchingMore &&
-                  <Box width="100%" mt="10px" data-testid='task-screen-box-7'>
+                  <Box width="100%" mt="10px" data-testid='task-screen-box-3'>
                             <Wrap
-                      sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-box'>
+                      sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-box-2'>
 
                               {[...Array(4)].map((_, index) =>
                       <WrapItem
@@ -401,7 +401,7 @@ const TaskScreenView = ({
                         sx={TaskScreenStyles()?.cardSuperContainer} data-testid='task-screen-index'>
 
                                   <MobileTaskCardSkeleton
-                          isInitialLoad={false} data-testid='task-screen-wrapitem-mobiletaskcardskeleton-1' />
+                          isInitialLoad={false} data-testid='task-screen-mobiletaskcardskeleton-box-4248' />
 
                                 </WrapItem>
                       )}
@@ -419,10 +419,10 @@ const TaskScreenView = ({
                 <TaskCardSkeleton count={4} data-testid='task-screen-taskcardskeleton-box' /> :
 
                 displayedTasks?.length > 0 &&
-                <Box sx={TaskScreenStyles()?.taskCardContainer} data-testid='task-screen-box-8'>
+                <Box sx={TaskScreenStyles()?.taskCardContainer} data-testid='task-screen-box'>
                       <HStack sx={TaskScreenStyles()?.taskCardSubContainer} data-testid='task-screen-hstack-box'>
-                        <Box sx={TaskScreenStyles()?.taskCardSubbContainer} data-testid='task-screen-box-hstack'>
-                          <Box data-testid='task-screen-box-9'>
+                        <Box sx={TaskScreenStyles()?.taskCardSubbContainer} data-testid='task-screen-box'>
+                          <Box data-testid='task-screen-box-4'>
                             <VStack sx={TaskScreenStyles()?.taskCardSection} data-testid='task-screen-vstack-box'>
                               {!isMobile &&
                           <Text
@@ -437,7 +437,7 @@ const TaskScreenView = ({
                               {renderSubjectFilter}
                               <Wrap
                             id={"cardsData"}
-                            sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-cardsdata-2'>
+                            sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-box'>
 
                                 {displayedTasks?.map((task, index) =>
                             <MemoizedTaskCard
@@ -488,11 +488,11 @@ const TaskScreenView = ({
                 <Box
                   sx={TaskScreenStyles()?.emptyTasksMainContainer}
                   // marginBottom={isMobile ? "-30px" : "0px"}
-                  data-testid='task-screen-box-10'>
+                  data-testid='task-screen-box'>
                     {!isMobile &&
                   <>
                         <Text
-                      sx={TaskScreenStyles()?.optionTitleTaskCardSection} data-testid='task-screen-text-box'>
+                      sx={TaskScreenStyles()?.optionTitleTaskCardSection} data-testid='task-screen-text-vstack'>
 
                           {selectedOption.name}
                         </Text>
@@ -501,18 +501,18 @@ const TaskScreenView = ({
                     {renderSubjectFilter}
                     <Box
                     id="noTasks"
-                    sx={TaskScreenStyles()?.emptyTasksContainer} data-testid='task-screen-box-notasks'>
+                    sx={TaskScreenStyles()?.emptyTasksContainer} data-testid='task-screen-box-5'>
 
                       <img
                       src={accordion_images.noUpdates}
                       width={"200px"}
-                      height={"150px"} data-testid='task-screen-img-noUpdates' />
+                      height={"150px"} data-testid='task-screen-img-box' />
 
-                      <Box sx={TaskScreenStyles()?.emptyTasksContainerTitle} data-testid='task-screen-box-11'>
+                      <Box sx={TaskScreenStyles()?.emptyTasksContainerTitle} data-testid='task-screen-box'>
                         {EmptyCardsTitle(selectedOption?.value)}
                       </Box>
                       <Box
-                      sx={TaskScreenStyles()?.emptyTasksContainerDescription} data-testid='task-screen-box-12'>
+                      sx={TaskScreenStyles()?.emptyTasksContainerDescription} data-testid='task-screen-box'>
 
                         {EmptyCardsDescription(selectedOption?.value)}
                       </Box>
@@ -524,24 +524,24 @@ const TaskScreenView = ({
                 {!isMobile &&
                 selectedOption?.name === FILTER_OPTIONS?.topPriority?.name &&
                 overdueTaskList?.length > 0 &&
-                <Box sx={TaskScreenStyles()?.taskCardContainer} data-testid='task-screen-box-13'>
-                      <HStack sx={TaskScreenStyles()?.taskCardSubContainer} data-testid='task-screen-hstack-box-2'>
-                        <Box sx={TaskScreenStyles()?.taskCardSubbContainer} data-testid='task-screen-box-hstack-2'>
-                          <Box data-testid='task-screen-box-14'>
-                            <Box data-testid='task-screen-box-15'>
-                              <VStack sx={TaskScreenStyles()?.taskCardSection} data-testid='task-screen-vstack-box-2'>
+                <Box sx={TaskScreenStyles()?.taskCardContainer} data-testid='task-screen-box'>
+                      <HStack sx={TaskScreenStyles()?.taskCardSubContainer} data-testid='task-screen-hstack-box'>
+                        <Box sx={TaskScreenStyles()?.taskCardSubbContainer} data-testid='task-screen-box'>
+                          <Box data-testid='task-screen-box-4'>
+                            <Box data-testid='task-screen-box-4'>
+                              <VStack sx={TaskScreenStyles()?.taskCardSection} data-testid='task-screen-vstack-box'>
                                 {!isMobile &&
                             <Text
                               sx={
                               TaskScreenStyles()?.
                               optionTitleTaskCardSection
-                              } data-testid='task-screen-text-overdue'>
+                              } data-testid='task-screen-text-vstack'>
 
                                     Overdue
                                   </Text>
                             }
                                 <Wrap
-                              sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-vstack'>
+                              sx={TaskScreenStyles()?.taskCardWrapContainer} data-testid='task-screen-wrap-box-2'>
 
                                   {overdueTaskList?.
                               slice(0, 2).
@@ -571,9 +571,9 @@ const TaskScreenView = ({
                             value: "missed_opportunity"
                           });
                         }}
-                        sx={TaskScreenStyles()?.overdueBottomBox} data-testid='task-screen-box-16'>
+                        sx={TaskScreenStyles()?.overdueBottomBox} data-testid='task-screen-box-clickable'>
 
-                            <Text sx={TaskScreenStyles()?.overdueBottomBoxText} data-testid='task-screen-text-see-all'>
+                            <Text sx={TaskScreenStyles()?.overdueBottomBoxText} data-testid='task-screen-text-vstack'>
                               See All
                             </Text>
                           </Box>
@@ -597,15 +597,15 @@ const TaskScreenView = ({
 
         {/* PLAIN INPUT */}
         {!showForbiddenLayout && isMobile &&
-        <Box sx={TaskScreenStyles(isMobile)?.bottomInput} data-testid='task-screen-box-17'>
+        <Box sx={TaskScreenStyles(isMobile)?.bottomInput} data-testid='task-screen-box'>
             {editor()}
-            <Box sx={TaskScreenStyles()?.bottomBox} data-testid='task-screen-box-18'></Box>
+            <Box sx={TaskScreenStyles()?.bottomBox} data-testid='task-screen-box'></Box>
           </Box>
         }
       </Box>
 
       {isMobile ?
-      <Suspense fallback={<></>} data-testid='task-screen-suspense-3'>
+      <Suspense fallback={<></>} data-testid='task-screen-suspense'>
           <MobileWelcomeModal
           isOpen={isModalOpen}
           onClose={() => {
@@ -619,7 +619,7 @@ const TaskScreenView = ({
 
         </Suspense> :
 
-      <Suspense fallback={<></>} data-testid='task-screen-suspense-4'>
+      <Suspense fallback={<></>} data-testid='task-screen-suspense'>
           <WelcomeModal
           isOpen={isModalOpen}
           onClose={() => {
@@ -634,7 +634,7 @@ const TaskScreenView = ({
         </Suspense>
       }
       {isDemoRun &&
-      <Suspense fallback={<></>} data-testid='task-screen-suspense-5'>
+      <Suspense fallback={<></>} data-testid='task-screen-suspense'>
           <DemoOnBoarding
           isOpen={isDemoRun}
           onClose={!isDemoRun}
