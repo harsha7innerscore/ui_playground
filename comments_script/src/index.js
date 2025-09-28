@@ -288,7 +288,18 @@ function addStateComment(path) {
  * @param {Object} path - The AST path
  */
 function addJSXElementComment(path) {
-  const elementName = path.node.name.name;
+  // Handle different node types for JSX elements
+  let elementName;
+
+  if (path.node.name && path.node.name.name) {
+    elementName = path.node.name.name;
+  } else if (path.node.name && path.node.name.type === 'JSXMemberExpression') {
+    // Handle member expressions like Foo.Bar
+    elementName = `${path.node.name.object.name}.${path.node.name.property.name}`;
+  } else {
+    // Skip if we can't determine the element name
+    return;
+  }
 
   // Skip common HTML elements
   const commonElements = ['div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',

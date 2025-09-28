@@ -48,7 +48,15 @@ function runTests() {
       console.log(`Testing: ${test.name}...`);
 
       // Process the input code
-      const processedCode = processJSXCode(inputCode, {});
+      const processedCode = processJSXCode(inputCode, {
+        rules: {
+          componentDeclaration: true,
+          props: true,
+          state: true,
+          functions: true,
+          jsxElements: true
+        }
+      });
 
       // Write the output for inspection
       const outputPath = path.join(OUTPUT_DIR, test.inputFile);
