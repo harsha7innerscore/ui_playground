@@ -1,0 +1,63 @@
+{
+  "mvp_spec": {
+    "flow": [
+      {
+        "step": "Fetch subjects",
+        "route": "/route",
+        "redux_slice": "subjects",
+        "fetch_condition": "if subjects not in redux then fetch /api/subjects",
+        "ui_state": ["loading", "error_retry", "empty", "data"],
+        "action_on_click": "navigate to /route/{subjectId}"
+      },
+      {
+        "step": "Fetch chapters for selected subject",
+        "route": "/route/{subjectId}",
+        "redux_slice": "chaptersBySubject",
+        "fetch_condition": "if chaptersBySubject[subjectId] not in redux then fetch /api/subjects/{subjectId}/chapters",
+        "ui_state": ["loading", "error_retry", "empty", "data"],
+        "action_on_click": "navigate to /route/{subjectId}/{chapterId}"
+      },
+      {
+        "step": "Fetch subchapters for a chapter",
+        "route": "/route/{subjectId}/{chapterId}",
+        "redux_slice": "subchaptersByChapter",
+        "fetch_condition": "if subchaptersByChapter[chapterId] not in redux then fetch /api/chapters/{chapterId}/subchapters",
+        "ui_state": ["loading", "error_retry", "empty", "data"],
+        "action_on_click": "navigate to /route/{subjectId}/{chapterId}/{subchapterId}"
+      },
+      {
+        "step": "Fetch tasks for a subchapter",
+        "route": "/route/{subjectId}/{chapterId}/{subchapterId}",
+        "redux_slice": "tasksBySubchapter",
+        "fetch_condition": "if tasksBySubchapter[subchapterId] not in redux then fetch /api/subchapters/{subchapterId}/tasks",
+        "ui_state": ["loading", "error_retry", "empty", "data"]
+      }
+    ],
+    "additional_info_apis": [
+      {
+        "name": "Subchapter attempt count per chapter",
+        "slice": "attemptCountByChapter",
+        "fetch_on": "when chapters are loaded OR when user enters chapter route",
+        "usage": "ui badge or small summary block"
+      },
+      {
+        "name": "Last attempted task per subchapter",
+        "slice": "lastAttemptBySubchapter",
+        "fetch_on": "when subchapters are loaded OR subchapter detail screen",
+        "usage": "to highlight resume task CTA"
+      }
+    ],
+    "caching_logic": {
+      "strategy": "route-aware progressive caching",
+      "rule": "do not refetch if data already exists in redux slice",
+      "route_driven_fetching": true,
+      "fallback": "refetch if stale or forced by user"
+    },
+    "mock_data_strategy": {
+      "status": "initial MVP",
+      "fetch": "will be replaced with mock services returning JSON",
+      "api_layer": "thin async wrapper around static JSON",
+      "extendability": "easy replacement with real API later"
+    }
+  }
+}
