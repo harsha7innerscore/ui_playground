@@ -1,0 +1,82 @@
+{
+  "subj-001": [
+    {
+      "id": "chap-001",
+      "subjectId": "subj-001",
+      "name": "Algebra",
+      "description": "Study of mathematical symbols and the rules for manipulating these symbols"
+    },
+    {
+      "id": "chap-002",
+      "subjectId": "subj-001",
+      "name": "Geometry",
+      "description": "Study of shapes, sizes, relative positions of figures, and properties of space"
+    },
+    {
+      "id": "chap-003",
+      "subjectId": "subj-001",
+      "name": "Calculus",
+      "description": "Mathematical study of continuous change"
+    }
+  ],
+  "subj-002": [
+    {
+      "id": "chap-004",
+      "subjectId": "subj-002",
+      "name": "Physics",
+      "description": "Study of matter, energy, and the interaction between them"
+    },
+    {
+      "id": "chap-005",
+      "subjectId": "subj-002",
+      "name": "Chemistry",
+      "description": "Study of the composition, structure, properties, and change of matter"
+    },
+    {
+      "id": "chap-006",
+      "subjectId": "subj-002",
+      "name": "Biology",
+      "description": "Study of living organisms and vital processes"
+    }
+  ],
+  "subj-003": [
+    {
+      "id": "chap-007",
+      "subjectId": "subj-003",
+      "name": "Ancient History",
+      "description": "Study of ancient civilizations and their contributions"
+    },
+    {
+      "id": "chap-008",
+      "subjectId": "subj-003",
+      "name": "Medieval History",
+      "description": "Study of the middle ages and feudal systems"
+    },
+    {
+      "id": "chap-009",
+      "subjectId": "subj-003",
+      "name": "Modern History",
+      "description": "Study of recent historical events and their impact"
+    }
+  ],
+  "subj-004": [
+    {
+      "id": "chap-010",
+      "subjectId": "subj-004",
+      "name": "Poetry",
+      "description": "Study of poetic forms and notable poets"
+    },
+    {
+      "id": "chap-011",
+      "subjectId": "subj-004",
+      "name": "Novels",
+      "description": "Study of classic and contemporary novels"
+    },
+    {
+      "id": "chap-012",
+      "subjectId": "subj-004",
+      "name": "Drama",
+      "description": "Study of plays and theatrical performances"
+    }
+  ]
+}

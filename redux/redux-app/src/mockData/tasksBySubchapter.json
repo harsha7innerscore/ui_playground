@@ -1,0 +1,94 @@
+{
+  "subchap-001": [
+    {
+      "id": "task-001",
+      "subchapterId": "subchap-001",
+      "name": "Solving Simple Equations",
+      "description": "Practice solving basic linear equations",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "task-002",
+      "subchapterId": "subchap-001",
+      "name": "Word Problems",
+      "description": "Apply linear equations to real-world problems",
+      "difficulty": "Medium"
+    },
+    {
+      "id": "task-003",
+      "subchapterId": "subchap-001",
+      "name": "Systems of Equations",
+      "description": "Solve multiple linear equations simultaneously",
+      "difficulty": "Hard"
+    }
+  ],
+  "subchap-002": [
+    {
+      "id": "task-004",
+      "subchapterId": "subchap-002",
+      "name": "Factoring Quadratics",
+      "description": "Practice factoring quadratic expressions",
+      "difficulty": "Medium"
+    },
+    {
+      "id": "task-005",
+      "subchapterId": "subchap-002",
+      "name": "Using the Quadratic Formula",
+      "description": "Apply the quadratic formula to solve equations",
+      "difficulty": "Medium"
+    },
+    {
+      "id": "task-006",
+      "subchapterId": "subchap-002",
+      "name": "Completing the Square",
+      "description": "Solve quadratic equations by completing the square",
+      "difficulty": "Hard"
+    }
+  ],
+  "subchap-003": [
+    {
+      "id": "task-007",
+      "subchapterId": "subchap-003",
+      "name": "Adding and Subtracting Polynomials",
+      "description": "Practice basic operations with polynomials",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "task-008",
+      "subchapterId": "subchap-003",
+      "name": "Multiplying Polynomials",
+      "description": "Learn to multiply polynomial expressions",
+      "difficulty": "Medium"
+    },
+    {
+      "id": "task-009",
+      "subchapterId": "subchap-003",
+      "name": "Dividing Polynomials",
+      "description": "Practice long division with polynomials",
+      "difficulty": "Hard"
+    }
+  ],
+  "subchap-004": [
+    {
+      "id": "task-010",
+      "subchapterId": "subchap-004",
+      "name": "Properties of Triangles",
+      "description": "Learn about different types of triangles",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "task-011",
+      "subchapterId": "subchap-004",
+      "name": "Pythagoras Theorem",
+      "description": "Apply the Pythagorean theorem to solve problems",
+      "difficulty": "Medium"
+    },
+    {
+      "id": "task-012",
+      "subchapterId": "subchap-004",
+      "name": "Trigonometry in Triangles",
+      "description": "Use trigonometric ratios in triangles",
+      "difficulty": "Hard"
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "chap-001": [
+    {
+      "id": "subchap-001",
+      "chapterId": "chap-001",
+      "name": "Linear Equations",
+      "description": "Solving equations in the form ax + b = c"
+    },
+    {
+      "id": "subchap-002",
+      "chapterId": "chap-001",
+      "name": "Quadratic Equations",
+      "description": "Solving equations in the form ax² + bx + c = 0"
+    },
+    {
+      "id": "subchap-003",
+      "chapterId": "chap-001",
+      "name": "Polynomials",
+      "description": "Working with polynomial expressions"
+    }
+  ],
+  "chap-002": [
+    {
+      "id": "subchap-004",
+      "chapterId": "chap-002",
+      "name": "Triangles",
+      "description": "Properties and theorems related to triangles"
+    },
+    {
+      "id": "subchap-005",
+      "chapterId": "chap-002",
+      "name": "Circles",
+      "description": "Properties and theorems related to circles"
+    },
+    {
+      "id": "subchap-006",
+      "chapterId": "chap-002",
+      "name": "Coordinate Geometry",
+      "description": "Working with geometry in the Cartesian plane"
+    }
+  ],
+  "chap-003": [
+    {
+      "id": "subchap-007",
+      "chapterId": "chap-003",
+      "name": "Limits",
+      "description": "Understanding the concept of limits"
+    },
+    {
+      "id": "subchap-008",
+      "chapterId": "chap-003",
+      "name": "Derivatives",
+      "description": "Understanding rates of change"
+    },
+    {
+      "id": "subchap-009",
+      "chapterId": "chap-003",
+      "name": "Integrals",
+      "description": "Finding areas and accumulation"
+    }
+  ],
+  "chap-004": [
+    {
+      "id": "subchap-010",
+      "chapterId": "chap-004",
+      "name": "Mechanics",
+      "description": "Study of motion and forces"
+    },
+    {
+      "id": "subchap-011",
+      "chapterId": "chap-004",
+      "name": "Electricity",
+      "description": "Study of electrical phenomena"
+    },
+    {
+      "id": "subchap-012",
+      "chapterId": "chap-004",
+      "name": "Optics",
+      "description": "Study of light and its properties"
+    }
+  ],
+  "chap-005": [
+    {
+      "id": "subchap-013",
+      "chapterId": "chap-005",
+      "name": "Atomic Structure",
+      "description": "Understanding the structure of atoms"
+    },
+    {
+      "id": "subchap-014",
+      "chapterId": "chap-005",
+      "name": "Chemical Bonding",
+      "description": "Understanding how atoms bond together"
+    },
+    {
+      "id": "subchap-015",
+      "chapterId": "chap-005",
+      "name": "Chemical Reactions",
+      "description": "Study of different types of chemical reactions"
+    }
+  ],
+  "chap-006": [
+    {
+      "id": "subchap-016",
+      "chapterId": "chap-006",
+      "name": "Cell Biology",
+      "description": "Study of cells and their functions"
+    },
+    {
+      "id": "subchap-017",
+      "chapterId": "chap-006",
+      "name": "Genetics",
+      "description": "Study of genes and heredity"
+    },
+    {
+      "id": "subchap-018",
+      "chapterId": "chap-006",
+      "name": "Ecology",
+      "description": "Study of organisms and their environment"
+    }
+  ],
+  "chap-007": [
+    {
+      "id": "subchap-019",
+      "chapterId": "chap-007",
+      "name": "Mesopotamia",
+      "description": "Study of ancient Mesopotamian civilizations"
+    },
+    {
+      "id": "subchap-020",
+      "chapterId": "chap-007",
+      "name": "Ancient Egypt",
+      "description": "Study of ancient Egyptian civilization"
+    },
+    {
+      "id": "subchap-021",
+      "chapterId": "chap-007",
+      "name": "Ancient Greece",
+      "description": "Study of ancient Greek civilization"
+    }
+  ],
+  "chap-008": [
+    {
+      "id": "subchap-022",
+      "chapterId": "chap-008",
+      "name": "Byzantine Empire",
+      "description": "Study of the Eastern Roman Empire"
+    },
+    {
+      "id": "subchap-023",
+      "chapterId": "chap-008",
+      "name": "Feudalism",
+      "description": "Study of the feudal system in medieval Europe"
+    },
+    {
+      "id": "subchap-024",
+      "chapterId": "chap-008",
+      "name": "Crusades",
+      "description": "Study of the religious wars in the Middle Ages"
+    }
+  ],
+  "chap-009": [
+    {
+      "id": "subchap-025",
+      "chapterId": "chap-009",
+      "name": "Renaissance",
+      "description": "Study of the cultural rebirth in Europe"
+    },
+    {
+      "id": "subchap-026",
+      "chapterId": "chap-009",
+      "name": "Industrial Revolution",
+      "description": "Study of the transition to new manufacturing processes"
+    },
+    {
+      "id": "subchap-027",
+      "chapterId": "chap-009",
+      "name": "World Wars",
+      "description": "Study of the global conflicts in the 20th century"
+    }
+  ],
+  "chap-010": [
+    {
+      "id": "subchap-028",
+      "chapterId": "chap-010",
+      "name": "Sonnets",
+      "description": "Study of the 14-line poetic form"
+    },
+    {
+      "id": "subchap-029",
+      "chapterId": "chap-010",
+      "name": "Epic Poetry",
+      "description": "Study of long narrative poems"
+    },
+    {
+      "id": "subchap-030",
+      "chapterId": "chap-010",
+      "name": "Modern Poetry",
+      "description": "Study of free verse and contemporary forms"
+    }
+  ],
+  "chap-011": [
+    {
+      "id": "subchap-031",
+      "chapterId": "chap-011",
+      "name": "Classic Novels",
+      "description": "Study of influential novels from the past"
+    },
+    {
+      "id": "subchap-032",
+      "chapterId": "chap-011",
+      "name": "Realistic Fiction",
+      "description": "Study of novels depicting real life"
+    },
+    {
+      "id": "subchap-033",
+      "chapterId": "chap-011",
+      "name": "Science Fiction",
+      "description": "Study of novels exploring scientific concepts"
+    }
+  ],
+  "chap-012": [
+    {
+      "id": "subchap-034",
+      "chapterId": "chap-012",
+      "name": "Tragedy",
+      "description": "Study of plays with unhappy endings"
+    },
+    {
+      "id": "subchap-035",
+      "chapterId": "chap-012",
+      "name": "Comedy",
+      "description": "Study of humorous plays"
+    },
+    {
+      "id": "subchap-036",
+      "chapterId": "chap-012",
+      "name": "Modern Drama",
+      "description": "Study of contemporary theatrical works"
+    }
+  ]
+}

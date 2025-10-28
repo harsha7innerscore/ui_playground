@@ -1,0 +1,26 @@
+[
+  {
+    "id": "subj-001",
+    "name": "Mathematics",
+    "description": "Explore various mathematical concepts and theories",
+    "image": "https://via.placeholder.com/100?text=Math"
+  },
+  {
+    "id": "subj-002",
+    "name": "Science",
+    "description": "Discover the wonders of scientific principles and experiments",
+    "image": "https://via.placeholder.com/100?text=Science"
+  },
+  {
+    "id": "subj-003",
+    "name": "History",
+    "description": "Learn about important historical events and figures",
+    "image": "https://via.placeholder.com/100?text=History"
+  },
+  {
+    "id": "subj-004",
+    "name": "Literature",
+    "description": "Analyze classic and contemporary literary works",
+    "image": "https://via.placeholder.com/100?text=Literature"
+  }
+]
