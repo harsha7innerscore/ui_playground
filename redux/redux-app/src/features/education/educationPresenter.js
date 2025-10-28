@@ -70,21 +70,52 @@ export const createEducationPresenter = (dispatch, navigate, model) => {
 
   // Handle subchapter selection
   const onSubchapterClick = async (subchapter, subjectId, chapterId) => {
+    console.error('🔴 SUBCHAPTER CLICKED 🔴', {
+      subchapterId: subchapter.id,
+      subchapterIdType: typeof subchapter.id,
+      subchapterName: subchapter.name
+    });
+
+    // Dispatch actions
+    console.warn('📢 DISPATCHING setSelectedSubchapter:', subchapter.id);
     dispatch(actions.setSelectedSubchapter(subchapter.id));
+
+    console.warn('📢 DISPATCHING setTasksLoading: true for', subchapter.id);
     dispatch(actions.setTasksLoading({ subchapterId: subchapter.id, loading: true }));
+
+    // Navigate
+    console.warn('📢 NAVIGATING to:', `/route/${subjectId}/${chapterId}/${subchapter.id}`);
     navigate(`/route/${subjectId}/${chapterId}/${subchapter.id}`);
 
     try {
+      console.warn('📢 FETCHING TASKS for subchapter:', subchapter.id);
       const tasks = await model.getSubchapterTasks(subchapter.id);
+      console.error('🔴 TASKS FETCHED 🔴', {
+        subchapterId: subchapter.id,
+        tasksFound: tasks.length,
+        tasks
+      });
+
+      console.warn('📢 DISPATCHING setTasksLoading: false for', subchapter.id);
       dispatch(actions.setTasksLoading({ subchapterId: subchapter.id, loading: false }));
 
       if (!tasks || tasks.length === 0) {
+        console.error('🔴 NO TASKS FOUND 🔴 for subchapter:', subchapter.id);
         dispatch(actions.setNoTasks(subchapter.id));
         return;
       }
 
+      console.error('🔴 SETTING TASKS 🔴', {
+        subchapterId: subchapter.id,
+        tasksCount: tasks.length,
+        tasks
+      });
       dispatch(actions.setTasks({ subchapterId: subchapter.id, tasks }));
     } catch (error) {
+      console.error('🔴 ERROR LOADING TASKS 🔴', {
+        subchapterId: subchapter.id,
+        error
+      });
       dispatch(actions.setTasksLoading({ subchapterId: subchapter.id, loading: false }));
       dispatch(actions.setError('Failed to load tasks'));
       setTimeout(() => dispatch(actions.setError('')), 4000);

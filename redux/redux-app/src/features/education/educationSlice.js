@@ -39,6 +39,11 @@ const educationSlice = createSlice({
       state.selectedChapter = action.payload;
     },
     setSelectedSubchapter: (state, action) => {
+      console.error('🔴 REDUX: Setting selectedSubchapter 🔴', {
+        oldValue: state.selectedSubchapter,
+        newValue: action.payload,
+        type: typeof action.payload
+      });
       state.selectedSubchapter = action.payload;
     },
     toggleChapter: (state, action) => {
@@ -53,12 +58,29 @@ const educationSlice = createSlice({
     },
     setTasksLoading: (state, action) => {
       const { subchapterId, loading } = action.payload;
+      console.error('🔴 REDUX: Setting tasksLoading 🔴', {
+        subchapterId,
+        loading,
+        subchapterIdType: typeof subchapterId
+      });
       state.tasksLoading[subchapterId] = loading;
     },
     setTasks: (state, action) => {
       const { subchapterId, tasks } = action.payload;
+      console.error('🔴 REDUX: Setting tasks 🔴', {
+        subchapterId,
+        tasksLength: tasks.length,
+        subchapterIdType: typeof subchapterId,
+        tasks
+      });
       state.tasks[subchapterId] = tasks;
       state.noTasksSubchapters[subchapterId] = false;
+      console.error('🔴 REDUX: State after setting tasks 🔴', {
+        subchapterId,
+        storedTasks: state.tasks[subchapterId],
+        storedTasksArray: Array.isArray(state.tasks[subchapterId]),
+        storedTasksLength: state.tasks[subchapterId] ? state.tasks[subchapterId].length : 0
+      });
     },
     setNoTasks: (state, action) => {
       state.noTasksSubchapters[action.payload] = true;

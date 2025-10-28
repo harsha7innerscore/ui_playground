@@ -89,7 +89,11 @@ export const createEducationModel = () => {
   const getSubchapterTasks = async (subchapterId) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(mockTasks[subchapterId] || []);
+        // Convert subchapterId to number to ensure consistent lookups
+        const id = parseInt(subchapterId);
+        const tasks = mockTasks[id] || [];
+        console.log('Model fetching tasks for subchapterId:', subchapterId, 'Converted ID:', id, 'Tasks found:', tasks);
+        resolve(tasks);
       }, 500);
     });
   };

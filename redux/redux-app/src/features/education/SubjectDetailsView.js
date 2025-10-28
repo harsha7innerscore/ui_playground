@@ -96,10 +96,24 @@ function SubjectDetailsView() {
                     <div className="space-y-3">
                       {chapter.subchapters.map(subchapter => {
                         const lastTask = subchapterLastTasks[subchapter.id];
-                        const isSelected = selectedSubchapter === subchapter.id;
+                        const isSelected = selectedSubchapter && (parseInt(selectedSubchapter) === parseInt(subchapter.id));
                         const subchapterTasks = tasks[subchapter.id];
                         const isTasksLoading = tasksLoading[subchapter.id];
                         const hasNoTasks = noTasksSubchapters[subchapter.id];
+
+                        // Always log the render state for every subchapter to help with debugging
+                        console.warn('🔍 SUBCHAPTER RENDER STATE:', {
+                          subchapterId: subchapter.id,
+                          selectedSubchapter,
+                          isSelected,
+                          'subchapter.id type': typeof subchapter.id,
+                          'selectedSubchapter type': typeof selectedSubchapter,
+                          subchapterTasks,
+                          isTasksLoading,
+                          hasNoTasks,
+                          'Array.isArray(subchapterTasks)': Array.isArray(subchapterTasks),
+                          'subchapterTasks length': subchapterTasks ? subchapterTasks.length : 'N/A'
+                        });
 
                         return (
                           <div key={subchapter.id} className="bg-white rounded-lg p-4 shadow-sm">
@@ -122,8 +136,22 @@ function SubjectDetailsView() {
                               </div>
                             </button>
 
-                            {isSelected && (
+                            {/* Always show the debug section, regardless of isSelected */}
                               <div className="mt-3 pt-3 border-t border-gray-200">
+                                {/* Debug information panel */}
+                                <div className="bg-yellow-50 p-3 rounded border border-yellow-200 mb-3">
+                                  <h5 className="font-bold text-sm text-yellow-800 mb-1">DEBUG INFO:</h5>
+                                  <div className="text-xs text-yellow-900 font-mono">
+                                    <div>subchapter.id: {subchapter.id} ({typeof subchapter.id})</div>
+                                    <div>selectedSubchapter: {selectedSubchapter} ({typeof selectedSubchapter})</div>
+                                    <div>isSelected: {isSelected ? 'true' : 'false'}</div>
+                                    <div>isTasksLoading: {isTasksLoading ? 'true' : 'false'}</div>
+                                    <div>hasNoTasks: {hasNoTasks ? 'true' : 'false'}</div>
+                                    <div>subchapterTasks: {subchapterTasks ? `Array[${subchapterTasks.length}]` : 'undefined'}</div>
+                                    <div>isArray: {Array.isArray(subchapterTasks) ? 'true' : 'false'}</div>
+                                  </div>
+                                </div>
+
                                 {isTasksLoading && (
                                   <div className="flex items-center justify-center py-4">
                                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-600"></div>
@@ -137,8 +165,11 @@ function SubjectDetailsView() {
                                   </div>
                                 )}
 
-                                {subchapterTasks && !isTasksLoading && (
+                                {Array.isArray(subchapterTasks) && subchapterTasks.length > 0 && !isTasksLoading && (
                                   <div className="space-y-2">
+                                    <div className="bg-green-100 p-2 text-center text-green-800 text-sm rounded mb-2">
+                                      ✅ Tasks loaded successfully: {subchapterTasks.length} tasks
+                                    </div>
                                     {subchapterTasks.map(task => (
                                       <div key={task.id} className="bg-purple-50 p-3 rounded border border-purple-100">
                                         <div className="flex items-center justify-between">
@@ -158,7 +189,6 @@ function SubjectDetailsView() {
                                   </div>
                                 )}
                               </div>
-                            )}
                           </div>
                         );
                       })}
