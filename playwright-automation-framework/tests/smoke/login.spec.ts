@@ -3,10 +3,10 @@ import { LoginPage } from '../../pages/LoginPage';
 import { HomePage } from '../../pages/HomePage';
 
 /**
- * Smoke tests for critical login functionality
- * These tests verify essential login flows that must work for the application to be usable
+ * Smoke tests for critical login functionality to access self-study features
+ * These tests verify essential login flows required to access the self-study application
  */
-test.describe('Login - Smoke Tests', () => {
+test.describe('Login - Self-Study Access Tests', () => {
   let loginPage: LoginPage;
   let homePage: HomePage;
 
@@ -24,15 +24,15 @@ test.describe('Login - Smoke Tests', () => {
     await loginPage.verifyLoginButtonEnabled();
   });
 
-  test('should login with valid credentials', async () => {
+  test('should login with valid credentials to access self-study features', async () => {
     // Arrange
-    const email = process.env.TEST_USER_EMAIL || 'test@example.com';
-    const password = process.env.TEST_USER_PASSWORD || 'testpassword123';
+    const email = process.env.TEST_USER_EMAIL || 'user@example.com';
+    const password = process.env.TEST_USER_PASSWORD || 'password123';
 
     // Act
     await loginPage.login(email, password);
 
-    // Assert
+    // Assert - Should reach self-study dashboard
     await loginPage.verifySuccessfulLogin();
     await homePage.verifyOnHomePage();
   });
@@ -64,7 +64,7 @@ test.describe('Login - Smoke Tests', () => {
 
   test('should show error for empty password', async () => {
     // Arrange
-    const email = 'test@example.com';
+    const email = 'user@example.com';
 
     // Act
     await loginPage.fillEmail(email);
@@ -74,10 +74,10 @@ test.describe('Login - Smoke Tests', () => {
     await expect(loginPage.isErrorMessageVisible()).resolves.toBe(true);
   });
 
-  test('should redirect to login after logout', async () => {
+  test('should redirect to login after logout from self-study session', async () => {
     // Arrange - Login first
-    const email = process.env.TEST_USER_EMAIL || 'test@example.com';
-    const password = process.env.TEST_USER_PASSWORD || 'testpassword123';
+    const email = process.env.TEST_USER_EMAIL || 'user@example.com';
+    const password = process.env.TEST_USER_PASSWORD || 'password123';
     await loginPage.login(email, password);
     await homePage.verifyOnHomePage();
 

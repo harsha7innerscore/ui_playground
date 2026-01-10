@@ -3,49 +3,30 @@ import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
 
 /**
- * Authentication fixture for managing user sessions
+ * Authentication fixture for self-study UI testing
  * Provides utilities for login, logout, and session management
  */
 
 export interface AuthUser {
   email: string;
   password: string;
-  role?: 'admin' | 'user' | 'readonly';
 }
 
 export interface AuthFixture {
   loginPage: LoginPage;
   homePage: HomePage;
   authenticatedUser: AuthUser;
-  loginAsUser: (user?: AuthUser) => Promise<void>;
-  loginAsAdmin: () => Promise<void>;
-  loginAsReadonlyUser: () => Promise<void>;
+  login: (user?: AuthUser) => Promise<void>;
   logout: () => Promise<void>;
   ensureAuthenticated: () => Promise<void>;
 }
 
-// Predefined test users
-const TEST_USERS: Record<string, AuthUser> = {
-  regular: {
-    email: process.env.TEST_USER_EMAIL || 'test@example.com',
-    password: process.env.TEST_USER_PASSWORD || 'testpassword123',
-    role: 'user'
-  },
-  admin: {
-    email: process.env.ADMIN_USER_EMAIL || 'admin@example.com',
-    password: process.env.ADMIN_USER_PASSWORD || 'adminpassword123',
-    role: 'admin'
-  },
-  readonly: {
-    email: process.env.READONLY_USER_EMAIL || 'readonly@example.com',
-    password: process.env.READONLY_USER_PASSWORD || 'readonlypassword123',
-    role: 'readonly'
-  }
+// Test user from environment variables
+const TEST_USER: AuthUser = {
+  email: process.env.TEST_USER_EMAIL || 'user@example.com',
+  password: process.env.TEST_USER_PASSWORD || 'password123'
 };
 
-/**
- * Extended test with authentication fixtures
- */
 export const test = base.extend<AuthFixture>({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
@@ -58,38 +39,17 @@ export const test = base.extend<AuthFixture>({
   },
 
   authenticatedUser: async ({}, use) => {
-    // Default to regular user
-    await use(TEST_USERS.regular);
+    await use(TEST_USER);
   },
 
-  loginAsUser: async ({ page, loginPage, homePage }, use) => {
-    const loginAsUser = async (user: AuthUser = TEST_USERS.regular) => {
+  login: async ({ page, loginPage, homePage }, use) => {
+    const login = async (user: AuthUser = TEST_USER) => {
       await loginPage.navigateToLogin();
       await loginPage.login(user.email, user.password);
       await homePage.verifyOnHomePage();
     };
 
-    await use(loginAsUser);
-  },
-
-  loginAsAdmin: async ({ page, loginPage, homePage }, use) => {
-    const loginAsAdmin = async () => {
-      await loginPage.navigateToLogin();
-      await loginPage.login(TEST_USERS.admin.email, TEST_USERS.admin.password);
-      await homePage.verifyOnHomePage();
-    };
-
-    await use(loginAsAdmin);
-  },
-
-  loginAsReadonlyUser: async ({ page, loginPage, homePage }, use) => {
-    const loginAsReadonlyUser = async () => {
-      await loginPage.navigateToLogin();
-      await loginPage.login(TEST_USERS.readonly.email, TEST_USERS.readonly.password);
-      await homePage.verifyOnHomePage();
-    };
-
-    await use(loginAsReadonlyUser);
+    await use(login);
   },
 
   logout: async ({ homePage, loginPage }, use) => {
@@ -101,13 +61,13 @@ export const test = base.extend<AuthFixture>({
     await use(logout);
   },
 
-  ensureAuthenticated: async ({ page, loginAsUser, authenticatedUser }, use) => {
+  ensureAuthenticated: async ({ page, login, authenticatedUser }, use) => {
     const ensureAuthenticated = async () => {
       // Check if already authenticated by looking for home page elements
       const currentUrl = page.url();
 
       if (currentUrl.includes('/login') || currentUrl === 'about:blank' || currentUrl.includes('localhost') && !currentUrl.includes('/dashboard')) {
-        await loginAsUser(authenticatedUser);
+        await login(authenticatedUser);
       } else {
         // Verify we're still authenticated by checking for user menu
         try {
@@ -115,11 +75,11 @@ export const test = base.extend<AuthFixture>({
           const isAuthenticated = await homePage.isUserMenuVisible();
 
           if (!isAuthenticated) {
-            await loginAsUser(authenticatedUser);
+            await login(authenticatedUser);
           }
         } catch {
           // If verification fails, login again
-          await loginAsUser(authenticatedUser);
+          await login(authenticatedUser);
         }
       }
     };
@@ -132,11 +92,10 @@ export const test = base.extend<AuthFixture>({
  * Helper function to create custom user for testing
  * @param email User email
  * @param password User password
- * @param role User role
  * @returns AuthUser object
  */
-export function createTestUser(email: string, password: string, role: 'admin' | 'user' | 'readonly' = 'user'): AuthUser {
-  return { email, password, role };
+export function createTestUser(email: string, password: string): AuthUser {
+  return { email, password };
 }
 
 /**
@@ -186,61 +145,6 @@ export class SessionManager {
   }
 }
 
-/**
- * API authentication utilities for bypassing UI login
- */
-export class ApiAuth {
-  constructor(private page: any) {}
-
-  /**
-   * Authenticate using API call (bypass UI login)
-   * @param user User credentials
-   * @returns Authentication token
-   */
-  async authenticateViaApi(user: AuthUser): Promise<string> {
-    const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:3000/api';
-
-    const response = await this.page.request.post(`${apiBaseUrl}/auth/login`, {
-      data: {
-        email: user.email,
-        password: user.password
-      }
-    });
-
-    expect(response.ok()).toBeTruthy();
-
-    const responseBody = await response.json();
-    const token = responseBody.token || responseBody.access_token;
-
-    if (!token) {
-      throw new Error('No authentication token received from API');
-    }
-
-    // Set token in browser storage
-    const sessionManager = new SessionManager(this.page);
-    await sessionManager.saveAuthToken(token);
-
-    return token;
-  }
-
-  /**
-   * Refresh authentication token
-   * @param refreshToken Refresh token
-   * @returns New authentication token
-   */
-  async refreshToken(refreshToken: string): Promise<string> {
-    const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:3000/api';
-
-    const response = await this.page.request.post(`${apiBaseUrl}/auth/refresh`, {
-      data: { refresh_token: refreshToken }
-    });
-
-    expect(response.ok()).toBeTruthy();
-
-    const responseBody = await response.json();
-    return responseBody.token || responseBody.access_token;
-  }
-}
 
 // Export for use in tests
 export { expect } from '@playwright/test';

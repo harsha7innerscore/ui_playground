@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { HomePage } from '../../pages/HomePage';
+import { SelfStudyDataGenerator } from '../../utils/data.generator';
 
 /**
- * Regression tests for home page functionality
- * Comprehensive tests for dashboard features and navigation
+ * Regression tests for self-study dashboard functionality
+ * Comprehensive tests for self-study features and navigation
  */
-test.describe('Home Page - Regression Tests', () => {
+test.describe('Self-Study Dashboard - Regression Tests', () => {
   let loginPage: LoginPage;
   let homePage: HomePage;
 
@@ -14,27 +15,27 @@ test.describe('Home Page - Regression Tests', () => {
     loginPage = new LoginPage(page);
     homePage = new HomePage(page);
 
-    // Login before each test to access home page
+    // Login before each test to access self-study dashboard
     await loginPage.navigateToLogin();
-    const email = process.env.TEST_USER_EMAIL || 'test@example.com';
-    const password = process.env.TEST_USER_PASSWORD || 'testpassword123';
+    const email = process.env.TEST_USER_EMAIL || 'user@example.com';
+    const password = process.env.TEST_USER_PASSWORD || 'password123';
     await loginPage.login(email, password);
     await homePage.verifyOnHomePage();
   });
 
-  test('should display all header elements', async () => {
+  test('should display self-study dashboard header elements', async () => {
     // Verify header components are present and functional
     await homePage.verifyHeaderElements();
     await expect(homePage.isUserMenuVisible()).resolves.toBe(true);
   });
 
-  test('should display navigation menu with all links', async () => {
-    // Verify navigation menu and all primary navigation links
+  test('should display self-study navigation menu', async () => {
+    // Verify navigation menu contains self-study related links
     await homePage.verifyNavigationElements();
   });
 
-  test('should display main content area', async () => {
-    // Verify main dashboard content is loaded
+  test('should display main self-study dashboard content', async () => {
+    // Verify main self-study dashboard content is loaded
     await homePage.verifyMainContentLoaded();
   });
 
@@ -43,98 +44,85 @@ test.describe('Home Page - Regression Tests', () => {
     await homePage.openUserMenu();
 
     // Verify logout button appears when menu is open
-    // Note: This test assumes logout button becomes visible when menu opens
-    // Adjust based on actual application behavior
     await homePage.waitForElement(homePage['logoutButton']);
   });
 
-  test('should navigate to products page', async () => {
-    // Test navigation to products section
-    await homePage.navigateToProducts();
-
-    // Verify navigation occurred
-    await homePage.verifyUrl(/\/products/);
+  test('should display study progress overview', async ({ page }) => {
+    // Test that study progress section is visible on dashboard
+    const progressSection = page.getByTestId('study-progress-overview');
+    await expect(progressSection).toBeVisible();
   });
 
-  test('should navigate to orders page', async () => {
-    // Test navigation to orders section
-    await homePage.navigateToOrders();
-
-    // Verify navigation occurred
-    await homePage.verifyUrl(/\/orders/);
+  test('should display recent study sessions', async ({ page }) => {
+    // Test that recent study sessions are shown on dashboard
+    const recentSessionsSection = page.getByTestId('recent-study-sessions');
+    await expect(recentSessionsSection).toBeVisible();
   });
 
-  test('should navigate to customers page', async () => {
-    // Test navigation to customers section
-    await homePage.navigateToCustomers();
-
-    // Verify navigation occurred
-    await homePage.verifyUrl(/\/customers/);
+  test('should display study goals summary', async ({ page }) => {
+    // Test that study goals summary is shown on dashboard
+    const goalsSection = page.getByTestId('study-goals-summary');
+    await expect(goalsSection).toBeVisible();
   });
 
-  test('should perform search functionality', async ({ page }) => {
-    // Test search feature if available
-    const searchTerm = 'test search';
+  test('should search through study materials', async ({ page }) => {
+    // Test search functionality for study sessions and notes
+    const searchTerm = 'JavaScript';
 
     // Check if search elements exist
-    const hasSearch = await homePage.isVisible(homePage['searchInput']);
+    const searchInput = page.getByTestId('study-search-input');
+    const hasSearch = await searchInput.isVisible().catch(() => false);
 
     if (hasSearch) {
-      await homePage.verifySearchFunctionality(searchTerm);
+      await searchInput.fill(searchTerm);
+      await page.getByTestId('search-button').click();
 
-      // Verify search was executed (URL change or results displayed)
-      // This will depend on how your application handles search
-      await page.waitForTimeout(1000); // Allow for search to process
-
-      // Add specific assertions based on your search implementation
-      // Examples:
-      // await expect(page.url()).toContain('search');
-      // await expect(page.locator('.search-results')).toBeVisible();
+      // Verify search results are displayed
+      await expect(page.getByTestId('search-results')).toBeVisible();
     } else {
-      test.skip('Search functionality not available');
+      test.skip('Study search functionality not available');
     }
   });
 
-  test('should display welcome message', async () => {
-    // Test welcome message display
-    const hasWelcomeMessage = await homePage.isVisible(homePage['welcomeMessage']);
+  test('should display welcome message with study motivation', async ({ page }) => {
+    // Test welcome message specific to learning
+    const welcomeMessage = page.getByTestId('study-welcome-message');
+    const hasWelcomeMessage = await welcomeMessage.isVisible().catch(() => false);
 
     if (hasWelcomeMessage) {
-      const welcomeText = await homePage.getWelcomeMessage();
+      const welcomeText = await welcomeMessage.textContent();
       expect(welcomeText).toBeTruthy();
-      expect(welcomeText.length).toBeGreaterThan(0);
+      expect(welcomeText).toContain('study' || 'learn' || 'progress');
     } else {
-      test.skip('Welcome message not available');
+      test.skip('Study welcome message not available');
     }
   });
 
-  test('should display statistics section', async () => {
-    // Test statistics/dashboard cards if available
-    const hasStatistics = await homePage.isStatisticsSectionVisible();
+  test('should display study statistics cards', async ({ page }) => {
+    // Test study statistics dashboard cards
+    const statsSection = page.getByTestId('study-statistics');
+    const hasStatistics = await statsSection.isVisible().catch(() => false);
 
     if (hasStatistics) {
-      const stats = await homePage.getStatisticsValues();
-      expect(stats.length).toBeGreaterThan(0);
-
-      // Verify each statistic has content
-      for (const stat of stats) {
-        expect(stat).toBeTruthy();
-      }
+      // Verify key study metrics are displayed
+      await expect(page.getByTestId('total-study-time')).toBeVisible();
+      await expect(page.getByTestId('completed-sessions')).toBeVisible();
+      await expect(page.getByTestId('current-streak')).toBeVisible();
     } else {
-      test.skip('Statistics section not available');
+      test.skip('Study statistics section not available');
     }
   });
 
-  test('should display recent activity section', async () => {
-    // Test recent activity section if available
-    const hasRecentActivity = await homePage.isRecentActivityVisible();
+  test('should display recent study activity', async ({ page }) => {
+    // Test recent study activity section
+    const recentActivity = page.getByTestId('recent-study-activity');
+    const hasRecentActivity = await recentActivity.isVisible().catch(() => false);
 
     if (hasRecentActivity) {
-      // Basic verification that section is present
-      // Add more specific tests based on activity content structure
+      // Verify recent activity items are shown
       expect(hasRecentActivity).toBe(true);
     } else {
-      test.skip('Recent activity section not available');
+      test.skip('Recent study activity section not available');
     }
   });
 

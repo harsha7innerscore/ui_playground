@@ -1,36 +1,38 @@
-# Playwright Automation Framework Specification
+# Self-Study UI Testing Framework Specification
 
 ## Project Overview
 
-**Project Name**: Playwright Automation Framework
-**Purpose**: Automate end-to-end testing for an existing application using Playwright, ensuring reliability, scalability, and CI/CD integration.
+**Project Name**: Self-Study UI Testing Framework
+**Purpose**: Automate UI testing for self-study learning features using Playwright, focusing on user interactions, study session management, and educational workflows.
 
 ### Scope
 
 #### In Scope
-- End-to-end UI automation
-- Smoke, regression, and critical flow testing
-- Cross-browser testing
-- CI/CD pipeline integration
+- Self-study feature UI automation
+- Study session management testing
+- User learning workflow validation
+- Cross-browser compatibility testing
 - Test reporting and artifacts
 
 #### Out of Scope
+- API testing
 - Performance testing
 - Security testing
-- Load and stress testing
+- CI/CD pipeline integration
 
 ## Assumptions
 
 ### Application
-- **Type**: Web Application
-- **Access**: Test environment accessible via URL
-- **Authentication**: Supports test credentials or mocked authentication
+- **Type**: Self-Study Web Application
+- **Access**: Study platform accessible via URL
+- **Authentication**: Single user login for accessing study features
+- **Features**: Study sessions, notes, goals, progress tracking
 
 ### Team
 **Required Skills**:
 - JavaScript/TypeScript
 - Basic Playwright knowledge
-- CI/CD familiarity
+- Understanding of educational/learning workflows
 
 ## Technology Stack
 
@@ -78,8 +80,8 @@ playwright-automation-framework/
   - Trace: `on-first-retry`
 
 ### Environment Variables
-- `BASE_URL`: Application base URL
-- `TEST_USER_EMAIL`: Test user email for authentication
+- `BASE_URL`: Self-study application base URL
+- `TEST_USER_EMAIL`: Test user email for accessing study features
 - `TEST_USER_PASSWORD`: Test user password for authentication
 
 ## Test Design Strategy
@@ -87,12 +89,12 @@ playwright-automation-framework/
 ### Approach
 - **Pattern**: Page Object Model (POM)
 - **Test Independence**: Each test must be isolated and idempotent
-- **Data Management**: Prefer API or fixtures over UI setup where possible
+- **Data Management**: Use test data generators for self-study entities (sessions, notes, goals)
 
 ### Test Types
-- **Smoke Tests**: Critical flows executed on every deployment
-- **Regression Tests**: Full suite executed nightly or pre-release
-- **Feature Tests**: Feature-specific test suites
+- **Smoke Tests**: Core self-study workflows (login, create session, take notes)
+- **Regression Tests**: Complete self-study feature testing
+- **Feature Tests**: Specific self-study functionality (progress tracking, study goals, session management)
 
 ## Coding Standards
 
@@ -117,23 +119,9 @@ playwright-automation-framework/
 - **Debug Mode**: `npm run test:debug` or `npx playwright test --debug`
 - **Headed Mode**: `npm run test:headed`
 
-### CI Environment
+### Production Environment
 - **Command**: `npx playwright test`
-- **Mode**: Headless execution
-- **Parallelization**: Limited to 1-2 workers for stability
-
-## CI/CD Integration
-
-### Supported Platforms
-- GitHub Actions
-- GitLab CI
-- Jenkins
-
-### Pipeline Steps
-1. **Install Dependencies**: `npm install`
-2. **Install Playwright Browsers**: `npx playwright install`
-3. **Run Tests**: `npx playwright test`
-4. **Upload Artifacts**: Reports, screenshots, videos, traces
+- **Mode**: Headless execution for automated runs
 
 ### Artifacts
 - **HTML Report**: Comprehensive test results with screenshots
@@ -151,12 +139,12 @@ playwright-automation-framework/
 - Execution traces
 - Browser logs
 
-### Secondary Reporter
-**JUnit XML**: For CI/CD integration and test result parsing
+### Additional Output
+**Console Logs**: Real-time test execution feedback and results summary
 
 ### Retention Policy
-- **Local**: Manual cleanup
-- **CI**: 7-14 days automatic retention
+- **Local**: Manual cleanup as needed
+- **Reports**: Generated HTML reports stored locally in reports/ directory
 
 ## Error Handling and Debugging
 
@@ -203,32 +191,31 @@ Automatically captures:
 ## Deliverables
 
 ### Initial Setup
-- ✅ Configured Playwright project
-- ✅ Base test framework structure
-- 🔄 Sample test implementations
-- 🔄 Documentation and setup guides
+- ✅ Configured Playwright project for self-study testing
+- ✅ Self-study focused test framework structure
+- ✅ Self-study data generators and fixtures
+- 🔄 Self-study test implementations
 
 ### Documentation
-- 🔄 README with comprehensive setup instructions
-- 🔄 Contribution guidelines for team members
-- ✅ This specification document
+- 🔄 README with self-study testing setup instructions
+- ✅ This specification document focused on self-study features
 
 ## Success Criteria
 
 ### Test Stability
-- Tests run consistently with minimal flakiness (<5% failure rate)
-- Deterministic test results across different environments
+- Self-study tests run consistently with minimal flakiness (<5% failure rate)
+- Deterministic test results across different browsers
 - Fast feedback loop (test suite completes in reasonable time)
 
 ### Coverage
-- All critical user journeys are automated
-- Key business flows have smoke test coverage
-- Regression coverage for previously identified bugs
+- All critical self-study user journeys are automated
+- Study session management workflows have comprehensive coverage
+- Learning feature regressions are caught by automated tests
 
 ### Automation Confidence
-- CI pipeline failures accurately represent product issues
-- Team trusts automated test results for deployment decisions
+- Test failures accurately represent self-study feature issues
 - Clear debugging information available for test failures
+- Tests provide confidence in self-study functionality
 
 ## Getting Started
 

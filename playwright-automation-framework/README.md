@@ -1,6 +1,6 @@
-# Playwright Automation Framework
+# Self-Study UI Testing Framework
 
-A comprehensive end-to-end testing framework built with Playwright and TypeScript, designed for reliability, scalability, and seamless CI/CD integration.
+A focused UI testing framework built with Playwright and TypeScript, designed for testing self-study learning features and educational workflows.
 
 ## 🚀 Quick Start
 
@@ -43,16 +43,16 @@ A comprehensive end-to-end testing framework built with Playwright and TypeScrip
 
 ```
 playwright-automation-framework/
-├── tests/                  # Test specifications
-│   ├── smoke/             # Critical path tests
-│   ├── regression/        # Comprehensive test suite
-│   └── feature/           # Feature-specific tests
-├── pages/                 # Page Object Models
+├── tests/                  # Self-study test specifications
+│   ├── smoke/             # Core self-study workflow tests
+│   ├── regression/        # Comprehensive self-study feature tests
+│   └── feature/           # Specific self-study functionality tests
+├── pages/                 # Page Object Models for self-study UI
 │   ├── BasePage.ts        # Common page functionality
-│   └── components/        # Reusable UI components
-├── fixtures/              # Test fixtures and setup
-├── utils/                 # Helper functions and utilities
-├── test-data/            # Static test data and mocks
+│   └── components/        # Reusable self-study UI components
+├── fixtures/              # Self-study test fixtures and authentication
+├── utils/                 # Helper functions and self-study data generators
+├── test-data/            # Self-study test data (sessions, notes, goals)
 ├── reports/              # Test execution reports
 ├── test-results/         # Test artifacts (screenshots, videos)
 ├── playwright.config.ts  # Playwright configuration
@@ -111,18 +111,12 @@ npx playwright show-trace test-results/[test-name]/trace.zip
 Create a `.env` file in the project root:
 
 ```env
-# Application URLs
+# Self-study application URL
 BASE_URL=http://localhost:3000
-STAGING_URL=https://staging.yourapp.com
-PRODUCTION_URL=https://yourapp.com
 
-# Test Credentials
-TEST_USER_EMAIL=test@example.com
-TEST_USER_PASSWORD=testpassword123
-
-# API Configuration (if needed)
-API_BASE_URL=https://api.yourapp.com
-API_KEY=your-api-key
+# Test user credentials for accessing self-study features
+TEST_USER_EMAIL=user@example.com
+TEST_USER_PASSWORD=password123
 ```
 
 ### Browser Configuration
@@ -142,21 +136,29 @@ The framework is configured to run tests across multiple browsers:
 
 ```typescript
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
+import { StudySessionPage } from '../pages/StudySessionPage';
+import { SelfStudyDataGenerator } from '../utils/data.generator';
 
-test.describe('Login Functionality', () => {
-  test('should login with valid credentials', async ({ page }) => {
-    // Navigate to login page
-    await page.goto('/login');
+test.describe('Self-Study Session Management', () => {
+  test('should create a new study session', async ({ page }) => {
+    // Generate test data for study session
+    const sessionData = SelfStudyDataGenerator.studySession({
+      title: 'JavaScript Fundamentals',
+      subject: 'Programming',
+      duration: 60
+    });
+
+    // Navigate to study sessions
+    await page.goto('/study-sessions');
 
     // Create page object
-    const loginPage = new LoginPage(page);
+    const studySessionPage = new StudySessionPage(page);
 
-    // Perform login
-    await loginPage.login('test@example.com', 'password123');
+    // Create new session
+    await studySessionPage.createSession(sessionData);
 
-    // Verify successful login
-    await expect(page).toHaveURL('/dashboard');
+    // Verify session creation
+    await expect(page.getByTestId('session-title')).toContainText('JavaScript Fundamentals');
   });
 });
 ```
@@ -164,30 +166,37 @@ test.describe('Login Functionality', () => {
 ### Page Object Example
 
 ```typescript
-// pages/LoginPage.ts
+// pages/StudySessionPage.ts
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { SelfStudySessionData } from '../utils/data.generator';
 
-export class LoginPage extends BasePage {
-  private readonly emailInput: Locator;
-  private readonly passwordInput: Locator;
-  private readonly submitButton: Locator;
+export class StudySessionPage extends BasePage {
+  private readonly createSessionButton: Locator;
+  private readonly titleInput: Locator;
+  private readonly subjectSelect: Locator;
+  private readonly durationInput: Locator;
+  private readonly saveButton: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.emailInput = page.getByTestId('email-input');
-    this.passwordInput = page.getByTestId('password-input');
-    this.submitButton = page.getByTestId('login-button');
+    this.createSessionButton = page.getByTestId('create-session-btn');
+    this.titleInput = page.getByTestId('session-title-input');
+    this.subjectSelect = page.getByTestId('session-subject-select');
+    this.durationInput = page.getByTestId('session-duration-input');
+    this.saveButton = page.getByTestId('save-session-btn');
   }
 
-  async login(email: string, password: string): Promise<void> {
-    await this.emailInput.fill(email);
-    await this.passwordInput.fill(password);
-    await this.submitButton.click();
+  async createSession(sessionData: SelfStudySessionData): Promise<void> {
+    await this.createSessionButton.click();
+    await this.titleInput.fill(sessionData.title);
+    await this.subjectSelect.selectOption(sessionData.subject);
+    await this.durationInput.fill(sessionData.duration.toString());
+    await this.saveButton.click();
   }
 
-  async isLoginFormVisible(): Promise<boolean> {
-    return await this.emailInput.isVisible();
+  async isSessionListVisible(): Promise<boolean> {
+    return await this.createSessionButton.isVisible();
   }
 }
 ```
@@ -200,79 +209,6 @@ export class LoginPage extends BasePage {
 4. **Descriptive Names**: Use clear, descriptive test and variable names
 5. **Async/Await**: Always use async/await for Playwright operations
 
-## 🏗️ CI/CD Integration
-
-### GitHub Actions
-
-Create `.github/workflows/playwright.yml`:
-
-```yaml
-name: Playwright Tests
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '18.20.4'
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-
-    - name: Run Playwright tests
-      run: npm test
-      env:
-        BASE_URL: ${{ secrets.BASE_URL }}
-        TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-        TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report
-        path: reports/
-        retention-days: 14
-```
-
-### GitLab CI
-
-Create `.gitlab-ci.yml`:
-
-```yaml
-image: node:18.20.4
-
-stages:
-  - test
-
-playwright-tests:
-  stage: test
-  before_script:
-    - npm ci
-    - npx playwright install --with-deps
-  script:
-    - npm test
-  artifacts:
-    when: always
-    paths:
-      - reports/
-    expire_in: 2 weeks
-  only:
-    - main
-    - develop
-    - merge_requests
-```
 
 ## 🐛 Debugging
 
@@ -345,10 +281,12 @@ Rich, interactive HTML reports are generated automatically:
 
 Access via: `npm run test:report`
 
-### JUnit XML
+### Console Output
 
-For CI/CD integration, JUnit XML reports are generated at:
-`reports/results.xml`
+Test results are also displayed in the console with detailed information about:
+- Test execution summary
+- Failed test details
+- Performance metrics
 
 ## 🚨 Troubleshooting
 
