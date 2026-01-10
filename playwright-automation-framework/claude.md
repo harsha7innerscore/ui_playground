@@ -1,6 +1,6 @@
-# Playwright Automation Framework - Local Configuration
+# Self-Study UI Testing Framework - Local Configuration
 
-This file contains project-specific configurations that override global workspace settings where conflicts arise.
+This file contains project-specific configurations for the self-study UI testing framework that override global workspace settings where conflicts arise.
 
 ## Technology Stack & Version Constraints
 

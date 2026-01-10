@@ -1,96 +1,63 @@
 /**
- * Data generator utilities for creating test data
- * Provides methods for generating realistic test data for various scenarios
+ * Data generator utilities for self-study feature testing
+ * Provides methods for generating test data specific to self-study functionality
  */
 
-export interface UserData {
+export interface SelfStudySessionData {
   id?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone?: string;
-  address?: AddressData;
-  role?: 'admin' | 'user' | 'readonly';
-  isActive?: boolean;
-  createdAt?: Date;
+  title: string;
+  subject: string;
+  duration: number; // in minutes
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  tags: string[];
+  status: 'not_started' | 'in_progress' | 'completed' | 'paused';
+  progress: number; // percentage 0-100
+  startDate?: Date;
+  completedDate?: Date;
 }
 
-export interface AddressData {
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
-
-export interface ProductData {
+export interface StudyGoalData {
   id?: string;
-  name: string;
+  title: string;
   description: string;
-  price: number;
-  category: string;
-  sku: string;
-  inStock: boolean;
-  quantity?: number;
-  imageUrl?: string;
+  targetDate: Date;
+  isCompleted: boolean;
+  progress: number; // percentage 0-100
 }
 
-export interface OrderData {
+export interface StudyNoteData {
   id?: string;
-  userId: string;
-  products: ProductData[];
-  totalAmount: number;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-  orderDate: Date;
-  shippingAddress: AddressData;
+  sessionId?: string;
+  title: string;
+  content: string;
+  createdDate: Date;
+  lastModified: Date;
+  tags: string[];
 }
 
 /**
- * Generate random test data
+ * Generate random test data for self-study features
  */
-export class DataGenerator {
-  private static readonly FIRST_NAMES = [
-    'John', 'Jane', 'Michael', 'Sarah', 'David', 'Emily', 'Christopher', 'Jessica',
-    'Matthew', 'Ashley', 'Joshua', 'Amanda', 'Daniel', 'Stephanie', 'Andrew', 'Nicole',
-    'James', 'Elizabeth', 'Justin', 'Heather', 'Joseph', 'Melissa', 'Robert', 'Michelle'
+export class SelfStudyDataGenerator {
+  private static readonly SUBJECTS = [
+    'Mathematics', 'Science', 'History', 'English', 'Programming',
+    'Spanish', 'Art', 'Music', 'Philosophy', 'Psychology'
   ];
 
-  private static readonly LAST_NAMES = [
-    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis',
-    'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson',
-    'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson', 'White'
+  private static readonly SESSION_TITLES = [
+    'Introduction to Algebra', 'World War II Overview', 'JavaScript Basics',
+    'Spanish Grammar', 'Ancient Rome History', 'Calculus Fundamentals',
+    'Poetry Analysis', 'Color Theory', 'Cognitive Psychology', 'Ethics in Philosophy'
   ];
 
-  private static readonly DOMAINS = [
-    'example.com', 'test.com', 'demo.org', 'sample.net', 'mock.io', 'testcase.dev'
+  private static readonly TAGS = [
+    'homework', 'exam-prep', 'review', 'practice', 'assignment',
+    'research', 'notes', 'important', 'difficult', 'favorite'
   ];
 
-  private static readonly STREETS = [
-    'Main Street', 'Oak Avenue', 'Park Road', 'First Street', 'Elm Street',
-    'Washington Avenue', 'Maple Street', 'Second Street', 'Cherry Lane', 'Pine Street'
-  ];
-
-  private static readonly CITIES = [
-    'Springfield', 'Franklin', 'Georgetown', 'Madison', 'Riverside', 'Salem',
-    'Fairview', 'Clinton', 'Bristol', 'Auburn', 'Manchester', 'Oxford', 'Milford'
-  ];
-
-  private static readonly STATES = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
-    'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
-    'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana'
-  ];
-
-  private static readonly PRODUCT_NAMES = [
-    'Wireless Headphones', 'Smart Watch', 'Laptop Computer', 'Coffee Maker',
-    'Running Shoes', 'Smartphone', 'Tablet', 'Bluetooth Speaker', 'Fitness Tracker',
-    'Gaming Mouse', 'Office Chair', 'Monitor', 'Keyboard', 'Webcam', 'Desk Lamp'
-  ];
-
-  private static readonly CATEGORIES = [
-    'Electronics', 'Clothing', 'Sports', 'Books', 'Home & Garden',
-    'Automotive', 'Health & Beauty', 'Toys & Games', 'Music', 'Movies'
+  private static readonly GOAL_TITLES = [
+    'Complete Math Course', 'Finish History Project', 'Master Programming Concepts',
+    'Improve Language Skills', 'Prepare for Finals', 'Learn New Framework'
   ];
 
   /**
@@ -130,312 +97,289 @@ export class DataGenerator {
   }
 
   /**
-   * Generate random email address
+   * Pick random items from array
    */
-  static email(firstName?: string, lastName?: string, domain?: string): string {
-    const fName = firstName || this.randomChoice(this.FIRST_NAMES);
-    const lName = lastName || this.randomChoice(this.LAST_NAMES);
-    const domainName = domain || this.randomChoice(this.DOMAINS);
-    const timestamp = Date.now().toString().slice(-4);
-
-    return `${fName.toLowerCase()}.${lName.toLowerCase()}${timestamp}@${domainName}`;
+  static randomChoices<T>(array: T[], count: number): T[] {
+    const shuffled = [...array].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, Math.min(count, array.length));
   }
 
   /**
-   * Generate random password
+   * Generate random study session data
    */
-  static password(length = 12, includeSpecialChars = true): string {
-    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const numbers = '0123456789';
-    const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-
-    let chars = lowercase + uppercase + numbers;
-    if (includeSpecialChars) {
-      chars += specialChars;
-    }
-
-    // Ensure password contains at least one character from each category
-    let password = '';
-    password += this.randomChoice(lowercase.split(''));
-    password += this.randomChoice(uppercase.split(''));
-    password += this.randomChoice(numbers.split(''));
-
-    if (includeSpecialChars) {
-      password += this.randomChoice(specialChars.split(''));
-    }
-
-    // Fill the rest randomly
-    for (let i = password.length; i < length; i++) {
-      password += this.randomChoice(chars.split(''));
-    }
-
-    // Shuffle the password
-    return password.split('').sort(() => Math.random() - 0.5).join('');
-  }
-
-  /**
-   * Generate random phone number
-   */
-  static phoneNumber(): string {
-    const areaCode = this.randomInt(200, 999);
-    const exchange = this.randomInt(200, 999);
-    const number = this.randomInt(1000, 9999);
-    return `(${areaCode}) ${exchange}-${number}`;
-  }
-
-  /**
-   * Generate random user data
-   */
-  static userData(overrides: Partial<UserData> = {}): UserData {
-    const firstName = this.randomChoice(this.FIRST_NAMES);
-    const lastName = this.randomChoice(this.LAST_NAMES);
+  static studySession(overrides: Partial<SelfStudySessionData> = {}): SelfStudySessionData {
+    const title = this.randomChoice(this.SESSION_TITLES);
+    const subject = this.randomChoice(this.SUBJECTS);
+    const status = this.randomChoice(['not_started', 'in_progress', 'completed', 'paused']);
 
     return {
       id: this.uuid(),
-      firstName,
-      lastName,
-      email: this.email(firstName, lastName),
-      password: this.password(),
-      phone: this.phoneNumber(),
-      address: this.addressData(),
-      role: this.randomChoice(['admin', 'user', 'readonly']),
-      isActive: true,
-      createdAt: new Date(),
+      title,
+      subject,
+      duration: this.randomInt(15, 180), // 15 minutes to 3 hours
+      difficulty: this.randomChoice(['beginner', 'intermediate', 'advanced']),
+      tags: this.randomChoices(this.TAGS, this.randomInt(1, 3)),
+      status,
+      progress: status === 'completed' ? 100 : this.randomInt(0, 95),
+      startDate: new Date(Date.now() - this.randomInt(0, 7) * 24 * 60 * 60 * 1000), // within last week
+      completedDate: status === 'completed' ? new Date() : undefined,
       ...overrides
     };
   }
 
   /**
-   * Generate random address data
+   * Generate random study goal data
    */
-  static addressData(overrides: Partial<AddressData> = {}): AddressData {
-    return {
-      street: `${this.randomInt(1, 9999)} ${this.randomChoice(this.STREETS)}`,
-      city: this.randomChoice(this.CITIES),
-      state: this.randomChoice(this.STATES),
-      zipCode: this.randomInt(10000, 99999).toString(),
-      country: 'United States',
-      ...overrides
-    };
-  }
-
-  /**
-   * Generate random product data
-   */
-  static productData(overrides: Partial<ProductData> = {}): ProductData {
-    const name = this.randomChoice(this.PRODUCT_NAMES);
-    const category = this.randomChoice(this.CATEGORIES);
+  static studyGoal(overrides: Partial<StudyGoalData> = {}): StudyGoalData {
+    const title = this.randomChoice(this.GOAL_TITLES);
+    const isCompleted = Math.random() > 0.7; // 30% chance of being completed
 
     return {
       id: this.uuid(),
-      name,
-      description: `High-quality ${name.toLowerCase()} with excellent features and durability.`,
-      price: parseFloat((Math.random() * 1000 + 10).toFixed(2)),
-      category,
-      sku: this.randomString(8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'),
-      inStock: Math.random() > 0.2, // 80% chance of being in stock
-      quantity: this.randomInt(0, 100),
-      imageUrl: `https://picsum.photos/400/300?random=${this.randomInt(1, 1000)}`,
+      title,
+      description: `Complete all requirements for ${title.toLowerCase()} including assignments and practice.`,
+      targetDate: new Date(Date.now() + this.randomInt(1, 30) * 24 * 60 * 60 * 1000), // within next month
+      isCompleted,
+      progress: isCompleted ? 100 : this.randomInt(0, 80),
       ...overrides
     };
   }
 
   /**
-   * Generate random order data
+   * Generate random study note data
    */
-  static orderData(overrides: Partial<OrderData> = {}): OrderData {
-    const products = Array.from({ length: this.randomInt(1, 5) }, () => this.productData());
-    const totalAmount = products.reduce((sum, product) => sum + product.price, 0);
+  static studyNote(overrides: Partial<StudyNoteData> = {}): StudyNoteData {
+    const titles = [
+      'Key Concepts', 'Important Formulas', 'Study Reminders', 'Practice Problems',
+      'Questions to Review', 'Summary Notes', 'Exam Tips', 'Quick Reference'
+    ];
+
+    const title = this.randomChoice(titles);
+    const createdDate = new Date(Date.now() - this.randomInt(0, 14) * 24 * 60 * 60 * 1000);
 
     return {
       id: this.uuid(),
-      userId: this.uuid(),
-      products,
-      totalAmount: parseFloat(totalAmount.toFixed(2)),
-      status: this.randomChoice(['pending', 'processing', 'shipped', 'delivered']),
-      orderDate: new Date(),
-      shippingAddress: this.addressData(),
+      sessionId: this.uuid(),
+      title,
+      content: `This is a sample note about ${title.toLowerCase()}. Contains important information for study review.`,
+      createdDate,
+      lastModified: new Date(createdDate.getTime() + this.randomInt(0, 3) * 24 * 60 * 60 * 1000),
+      tags: this.randomChoices(this.TAGS, this.randomInt(1, 2)),
       ...overrides
     };
   }
 
   /**
-   * Generate multiple users
+   * Generate multiple study sessions
    */
-  static users(count: number, overrides: Partial<UserData> = {}): UserData[] {
-    return Array.from({ length: count }, () => this.userData(overrides));
+  static studySessions(count: number, overrides: Partial<SelfStudySessionData> = {}): SelfStudySessionData[] {
+    return Array.from({ length: count }, () => this.studySession(overrides));
   }
 
   /**
-   * Generate multiple products
+   * Generate multiple study goals
    */
-  static products(count: number, overrides: Partial<ProductData> = {}): ProductData[] {
-    return Array.from({ length: count }, () => this.productData(overrides));
+  static studyGoals(count: number, overrides: Partial<StudyGoalData> = {}): StudyGoalData[] {
+    return Array.from({ length: count }, () => this.studyGoal(overrides));
   }
 
   /**
-   * Generate multiple orders
+   * Generate multiple study notes
    */
-  static orders(count: number, overrides: Partial<OrderData> = {}): OrderData[] {
-    return Array.from({ length: count }, () => this.orderData(overrides));
+  static studyNotes(count: number, overrides: Partial<StudyNoteData> = {}): StudyNoteData[] {
+    return Array.from({ length: count }, () => this.studyNote(overrides));
   }
 
   /**
-   * Generate test data for specific scenarios
+   * Generate test scenarios specific to self-study features
    */
   static scenarios = {
     /**
-     * Generate admin user
+     * Generate a new study session
      */
-    adminUser: (): UserData => this.userData({ role: 'admin' }),
+    newSession: (): SelfStudySessionData => this.studySession({ status: 'not_started', progress: 0 }),
 
     /**
-     * Generate regular user
+     * Generate an active study session
      */
-    regularUser: (): UserData => this.userData({ role: 'user' }),
+    activeSession: (): SelfStudySessionData => this.studySession({
+      status: 'in_progress',
+      progress: this.randomInt(10, 80),
+      startDate: new Date(Date.now() - this.randomInt(1, 6) * 60 * 60 * 1000) // started 1-6 hours ago
+    }),
 
     /**
-     * Generate readonly user
+     * Generate a completed study session
      */
-    readonlyUser: (): UserData => this.userData({ role: 'readonly' }),
+    completedSession: (): SelfStudySessionData => this.studySession({
+      status: 'completed',
+      progress: 100,
+      completedDate: new Date(Date.now() - this.randomInt(0, 7) * 24 * 60 * 60 * 1000)
+    }),
 
     /**
-     * Generate user with invalid email
+     * Generate a long study session
      */
-    invalidEmailUser: (): UserData => this.userData({ email: 'invalid-email' }),
+    longSession: (): SelfStudySessionData => this.studySession({
+      duration: this.randomInt(120, 240) // 2-4 hours
+    }),
 
     /**
-     * Generate inactive user
+     * Generate an overdue goal
      */
-    inactiveUser: (): UserData => this.userData({ isActive: false }),
+    overdueGoal: (): StudyGoalData => this.studyGoal({
+      targetDate: new Date(Date.now() - this.randomInt(1, 7) * 24 * 60 * 60 * 1000), // overdue by 1-7 days
+      isCompleted: false,
+      progress: this.randomInt(30, 70)
+    }),
 
     /**
-     * Generate expensive product
+     * Generate a completed goal
      */
-    expensiveProduct: (): ProductData => this.productData({ price: this.randomInt(500, 2000) }),
-
-    /**
-     * Generate out of stock product
-     */
-    outOfStockProduct: (): ProductData => this.productData({ inStock: false, quantity: 0 }),
-
-    /**
-     * Generate large order
-     */
-    largeOrder: (): OrderData => {
-      const products = Array.from({ length: this.randomInt(5, 15) }, () => this.productData());
-      const totalAmount = products.reduce((sum, product) => sum + product.price, 0);
-      return this.orderData({ products, totalAmount: parseFloat(totalAmount.toFixed(2)) });
-    },
-
-    /**
-     * Generate cancelled order
-     */
-    cancelledOrder: (): OrderData => this.orderData({ status: 'cancelled' }),
+    completedGoal: (): StudyGoalData => this.studyGoal({
+      isCompleted: true,
+      progress: 100
+    }),
   };
 }
 
 /**
- * Test data builder for fluent API
+ * Test data builder for fluent API specific to self-study features
  */
-export class TestDataBuilder {
-  private data: any = {};
-
-  static user(): UserDataBuilder {
-    return new UserDataBuilder();
+export class SelfStudyTestDataBuilder {
+  static session(): SessionDataBuilder {
+    return new SessionDataBuilder();
   }
 
-  static product(): ProductDataBuilder {
-    return new ProductDataBuilder();
+  static goal(): GoalDataBuilder {
+    return new GoalDataBuilder();
   }
 
-  static order(): OrderDataBuilder {
-    return new OrderDataBuilder();
+  static note(): NoteDataBuilder {
+    return new NoteDataBuilder();
   }
 }
 
-export class UserDataBuilder {
-  private data: Partial<UserData> = {};
+export class SessionDataBuilder {
+  private data: Partial<SelfStudySessionData> = {};
 
-  withFirstName(firstName: string): this {
-    this.data.firstName = firstName;
+  withTitle(title: string): this {
+    this.data.title = title;
     return this;
   }
 
-  withLastName(lastName: string): this {
-    this.data.lastName = lastName;
+  withSubject(subject: string): this {
+    this.data.subject = subject;
     return this;
   }
 
-  withEmail(email: string): this {
-    this.data.email = email;
+  withDuration(duration: number): this {
+    this.data.duration = duration;
     return this;
   }
 
-  withRole(role: 'admin' | 'user' | 'readonly'): this {
-    this.data.role = role;
+  withDifficulty(difficulty: 'beginner' | 'intermediate' | 'advanced'): this {
+    this.data.difficulty = difficulty;
     return this;
   }
 
-  inactive(): this {
-    this.data.isActive = false;
-    return this;
-  }
-
-  build(): UserData {
-    return DataGenerator.userData(this.data);
-  }
-}
-
-export class ProductDataBuilder {
-  private data: Partial<ProductData> = {};
-
-  withName(name: string): this {
-    this.data.name = name;
-    return this;
-  }
-
-  withPrice(price: number): this {
-    this.data.price = price;
-    return this;
-  }
-
-  withCategory(category: string): this {
-    this.data.category = category;
-    return this;
-  }
-
-  outOfStock(): this {
-    this.data.inStock = false;
-    this.data.quantity = 0;
-    return this;
-  }
-
-  build(): ProductData {
-    return DataGenerator.productData(this.data);
-  }
-}
-
-export class OrderDataBuilder {
-  private data: Partial<OrderData> = {};
-
-  withUserId(userId: string): this {
-    this.data.userId = userId;
-    return this;
-  }
-
-  withStatus(status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'): this {
+  withStatus(status: 'not_started' | 'in_progress' | 'completed' | 'paused'): this {
     this.data.status = status;
     return this;
   }
 
-  withProducts(products: ProductData[]): this {
-    this.data.products = products;
+  withProgress(progress: number): this {
+    this.data.progress = progress;
     return this;
   }
 
-  build(): OrderData {
-    return DataGenerator.orderData(this.data);
+  withTags(tags: string[]): this {
+    this.data.tags = tags;
+    return this;
+  }
+
+  completed(): this {
+    this.data.status = 'completed';
+    this.data.progress = 100;
+    this.data.completedDate = new Date();
+    return this;
+  }
+
+  active(): this {
+    this.data.status = 'in_progress';
+    this.data.startDate = new Date();
+    return this;
+  }
+
+  build(): SelfStudySessionData {
+    return SelfStudyDataGenerator.studySession(this.data);
+  }
+}
+
+export class GoalDataBuilder {
+  private data: Partial<StudyGoalData> = {};
+
+  withTitle(title: string): this {
+    this.data.title = title;
+    return this;
+  }
+
+  withDescription(description: string): this {
+    this.data.description = description;
+    return this;
+  }
+
+  withTargetDate(targetDate: Date): this {
+    this.data.targetDate = targetDate;
+    return this;
+  }
+
+  withProgress(progress: number): this {
+    this.data.progress = progress;
+    return this;
+  }
+
+  completed(): this {
+    this.data.isCompleted = true;
+    this.data.progress = 100;
+    return this;
+  }
+
+  overdue(): this {
+    this.data.targetDate = new Date(Date.now() - 24 * 60 * 60 * 1000); // yesterday
+    this.data.isCompleted = false;
+    return this;
+  }
+
+  build(): StudyGoalData {
+    return SelfStudyDataGenerator.studyGoal(this.data);
+  }
+}
+
+export class NoteDataBuilder {
+  private data: Partial<StudyNoteData> = {};
+
+  withTitle(title: string): this {
+    this.data.title = title;
+    return this;
+  }
+
+  withContent(content: string): this {
+    this.data.content = content;
+    return this;
+  }
+
+  withSessionId(sessionId: string): this {
+    this.data.sessionId = sessionId;
+    return this;
+  }
+
+  withTags(tags: string[]): this {
+    this.data.tags = tags;
+    return this;
+  }
+
+  build(): StudyNoteData {
+    return SelfStudyDataGenerator.studyNote(this.data);
   }
 }
