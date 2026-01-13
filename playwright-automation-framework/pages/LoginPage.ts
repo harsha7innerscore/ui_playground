@@ -20,8 +20,8 @@ export class LoginPage extends BasePage {
     super(page);
 
     // Initialize locators using data-testid (preferred) and fallback selectors
-    this.emailInput = page.getByTestId('email-input').or(page.locator('input[type="email"]'));
-    this.passwordInput = page.getByTestId('password-input').or(page.locator('input[type="password"]'));
+    this.emailInput = page.getByTestId('login-user-id-input').or(page.locator('input[type="email"]'));
+    this.passwordInput = page.getByTestId('login-password').or(page.locator('input[type="password"]'));
     this.loginButton = page.getByTestId('login-button').or(page.getByRole('button', { name: /log.*in/i }));
     this.forgotPasswordLink = page.getByTestId('forgot-password-link').or(page.getByText(/forgot.*password/i));
     this.signUpLink = page.getByTestId('signup-link').or(page.getByText(/sign.*up/i));
