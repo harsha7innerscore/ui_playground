@@ -16,32 +16,66 @@ export class LoginPage extends BasePage {
   private readonly loginForm: Locator;
   private readonly rememberMeCheckbox: Locator;
 
+  // Password reset form locators
+  private readonly otpInput: Locator;
+  private readonly newPasswordInput: Locator;
+  private readonly confirmPasswordInput: Locator;
+  private readonly passwordResetSubmitButton: Locator;
+  private readonly passwordResetErrorMessage: Locator;
+  private readonly resendOtpLink: Locator;
+
   constructor(page: Page) {
     super(page);
 
     // Initialize locators using data-testid (preferred) and fallback selectors
     this.emailInput = page
       .getByTestId("login-user-id-input")
+      .or(page.locator('input[type="text"]'))
       .or(page.locator('input[type="email"]'));
     this.passwordInput = page
-      .getByTestId("login-password")
+      .locator("#login-password-input")
+      .or(page.getByTestId("login-password"))
       .or(page.locator('input[type="password"]'));
     this.loginButton = page
       .getByTestId("login-submit-button")
       .or(page.getByRole("button", { name: /log.*in/i }));
     this.forgotPasswordLink = page
-      .getByTestId("forgot-password-link")
+      .locator("#forgot-password-link")
       .or(page.getByText(/forgot.*password/i));
     this.signUpLink = page
       .getByTestId("signup-link")
       .or(page.getByText(/sign.*up/i));
     this.errorMessage = page
-      .getByTestId("error-message")
+      .locator("#login-error-message")
+      .or(page.locator(".error-message"))
       .or(page.locator(".error, .alert-danger"));
-    this.loginForm = page.getByTestId("login-form").or(page.locator("form"));
+    this.loginForm = page
+      .getByTestId("student-login-right-section")
+      .or(page.locator("form"));
     this.rememberMeCheckbox = page
       .getByTestId("remember-me")
       .or(page.locator('input[type="checkbox"]'));
+
+    // Initialize password reset form locators
+    this.otpInput = page
+      .locator("#password-reset-otp-input")
+      .or(page.locator('input[type="tel"]'))
+      .or(page.locator('input[inputmode="numeric"]'));
+    this.newPasswordInput = page
+      .locator("#password-reset-new-input")
+      .or(page.locator('input[autocomplete="new-password"]'));
+    this.confirmPasswordInput = page
+      .locator("#password-reset-confirm-input")
+      .or(page.locator('input[id*="confirm"]'));
+    this.passwordResetSubmitButton = page
+      .locator("#password-reset-submit")
+      .or(page.getByRole("button", { name: /set.*password/i }));
+    this.passwordResetErrorMessage = page
+      .locator("#password-reset-error")
+      .or(page.locator(".error-message"));
+    this.resendOtpLink = page
+      .getByText(/resend/i)
+      .or(page.locator('text[class*="rensend-text"]'));
   }
 
   /**
@@ -225,9 +259,9 @@ export class LoginPage extends BasePage {
 
   /**
    * Verify successful login redirect
-   * @param expectedUrl - Expected URL after login (default: base URL)
+   * @param expectedUrl - Expected URL after login (default: SchoolAI URL pattern)
    */
-  async verifySuccessfulLogin(expectedUrl = "/"): Promise<void> {
+  async verifySuccessfulLogin(expectedUrl: string | RegExp = /\/school\/aitutor\/student\/aps|\/$/): Promise<void> {
     await this.waitForNavigation(expectedUrl);
     await this.verifyUrl(expectedUrl);
   }
@@ -245,5 +279,124 @@ export class LoginPage extends BasePage {
   ): Promise<void> {
     await this.login(email, password);
     await this.verifySuccessfulLogin(expectedRedirectUrl);
+  }
+
+  // Password Reset Methods
+
+  /**
+   * Fill the OTP input field
+   * @param otp - The OTP code (4 digits)
+   */
+  async fillOtp(otp: string): Promise<void> {
+    await this.fillInput(this.otpInput, otp);
+  }
+
+  /**
+   * Fill the new password field
+   * @param password - New password
+   */
+  async fillNewPassword(password: string): Promise<void> {
+    await this.fillInput(this.newPasswordInput, password);
+  }
+
+  /**
+   * Fill the confirm password field
+   * @param password - Confirm password
+   */
+  async fillConfirmPassword(password: string): Promise<void> {
+    await this.fillInput(this.confirmPasswordInput, password);
+  }
+
+  /**
+   * Submit the password reset form
+   */
+  async submitPasswordReset(): Promise<void> {
+    await this.clickWithRetry(this.passwordResetSubmitButton);
+  }
+
+  /**
+   * Click the resend OTP link
+   */
+  async clickResendOtp(): Promise<void> {
+    await this.clickWithRetry(this.resendOtpLink);
+  }
+
+  /**
+   * Complete password reset flow
+   * @param otp - OTP code
+   * @param newPassword - New password
+   * @param confirmPassword - Confirm password (defaults to newPassword)
+   */
+  async resetPassword(
+    otp: string,
+    newPassword: string,
+    confirmPassword = newPassword
+  ): Promise<void> {
+    await this.fillOtp(otp);
+    await this.fillNewPassword(newPassword);
+    await this.fillConfirmPassword(confirmPassword);
+    await this.submitPasswordReset();
+  }
+
+  /**
+   * Verify password reset form elements are present
+   */
+  async verifyPasswordResetFormElements(): Promise<void> {
+    await expect(this.otpInput).toBeVisible();
+    await expect(this.newPasswordInput).toBeVisible();
+    await expect(this.confirmPasswordInput).toBeVisible();
+    await expect(this.passwordResetSubmitButton).toBeVisible();
+  }
+
+  /**
+   * Check if password reset error message is displayed
+   * @returns True if error message is visible
+   */
+  async isPasswordResetErrorVisible(): Promise<boolean> {
+    return await this.isVisible(this.passwordResetErrorMessage);
+  }
+
+  /**
+   * Get the password reset error message text
+   * @returns Error message text
+   */
+  async getPasswordResetErrorMessage(): Promise<string> {
+    await this.waitForElement(this.passwordResetErrorMessage);
+    return await this.getTextContent(this.passwordResetErrorMessage);
+  }
+
+  /**
+   * Verify password reset button is enabled
+   */
+  async verifyPasswordResetButtonEnabled(): Promise<void> {
+    await expect(this.passwordResetSubmitButton).toBeEnabled();
+  }
+
+  /**
+   * Verify password reset button is disabled
+   */
+  async verifyPasswordResetButtonDisabled(): Promise<void> {
+    await expect(this.passwordResetSubmitButton).toBeDisabled();
+  }
+
+  /**
+   * Wait for password reset form to be visible
+   */
+  async waitForPasswordResetFormToBeVisible(): Promise<void> {
+    await this.waitForElement(this.otpInput);
+    await this.waitForElement(this.newPasswordInput);
+    await this.waitForElement(this.confirmPasswordInput);
+  }
+
+  /**
+   * Check if password reset form is visible
+   * @returns True if password reset form is visible
+   */
+  async isPasswordResetFormVisible(): Promise<boolean> {
+    return (
+      (await this.isVisible(this.otpInput)) &&
+      (await this.isVisible(this.newPasswordInput)) &&
+      (await this.isVisible(this.confirmPasswordInput))
+    );
   }
 }

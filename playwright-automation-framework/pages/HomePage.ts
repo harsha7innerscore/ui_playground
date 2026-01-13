@@ -221,7 +221,8 @@ export class HomePage extends BasePage {
    * Verify user is on home page
    */
   async verifyOnHomePage(): Promise<void> {
-    await this.verifyUrl(/\/$/);
+    // Updated to match SchoolAI URL pattern instead of just "/"
+    await this.verifyUrl(/\/school\/aitutor\/student\/aps|\/$/);
     await this.verifyHeaderElements();
     await this.verifyMainContentLoaded();
   }

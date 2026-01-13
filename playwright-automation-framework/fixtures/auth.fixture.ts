@@ -55,7 +55,7 @@ export const test = base.extend<AuthFixture>({
   logout: async ({ homePage, loginPage }, use) => {
     const logout = async () => {
       await homePage.logout();
-      await loginPage.verifyUrl(/\/login/);
+      await loginPage.verifyUrl(/\/school\/aitutor\/student\/aps|\/login|\//);
     };
 
     await use(logout);

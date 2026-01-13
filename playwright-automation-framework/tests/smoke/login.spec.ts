@@ -38,9 +38,9 @@ test.describe('Login - Self-Study Access Tests', () => {
   });
 
   test('should login with valid credentials to access self-study features', async () => {
-    // Arrange
-    const email = process.env.TEST_USER_EMAIL || 'user@example.com';
-    const password = process.env.TEST_USER_PASSWORD || 'password123';
+    // Arrange - Use environment variables or defaults (updated for SchoolAI)
+    const email = process.env.TEST_USER_EMAIL || 'Test1177';
+    const password = process.env.TEST_USER_PASSWORD || 'Test@123';
 
     // Act
     await loginPage.login(email, password);
@@ -60,7 +60,7 @@ test.describe('Login - Self-Study Access Tests', () => {
 
     // Assert - Should stay on login page with error
     await expect(loginPage.isErrorMessageVisible()).resolves.toBe(true);
-    await loginPage.verifyUrl(/\//);
+    await loginPage.verifyUrl(/\/school\/aitutor\/student\/aps|\//);
   });
 
   test('should show error for empty email', async () => {
@@ -88,9 +88,9 @@ test.describe('Login - Self-Study Access Tests', () => {
   });
 
   test('should redirect to login after logout from self-study session', async () => {
-    // Arrange - Login first
-    const email = process.env.TEST_USER_EMAIL || 'user@example.com';
-    const password = process.env.TEST_USER_PASSWORD || 'password123';
+    // Arrange - Login first with SchoolAI credentials
+    const email = process.env.TEST_USER_EMAIL || 'Test1177';
+    const password = process.env.TEST_USER_PASSWORD || 'Test@123';
     await loginPage.login(email, password);
     await homePage.verifyOnHomePage();
 
@@ -98,7 +98,7 @@ test.describe('Login - Self-Study Access Tests', () => {
     await homePage.logout();
 
     // Assert - Should be back on login page
-    await loginPage.verifyUrl(/\//);
+    await loginPage.verifyUrl(/\/school\/aitutor\/student\/aps|\//);
     await expect(loginPage.isLoginFormVisible()).resolves.toBe(true);
   });
 });

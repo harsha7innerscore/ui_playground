@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/selfStudy.fixture';
+import { test, expect } from "../../fixtures/selfStudy.fixture";
 
 /**
  * Self-Study Feature - Smoke Tests (P0 Priority)
@@ -6,25 +6,26 @@ import { test, expect } from '../../fixtures/selfStudy.fixture';
  * Based on CSV test cases: TC_AV_01, TC_AV_02, TC_AV_05, TC_AV_10, TC_AV_18, TC_AV_20
  */
 
-test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
-
+test.describe("Self-Study Feature - Smoke Tests (P0)", () => {
   test.beforeEach(async ({ navigateToSelfStudy }) => {
     await navigateToSelfStudy();
   });
 
-  test('TC_AV_01: Verify navigation to self study page', async ({
+  test("TC_AV_01: Verify navigation to self study page", async ({
     page,
     subjectsViewPage,
     homePage,
-    ensureAuthenticated
+    ensureAuthenticated,
   }) => {
     // Given: Student should access the schoolai portal
     // When: Student should login into application and navigate to HomePage
     await ensureAuthenticated();
-    await homePage.navigateToHomePage();
+    await homePage.navigateToHome();
 
     // And: Student clicks on self study in header
-    const selfStudyLink = page.locator('text=Self Study, a[href*="self"], [data-testid*="self-study"]').first();
+    const selfStudyLink = page
+      .locator('text=Self Study, a[href*="self"], [data-testid*="self-study"]')
+      .first();
     if (await selfStudyLink.isVisible()) {
       await selfStudyLink.click();
     } else {
@@ -38,9 +39,9 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
     await subjectsViewPage.verifyUrl(/.*self.*study|.*aps/);
   });
 
-  test('TC_AV_02: Verify Self Study landing page UI loading', async ({
+  test("TC_AV_02: Verify Self Study landing page UI loading", async ({
     subjectsViewPage,
-    ensureAuthenticated
+    ensureAuthenticated,
   }) => {
     // Given: Student should login to the school AI web
     await ensureAuthenticated();
@@ -55,7 +56,9 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
     await expect(subjectsViewPage.isContainerVisible()).resolves.toBeTruthy();
 
     // Verify subjects grid is loaded
-    await expect(subjectsViewPage.isSubjectsGridVisible()).resolves.toBeTruthy();
+    await expect(
+      subjectsViewPage.isSubjectsGridVisible()
+    ).resolves.toBeTruthy();
 
     // Verify greeting message is displayed
     const greetingMessage = await subjectsViewPage.getGreetingMessage();
@@ -65,9 +68,9 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
     await subjectsViewPage.verifyLoaderAnimation();
   });
 
-  test('TC_AV_05: Verify all subject cards loaded', async ({
+  test("TC_AV_05: Verify all subject cards loaded", async ({
     subjectsViewPage,
-    selfStudyTestData
+    selfStudyTestData,
   }) => {
     // Given: The teacher should be mapped for the subjects
     // When: Student navigates to self study
@@ -88,7 +91,9 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
         foundSubjects++;
       } catch {
         // Subject might not be available for this test user
-        console.log(`Subject ${subject} not found - may not be configured for test user`);
+        console.log(
+          `Subject ${subject} not found - may not be configured for test user`
+        );
       }
     }
 
@@ -96,10 +101,10 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
     expect(foundSubjects).toBeGreaterThan(0);
   });
 
-  test('TC_AV_10: Verify subject navigation', async ({
+  test("TC_AV_10: Verify subject navigation", async ({
     subjectsViewPage,
     accordionViewPage,
-    selfStudyTestData
+    selfStudyTestData,
   }) => {
     // Given: Student should login to the school AI web and navigate to self study
     await subjectsViewPage.waitForPageToLoad();
@@ -115,29 +120,32 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
 
       // Then: User navigates to chapter list
       await accordionViewPage.waitForPageToLoad();
-      await expect(accordionViewPage.isContainerVisible()).resolves.toBeTruthy();
+      await expect(
+        accordionViewPage.isContainerVisible()
+      ).resolves.toBeTruthy();
 
       // Verify subject information is displayed in header
       await accordionViewPage.verifySubjectInHeader(testSubject);
 
       // Verify URL contains subject information
       await accordionViewPage.verifySubjectInUrl(testSubject);
-
     } catch (error) {
       // If specific subject not available, try clicking first available card
       const allCards = await subjectsViewPage.getSubjectCards();
       if (allCards.length > 0) {
         await allCards[0].click();
         await accordionViewPage.waitForPageToLoad();
-        await expect(accordionViewPage.isContainerVisible()).resolves.toBeTruthy();
+        await expect(
+          accordionViewPage.isContainerVisible()
+        ).resolves.toBeTruthy();
       } else {
         throw error;
       }
     }
   });
 
-  test('TC_AV_18: Verify each card heading/title', async ({
-    subjectsViewPage
+  test("TC_AV_18: Verify each card heading/title", async ({
+    subjectsViewPage,
   }) => {
     // Given: User is logged into the SchoolAI application and on Self Study page
     await subjectsViewPage.waitForPageToLoad();
@@ -160,17 +168,17 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
     }
   });
 
-  test('TC_AV_20: Verify resume action', async ({
-    subjectsViewPage
-  }) => {
+  test("TC_AV_20: Verify resume action", async ({ subjectsViewPage }) => {
     // Given: Student has ongoing task
     await subjectsViewPage.waitForPageToLoad();
 
     // Check if Continue Studying section is visible (indicates ongoing tasks)
-    const hasContinueStudying = await subjectsViewPage.isContinueStudyingSectionVisible();
+    const hasContinueStudying =
+      await subjectsViewPage.isContinueStudyingSectionVisible();
 
     if (hasContinueStudying) {
-      const continueCardsCount = await subjectsViewPage.getContinueStudyingCardsCount();
+      const continueCardsCount =
+        await subjectsViewPage.getContinueStudyingCardsCount();
       expect(continueCardsCount).toBeGreaterThan(0);
       expect(continueCardsCount).toBeLessThanOrEqual(3);
 
@@ -186,23 +194,26 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
 
       // Either URL should change or we should be on a different page/view
       const urlChanged = newUrl !== initialUrl;
-      const pageHasNewContent = await subjectsViewPage.page.locator('body').isVisible();
+      const pageHasNewContent = await subjectsViewPage.page
+        .locator("body")
+        .isVisible();
 
       expect(urlChanged || pageHasNewContent).toBeTruthy();
-
     } else {
       // If no continue studying cards, log this as expected for new users
-      console.log('No continue studying cards found - this is expected for new users without ongoing activities');
+      console.log(
+        "No continue studying cards found - this is expected for new users without ongoing activities"
+      );
 
       // Verify the empty state or that Continue Studying section is appropriately hidden
       expect(hasContinueStudying).toBeFalsy();
     }
   });
 
-  test('TC_AV_11: Verify correct subject header', async ({
+  test("TC_AV_11: Verify correct subject header", async ({
     subjectsViewPage,
     accordionViewPage,
-    selfStudyTestData
+    selfStudyTestData,
   }) => {
     // Given: Student navigates to self study and clicks a subject
     await subjectsViewPage.waitForPageToLoad();
@@ -218,7 +229,6 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
 
       // Then: Correct subject displayed in header
       await accordionViewPage.verifySubjectInHeader(testSubject);
-
     } catch (error) {
       // Fallback: Click first available subject card
       const allCards = await subjectsViewPage.getSubjectCards();
@@ -232,7 +242,9 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
 
         // Verify the subject name appears somewhere in the header area
         const headerText = await accordionViewPage.getGreetingMessage();
-        expect(headerText.toLowerCase()).toContain(subjectFromCard.split(' ')[0]);
+        expect(headerText.toLowerCase()).toContain(
+          subjectFromCard.split(" ")[0]
+        );
       } else {
         throw error;
       }
@@ -244,15 +256,14 @@ test.describe('Self-Study Feature - Smoke Tests (P0)', () => {
  * Self-Study Feature - Navigation Flow Tests (P0)
  * End-to-end navigation flows for critical paths
  */
-test.describe('Self-Study Feature - Navigation Flows (P0)', () => {
-
-  test('Complete navigation flow: Home → Self Study → Subject → Topic', async ({
+test.describe("Self-Study Feature - Navigation Flows (P0)", () => {
+  test("Complete navigation flow: Home → Self Study → Subject → Topic", async ({
     navigateToSelfStudy,
     subjectsViewPage,
     accordionViewPage,
     selectSubject,
     selectTopic,
-    selfStudyTestData
+    selfStudyTestData,
   }) => {
     // Navigate to self study
     await navigateToSelfStudy();
@@ -279,12 +290,12 @@ test.describe('Self-Study Feature - Navigation Flows (P0)', () => {
     }
   });
 
-  test('Back navigation flow: Subject → Self Study', async ({
+  test("Back navigation flow: Subject → Self Study", async ({
     navigateToSelfStudy,
     subjectsViewPage,
     accordionViewPage,
     page,
-    selfStudyTestData
+    selfStudyTestData,
   }) => {
     await navigateToSelfStudy();
 
@@ -301,15 +312,15 @@ test.describe('Self-Study Feature - Navigation Flows (P0)', () => {
     await expect(subjectsViewPage.isContainerVisible()).resolves.toBeTruthy();
   });
 
-  test('Mobile breadcrumb navigation', async ({
+  test("Mobile breadcrumb navigation", async ({
     navigateToSelfStudy,
     subjectsViewPage,
     accordionViewPage,
     verifyResponsiveDesign,
-    selfStudyTestData
+    selfStudyTestData,
   }) => {
     // Set mobile viewport
-    await verifyResponsiveDesign('mobile');
+    await verifyResponsiveDesign("mobile");
 
     await navigateToSelfStudy();
 

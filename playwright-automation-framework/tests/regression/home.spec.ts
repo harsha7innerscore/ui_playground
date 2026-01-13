@@ -139,16 +139,16 @@ test.describe('Self-Study Dashboard - Regression Tests', () => {
     // Test profile navigation
     await homePage.navigateToProfile();
 
-    // Verify navigation to profile page
-    await homePage.verifyUrl(/\/profile/);
+    // Verify navigation to profile page (updated for SchoolAI URL structure)
+    await homePage.verifyUrl(/\/school\/aitutor\/student\/aps.*profile|\/profile/);
   });
 
   test('should navigate to settings', async () => {
     // Test settings navigation
     await homePage.navigateToSettings();
 
-    // Verify navigation to settings page
-    await homePage.verifyUrl(/\/settings/);
+    // Verify navigation to settings page (updated for SchoolAI URL structure)
+    await homePage.verifyUrl(/\/school\/aitutor\/student\/aps.*settings|\/settings/);
   });
 
   test('should verify complete page layout', async () => {
