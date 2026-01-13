@@ -64,7 +64,7 @@ export class HomePage extends BasePage {
    * Navigate to the home/dashboard page
    */
   async navigateToHome(): Promise<void> {
-    await this.goto('/dashboard');
+    await this.goto('/');
     await this.waitForPageLoad();
   }
 
@@ -90,7 +90,7 @@ export class HomePage extends BasePage {
   async logout(): Promise<void> {
     await this.openUserMenu();
     await this.clickWithRetry(this.logoutButton);
-    await this.waitForNavigation('/login');
+    await this.waitForNavigation('/');
   }
 
   /**
@@ -193,7 +193,7 @@ export class HomePage extends BasePage {
    * Verify user is on home page
    */
   async verifyOnHomePage(): Promise<void> {
-    await this.verifyUrl(/\/(dashboard|home)/);
+    await this.verifyUrl(/\/$/);
     await this.verifyHeaderElements();
     await this.verifyMainContentLoaded();
   }

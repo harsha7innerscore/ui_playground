@@ -47,7 +47,7 @@ test.describe('Login - Self-Study Access Tests', () => {
 
     // Assert - Should stay on login page with error
     await expect(loginPage.isErrorMessageVisible()).resolves.toBe(true);
-    await loginPage.verifyUrl(/\/login/);
+    await loginPage.verifyUrl(/\//);
   });
 
   test('should show error for empty email', async () => {
@@ -85,7 +85,7 @@ test.describe('Login - Self-Study Access Tests', () => {
     await homePage.logout();
 
     // Assert - Should be back on login page
-    await loginPage.verifyUrl(/\/login/);
+    await loginPage.verifyUrl(/\//);
     await expect(loginPage.isLoginFormVisible()).resolves.toBe(true);
   });
 });

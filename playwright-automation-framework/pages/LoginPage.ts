@@ -34,7 +34,7 @@ export class LoginPage extends BasePage {
    * Navigate to the login page
    */
   async navigateToLogin(): Promise<void> {
-    await this.goto('/login');
+    await this.goto('/');
     await this.waitForPageLoad();
   }
 
@@ -207,9 +207,9 @@ export class LoginPage extends BasePage {
 
   /**
    * Verify successful login redirect
-   * @param expectedUrl - Expected URL after login (default: dashboard)
+   * @param expectedUrl - Expected URL after login (default: base URL)
    */
-  async verifySuccessfulLogin(expectedUrl = '/dashboard'): Promise<void> {
+  async verifySuccessfulLogin(expectedUrl = '/'): Promise<void> {
     await this.waitForNavigation(expectedUrl);
     await this.verifyUrl(expectedUrl);
   }
@@ -220,7 +220,7 @@ export class LoginPage extends BasePage {
    * @param password - User password
    * @param expectedRedirectUrl - Expected URL after successful login
    */
-  async loginAndVerifySuccess(email: string, password: string, expectedRedirectUrl = '/dashboard'): Promise<void> {
+  async loginAndVerifySuccess(email: string, password: string, expectedRedirectUrl = '/'): Promise<void> {
     await this.login(email, password);
     await this.verifySuccessfulLogin(expectedRedirectUrl);
   }
