@@ -12,7 +12,6 @@ test.describe("Self-Study Feature - Smoke Tests (P0)", () => {
   });
 
   test("TC_AV_01: Verify navigation to self study page", async ({
-    page,
     subjectsViewPage,
     homePage,
     ensureAuthenticated,
@@ -21,22 +20,15 @@ test.describe("Self-Study Feature - Smoke Tests (P0)", () => {
     // When: Student should login into application and navigate to HomePage
     await ensureAuthenticated();
     await homePage.navigateToHome();
+    await homePage.verifyOnHomePage();
 
-    // And: Student clicks on self study in header
-    const selfStudyLink = page
-      .locator('text=Self Study, a[href*="self"], [data-testid*="self-study"]')
-      .first();
-    if (await selfStudyLink.isVisible()) {
-      await selfStudyLink.click();
-    } else {
-      // Alternative navigation if header link not found
-      await subjectsViewPage.navigateToSelfStudy();
-    }
+    // And: Student clicks on self study in header using data-testid="nav-item-Self Study"
+    await homePage.navigateToSelfStudy();
 
     // Then: The student is navigated to self study page
     await subjectsViewPage.waitForPageToLoad();
     await expect(subjectsViewPage.isContainerVisible()).resolves.toBeTruthy();
-    await subjectsViewPage.verifyUrl(/.*self.*study|.*aps/);
+    await subjectsViewPage.verifyUrl(/.*self.*study|.*syllabus|.*aps/);
   });
 
   test("TC_AV_02: Verify Self Study landing page UI loading", async ({

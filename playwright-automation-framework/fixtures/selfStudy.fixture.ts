@@ -74,10 +74,12 @@ export const test = authTest.extend<SelfStudyFixture>({
     await use(DEFAULT_SELF_STUDY_DATA);
   },
 
-  navigateToSelfStudy: async ({ subjectsViewPage, ensureAuthenticated }, use) => {
+  navigateToSelfStudy: async ({ subjectsViewPage, homePage, ensureAuthenticated }, use) => {
     const navigateToSelfStudy = async () => {
       await ensureAuthenticated();
-      await subjectsViewPage.navigateToSelfStudy();
+      await homePage.navigateToHome();
+      await homePage.verifyOnHomePage();
+      await homePage.navigateToSelfStudy();
       await subjectsViewPage.waitForPageToLoad();
     };
 

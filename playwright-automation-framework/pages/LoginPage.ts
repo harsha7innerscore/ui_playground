@@ -259,9 +259,9 @@ export class LoginPage extends BasePage {
 
   /**
    * Verify successful login redirect
-   * @param expectedUrl - Expected URL after login (default: SchoolAI URL pattern)
+   * @param expectedUrl - Expected URL after login (default: home page URL pattern)
    */
-  async verifySuccessfulLogin(expectedUrl: string | RegExp = /\/school\/aitutor\/student\/aps|\/$/): Promise<void> {
+  async verifySuccessfulLogin(expectedUrl: string | RegExp = /\/school\/aitutor\/home|\/home|\/$/): Promise<void> {
     await this.waitForNavigation(expectedUrl);
     await this.verifyUrl(expectedUrl);
   }
@@ -275,7 +275,7 @@ export class LoginPage extends BasePage {
   async loginAndVerifySuccess(
     email: string,
     password: string,
-    expectedRedirectUrl = "/"
+    expectedRedirectUrl: string | RegExp = /\/school\/aitutor\/home|\/home|\/$/
   ): Promise<void> {
     await this.login(email, password);
     await this.verifySuccessfulLogin(expectedRedirectUrl);

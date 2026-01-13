@@ -66,7 +66,7 @@ export const test = base.extend<AuthFixture>({
       // Check if already authenticated by looking for home page elements
       const currentUrl = page.url();
 
-      if (currentUrl.includes('/login') || currentUrl === 'about:blank' || currentUrl.includes('localhost') && !currentUrl.includes('/dashboard')) {
+      if (currentUrl.includes('/login') || currentUrl === 'about:blank' || currentUrl.includes('localhost') && !currentUrl.includes('/home')) {
         await login(authenticatedUser);
       } else {
         // Verify we're still authenticated by checking for user menu

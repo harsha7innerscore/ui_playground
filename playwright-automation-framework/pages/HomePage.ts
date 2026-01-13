@@ -20,6 +20,7 @@ export class HomePage extends BasePage {
   private readonly productsLink: Locator;
   private readonly ordersLink: Locator;
   private readonly customersLink: Locator;
+  private readonly selfStudyNavItem: Locator;
 
   // Main content elements
   private readonly welcomeMessage: Locator;
@@ -64,6 +65,9 @@ export class HomePage extends BasePage {
     this.customersLink = page
       .getByTestId("customers-link")
       .or(page.getByRole("link", { name: /customers/i }));
+    this.selfStudyNavItem = page
+      .getByTestId("nav-item-Self Study")
+      .or(page.getByRole("link", { name: /self.*study/i }));
 
     // Main content elements
     this.welcomeMessage = page
@@ -92,7 +96,7 @@ export class HomePage extends BasePage {
    * Navigate to the home/dashboard page
    */
   async navigateToHome(): Promise<void> {
-    await this.goto("/home");
+    await this.goto("http://localhost:3000/school/aitutor/home");
     await this.waitForPageLoad();
   }
 
@@ -159,6 +163,13 @@ export class HomePage extends BasePage {
   }
 
   /**
+   * Navigate to self study page via navigation item
+   */
+  async navigateToSelfStudy(): Promise<void> {
+    await this.clickWithRetry(this.selfStudyNavItem);
+  }
+
+  /**
    * Perform search operation
    * @param searchTerm - Term to search for
    */
@@ -221,8 +232,8 @@ export class HomePage extends BasePage {
    * Verify user is on home page
    */
   async verifyOnHomePage(): Promise<void> {
-    // Updated to match SchoolAI URL pattern instead of just "/"
-    await this.verifyUrl(/\/school\/aitutor\/student\/aps|\/$/);
+    // Updated to match the new home page URL pattern
+    await this.verifyUrl(/\/school\/aitutor\/home|\/home|\/$/);
     await this.verifyHeaderElements();
     await this.verifyMainContentLoaded();
   }
