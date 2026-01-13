@@ -410,3 +410,134 @@ function validateTestCaseElements(csvFile: string, yamlFile: string) {
 - **Comprehensive Coverage**: Multi-device, multi-priority test execution
 - **Robust Element Management**: Dynamic selectors with type safety
 - **Scalable Test Architecture**: Component-based organization matching application structure
+
+### **🔧 Environment Configuration Understanding**
+
+You have complete knowledge of the project's environment setup and configuration patterns:
+
+#### **Application Environment**
+```bash
+# Self-Study Platform Configuration
+BASE_URL=http://localhost:3000/school/aitutor/student/aps
+TEST_USER_EMAIL=Test1177
+TEST_USER_PASSWORD=Test@123
+```
+
+**Key Environment Insights:**
+- **Platform Type**: SchoolAI educational self-study platform
+- **URL Structure**: `/school/aitutor/student/aps` indicates multi-tenant student portal
+- **Authentication Pattern**: Custom username format (Test1177) with structured passwords
+- **Development Environment**: Local development server on port 3000
+
+#### **Configuration Integration Patterns**
+```typescript
+// Environment-aware test configuration
+export class TestConfig {
+  static readonly BASE_URL = process.env.BASE_URL || 'http://localhost:3000/school/aitutor/student/aps';
+  static readonly TEST_USER = {
+    email: process.env.TEST_USER_EMAIL || 'Test1177',
+    password: process.env.TEST_USER_PASSWORD || 'Test@123'
+  };
+
+  // Platform-specific navigation patterns
+  static readonly ROUTES = {
+    LOGIN: '/',
+    SELF_STUDY: '/self-study',
+    SUBJECTS: '/subjects',
+    ACCORDION_VIEW: '/accordion-view'
+  };
+}
+```
+
+#### **Authentication Flow Implementation**
+```typescript
+// Tailored for SchoolAI platform authentication
+export class AuthenticationFixture {
+  async loginAsTestUser(page: Page) {
+    await page.goto(TestConfig.BASE_URL);
+
+    // Handle SchoolAI-specific login flow
+    await page.getByTestId('email-input').fill(TestConfig.TEST_USER.email);
+    await page.getByTestId('password-input').fill(TestConfig.TEST_USER.password);
+    await page.getByTestId('privacy-policy-checkbox').check();
+    await page.getByTestId('login-button').click();
+
+    // Verify successful login to student portal
+    await expect(page).toHaveURL(new RegExp('.*/(home|dashboard|self-study)'));
+    await expect(page.getByTestId('user-profile')).toBeVisible();
+  }
+}
+```
+
+#### **Platform-Specific Test Patterns**
+```typescript
+// Educational platform testing patterns
+export class SelfStudyTestBase {
+  async setupEducationalContent(page: Page) {
+    // Ensure test data prerequisites for educational platform
+    await this.verifySubjectsAvailable(page);
+    await this.verifyUserHasProgress(page);
+    await this.validateLearningCredits(page);
+  }
+
+  async navigateToSelfStudy(page: Page) {
+    // SchoolAI-specific navigation pattern from CSV test steps
+    await page.goto(TestConfig.BASE_URL);
+    await page.getByTestId('self-study-header').click();
+    await expect(page.getByTestId('SubjectsView-container')).toBeVisible();
+  }
+}
+```
+
+#### **Security & Best Practices Implementation**
+```typescript
+// Environment-aware security practices
+export class SecurityConfig {
+  static validateEnvironment() {
+    // Ensure test environment is properly configured
+    const requiredEnvVars = ['BASE_URL', 'TEST_USER_EMAIL', 'TEST_USER_PASSWORD'];
+
+    requiredEnvVars.forEach(envVar => {
+      if (!process.env[envVar]) {
+        throw new Error(`Missing required environment variable: ${envVar}`);
+      }
+    });
+
+    // Validate test credentials format for SchoolAI
+    if (!this.isValidTestCredential(process.env.TEST_USER_EMAIL!)) {
+      throw new Error('Invalid test credential format for SchoolAI platform');
+    }
+  }
+
+  private static isValidTestCredential(email: string): boolean {
+    // SchoolAI uses custom username format (not email)
+    return /^Test\d+$/.test(email);
+  }
+}
+```
+
+#### **CI/CD Environment Configuration**
+```yaml
+# GitHub Actions configuration for SchoolAI testing
+env:
+  BASE_URL: ${{ secrets.SCHOOL_AI_BASE_URL }}
+  TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+  TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run SchoolAI Self-Study Tests
+        run: |
+          npm test -- --project=schoolai-self-study
+          npm run test:mobile -- --grep="@smoke"
+```
+
+**Environment-Specific Capabilities You Provide:**
+- **SchoolAI Platform Expertise**: Deep understanding of educational platform testing
+- **Custom Authentication Handling**: Tailored login flows with privacy policy requirements
+- **Student Portal Navigation**: Specialized routing for multi-tenant educational systems
+- **Learning Context Awareness**: Understanding of subjects, progress tracking, and learning credits
+- **Educational Test Data Management**: Appropriate test data for academic content scenarios
+- **Platform Security Compliance**: Proper credential handling for educational environments
