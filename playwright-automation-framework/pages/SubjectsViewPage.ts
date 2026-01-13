@@ -1,12 +1,11 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Page, Locator, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
 /**
  * Page Object for the Self-Study Subjects View page
  * Handles subject cards, continue studying section, and navigation
  */
 export class SubjectsViewPage extends BasePage {
-
   // Main container
   private readonly container: Locator;
 
@@ -27,27 +26,33 @@ export class SubjectsViewPage extends BasePage {
     super(page);
 
     // Initialize locators based on YAML test IDs
-    this.container = this.page.getByTestId('SubjectsView-container');
+    this.container = this.page.getByTestId("SubjectsView-container");
 
     // Continue studying section
-    this.continueStudyingSection = this.page.getByTestId('SubjectsView-continue-studying-section');
-    this.continueStudyingTitle = this.page.getByTestId('SubjectsView-continue-studying-title');
-    this.studyCardsContainer = this.page.getByTestId('SubjectsView-study-cards-container');
+    this.continueStudyingSection = this.page.getByTestId(
+      "SubjectsView-continue-studying-section"
+    );
+    this.continueStudyingTitle = this.page.getByTestId(
+      "SubjectsView-continue-studying-title"
+    );
+    this.studyCardsContainer = this.page.getByTestId(
+      "SubjectsView-study-cards-container"
+    );
 
     // Subjects section
-    this.subjectsTitle = this.page.getByTestId('SubjectsView-subjects-title');
-    this.subjectsGrid = this.page.getByTestId('SubjectsView-subjects-grid');
-    this.greeting = this.page.getByTestId('SubjectsView-greeting');
+    this.subjectsTitle = this.page.getByTestId("SubjectsView-subjects-title");
+    this.subjectsGrid = this.page.getByTestId("SubjectsView-subjects-grid");
+    this.greeting = this.page.getByTestId("SubjectsView-greeting");
 
     // Top container
-    this.welcomeText = this.page.getByTestId('top-container-welcomeText');
+    this.welcomeText = this.page.getByTestId("top-container-welcomeText");
   }
 
   /**
    * Navigate to the Self-Study page
    */
   async navigateToSelfStudy(): Promise<void> {
-    await this.goto('/school/aitutor/student/aps');
+    await this.goto("/school/aitutor/syllabus");
     await this.waitForPageLoad();
   }
 
@@ -56,7 +61,7 @@ export class SubjectsViewPage extends BasePage {
    */
   async waitForPageToLoad(): Promise<void> {
     await this.waitForElement(this.container);
-    await this.waitForPageLoad('networkidle');
+    await this.waitForPageLoad("networkidle");
   }
 
   /**
@@ -77,7 +82,7 @@ export class SubjectsViewPage extends BasePage {
    * Verify the greeting message contains "Hello 👋"
    */
   async verifyGreetingMessage(): Promise<void> {
-    await expect(this.greeting).toContainText('Hello 👋');
+    await expect(this.greeting).toContainText("Hello 👋");
   }
 
   /**
@@ -123,7 +128,9 @@ export class SubjectsViewPage extends BasePage {
    * Get all subject cards in the grid
    */
   async getSubjectCards(): Promise<Locator[]> {
-    return await this.subjectsGrid.locator('[data-testid^="SubjectsView-"]').all();
+    return await this.subjectsGrid
+      .locator('[data-testid^="SubjectsView-"]')
+      .all();
   }
 
   /**
@@ -185,7 +192,9 @@ export class SubjectsViewPage extends BasePage {
     if (!(await this.isContinueStudyingSectionVisible())) {
       return [];
     }
-    return await this.studyCardsContainer.locator('[data-testid*="card"], .card').all();
+    return await this.studyCardsContainer
+      .locator('[data-testid*="card"], .card')
+      .all();
   }
 
   /**
@@ -240,11 +249,17 @@ export class SubjectsViewPage extends BasePage {
       const card = cards[index];
 
       // Check for title
-      const title = card.locator('[class*="title"], [data-testid*="title"], h1, h2, h3, h4, h5, h6').first();
+      const title = card
+        .locator(
+          '[class*="title"], [data-testid*="title"], h1, h2, h3, h4, h5, h6'
+        )
+        .first();
       await expect(title).toBeVisible();
 
       // Check for status indicator
-      const status = card.locator('[class*="status"], [data-testid*="status"]').first();
+      const status = card
+        .locator('[class*="status"], [data-testid*="status"]')
+        .first();
       if (await status.isVisible()) {
         await expect(status).toBeVisible();
       }
@@ -266,7 +281,9 @@ export class SubjectsViewPage extends BasePage {
     const cards = await this.getContinueStudyingCards();
     for (const card of cards) {
       // Look for Assessment Practice or GP/AP text
-      const apGpText = card.locator('text=/Assessment Practice|AP|GP/i').first();
+      const apGpText = card
+        .locator("text=/Assessment Practice|AP|GP/i")
+        .first();
       if (await apGpText.isVisible()) {
         await expect(apGpText).toBeVisible();
 
@@ -313,7 +330,9 @@ export class SubjectsViewPage extends BasePage {
    * @param index - Index of the skeleton loader
    */
   async waitForSkeletonLoader(index: number = 0): Promise<void> {
-    const skeletonLoader = this.page.getByTestId(`SubjectsView-skeleton-${index}`);
+    const skeletonLoader = this.page.getByTestId(
+      `SubjectsView-skeleton-${index}`
+    );
     if (await skeletonLoader.isVisible()) {
       await this.waitForElementToBeHidden(skeletonLoader);
     }
@@ -356,7 +375,9 @@ export class SubjectsViewPage extends BasePage {
    */
   async verifyLoaderAnimation(): Promise<void> {
     // Check for any loader/spinner elements
-    const loaders = await this.page.locator('[class*="loader"], [class*="spinner"], [class*="loading"]').all();
+    const loaders = await this.page
+      .locator('[class*="loader"], [class*="spinner"], [class*="loading"]')
+      .all();
 
     // If loaders are present, wait for them to disappear
     for (const loader of loaders) {
@@ -373,7 +394,11 @@ export class SubjectsViewPage extends BasePage {
    * Verify empty state when no subjects are available
    */
   async verifyEmptySubjectsState(): Promise<void> {
-    const emptyMessage = this.page.locator('text=/No subjects found/i, [data-testid*="empty"], [class*="empty"]').first();
+    const emptyMessage = this.page
+      .locator(
+        'text=/No subjects found/i, [data-testid*="empty"], [class*="empty"]'
+      )
+      .first();
     await expect(emptyMessage).toBeVisible();
   }
 
@@ -389,11 +414,12 @@ export class SubjectsViewPage extends BasePage {
       const card = cards[i];
 
       // Check if the card has the expected test ID or contains expected text
-      const testId = await card.getAttribute('data-testid');
+      const testId = await card.getAttribute("data-testid");
       const cardText = await this.getTextContent(card);
 
-      const isExpectedCard = testId?.includes(expectedSubject) ||
-                           cardText.toLowerCase().includes(expectedSubject);
+      const isExpectedCard =
+        testId?.includes(expectedSubject) ||
+        cardText.toLowerCase().includes(expectedSubject);
 
       expect(isExpectedCard).toBeTruthy();
     }
@@ -407,7 +433,9 @@ export class SubjectsViewPage extends BasePage {
     const cards = await this.getContinueStudyingCards();
     if (index < cards.length) {
       const card = cards[index];
-      const heading = card.locator('[class*="title"], [class*="heading"], h1, h2, h3, h4, h5, h6').first();
+      const heading = card
+        .locator('[class*="title"], [class*="heading"], h1, h2, h3, h4, h5, h6')
+        .first();
       return await this.getTextContent(heading);
     }
     throw new Error(`Card at index ${index} not found`);
@@ -422,7 +450,7 @@ export class SubjectsViewPage extends BasePage {
     for (let i = 0; i < cards.length; i++) {
       const heading = await this.getCardHeading(i);
       expect(heading.length).toBeGreaterThan(0);
-      expect(heading.trim()).not.toBe('');
+      expect(heading.trim()).not.toBe("");
     }
   }
 }

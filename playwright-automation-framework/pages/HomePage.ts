@@ -1,5 +1,5 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Page, Locator, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
 /**
  * Page Object for the Home/Dashboard page
@@ -35,36 +35,64 @@ export class HomePage extends BasePage {
     super(page);
 
     // Header elements
-    this.header = page.getByTestId('main-header').or(page.locator('header'));
-    this.logo = page.getByTestId('logo').or(page.locator('.logo'));
-    this.userMenu = page.getByTestId('user-menu').or(page.locator('.user-menu'));
-    this.logoutButton = page.getByTestId('logout-button').or(page.getByText(/logout|sign out/i));
-    this.profileLink = page.getByTestId('profile-link').or(page.getByText(/profile/i));
-    this.settingsLink = page.getByTestId('settings-link').or(page.getByText(/settings/i));
+    this.header = page.getByTestId("main-header").or(page.locator("header"));
+    this.logo = page.getByTestId("logo").or(page.locator(".logo"));
+    this.userMenu = page
+      .getByTestId("user-menu")
+      .or(page.locator(".user-menu"));
+    this.logoutButton = page
+      .getByTestId("logout-button")
+      .or(page.getByText(/logout|sign out/i));
+    this.profileLink = page
+      .getByTestId("profile-link")
+      .or(page.getByText(/profile/i));
+    this.settingsLink = page
+      .getByTestId("settings-link")
+      .or(page.getByText(/settings/i));
 
     // Navigation elements
-    this.navigationMenu = page.getByTestId('nav-menu').or(page.locator('nav'));
-    this.dashboardLink = page.getByTestId('dashboard-link').or(page.getByRole('link', { name: /dashboard/i }));
-    this.productsLink = page.getByTestId('products-link').or(page.getByRole('link', { name: /products/i }));
-    this.ordersLink = page.getByTestId('orders-link').or(page.getByRole('link', { name: /orders/i }));
-    this.customersLink = page.getByTestId('customers-link').or(page.getByRole('link', { name: /customers/i }));
+    this.navigationMenu = page.getByTestId("nav-menu").or(page.locator("nav"));
+    this.dashboardLink = page
+      .getByTestId("dashboard-link")
+      .or(page.getByRole("link", { name: /dashboard/i }));
+    this.productsLink = page
+      .getByTestId("products-link")
+      .or(page.getByRole("link", { name: /products/i }));
+    this.ordersLink = page
+      .getByTestId("orders-link")
+      .or(page.getByRole("link", { name: /orders/i }));
+    this.customersLink = page
+      .getByTestId("customers-link")
+      .or(page.getByRole("link", { name: /customers/i }));
 
     // Main content elements
-    this.welcomeMessage = page.getByTestId('welcome-message').or(page.locator('.welcome'));
-    this.mainContent = page.getByTestId('main-content').or(page.locator('main'));
-    this.statisticsCards = page.getByTestId('stats-cards').or(page.locator('.stats, .statistics'));
-    this.recentActivitySection = page.getByTestId('recent-activity').or(page.locator('.recent-activity'));
+    this.welcomeMessage = page
+      .getByTestId("welcome-message")
+      .or(page.locator(".welcome"));
+    this.mainContent = page
+      .getByTestId("main-content")
+      .or(page.locator("main"));
+    this.statisticsCards = page
+      .getByTestId("stats-cards")
+      .or(page.locator(".stats, .statistics"));
+    this.recentActivitySection = page
+      .getByTestId("recent-activity")
+      .or(page.locator(".recent-activity"));
 
     // Search elements
-    this.searchInput = page.getByTestId('search-input').or(page.getByPlaceholder(/search/i));
-    this.searchButton = page.getByTestId('search-button').or(page.getByRole('button', { name: /search/i }));
+    this.searchInput = page
+      .getByTestId("search-input")
+      .or(page.getByPlaceholder(/search/i));
+    this.searchButton = page
+      .getByTestId("search-button")
+      .or(page.getByRole("button", { name: /search/i }));
   }
 
   /**
    * Navigate to the home/dashboard page
    */
   async navigateToHome(): Promise<void> {
-    await this.goto('/');
+    await this.goto("/home");
     await this.waitForPageLoad();
   }
 
@@ -90,7 +118,7 @@ export class HomePage extends BasePage {
   async logout(): Promise<void> {
     await this.openUserMenu();
     await this.clickWithRetry(this.logoutButton);
-    await this.waitForNavigation('/');
+    await this.waitForNavigation("/");
   }
 
   /**

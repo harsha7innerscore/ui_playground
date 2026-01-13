@@ -1,5 +1,5 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Page, Locator, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
 /**
  * Page Object for the Login page
@@ -20,21 +20,35 @@ export class LoginPage extends BasePage {
     super(page);
 
     // Initialize locators using data-testid (preferred) and fallback selectors
-    this.emailInput = page.getByTestId('login-user-id-input').or(page.locator('input[type="email"]'));
-    this.passwordInput = page.getByTestId('login-password').or(page.locator('input[type="password"]'));
-    this.loginButton = page.getByTestId('login-button').or(page.getByRole('button', { name: /log.*in/i }));
-    this.forgotPasswordLink = page.getByTestId('forgot-password-link').or(page.getByText(/forgot.*password/i));
-    this.signUpLink = page.getByTestId('signup-link').or(page.getByText(/sign.*up/i));
-    this.errorMessage = page.getByTestId('error-message').or(page.locator('.error, .alert-danger'));
-    this.loginForm = page.getByTestId('login-form').or(page.locator('form'));
-    this.rememberMeCheckbox = page.getByTestId('remember-me').or(page.locator('input[type="checkbox"]'));
+    this.emailInput = page
+      .getByTestId("login-user-id-input")
+      .or(page.locator('input[type="email"]'));
+    this.passwordInput = page
+      .getByTestId("login-password")
+      .or(page.locator('input[type="password"]'));
+    this.loginButton = page
+      .getByTestId("login-submit-button")
+      .or(page.getByRole("button", { name: /log.*in/i }));
+    this.forgotPasswordLink = page
+      .getByTestId("forgot-password-link")
+      .or(page.getByText(/forgot.*password/i));
+    this.signUpLink = page
+      .getByTestId("signup-link")
+      .or(page.getByText(/sign.*up/i));
+    this.errorMessage = page
+      .getByTestId("error-message")
+      .or(page.locator(".error, .alert-danger"));
+    this.loginForm = page.getByTestId("login-form").or(page.locator("form"));
+    this.rememberMeCheckbox = page
+      .getByTestId("remember-me")
+      .or(page.locator('input[type="checkbox"]'));
   }
 
   /**
    * Navigate to the login page
    */
   async navigateToLogin(): Promise<void> {
-    await this.goto('/');
+    await this.goto("http://localhost:3000/school/aitutor/student/aps");
     await this.waitForPageLoad();
   }
 
@@ -44,7 +58,11 @@ export class LoginPage extends BasePage {
    * @param password - User password
    * @param rememberMe - Whether to check remember me option
    */
-  async login(email: string, password: string, rememberMe = false): Promise<void> {
+  async login(
+    email: string,
+    password: string,
+    rememberMe = false
+  ): Promise<void> {
     await this.waitForLoginFormToBeVisible();
 
     // Fill email field
@@ -209,7 +227,7 @@ export class LoginPage extends BasePage {
    * Verify successful login redirect
    * @param expectedUrl - Expected URL after login (default: base URL)
    */
-  async verifySuccessfulLogin(expectedUrl = '/'): Promise<void> {
+  async verifySuccessfulLogin(expectedUrl = "/"): Promise<void> {
     await this.waitForNavigation(expectedUrl);
     await this.verifyUrl(expectedUrl);
   }
@@ -220,7 +238,11 @@ export class LoginPage extends BasePage {
    * @param password - User password
    * @param expectedRedirectUrl - Expected URL after successful login
    */
-  async loginAndVerifySuccess(email: string, password: string, expectedRedirectUrl = '/'): Promise<void> {
+  async loginAndVerifySuccess(
+    email: string,
+    password: string,
+    expectedRedirectUrl = "/"
+  ): Promise<void> {
     await this.login(email, password);
     await this.verifySuccessfulLogin(expectedRedirectUrl);
   }

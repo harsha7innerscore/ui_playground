@@ -21,6 +21,19 @@ test.describe('Login - Self-Study Access Tests', () => {
   test('should display login form elements', async () => {
     // Verify all essential login form elements are present
     await loginPage.verifyLoginFormElements();
+    // Note: Login button is expected to be disabled until form fields are filled
+  });
+
+  test('should enable login button when form fields are filled', async () => {
+    // Arrange
+    const email = process.env.TEST_USER_EMAIL || 'Test1177';
+    const password = process.env.TEST_USER_PASSWORD || 'Test@123';
+
+    // Act - Fill form fields
+    await loginPage.fillEmail(email);
+    await loginPage.fillPassword(password);
+
+    // Assert - Button should now be enabled
     await loginPage.verifyLoginButtonEnabled();
   });
 
