@@ -1,0 +1,65 @@
+<testsuites id="" name="" tests="7" failures="0" skipped="0" errors="0" time="2.669872">
+<testsuite name="feature/self-study/framework-validation.spec.ts" timestamp="2026-01-13T13:59:44.652Z" hostname="chromium" tests="7" failures="0" skipped="0" time="1.798" errors="0">
+<testcase name="Playwright Framework Validation › should validate page object imports and instantiation" classname="feature/self-study/framework-validation.spec.ts" time="0.534">
+<system-out>
+<![CDATA[✓ All page objects instantiated successfully via fixtures
+]]>
+</system-out>
+</testcase>
+<testcase name="Playwright Framework Validation › should validate environment configuration and selectors" classname="feature/self-study/framework-validation.spec.ts" time="0.033">
+<system-out>
+<![CDATA[Environment variables:
+BASE_URL: http://localhost:3000/school/aitutor/student/aps
+TEST_USER_EMAIL: Test1177
+TEST_USER_PASSWORD: [REDACTED]
+✓ Selector defined: data-testid="login-user-id-input"
+✓ Selector defined: data-testid="login-password"
+✓ Selector defined: data-testid="login-submit-button"
+✓ Selector defined: data-testid="nav-item-Self Study"
+]]>
+</system-out>
+</testcase>
+<testcase name="Playwright Framework Validation › should validate URL patterns from requirements" classname="feature/self-study/framework-validation.spec.ts" time="0.02">
+<system-out>
+<![CDATA[URL Configuration Validation:
+✓ Login URL: http://localhost:3000/school/aitutor/student/aps
+✓ Home URL: /school/aitutor/home
+✓ Self Study URL: /school/aitutor/syllabus
+]]>
+</system-out>
+</testcase>
+<testcase name="Playwright Framework Validation › should validate test fixture functionality" classname="feature/self-study/framework-validation.spec.ts" time="0.613">
+<system-out>
+<![CDATA[✓ Test fixtures are properly configured
+✓ Page object methods are available
+]]>
+</system-out>
+</testcase>
+<testcase name="Playwright Framework Validation › should validate framework file structure" classname="feature/self-study/framework-validation.spec.ts" time="0.023">
+<system-out>
+<![CDATA[✓ File exists: pages/BasePage.ts
+✓ File exists: pages/LoginPage.ts
+✓ File exists: pages/HomePage.ts
+✓ File exists: pages/SelfStudyPage.ts
+✓ File exists: fixtures/auth.fixture.ts
+✓ File exists: tests/feature/self-study/self-study-flow.spec.ts
+]]>
+</system-out>
+</testcase>
+<testcase name="Framework Performance and Config › should validate Playwright configuration" classname="feature/self-study/framework-validation.spec.ts" time="0.03">
+<system-out>
+<![CDATA[✓ Playwright configuration validated
+Test directory: ./tests
+Base URL: http://localhost:3000/school/aitutor/student/aps
+]]>
+</system-out>
+</testcase>
+<testcase name="Framework Performance and Config › should demonstrate page object method chaining" classname="feature/self-study/framework-validation.spec.ts" time="0.545">
+<system-out>
+<![CDATA[✓ BasePage methods are available through inheritance
+✓ LoginPage specific methods are available
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
