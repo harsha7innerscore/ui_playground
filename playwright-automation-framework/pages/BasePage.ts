@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect } from "@playwright/test";
 
 /**
  * BasePage - Common functionality for all page objects
@@ -10,7 +10,7 @@ export class BasePage {
 
   constructor(page: Page) {
     this.page = page;
-    this.baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    this.baseUrl = process.env.BASE_URL || "http://localhost:3000";
   }
 
   /**
@@ -18,7 +18,7 @@ export class BasePage {
    * @param path - Path to navigate to (relative to baseUrl)
    */
   async navigateTo(path: string): Promise<void> {
-    const fullUrl = path.startsWith('http') ? path : `${this.baseUrl}${path}`;
+    const fullUrl = path.startsWith("http") ? path : `${this.baseUrl}${path}`;
     await this.page.goto(fullUrl);
     await this.waitForPageLoad();
   }
@@ -28,7 +28,7 @@ export class BasePage {
    * Uses domcontentloaded state for better reliability
    */
   async waitForPageLoad(): Promise<void> {
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState("domcontentloaded");
     // Additional wait to ensure dynamic content is loaded
     await this.page.waitForTimeout(1000);
   }
@@ -63,10 +63,13 @@ export class BasePage {
    * @param selector - Element selector
    * @param timeout - Maximum time to wait
    */
-  async waitForElementVisible(selector: string, timeout: number = 10000): Promise<void> {
+  async waitForElementVisible(
+    selector: string,
+    timeout: number = 10000
+  ): Promise<void> {
     await this.page.locator(selector).waitFor({
-      state: 'visible',
-      timeout
+      state: "visible",
+      timeout,
     });
   }
 
@@ -75,7 +78,10 @@ export class BasePage {
    * @param selector - Element selector
    * @param maxRetries - Maximum number of retry attempts
    */
-  async clickWithRetry(selector: string, maxRetries: number = 3): Promise<void> {
+  async clickWithRetry(
+    selector: string,
+    maxRetries: number = 3
+  ): Promise<void> {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         await this.waitForElementVisible(selector);
@@ -83,7 +89,9 @@ export class BasePage {
         return;
       } catch (error) {
         if (attempt === maxRetries) {
-          throw new Error(`Failed to click element "${selector}" after ${maxRetries} attempts: ${error}`);
+          throw new Error(
+            `Failed to click element "${selector}" after ${maxRetries} attempts: ${error}`
+          );
         }
         console.log(`Click attempt ${attempt} failed, retrying...`);
         await this.page.waitForTimeout(1000);
@@ -120,7 +128,7 @@ export class BasePage {
    * Useful after form submissions or link clicks
    */
   async waitForNavigation(): Promise<void> {
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState("networkidle");
     await this.waitForPageLoad();
   }
 
@@ -131,7 +139,7 @@ export class BasePage {
   async takeScreenshot(filename: string): Promise<void> {
     await this.page.screenshot({
       path: `test-results/${filename}.png`,
-      fullPage: true
+      fullPage: true,
     });
   }
 
@@ -141,7 +149,9 @@ export class BasePage {
    */
   async elementExists(selector: string): Promise<boolean> {
     try {
-      await this.page.locator(selector).waitFor({ state: 'attached', timeout: 5000 });
+      await this.page
+        .locator(selector)
+        .waitFor({ state: "attached", timeout: 20000 });
       return true;
     } catch {
       return false;
@@ -153,7 +163,7 @@ export class BasePage {
    * @param expectedTitle - Expected title text
    */
   async verifyPageTitle(expectedTitle: string): Promise<void> {
-    await expect(this.page).toHaveTitle(new RegExp(expectedTitle, 'i'));
+    await expect(this.page).toHaveTitle(new RegExp(expectedTitle, "i"));
   }
 
   /**

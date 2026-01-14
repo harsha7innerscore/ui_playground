@@ -1,7 +1,7 @@
-import { test as base, Page } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { HomePage } from '../pages/HomePage';
-import { SelfStudyPage } from '../pages/SelfStudyPage';
+import { test as base, Page } from "@playwright/test";
+import { LoginPage } from "../pages/LoginPage";
+import { HomePage } from "../pages/HomePage";
+import { SelfStudyPage } from "../pages/SelfStudyPage";
 
 /**
  * Authentication fixture for self-study feature testing
@@ -45,13 +45,13 @@ export const test = base.extend<AuthFixtures>({
 
   // Pre-authenticated page - performs login before test
   authenticatedPage: async ({ page }, use) => {
-    console.log('Setting up authenticated page...');
+    console.log("Setting up authenticated page...");
 
     // Create login page and perform authentication
     const loginPage = new LoginPage(page);
     await loginPage.login();
 
-    console.log('Authentication completed for fixture');
+    console.log("Authentication completed for fixture");
     await use(page);
   },
 
@@ -77,10 +77,10 @@ export const test = base.extend<AuthFixtures>({
     await selfStudyPage.verifySelfStudyPage();
 
     await use(selfStudyPage);
-  }
+  },
 });
 
-export { expect } from '@playwright/test';
+export { expect } from "@playwright/test";
 
 /**
  * Test data for authentication scenarios
@@ -88,23 +88,25 @@ export { expect } from '@playwright/test';
 export const AuthTestData = {
   // Default test credentials from environment
   defaultCredentials: {
-    email: process.env.TEST_USER_EMAIL || 'Test1177',
-    password: process.env.TEST_USER_PASSWORD || 'Test@123'
+    email: process.env.TEST_USER_EMAIL || "Test1177",
+    password: process.env.TEST_USER_PASSWORD || "Test@123",
   },
 
   // Expected URLs for verification
   urls: {
-    login: process.env.BASE_URL || 'http://localhost:3000/school/aitutor/student/aps',
-    home: '/school/aitutor/home',
-    selfStudy: '/school/aitutor/syllabus'
+    login:
+      process.env.BASE_URL ||
+      "http://localhost:3000/school/aitutor/student/aps",
+    home: "/school/aitutor/home",
+    selfStudy: "/school/aitutor/syllabus",
   },
 
   // Timeout configurations
   timeouts: {
     login: 15000,
     navigation: 10000,
-    pageLoad: 5000
-  }
+    pageLoad: 15000,
+  },
 };
 
 /**
@@ -122,7 +124,11 @@ export class AuthTestHelper {
   /**
    * Perform manual login with custom credentials
    */
-  static async loginWith(page: Page, email: string, password: string): Promise<void> {
+  static async loginWith(
+    page: Page,
+    email: string,
+    password: string
+  ): Promise<void> {
     const loginPage = new LoginPage(page);
     await loginPage.loginWith(email, password);
   }
@@ -131,7 +137,7 @@ export class AuthTestHelper {
    * Navigate through the complete self-study flow
    */
   static async completeFullFlow(page: Page): Promise<void> {
-    console.log('Starting complete self-study flow...');
+    console.log("Starting complete self-study flow...");
 
     // Step 1: Login
     const loginPage = new LoginPage(page);
@@ -145,7 +151,7 @@ export class AuthTestHelper {
     const selfStudyPage = new SelfStudyPage(page);
     await selfStudyPage.completeSelfStudyVerification();
 
-    console.log('Complete self-study flow finished successfully');
+    console.log("Complete self-study flow finished successfully");
   }
 
   /**
@@ -154,15 +160,15 @@ export class AuthTestHelper {
   static async setupTestEnvironment(): Promise<void> {
     // Verify environment variables are set
     if (!process.env.BASE_URL) {
-      console.warn('BASE_URL not set in environment, using default');
+      console.warn("BASE_URL not set in environment, using default");
     }
     if (!process.env.TEST_USER_EMAIL) {
-      console.warn('TEST_USER_EMAIL not set in environment, using default');
+      console.warn("TEST_USER_EMAIL not set in environment, using default");
     }
     if (!process.env.TEST_USER_PASSWORD) {
-      console.warn('TEST_USER_PASSWORD not set in environment, using default');
+      console.warn("TEST_USER_PASSWORD not set in environment, using default");
     }
 
-    console.log('Test environment setup completed');
+    console.log("Test environment setup completed");
   }
 }

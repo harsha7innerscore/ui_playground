@@ -1,5 +1,5 @@
-import { Page, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Page, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
 /**
  * LoginPage - Page object for login functionality
@@ -7,9 +7,9 @@ import { BasePage } from './BasePage';
  */
 export class LoginPage extends BasePage {
   // Element selectors using data-testid attributes as specified
-  private readonly emailInput = this.getByTestId('login-user-id-input');
-  private readonly passwordInput = this.getByTestId('login-password');
-  private readonly submitButton = this.getByTestId('login-submit-button');
+  private readonly emailInput = this.getByTestId("login-user-id-input");
+  private readonly passwordInput = this.getByTestId("login-password");
+  private readonly submitButton = this.getByTestId("login-submit-button");
 
   constructor(page: Page) {
     super(page);
@@ -19,7 +19,9 @@ export class LoginPage extends BasePage {
    * Navigate to the login page using BASE_URL from environment
    */
   async navigateToLogin(): Promise<void> {
-    const loginUrl = process.env.BASE_URL || 'http://localhost:3000/school/aitutor/student/aps';
+    const loginUrl =
+      process.env.BASE_URL ||
+      "http://localhost:3000/school/aitutor/student/aps";
     await this.navigateTo(loginUrl);
     await this.verifyLoginPage();
   }
@@ -31,7 +33,8 @@ export class LoginPage extends BasePage {
   async verifyLoginPage(): Promise<void> {
     const currentUrl = this.getCurrentUrl();
     // Verify URL indicates this is a login page (contains login-related path)
-    const isLoginPage = currentUrl.includes('student/aps') || currentUrl.includes('login');
+    const isLoginPage =
+      currentUrl.includes("student/aps") || currentUrl.includes("login");
     expect(isLoginPage).toBeTruthy();
     console.log(`Verified login page: ${currentUrl}`);
   }
@@ -40,7 +43,7 @@ export class LoginPage extends BasePage {
    * Fill email input field with test user email from environment
    */
   async fillEmail(): Promise<void> {
-    const email = process.env.TEST_USER_EMAIL || 'Test1177';
+    const email = process.env.TEST_USER_EMAIL || "Test1177";
     await this.waitForElementVisible('[data-testid="login-user-id-input"]');
     await this.emailInput.clear();
     await this.emailInput.fill(email);
@@ -55,7 +58,7 @@ export class LoginPage extends BasePage {
    * Fill password input field with test user password from environment
    */
   async fillPassword(): Promise<void> {
-    const password = process.env.TEST_USER_PASSWORD || 'Test@123';
+    const password = process.env.TEST_USER_PASSWORD || "Test@123";
     await this.waitForElementVisible('[data-testid="login-password"]');
     await this.passwordInput.clear();
     await this.passwordInput.fill(password);
@@ -63,7 +66,7 @@ export class LoginPage extends BasePage {
     // Verify password was entered (check length for security)
     const filledValue = await this.passwordInput.inputValue();
     expect(filledValue.length).toBe(password.length);
-    console.log('Password filled successfully');
+    console.log("Password filled successfully");
   }
 
   /**
@@ -72,7 +75,7 @@ export class LoginPage extends BasePage {
   async clickSubmitButton(): Promise<void> {
     await this.waitForElementVisible('[data-testid="login-submit-button"]');
     await this.submitButton.click();
-    console.log('Login submit button clicked');
+    console.log("Login submit button clicked");
   }
 
   /**
@@ -84,7 +87,7 @@ export class LoginPage extends BasePage {
     await this.waitForNavigation();
 
     // Verify redirect to the expected home page URL
-    const expectedHomeUrl = '/school/aitutor/home';
+    const expectedHomeUrl = "/school/aitutor/home";
     await this.waitForUrl(expectedHomeUrl, 15000);
 
     const currentUrl = this.getCurrentUrl();
@@ -97,7 +100,7 @@ export class LoginPage extends BasePage {
    * This is the main method that orchestrates the entire login process
    */
   async login(): Promise<void> {
-    console.log('Starting login flow...');
+    console.log("Starting login flow...");
 
     // Step 1: Navigate to login page and verify URL
     await this.navigateToLogin();
@@ -112,7 +115,7 @@ export class LoginPage extends BasePage {
     // Step 4: Wait for and verify successful redirect
     await this.waitForLoginRedirect();
 
-    console.log('Login flow completed successfully');
+    console.log("Login flow completed successfully");
   }
 
   /**
@@ -121,7 +124,7 @@ export class LoginPage extends BasePage {
    */
   async isLoggedIn(): Promise<boolean> {
     const currentUrl = this.getCurrentUrl();
-    return currentUrl.includes('/school/aitutor/home');
+    return currentUrl.includes("/school/aitutor/home");
   }
 
   /**
@@ -143,7 +146,7 @@ export class LoginPage extends BasePage {
     await this.clickSubmitButton();
     await this.waitForLoginRedirect();
 
-    console.log('Custom login flow completed successfully');
+    console.log("Custom login flow completed successfully");
   }
 
   /**
@@ -154,6 +157,6 @@ export class LoginPage extends BasePage {
     await expect(this.emailInput).toBeVisible();
     await expect(this.passwordInput).toBeVisible();
     await expect(this.submitButton).toBeVisible();
-    console.log('Login form elements verified');
+    console.log("Login form elements verified");
   }
 }
