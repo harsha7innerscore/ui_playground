@@ -1,0 +1,125 @@
+File Name,Test Suite,Test Case Name,Test Scenario Description
+framework-validation.spec.ts,Playwright Framework Validation,should validate page object imports and instantiation,Tests that page objects are properly instantiated via fixtures and have expected methods
+framework-validation.spec.ts,Playwright Framework Validation,should validate environment configuration and selectors,Verifies environment variables are loaded and expected selectors are defined
+framework-validation.spec.ts,Playwright Framework Validation,should validate URL patterns from requirements,Validates URL patterns match the requirements from todoList.md
+framework-validation.spec.ts,Playwright Framework Validation,should validate test fixture functionality,Tests that fixtures provide properly configured page objects with required methods
+framework-validation.spec.ts,Playwright Framework Validation,should validate framework file structure,Validates that all required framework files exist and are properly structured
+framework-validation.spec.ts,Framework Performance and Config,should validate Playwright configuration,Verifies playwright.config.ts settings are loaded correctly
+framework-validation.spec.ts,Framework Performance and Config,should demonstrate page object method chaining,Tests BasePage methods through LoginPage inheritance and method availability
+self-study-flow.spec.ts,Self-Study Feature Flow,should complete positive flow: Login → Home → Self Study,Tests complete workflow from login to home to self-study page following todoList.md requirements
+self-study-flow.spec.ts,Self-Study Feature Flow,should verify login page elements and functionality,Verifies login page elements are present and environment variables are used correctly
+self-study-flow.spec.ts,Self-Study Feature Flow,should verify all required URLs match specification,Verifies URL patterns match the specification requirements
+self-study-flow.spec.ts,Self-Study Test Configuration,should validate environment configuration,Validates all required environment variables are set properly
+revision-flow.spec.ts,Revision Flow - Revision Container and Features,should display revision container when revision is enabled,Tests visibility of revision container and title when revision is available for a topic
+revision-flow.spec.ts,Revision Flow - Revision Container and Features,should display recap map button,Verifies recap map button is visible and interactive with proper text and styling
+revision-flow.spec.ts,Revision Flow - Revision Container and Features,should display revision description text,Tests that revision description text is visible and contains meaningful content
+revision-flow.spec.ts,Revision Flow - Revision Container and Features,should display revision action button,Verifies main revision button is visible with appropriate text (Take revision/Continue Revision)
+revision-flow.spec.ts,Revision Flow - Revision Container and Features,should handle recap map button click,Tests click interaction on recap map button and hover functionality
+revision-flow.spec.ts,Revision Flow - Revision Data and Sessions,should display revision data container when sessions exist,Tests visibility of revision data and task details container when revision sessions are available
+revision-flow.spec.ts,Revision Flow - Revision Data and Sessions,should display revision task details items,Verifies revision task details items are displayed with session information and dates
+revision-flow.spec.ts,Revision Flow - Revision Data and Sessions,should handle revision task detail item clicks,Tests click interactions on revision task detail items
+revision-flow.spec.ts,Revision Flow - Revision Data and Sessions,should display view more/less functionality for revision tasks,Tests view more/less toggle functionality for revision tasks with proper button text changes
+revision-flow.spec.ts,Revision Flow - Revision Data and Sessions,should handle revision button click for task creation,Tests revision button interaction for creating or resuming revision tasks
+revision-flow.spec.ts,Revision Flow - Different Revision States,should handle revision flow for topics with no prior sessions,Tests revision display and button text for topics without prior revision sessions
+revision-flow.spec.ts,Revision Flow - Different Revision States,should handle revision flow for topics with existing sessions,Tests revision display and functionality for topics with existing revision sessions
+revision-flow.spec.ts,Revision Flow - Different Revision States,should handle topics where revision is not enabled,Tests behavior when revision feature is not available for certain topics
+revision-flow.spec.ts,Revision Flow - Mobile Responsive Behavior,should display revision container properly on mobile,Tests revision container display and button sizes on mobile viewport (375px)
+revision-flow.spec.ts,Revision Flow - Mobile Responsive Behavior,should handle mobile touch interactions for revision elements,Tests tap interactions and touch-friendly behavior for revision buttons on mobile
+revision-flow.spec.ts,Revision Flow - Performance and Error Handling,should load revision data within reasonable time,Tests that revision data loads within acceptable time limits (8 seconds)
+revision-flow.spec.ts,Revision Flow - Performance and Error Handling,should handle revision feature unavailability gracefully,Tests graceful behavior when revision features are not available for topics
+revision-flow.spec.ts,Revision Flow - Performance and Error Handling,should handle rapid revision button clicks gracefully,Tests system handling of rapid clicks on revision buttons without errors
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should display main subjects view container,Verifies main container structure including syllabus container and wrapper elements
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should display greeting and welcome message,Tests greeting display with user's name and welcome container elements including avatar
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should display subjects section with title and grid,Verifies subjects section structure with proper title ('Subjects') and grid layout
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should display subject cards in the grid,Tests subject card display in grid with proper interaction and hover behavior
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should handle subject card selection and navigation,Tests subject card click navigation to accordion view with proper tab selection
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should display continue studying section when available,Tests continue studying section display with title and cards container when user has recent tasks
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should display skeleton loaders while loading,Tests skeleton loading states during data loading processes
+subjects-view.spec.ts,SubjectsView - Subject Selection Interface,should display learning credits when available,Tests learning credits container display vs welcome container based on user credit status
+subjects-view.spec.ts,SubjectsView - Mobile Responsive Behavior,should display mobile-specific pagination for continue studying,Tests mobile pagination display and functionality for continue studying section
+subjects-view.spec.ts,SubjectsView - Mobile Responsive Behavior,should maintain responsive grid layout on mobile,Tests subject grid adaptation to mobile viewport (375px) with proper width constraints
+subjects-view.spec.ts,SubjectsView - Error Handling and Edge Cases,should handle empty subjects state gracefully,Tests component behavior when no subject data is available with proper error handling
+subjects-view.spec.ts,SubjectsView - Error Handling and Edge Cases,should handle network errors gracefully,Tests component resilience to network errors with error boundary functionality
+subjects-view.spec.ts,SubjectsView - Error Handling and Edge Cases,should maintain accessibility standards,Tests proper ARIA attributes and semantic HTML structure for accessibility compliance
+subjects-view.spec.ts,SubjectsView - Performance and Loading,should load subjects within reasonable time,Tests subject loading performance within acceptable time limits (10 seconds)
+subjects-view.spec.ts,SubjectsView - Performance and Loading,should handle rapid subject card clicks gracefully,Tests system handling of rapid clicks on subject cards without causing errors
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should display accordion view container and basic structure,Verifies main accordion container and topic-subtopic container structure
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should display greeting and top container elements,Tests accordion view specific greeting display with user's name
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should display subject tabs container,Verifies subject tabs container with proper ARIA attributes and tablist functionality
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should allow subject tab selection and switching,Tests subject tab switching functionality and topic data loading for different subjects
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should display topics list panel with topic containers,Verifies topics list panel display with topic items and proper container structure
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should display subtopics panel when topic is selected,Tests subtopics panel visibility and subtopic list container when topic is selected
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should display topic progress information,Tests topic progress containers and progress count display in format like '3/10'
+accordion-view.spec.ts,AccordionView - Main Learning Interface,should handle topic selection and expansion,Tests topic click behavior and expansion with subtopics panel visibility
+accordion-view.spec.ts,AccordionView - Subtopic Interactions,should display subtopic list container,Verifies subtopic list container visibility when available
+accordion-view.spec.ts,AccordionView - Subtopic Interactions,should handle subtopic expansion and interaction,Tests subtopic container clicks and expansion with task container appearance
+accordion-view.spec.ts,AccordionView - Subtopic Interactions,should display subtopic details containers,Verifies subtopic details containers are visible and interactive
+accordion-view.spec.ts,AccordionView - Subtopic Interactions,should handle locked subtopic states,Tests locked subtopic behavior with reduced opacity and limited interactivity
+accordion-view.spec.ts,AccordionView - Mobile Responsive Behavior,should display breadcrumb navigation on mobile,Tests mobile breadcrumb navigation display and click functionality on mobile viewport
+accordion-view.spec.ts,AccordionView - Mobile Responsive Behavior,should adapt layout for mobile topic selection,Tests mobile layout adaptation when topics are selected with proper panel visibility
+accordion-view.spec.ts,AccordionView - Mobile Responsive Behavior,should maintain proper mobile subject tab layout,Tests subject tabs container adaptation to mobile viewport (375px) width constraints
+accordion-view.spec.ts,AccordionView - Accessibility and Performance,should maintain accessibility standards,Tests proper ARIA attributes including region roles and aria-label for accessibility
+accordion-view.spec.ts,AccordionView - Accessibility and Performance,should handle keyboard navigation,Tests keyboard navigation through subject tabs with focus management and Enter/Space activation
+accordion-view.spec.ts,AccordionView - Accessibility and Performance,should load accordion view within reasonable time,Tests accordion view loading performance within acceptable time limits (8 seconds)
+accordion-view.spec.ts,AccordionView - Accessibility and Performance,should handle rapid topic/subtopic interactions,Tests system handling of rapid topic and subtopic switching without errors
+task-management.spec.ts,Task Management - Task Display and Interaction,should display task container when tasks are available,Tests task container visibility and individual task items or empty state handling
+task-management.spec.ts,Task Management - Task Display and Interaction,should display task information correctly,Tests task date information display and task info containers with icons and types
+task-management.spec.ts,Task Management - Task Display and Interaction,should display task status and performance information,Tests task status containers and performance badges with image elements and self-created indicators
+task-management.spec.ts,Task Management - Task Display and Interaction,should handle task click interactions,Tests task click behavior and cursor indication for interactive elements
+task-management.spec.ts,Task Management - Task Display and Interaction,should display view more/less functionality,Tests view more/less toggle functionality for tasks with button text changes
+task-management.spec.ts,Task Management - Self-Learn Buttons,should display self-learn buttons container,Tests self-learn buttons container visibility when available
+task-management.spec.ts,Task Management - Self-Learn Buttons,should display assessment self-learn button,Tests assessment button visibility and proper button element functionality
+task-management.spec.ts,Task Management - Self-Learn Buttons,should display guided practice self-learn button,Tests guided practice button visibility and proper button element structure
+task-management.spec.ts,Task Management - Self-Learn Buttons,should display learn subtopic self-learn button,Tests learn subtopic button visibility and proper button element functionality
+task-management.spec.ts,Task Management - Self-Learn Buttons,should display prerequisite self-learn button when applicable,Tests prerequisite button visibility when applicable with proper button element structure
+task-management.spec.ts,Task Management - Self-Learn Buttons,should handle self-learn button clicks and task creation,Tests self-learn button click interactions for assessment guided practice and learn buttons
+task-management.spec.ts,Task Management - Learning Credits Integration,should display low balance tooltip when applicable,Tests low balance tooltip visibility and content about Smart Learn feature restrictions
+task-management.spec.ts,Task Management - Learning Credits Integration,should display low balance warning icon when applicable,Tests warning icon visibility with pointer cursor and hover interaction behavior
+task-management.spec.ts,Task Management - Learning Credits Integration,should handle restricted task interactions due to low balance,Tests task click behavior when credit restrictions are active showing tooltips instead of navigation
+task-management.spec.ts,Task Management - Learning Credits Integration,should handle credit request modal when applicable,Tests credit request modal display and mobile adaptation when applicable
+task-management.spec.ts,Task Management - Error Handling and Edge Cases,should handle empty task state gracefully,Tests empty task state handling with proper empty container and text display
+task-management.spec.ts,Task Management - Error Handling and Edge Cases,should handle task loading states,Tests task loading behavior with proper container appearance timing
+task-management.spec.ts,Task Management - Error Handling and Edge Cases,should handle rapid button clicks gracefully,Tests system handling of rapid self-learn button clicks without causing errors
+navigation-flows.spec.ts,Navigation Flows - Complete User Journeys,should complete full journey: Subject Selection → Topic Selection → Subtopic Expansion,Tests complete end-to-end navigation from subjects view through accordion view to subtopic expansion
+navigation-flows.spec.ts,Navigation Flows - Complete User Journeys,should handle back navigation through breadcrumbs,Tests breadcrumb navigation functionality primarily on mobile for going back in navigation
+navigation-flows.spec.ts,Navigation Flows - Complete User Journeys,should support switching between subjects via tabs,Tests subject tab switching functionality with proper topic loading for different subjects
+navigation-flows.spec.ts,Navigation Flows - Complete User Journeys,should maintain state when navigating between topics,Tests state management when switching between different topics with proper subtopics panel updates
+navigation-flows.spec.ts,Navigation Flows - Continue Studying Integration,should display and interact with continue studying cards,Tests continue studying section display with study cards and interaction capability
+navigation-flows.spec.ts,Navigation Flows - Continue Studying Integration,should handle continue studying navigation on mobile,Tests continue studying section behavior on mobile viewport with pagination functionality
+navigation-flows.spec.ts,Navigation Flows - Continue Studying Integration,should support direct task resumption from continue studying,Tests direct task navigation from continue studying cards for task resumption
+navigation-flows.spec.ts,Navigation Flows - Multi-Step Task Workflows,should support self-learn task creation workflow,Tests self-learn task creation workflow with assessment guided practice and learn subtopic options
+navigation-flows.spec.ts,Navigation Flows - Multi-Step Task Workflows,should support revision workflow initiation,Tests revision workflow initiation with recap map and revision buttons for available topics
+navigation-flows.spec.ts,Navigation Flows - Multi-Step Task Workflows,should handle task progression and status updates,Tests task progression tracking with date information and performance badges
+navigation-flows.spec.ts,Navigation Flows - Performance and Error Recovery,should handle navigation timeouts gracefully,Tests navigation performance with shorter timeouts to simulate slow networks
+navigation-flows.spec.ts,Navigation Flows - Performance and Error Recovery,should recover from navigation errors,Tests error recovery from rapid navigation and browser back/forward actions
+navigation-flows.spec.ts,Navigation Flows - Performance and Error Recovery,should maintain navigation performance under load,Tests complete navigation sequence performance within acceptable time limits (15 seconds)
+navigation-flows.spec.ts,Navigation Flows - Performance and Error Recovery,should handle concurrent navigation requests,Tests handling of overlapping navigation actions and concurrent clicks gracefully
+learning-credits.spec.ts,Learning Credits - Credit Balance and Display,should display learning credits container when available,Tests learning credits container display vs welcome container based on credit availability
+learning-credits.spec.ts,Learning Credits - Credit Balance and Display,should handle low balance state styling and warnings,Tests low balance styling indicators and welcome text messaging for credit guidance
+learning-credits.spec.ts,Learning Credits - Credit Balance and Display,should display appropriate title based on balance state,Tests title display adaptation based on credit balance state with proper h1 element structure
+learning-credits.spec.ts,Learning Credits - Feature Restrictions and Tooltips,should display low balance tooltip when applicable,Tests low balance tooltip visibility with Smart Learn feature restriction content and styling
+learning-credits.spec.ts,Learning Credits - Feature Restrictions and Tooltips,should display low balance warning icon when applicable,Tests warning icon display with pointer cursor hover interaction and tooltip appearance
+learning-credits.spec.ts,Learning Credits - Feature Restrictions and Tooltips,should restrict Smart Learn features when balance is low,Tests Smart Learn feature restrictions with task clicks showing tooltips and self-learn button warnings
+learning-credits.spec.ts,Learning Credits - Feature Restrictions and Tooltips,should handle credit request modal when applicable,Tests credit request modal display and mobile adaptation functionality
+learning-credits.spec.ts,Learning Credits - User Mode Behaviors,should handle NORMAL user mode features,Tests NORMAL mode behavior with full feature access and absence of credit restrictions
+learning-credits.spec.ts,Learning Credits - User Mode Behaviors,should handle FREE user mode restrictions,Tests FREE mode behavior with credit-based restrictions and warning displays
+learning-credits.spec.ts,Learning Credits - User Mode Behaviors,should display appropriate nudges and guidance for credit management,Tests credit-related guidance in welcome text and time logs modal functionality
+learning-credits.spec.ts,Learning Credits - Error Handling and Edge Cases,should handle credit system unavailability gracefully,Tests behavior when credit system is not available with normal feature access
+learning-credits.spec.ts,Learning Credits - Error Handling and Edge Cases,should handle credit API failures gracefully,Tests functionality maintenance despite potential credit API failures
+learning-credits.spec.ts,Learning Credits - Error Handling and Edge Cases,should handle rapid credit-related interactions,Tests rapid interactions with credit-restricted features and warning icons without errors
+responsive-design.spec.ts,Responsive Design - Mobile Layout Adaptations,should display mobile-optimized subjects view layout,Tests mobile viewport (375px) adaptation of subjects container and grid with proper card sizing
+responsive-design.spec.ts,Responsive Design - Mobile Layout Adaptations,should display mobile pagination for continue studying,Tests mobile-specific pagination display and positioning for continue studying section
+responsive-design.spec.ts,Responsive Design - Mobile Layout Adaptations,should display mobile bottom navigation container,Tests mobile bottom container vs desktop container visibility with proper width constraints
+responsive-design.spec.ts,Responsive Design - Mobile Layout Adaptations,should adapt accordion view for mobile navigation,Tests accordion container mobile adaptation with breadcrumb navigation and subject tabs
+responsive-design.spec.ts,Responsive Design - Mobile Layout Adaptations,should handle mobile topic and subtopic selection behavior,Tests mobile layout adaptation for topic selection with proper panel visibility and responsive behavior
+responsive-design.spec.ts,Responsive Design - Desktop Layout Behavior,should display desktop-optimized subjects view layout,Tests desktop viewport (1440px) subjects container utilization with grid efficiency and no mobile pagination
+responsive-design.spec.ts,Responsive Design - Desktop Layout Behavior,should display desktop bottom navigation container,Tests desktop bottom container vs mobile container visibility with proper width utilization
+responsive-design.spec.ts,Responsive Design - Desktop Layout Behavior,should display desktop accordion layout with proper panels,Tests desktop accordion layout with both panels visible and proper width ratios (75% vs 25%)
+responsive-design.spec.ts,Responsive Design - Desktop Layout Behavior,should display topic progress information on desktop,Tests topic progress containers display and spacing on desktop with proper sizing
+responsive-design.spec.ts,Responsive Design - Cross-Device Compatibility,should work on tablet viewport (768px),Tests functionality and layout adaptation on tablet viewport with proper container sizing
+responsive-design.spec.ts,Responsive Design - Cross-Device Compatibility,should work on large desktop viewport (1920px),Tests functionality and scaling on large desktop viewport (1920px) with proper panel sizing
+responsive-design.spec.ts,Responsive Design - Cross-Device Compatibility,should work on small mobile viewport (320px),Tests functionality on very small mobile viewport (320px) with proper touch target sizes
+responsive-design.spec.ts,Responsive Design - Touch and Interaction Adaptations,should handle touch interactions appropriately,Tests tap interactions on mobile for subject cards and topic navigation functionality
+responsive-design.spec.ts,Responsive Design - Touch and Interaction Adaptations,should maintain touch target sizes for accessibility,Tests touch target sizes (44px minimum) for tabs topics and buttons following iOS guidelines
+responsive-design.spec.ts,Responsive Design - Touch and Interaction Adaptations,should adapt self-learn buttons for touch interaction,Tests self-learn button sizing for touch interaction with minimum size requirements
+responsive-design.spec.ts,Responsive Design - Touch and Interaction Adaptations,should handle responsive revision elements on mobile,Tests revision button sizing and touch interactions on mobile with proper tap behavior
