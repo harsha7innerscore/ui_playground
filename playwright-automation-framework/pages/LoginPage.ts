@@ -6,10 +6,10 @@ import { BasePage } from "./BasePage";
  * Handles authentication flow for self-study feature testing
  */
 export class LoginPage extends BasePage {
-  // Element selectors using data-testid attributes as specified
-  private readonly emailInput = this.getByTestId("login-user-id-input");
-  private readonly passwordInput = this.getByTestId("login-password");
-  private readonly submitButton = this.getByTestId("login-submit-button");
+  // Element selectors using id attributes (since HTML uses id, not data-testid)
+  private readonly emailInput = this.page.locator('[id="login-user-id-input"]');
+  private readonly passwordInput = this.page.locator('[id="login-password-input"]');
+  private readonly submitButton = this.page.locator('[id="login-submit-button"]');
 
   constructor(page: Page) {
     super(page);
@@ -44,7 +44,7 @@ export class LoginPage extends BasePage {
    */
   async fillEmail(): Promise<void> {
     const email = process.env.TEST_USER_EMAIL || "Test1177";
-    await this.waitForElementVisible('[data-testid="login-user-id-input"]');
+    await this.waitForElementVisible('[id="login-user-id-input"]');
     await this.emailInput.clear();
     await this.emailInput.fill(email);
 
@@ -59,7 +59,7 @@ export class LoginPage extends BasePage {
    */
   async fillPassword(): Promise<void> {
     const password = process.env.TEST_USER_PASSWORD || "Test@123";
-    await this.waitForElementVisible('[data-testid="login-password"]');
+    await this.waitForElementVisible('[id="login-password-input"]');
     await this.passwordInput.clear();
     await this.passwordInput.fill(password);
 
@@ -73,7 +73,7 @@ export class LoginPage extends BasePage {
    * Click the submit/login button
    */
   async clickSubmitButton(): Promise<void> {
-    await this.waitForElementVisible('[data-testid="login-submit-button"]');
+    await this.waitForElementVisible('[id="login-submit-button"]');
     await this.submitButton.click();
     console.log("Login submit button clicked");
   }
