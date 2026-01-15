@@ -565,4 +565,14 @@ test.describe('Navigation Flows - Performance and Error Recovery', () => {
       console.log('✓ Concurrent navigation handled correctly');
     }
   });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('Navigation Flows test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });

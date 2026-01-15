@@ -174,4 +174,64 @@ export class BasePage {
   async wait(milliseconds: number): Promise<void> {
     await this.page.waitForTimeout(milliseconds);
   }
+
+  /**
+   * Logout functionality - clicks profile icon and logout button
+   * Works from any authenticated page to return to login page
+   */
+  async logout(): Promise<void> {
+    console.log('Starting logout process...');
+
+    try {
+      // Step 1: Click on the profile icon in the app bar
+      const profileIcon = this.getByTestId('appbar-profile-icon');
+      await this.waitForElementVisible('[data-testid="appbar-profile-icon"]');
+      await profileIcon.click();
+      console.log('Profile icon clicked');
+
+      // Step 2: Wait for the menu to appear and click logout button
+      await this.waitForElementVisible('#logout-button', 5000);
+      const logoutButton = this.page.locator('#logout-button');
+      await logoutButton.click();
+      console.log('Logout button clicked');
+
+      // Step 3: Wait for navigation back to login page
+      await this.waitForNavigation();
+
+      // Step 4: Verify we're back on the login page
+      const currentUrl = this.getCurrentUrl();
+      const isOnLoginPage = currentUrl.includes('student/aps') || currentUrl.includes('login');
+
+      if (isOnLoginPage) {
+        console.log(`Successfully logged out. Current URL: ${currentUrl}`);
+      } else {
+        console.warn(`Logout completed but URL unexpected: ${currentUrl}`);
+      }
+
+    } catch (error) {
+      console.error('Logout process failed:', error);
+      throw new Error(`Failed to logout: ${error}`);
+    }
+  }
+
+  /**
+   * Check if user is currently logged in
+   * @returns true if logged in (on home or syllabus page), false if on login page
+   */
+  async isLoggedIn(): Promise<boolean> {
+    const currentUrl = this.getCurrentUrl();
+    return currentUrl.includes('/school/aitutor/home') || currentUrl.includes('/school/aitutor/syllabus');
+  }
+
+  /**
+   * Logout if currently logged in
+   * Safe method that only performs logout if user is authenticated
+   */
+  async logoutIfLoggedIn(): Promise<void> {
+    if (await this.isLoggedIn()) {
+      await this.logout();
+    } else {
+      console.log('User is not logged in, skipping logout');
+    }
+  }
 }

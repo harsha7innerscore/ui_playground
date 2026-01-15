@@ -264,4 +264,14 @@ test.describe('SubjectsView - Performance and Loading', () => {
       await expect(page.getByTestId('accordion-view-container')).toBeVisible();
     }
   });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('SubjectsView test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });

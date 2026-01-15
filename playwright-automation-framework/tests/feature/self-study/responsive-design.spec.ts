@@ -621,4 +621,14 @@ test.describe('Responsive Design - Touch and Interaction Adaptations', () => {
       }
     }
   });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('Responsive Design test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });

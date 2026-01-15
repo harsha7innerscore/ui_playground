@@ -162,6 +162,16 @@ test.describe("Revision Flow - Revision Container and Features", () => {
       console.log("Recap map button is available for testing");
     }
   });
+
+  test.afterEach(async ({ page, homePage }) => {
+    console.log('Revision container test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });
 
 test.describe("Revision Flow - Revision Data and Sessions", () => {
@@ -322,6 +332,16 @@ test.describe("Revision Flow - Revision Data and Sessions", () => {
       console.log("Revision button is available for task creation");
     }
   });
+
+  test.afterEach(async ({ page, homePage }) => {
+    console.log('Revision data sessions test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });
 
 test.describe("Revision Flow - Different Revision States", () => {
@@ -479,6 +499,16 @@ test.describe("Revision Flow - Different Revision States", () => {
     // At least some topics should exist
     expect(totalTopicsChecked).toBeGreaterThan(0);
   });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('Revision states test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });
 
 test.describe("Revision Flow - Mobile Responsive Behavior", () => {
@@ -570,6 +600,16 @@ test.describe("Revision Flow - Mobile Responsive Behavior", () => {
       // Elements should remain functional after touch
       await expect(recapButton).toBeEnabled();
       await expect(revisionButton).toBeEnabled();
+    }
+  });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('Mobile responsive test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
     }
   });
 });
@@ -706,6 +746,16 @@ test.describe("Revision Flow - Performance and Error Handling", () => {
           await expect(revisionButton).toBeEnabled();
         }
       }
+    }
+  });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('Performance and error handling test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
     }
   });
 });

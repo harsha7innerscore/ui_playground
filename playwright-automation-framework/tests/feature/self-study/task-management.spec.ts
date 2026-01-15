@@ -522,4 +522,14 @@ test.describe('Task Management - Error Handling and Edge Cases', () => {
       }
     }
   });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('Task Management test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });

@@ -147,8 +147,15 @@ test.describe('Self-Study Feature Flow', () => {
     expect(true).toBe(true); // Placeholder assertion
   });
 
-  test.afterEach(async ({ page }) => {
+  test.afterEach(async ({ page, homePage }) => {
     console.log('Test completed, cleaning up...');
+
+    // Logout if currently logged in
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
 
     // Take a screenshot for record keeping
     await page.screenshot({

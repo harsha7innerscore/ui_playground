@@ -388,4 +388,14 @@ test.describe('AccordionView - Accessibility and Performance', () => {
       await expect(page.getByTestId('accordion-view-subtopics-panel')).toBeVisible();
     }
   });
+
+  test.afterEach(async ({ homePage }) => {
+    console.log('AccordionView test completed, logging out...');
+
+    try {
+      await homePage.logoutIfLoggedIn();
+    } catch (error) {
+      console.warn('Logout failed during cleanup:', error);
+    }
+  });
 });
