@@ -98,6 +98,101 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
     // Note: Not clicking to avoid navigation for other tests
   });
 
+  test("should show white background on subject card hover", async ({ page }) => {
+    // Wait for subjects grid to be visible first
+    await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
+
+    // Wait for loading to complete by ensuring skeleton elements are gone
+    await page.waitForFunction(
+      () => {
+        const skeletons = document.querySelectorAll(
+          '[data-testid*="SubjectsView-skeleton-"]'
+        );
+        return skeletons.length === 0;
+      },
+      { timeout: 15000 }
+    );
+
+    // Find subject cards with the correct structure
+    const subjectCardsSelector =
+      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
+
+    const firstSubjectCard = page.locator(subjectCardsSelector).first();
+    await expect(firstSubjectCard).toBeVisible({ timeout: 15000 });
+
+    // Get the subject name from the data-testid attribute to find the text element
+    const dataTestId = await firstSubjectCard.getAttribute("data-testid");
+    const subjectName = dataTestId?.replace("SubjectsView-", "") || "";
+
+    // Find the text element inside the subject card
+    const subjectNameText = firstSubjectCard.locator('text=' + subjectName);
+    await expect(subjectNameText).toBeVisible();
+
+    // Get initial background color of the text element before hover
+    const initialBackgroundColor = await subjectNameText.evaluate((element) => {
+      return window.getComputedStyle(element).backgroundColor;
+    });
+
+    // Hover over the subject card to trigger the hover effect
+    await firstSubjectCard.hover();
+
+    // Wait a brief moment for hover effect to apply
+    await page.waitForTimeout(200);
+
+    // Get background color of the text element after hover
+    const hoverBackgroundColor = await subjectNameText.evaluate((element) => {
+      return window.getComputedStyle(element).backgroundColor;
+    });
+
+    // Verify that the text background color changed to white (rgb(255, 255, 255) or rgba(255, 255, 255, 1))
+    expect(hoverBackgroundColor).toMatch(/rgb\(255,\s*255,\s*255\)|rgba\(255,\s*255,\s*255,\s*1\)|white/);
+
+    console.log(`Subject: ${subjectName} | Initial text background: ${initialBackgroundColor}, Hover text background: ${hoverBackgroundColor}`);
+  });
+
+  test("should display subject card with icon and name text", async ({ page }) => {
+    // Wait for subjects grid to be visible first
+    await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
+
+    // Wait for loading to complete by ensuring skeleton elements are gone
+    await page.waitForFunction(
+      () => {
+        const skeletons = document.querySelectorAll(
+          '[data-testid*="SubjectsView-skeleton-"]'
+        );
+        return skeletons.length === 0;
+      },
+      { timeout: 15000 }
+    );
+
+    // Find subject cards with the correct structure
+    const subjectCardsSelector =
+      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
+
+    const firstSubjectCard = page.locator(subjectCardsSelector).first();
+    await expect(firstSubjectCard).toBeVisible({ timeout: 15000 });
+
+    // Get the subject name from the data-testid attribute
+    const dataTestId = await firstSubjectCard.getAttribute("data-testid");
+    const subjectName = dataTestId?.replace("SubjectsView-", "") || "";
+
+    expect(subjectName).toBeTruthy();
+    console.log(`Testing subject card structure for: ${subjectName}`);
+
+    // Verify subject icon exists with correct alt text
+    const subjectIcon = firstSubjectCard.locator('img');
+    await expect(subjectIcon).toBeVisible();
+
+    const expectedAltText = `${subjectName} subject icon`;
+    await expect(subjectIcon).toHaveAttribute("alt", expectedAltText);
+
+    // Verify subject name text is displayed
+    const subjectNameText = firstSubjectCard.locator('text=' + subjectName);
+    await expect(subjectNameText).toBeVisible();
+
+    console.log(`Verified subject card structure: icon with alt="${expectedAltText}" and name text "${subjectName}"`);
+  });
+
   test("should handle subject card selection and navigation", async ({
     page,
   }) => {
