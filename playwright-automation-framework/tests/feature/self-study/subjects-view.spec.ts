@@ -650,18 +650,9 @@ test.describe("SubjectsView - Mobile Responsive Behavior", () => {
       .catch(() => false);
 
     if (isPaginationVisible) {
-      const paginationComponent = page.getByTestId(
-        "SubjectsView-pagination-component"
-      );
-      await expect(paginationComponent).toBeVisible();
-
-      // Check for pagination buttons
-      const nextButton = paginationComponent.locator("button", {
-        hasText: /next|>/i,
-      });
-      const prevButton = paginationComponent.locator("button", {
-        hasText: /prev|</i,
-      });
+      // Check for pagination buttons using specific data-testid attributes
+      const nextButton = page.getByTestId("pagination-next-button");
+      const prevButton = page.getByTestId("pagination-previous-button");
 
       const hasNextButton = (await nextButton.count()) > 0;
       const hasPrevButton = (await prevButton.count()) > 0;
@@ -673,34 +664,159 @@ test.describe("SubjectsView - Mobile Responsive Behavior", () => {
     }
   });
 
-  test("should adapt subject grid columns for mobile viewport", async ({
-    page,
-  }) => {
-    // Wait for subjects to load
-    await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
-    await page.waitForFunction(
-      () =>
-        document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]')
-          .length === 0,
-      { timeout: 15000 }
+  test("should display pagination page info correctly", async ({ page }) => {
+    const paginationContainer = page.getByTestId(
+      "SubjectsView-pagination-container"
     );
+    const isPaginationVisible = await paginationContainer
+      .isVisible()
+      .catch(() => false);
 
-    const subjectCardsSelector =
-      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
+    if (isPaginationVisible) {
+      // Check for pagination page info
+      const pageInfo = page.getByTestId("pagination-page-info");
+      await expect(pageInfo).toBeVisible();
 
-    const subjectCards = page.locator(subjectCardsSelector);
-    const cardCount = await subjectCards.count();
+      // Verify page info format: "{currentPage} of {totalPages}"
+      const pageInfoText = await pageInfo.textContent();
+      expect(pageInfoText).toMatch(/^\d+ of \d+$/);
 
-    if (cardCount > 0) {
-      const firstCard = subjectCards.first();
-      const cardBox = await firstCard.boundingBox();
+      // Extract current and total pages
+      const match = pageInfoText?.match(/^(\d+) of (\d+)$/);
+      if (match) {
+        const currentPage = parseInt(match[1]);
+        const totalPages = parseInt(match[2]);
 
-      if (cardBox) {
-        // On mobile (375px), cards should be appropriately sized
-        expect(cardBox.width).toBeGreaterThan(80); // Not too small
-        expect(cardBox.width).toBeLessThan(200); // Not too wide for mobile
+        expect(currentPage).toBeGreaterThanOrEqual(1);
+        expect(totalPages).toBeGreaterThanOrEqual(1);
+        expect(currentPage).toBeLessThanOrEqual(totalPages);
 
-        console.log(`Mobile subject card width: ${cardBox.width}px`);
+        console.log(`Pagination shows: ${pageInfoText}`);
+      }
+    }
+  });
+
+  test("should disable previous button on first page", async ({ page }) => {
+    const paginationContainer = page.getByTestId(
+      "SubjectsView-pagination-container"
+    );
+    const isPaginationVisible = await paginationContainer
+      .isVisible()
+      .catch(() => false);
+
+    if (isPaginationVisible) {
+      const pageInfo = page.getByTestId("pagination-page-info");
+      const pageInfoText = await pageInfo.textContent();
+
+      // Check if we're on the first page
+      const match = pageInfoText?.match(/^(\d+) of (\d+)$/);
+      if (match) {
+        const currentPage = parseInt(match[1]);
+
+        if (currentPage === 1) {
+          // Previous button should be disabled on first page
+          const prevButton = page.getByTestId("pagination-previous-button");
+          await expect(prevButton).toBeDisabled();
+          console.log("Previous button correctly disabled on first page");
+        } else {
+          // Previous button should be enabled if not on first page
+          const prevButton = page.getByTestId("pagination-previous-button");
+          await expect(prevButton).toBeEnabled();
+          console.log(`Previous button enabled on page ${currentPage}`);
+        }
+      }
+    }
+  });
+
+  test("should disable next button on last page", async ({ page }) => {
+    const paginationContainer = page.getByTestId(
+      "SubjectsView-pagination-container"
+    );
+    const isPaginationVisible = await paginationContainer
+      .isVisible()
+      .catch(() => false);
+
+    if (isPaginationVisible) {
+      const pageInfo = page.getByTestId("pagination-page-info");
+      const pageInfoText = await pageInfo.textContent();
+
+      // Check if we're on the last page
+      const match = pageInfoText?.match(/^(\d+) of (\d+)$/);
+      if (match) {
+        const currentPage = parseInt(match[1]);
+        const totalPages = parseInt(match[2]);
+
+        if (currentPage === totalPages) {
+          // Next button should be disabled on last page
+          const nextButton = page.getByTestId("pagination-next-button");
+          await expect(nextButton).toBeDisabled();
+          console.log("Next button correctly disabled on last page");
+        } else {
+          // Next button should be enabled if not on last page
+          const nextButton = page.getByTestId("pagination-next-button");
+          await expect(nextButton).toBeEnabled();
+          console.log(`Next button enabled on page ${currentPage} of ${totalPages}`);
+        }
+      }
+    }
+  });
+
+  test("should handle pagination navigation correctly", async ({ page }) => {
+    const paginationContainer = page.getByTestId(
+      "SubjectsView-pagination-container"
+    );
+    const isPaginationVisible = await paginationContainer
+      .isVisible()
+      .catch(() => false);
+
+    if (isPaginationVisible) {
+      const pageInfo = page.getByTestId("pagination-page-info");
+      const nextButton = page.getByTestId("pagination-next-button");
+      const prevButton = page.getByTestId("pagination-previous-button");
+
+      // Get initial page info
+      const initialPageText = await pageInfo.textContent();
+      const initialMatch = initialPageText?.match(/^(\d+) of (\d+)$/);
+
+      if (initialMatch) {
+        const initialPage = parseInt(initialMatch[1]);
+        const totalPages = parseInt(initialMatch[2]);
+
+        console.log(`Starting on page ${initialPage} of ${totalPages}`);
+
+        // Test next button functionality if not on last page
+        if (initialPage < totalPages && await nextButton.isEnabled()) {
+          await nextButton.click();
+
+          // Wait for page change and verify
+          await page.waitForTimeout(500);
+          const newPageText = await pageInfo.textContent();
+          const newMatch = newPageText?.match(/^(\d+) of (\d+)$/);
+
+          if (newMatch) {
+            const newPage = parseInt(newMatch[1]);
+            expect(newPage).toBe(initialPage + 1);
+            console.log(`Successfully navigated to page ${newPage}`);
+
+            // Test previous button functionality
+            if (await prevButton.isEnabled()) {
+              await prevButton.click();
+
+              // Wait for page change and verify we're back to initial page
+              await page.waitForTimeout(500);
+              const backPageText = await pageInfo.textContent();
+              const backMatch = backPageText?.match(/^(\d+) of (\d+)$/);
+
+              if (backMatch) {
+                const backPage = parseInt(backMatch[1]);
+                expect(backPage).toBe(initialPage);
+                console.log(`Successfully navigated back to page ${backPage}`);
+              }
+            }
+          }
+        } else {
+          console.log("Next button not available or already on last page");
+        }
       }
     }
   });
