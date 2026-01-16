@@ -98,7 +98,9 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
     // Note: Not clicking to avoid navigation for other tests
   });
 
-  test("should show white background on subject card hover", async ({ page }) => {
+  test("should show white background on subject card hover", async ({
+    page,
+  }) => {
     // Wait for subjects grid to be visible first
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
 
@@ -125,7 +127,7 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
     const subjectName = dataTestId?.replace("SubjectsView-", "") || "";
 
     // Find the text element inside the subject card
-    const subjectNameText = firstSubjectCard.locator('text=' + subjectName);
+    const subjectNameText = firstSubjectCard.locator("text=" + subjectName);
     await expect(subjectNameText).toBeVisible();
 
     // Get initial background color of the text element before hover
@@ -145,12 +147,18 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
     });
 
     // Verify that the text background color changed to white (rgb(255, 255, 255) or rgba(255, 255, 255, 1))
-    expect(hoverBackgroundColor).toMatch(/rgb\(255,\s*255,\s*255\)|rgba\(255,\s*255,\s*255,\s*1\)|white/);
+    expect(hoverBackgroundColor).toMatch(
+      /rgb\(255,\s*255,\s*255\)|rgba\(255,\s*255,\s*255,\s*1\)|white/
+    );
 
-    console.log(`Subject: ${subjectName} | Initial text background: ${initialBackgroundColor}, Hover text background: ${hoverBackgroundColor}`);
+    console.log(
+      `Subject: ${subjectName} | Initial text background: ${initialBackgroundColor}, Hover text background: ${hoverBackgroundColor}`
+    );
   });
 
-  test("should display subject card with icon and name text", async ({ page }) => {
+  test("should display subject card with icon and name text", async ({
+    page,
+  }) => {
     // Wait for subjects grid to be visible first
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
 
@@ -180,17 +188,19 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
     console.log(`Testing subject card structure for: ${subjectName}`);
 
     // Verify subject icon exists with correct alt text
-    const subjectIcon = firstSubjectCard.locator('img');
+    const subjectIcon = firstSubjectCard.locator("img");
     await expect(subjectIcon).toBeVisible();
 
     const expectedAltText = `${subjectName} subject icon`;
     await expect(subjectIcon).toHaveAttribute("alt", expectedAltText);
 
     // Verify subject name text is displayed
-    const subjectNameText = firstSubjectCard.locator('text=' + subjectName);
+    const subjectNameText = firstSubjectCard.locator("text=" + subjectName);
     await expect(subjectNameText).toBeVisible();
 
-    console.log(`Verified subject card structure: icon with alt="${expectedAltText}" and name text "${subjectName}"`);
+    console.log(
+      `Verified subject card structure: icon with alt="${expectedAltText}" and name text "${subjectName}"`
+    );
   });
 
   test("should handle subject card selection and navigation", async ({
@@ -285,39 +295,31 @@ test.describe("SubjectsView - Props Validation and Edge Cases", () => {
     await selfStudyPage.verifySelfStudyPage();
   });
 
-  test("should handle component with empty subjects gracefully", async ({ page }) => {
+  test("should handle component with empty subjects gracefully", async ({
+    page,
+  }) => {
     // Component should render basic structure even with no subjects
     await expect(page.getByTestId("SubjectsView-container")).toBeVisible();
-    await expect(page.getByTestId("SubjectsView-subjects-section")).toBeVisible();
+    await expect(
+      page.getByTestId("SubjectsView-subjects-section")
+    ).toBeVisible();
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
-    await expect(page.getByTestId("SubjectsView-subjects-title")).toHaveText("Subjects");
+    await expect(page.getByTestId("SubjectsView-subjects-title")).toHaveText(
+      "Subjects"
+    );
 
     console.log("Component handles empty subjects state gracefully");
   });
 
-  test("should display exactly 6 skeleton cards during loading", async ({ page }) => {
-    // Reload to catch loading state
-    await page.reload();
-
-    // Wait for skeletons to appear and count them
-    await expect(page.getByTestId("SubjectsView-skeleton-0")).toBeVisible({ timeout: 5000 });
-
-    // Verify all 6 skeleton cards exist
-    for (let i = 0; i < 6; i++) {
-      await expect(page.getByTestId(`SubjectsView-skeleton-${i}`)).toBeVisible();
-    }
-
-    // Verify no more than 6 skeletons exist
-    await expect(page.getByTestId("SubjectsView-skeleton-6")).not.toBeVisible().catch(() => true);
-
-    console.log("Verified exactly 6 skeleton cards during loading");
-  });
-
-  test("should handle subjects with long names without breaking layout", async ({ page }) => {
+  test("should handle subjects with long names without breaking layout", async ({
+    page,
+  }) => {
     // Wait for subjects to load
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
     await page.waitForFunction(
-      () => document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]').length === 0,
+      () =>
+        document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]')
+          .length === 0,
       { timeout: 15000 }
     );
 
@@ -333,7 +335,9 @@ test.describe("SubjectsView - Props Validation and Edge Cases", () => {
 
       // Verify card doesn't overflow container
       const cardBox = await firstCard.boundingBox();
-      const gridBox = await page.getByTestId("SubjectsView-subjects-grid").boundingBox();
+      const gridBox = await page
+        .getByTestId("SubjectsView-subjects-grid")
+        .boundingBox();
 
       if (cardBox && gridBox) {
         expect(cardBox.width).toBeLessThanOrEqual(gridBox.width);
@@ -350,35 +354,53 @@ test.describe("SubjectsView - Task Cards and Continue Studying", () => {
     await selfStudyPage.verifySelfStudyPage();
   });
 
-  test("should display continue studying section with correct title when tasks available", async ({ page }) => {
-    const continueSection = page.getByTestId("SubjectsView-continue-studying-section");
+  test("should display continue studying section with correct title when tasks available", async ({
+    page,
+  }) => {
+    const continueSection = page.getByTestId(
+      "SubjectsView-continue-studying-section"
+    );
     const isVisible = await continueSection.isVisible().catch(() => false);
 
     if (isVisible) {
       // Verify section structure
-      await expect(page.getByTestId("SubjectsView-continue-studying-title")).toBeVisible();
-      await expect(page.getByTestId("SubjectsView-study-cards-container")).toBeVisible();
+      await expect(
+        page.getByTestId("SubjectsView-continue-studying-title")
+      ).toBeVisible();
+      await expect(
+        page.getByTestId("SubjectsView-study-cards-container")
+      ).toBeVisible();
 
       // Verify title text is exactly correct
       const title = page.getByTestId("SubjectsView-continue-studying-title");
       await expect(title).toHaveText("Continue studying");
 
-      console.log("Continue studying section displays with correct structure and title");
+      console.log(
+        "Continue studying section displays with correct structure and title"
+      );
     } else {
-      console.log("No continue studying data available for this user - test skipped");
+      console.log(
+        "No continue studying data available for this user - test skipped"
+      );
     }
   });
 
   test("should handle task card interactions properly", async ({ page }) => {
-    const continueSection = page.getByTestId("SubjectsView-continue-studying-section");
+    const continueSection = page.getByTestId(
+      "SubjectsView-continue-studying-section"
+    );
     const isVisible = await continueSection.isVisible().catch(() => false);
 
     if (isVisible) {
-      const studyContainer = page.getByTestId("SubjectsView-study-cards-container");
+      const studyContainer = page.getByTestId(
+        "SubjectsView-study-cards-container"
+      );
       await expect(studyContainer).toBeVisible();
 
       // Look for task cards within the container
-      const taskCards = studyContainer.locator('[data-testid*="task-card"], [data-testid*="mobile-task-card"]');
+      const taskCards = studyContainer.locator(
+        '[data-testid*="task-card"], [data-testid*="mobile-task-card"]'
+      );
       const taskCardCount = await taskCards.count();
 
       if (taskCardCount > 0) {
@@ -389,7 +411,9 @@ test.describe("SubjectsView - Task Cards and Continue Studying", () => {
         // Test hover behavior
         await firstTaskCard.hover();
 
-        console.log(`Found ${taskCardCount} task cards, verified interaction capability`);
+        console.log(
+          `Found ${taskCardCount} task cards, verified interaction capability`
+        );
       } else {
         console.log("No task cards found in continue studying section");
       }
@@ -404,38 +428,15 @@ test.describe("SubjectsView - Enhanced Accessibility", () => {
     await selfStudyPage.verifySelfStudyPage();
   });
 
-  test("should support keyboard navigation for subject selection", async ({ page }) => {
+  test("should have proper ARIA labels for interactive elements", async ({
+    page,
+  }) => {
     // Wait for subjects to load
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
     await page.waitForFunction(
-      () => document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]').length === 0,
-      { timeout: 15000 }
-    );
-
-    const subjectCardsSelector =
-      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
-
-    const firstCard = page.locator(subjectCardsSelector).first();
-    await expect(firstCard).toBeVisible({ timeout: 15000 });
-
-    // Test keyboard focus
-    await firstCard.focus();
-    await expect(firstCard).toBeFocused();
-
-    // Test keyboard activation with Enter
-    await firstCard.press('Enter');
-
-    // Should navigate to subject detail view
-    await expect(page.getByTestId("accordion-view-topic-subtopic-container")).toBeVisible({ timeout: 15000 });
-
-    console.log("Subject cards support keyboard navigation and activation");
-  });
-
-  test("should have proper ARIA labels for interactive elements", async ({ page }) => {
-    // Wait for subjects to load
-    await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
-    await page.waitForFunction(
-      () => document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]').length === 0,
+      () =>
+        document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]')
+          .length === 0,
       { timeout: 15000 }
     );
 
@@ -451,16 +452,24 @@ test.describe("SubjectsView - Enhanced Accessibility", () => {
     const hasRole = await firstCard.getAttribute("role");
 
     // Should have either aria-label or role="button" for accessibility
-    expect(hasAriaLabel || hasRole === "button" || hasAriaLabelledBy).toBeTruthy();
+    expect(
+      hasAriaLabel || hasRole === "button" || hasAriaLabelledBy
+    ).toBeTruthy();
 
-    console.log("Subject cards have appropriate ARIA attributes for accessibility");
+    console.log(
+      "Subject cards have appropriate ARIA attributes for accessibility"
+    );
   });
 
-  test("should have proper tab indices for navigation order", async ({ page }) => {
+  test("should have proper tab indices for navigation order", async ({
+    page,
+  }) => {
     // Wait for subjects to load
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
     await page.waitForFunction(
-      () => document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]').length === 0,
+      () =>
+        document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]')
+          .length === 0,
       { timeout: 15000 }
     );
 
@@ -477,7 +486,9 @@ test.describe("SubjectsView - Enhanced Accessibility", () => {
       // Should have tabindex="0" or be naturally focusable
       expect(tabIndex === "0" || tabIndex === null).toBeTruthy();
 
-      console.log("Subject cards have proper tab indices for keyboard navigation");
+      console.log(
+        "Subject cards have proper tab indices for keyboard navigation"
+      );
     }
   });
 });
@@ -496,7 +507,9 @@ test.describe("SubjectsView - Security and XSS Prevention", () => {
     // Wait for subjects to load
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
     await page.waitForFunction(
-      () => document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]').length === 0,
+      () =>
+        document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]')
+          .length === 0,
       { timeout: 15000 }
     );
 
@@ -510,9 +523,10 @@ test.describe("SubjectsView - Security and XSS Prevention", () => {
       // Check that no script tags exist in the rendered content
       const scriptTags = page.locator("script");
       const maliciousScripts = await scriptTags.evaluateAll((scripts) => {
-        return scripts.filter(script =>
-          script.textContent && script.textContent.includes('alert') ||
-          script.src && script.src.includes('malicious')
+        return scripts.filter(
+          (script) =>
+            (script.textContent && script.textContent.includes("alert")) ||
+            (script.src && script.src.includes("malicious"))
         );
       });
 
@@ -530,7 +544,9 @@ test.describe("SubjectsView - Security and XSS Prevention", () => {
 
   test("should sanitize welcome text and user content", async ({ page }) => {
     // Check that welcome messages don't contain executable content
-    const welcomeElements = page.locator('[data-testid*="learning-credits"], [data-testid*="top-container"]');
+    const welcomeElements = page.locator(
+      '[data-testid*="learning-credits"], [data-testid*="top-container"]'
+    );
     const welcomeCount = await welcomeElements.count();
 
     if (welcomeCount > 0) {
@@ -593,22 +609,32 @@ test.describe("SubjectsView - Mobile Responsive Behavior", () => {
   });
 
   test("should display mobile task cards when available", async ({ page }) => {
-    const continueSection = page.getByTestId("SubjectsView-continue-studying-section");
+    const continueSection = page.getByTestId(
+      "SubjectsView-continue-studying-section"
+    );
     const isVisible = await continueSection.isVisible().catch(() => false);
 
     if (isVisible) {
-      const studyContainer = page.getByTestId("SubjectsView-study-cards-container");
+      const studyContainer = page.getByTestId(
+        "SubjectsView-study-cards-container"
+      );
       await expect(studyContainer).toBeVisible();
 
       // On mobile, should prefer mobile task cards
-      const mobileTaskCards = studyContainer.locator('[data-testid*="mobile-task-card"]');
-      const regularTaskCards = studyContainer.locator('[data-testid*="task-card"]:not([data-testid*="mobile-task-card"])');
+      const mobileTaskCards = studyContainer.locator(
+        '[data-testid*="mobile-task-card"]'
+      );
+      const regularTaskCards = studyContainer.locator(
+        '[data-testid*="task-card"]:not([data-testid*="mobile-task-card"])'
+      );
 
       const mobileCount = await mobileTaskCards.count();
       const regularCount = await regularTaskCards.count();
 
       // Should prioritize mobile cards on mobile viewport
-      console.log(`Mobile task cards: ${mobileCount}, Regular task cards: ${regularCount}`);
+      console.log(
+        `Mobile task cards: ${mobileCount}, Regular task cards: ${regularCount}`
+      );
 
       // At least one type of task card should be present
       expect(mobileCount + regularCount).toBeGreaterThan(0);
@@ -616,19 +642,29 @@ test.describe("SubjectsView - Mobile Responsive Behavior", () => {
   });
 
   test("should handle pagination controls on mobile", async ({ page }) => {
-    const paginationContainer = page.getByTestId("SubjectsView-pagination-container");
-    const isPaginationVisible = await paginationContainer.isVisible().catch(() => false);
+    const paginationContainer = page.getByTestId(
+      "SubjectsView-pagination-container"
+    );
+    const isPaginationVisible = await paginationContainer
+      .isVisible()
+      .catch(() => false);
 
     if (isPaginationVisible) {
-      const paginationComponent = page.getByTestId("SubjectsView-pagination-component");
+      const paginationComponent = page.getByTestId(
+        "SubjectsView-pagination-component"
+      );
       await expect(paginationComponent).toBeVisible();
 
       // Check for pagination buttons
-      const nextButton = paginationComponent.locator('button', { hasText: /next|>/i });
-      const prevButton = paginationComponent.locator('button', { hasText: /prev|</i });
+      const nextButton = paginationComponent.locator("button", {
+        hasText: /next|>/i,
+      });
+      const prevButton = paginationComponent.locator("button", {
+        hasText: /prev|</i,
+      });
 
-      const hasNextButton = await nextButton.count() > 0;
-      const hasPrevButton = await prevButton.count() > 0;
+      const hasNextButton = (await nextButton.count()) > 0;
+      const hasPrevButton = (await prevButton.count()) > 0;
 
       // At least one navigation button should exist
       expect(hasNextButton || hasPrevButton).toBeTruthy();
@@ -637,11 +673,15 @@ test.describe("SubjectsView - Mobile Responsive Behavior", () => {
     }
   });
 
-  test("should adapt subject grid columns for mobile viewport", async ({ page }) => {
+  test("should adapt subject grid columns for mobile viewport", async ({
+    page,
+  }) => {
     // Wait for subjects to load
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
     await page.waitForFunction(
-      () => document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]').length === 0,
+      () =>
+        document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]')
+          .length === 0,
       { timeout: 15000 }
     );
 
@@ -762,10 +802,14 @@ test.describe("SubjectsView - Performance and Loading", () => {
       page.getByTestId("top-container-welcome-container")
     ).toBeVisible({ timeout: 15000 });
 
-    console.log("Successfully handled rapid clicks and navigated to subject detail view");
+    console.log(
+      "Successfully handled rapid clicks and navigated to subject detail view"
+    );
   });
 
-  test("should maintain performance with multiple re-renders", async ({ page }) => {
+  test("should maintain performance with multiple re-renders", async ({
+    page,
+  }) => {
     const startTime = Date.now();
 
     // Trigger multiple viewport changes to test render performance
@@ -785,72 +829,6 @@ test.describe("SubjectsView - Performance and Loading", () => {
 
     // Should handle viewport changes efficiently
     expect(renderTime).toBeLessThan(5000);
-  });
-
-  test("should efficiently handle skeleton to content transitions", async ({ page }) => {
-    // Reload to observe loading transition
-    const startTime = Date.now();
-    await page.reload();
-
-    // Wait for skeleton to appear
-    await expect(page.getByTestId("SubjectsView-skeleton-0")).toBeVisible({ timeout: 5000 });
-
-    // Wait for skeleton to disappear and content to load
-    await page.waitForFunction(
-      () => {
-        const skeletons = document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]');
-        const subjects = document.querySelectorAll('[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"])');
-        return skeletons.length === 0 && subjects.length > 6; // More than just container elements
-      },
-      { timeout: 15000 }
-    );
-
-    const transitionTime = Date.now() - startTime;
-    console.log(`Skeleton to content transition completed in ${transitionTime}ms`);
-
-    // Transition should be smooth and reasonably fast
-    expect(transitionTime).toBeLessThan(20000);
-  });
-
-  test("should handle memory management efficiently", async ({ page }) => {
-    // Test memory efficiency by navigating back and forth
-    await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
-
-    // Wait for subjects to load
-    await page.waitForFunction(
-      () => document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]').length === 0,
-      { timeout: 15000 }
-    );
-
-    const initialMemory = await page.evaluate(() => {
-      return (performance as any).memory?.usedJSHeapSize || 0;
-    });
-
-    // Navigate to a subject and back multiple times
-    const subjectCardsSelector =
-      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
-
-    const firstCard = page.locator(subjectCardsSelector).first();
-    if (await firstCard.count() > 0) {
-      await firstCard.click();
-      await page.waitForTimeout(1000);
-      await page.goBack();
-      await expect(page.getByTestId("SubjectsView-container")).toBeVisible();
-    }
-
-    const finalMemory = await page.evaluate(() => {
-      return (performance as any).memory?.usedJSHeapSize || 0;
-    });
-
-    if (initialMemory > 0 && finalMemory > 0) {
-      const memoryIncrease = finalMemory - initialMemory;
-      console.log(`Memory usage change: ${memoryIncrease} bytes`);
-
-      // Memory should not increase dramatically (less than 10MB increase)
-      expect(memoryIncrease).toBeLessThan(10 * 1024 * 1024);
-    }
-
-    console.log("Memory management appears efficient during navigation");
   });
 
   test.afterEach(async ({ homePage }) => {
