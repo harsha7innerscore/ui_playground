@@ -1,16 +1,28 @@
-import { Page, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Page, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
 /**
  * HomePage - Page object for home page functionality
  * Handles navigation to self-study feature from home page
  */
 export class HomePage extends BasePage {
-  // Element selectors using data-testid attributes as specified
-  private readonly selfStudyNavItem = this.getByTestId('nav-item-Self Study');
+  // Navigation selectors - dynamically determined based on viewport
 
   constructor(page: Page) {
     super(page);
+  }
+
+  /**
+   * Get the appropriate Self Study navigation selector based on viewport
+   * @returns The correct data-testid selector for mobile or desktop
+   */
+  private getSelfStudyNavSelector(): string {
+    const viewport = this.page.viewportSize();
+    const isMobile = viewport && viewport.width <= 1024;
+
+    return isMobile
+      ? '[data-testid="mobile-nav-item-Self Study"]'
+      : '[data-testid="nav-item-Self Study"]';
   }
 
   /**
@@ -18,13 +30,13 @@ export class HomePage extends BasePage {
    * Includes waiting period as specified in requirements: "wait for sometime before doing this"
    */
   async verifyHomePage(): Promise<void> {
-    console.log('Waiting before verifying home page URL...');
+    console.log("Waiting before verifying home page URL...");
 
     // Wait for some time as specified in requirements
     await this.wait(2000);
 
     // Wait for the expected home page URL
-    const expectedHomeUrl = '/school/aitutor/home';
+    const expectedHomeUrl = "/school/aitutor/home";
     await this.waitForUrl(expectedHomeUrl, 10000);
 
     // Verify current URL contains the expected home page path
@@ -36,17 +48,29 @@ export class HomePage extends BasePage {
   /**
    * Click on Self Study navigation item
    * This should navigate to /school/aitutor/syllabus route
+   * Handles both desktop and mobile navigation with appropriate data-testid
    */
   async clickSelfStudyNav(): Promise<void> {
-    console.log('Clicking Self Study navigation item...');
+    console.log("Clicking Self Study navigation item...");
+
+    // Get the appropriate selector based on viewport
+    const selector = this.getSelfStudyNavSelector();
+    const viewport = this.page.viewportSize();
+    const isMobile = viewport && viewport.width <= 1024;
+
+    console.log(
+      `Using ${
+        isMobile ? "mobile" : "desktop"
+      } navigation selector: ${selector}`
+    );
 
     // Wait for the navigation item to be visible
-    await this.waitForElementVisible('[data-testid="nav-item-Self Study"]');
+    await this.waitForElementVisible(selector);
 
-    // Click the Self Study navigation item
-    await this.selfStudyNavItem.click();
+    // Click the Self Study navigation item using the appropriate selector
+    await this.page.locator(selector).click();
 
-    console.log('Self Study navigation item clicked');
+    console.log("Self Study navigation item clicked");
   }
 
   /**
@@ -54,13 +78,13 @@ export class HomePage extends BasePage {
    * Expected navigation to: http://localhost:3000/school/aitutor/syllabus
    */
   async waitForSelfStudyNavigation(): Promise<void> {
-    console.log('Waiting for navigation to self-study page...');
+    console.log("Waiting for navigation to self-study page...");
 
     // Wait for navigation to complete
     await this.waitForNavigation();
 
     // Wait for the expected self-study URL
-    const expectedSelfStudyUrl = '/school/aitutor/syllabus';
+    const expectedSelfStudyUrl = "/school/aitutor/syllabus";
     await this.waitForUrl(expectedSelfStudyUrl, 15000);
 
     // Verify we've navigated to the correct URL
@@ -74,7 +98,7 @@ export class HomePage extends BasePage {
    * This orchestrates the full home page flow as specified in requirements
    */
   async navigateToSelfStudy(): Promise<void> {
-    console.log('Starting navigation to Self Study from Home page...');
+    console.log("Starting navigation to Self Study from Home page...");
 
     // Step 1: Verify we're on home page (with wait time as specified)
     await this.verifyHomePage();
@@ -85,17 +109,27 @@ export class HomePage extends BasePage {
     // Step 3: Wait for and verify navigation to self-study page
     await this.waitForSelfStudyNavigation();
 
-    console.log('Navigation to Self Study completed successfully');
+    console.log("Navigation to Self Study completed successfully");
   }
 
   /**
    * Verify home page elements are loaded and visible
    * Useful for ensuring page is fully loaded before interaction
+   * Handles both mobile and desktop navigation elements
    */
   async verifyHomePageElements(): Promise<void> {
+    // Get the appropriate selector based on viewport
+    const selector = this.getSelfStudyNavSelector();
+    const viewport = this.page.viewportSize();
+    const isMobile = viewport && viewport.width <= 1024;
+
     // Verify Self Study navigation item is present
-    await expect(this.selfStudyNavItem).toBeVisible();
-    console.log('Home page navigation elements verified');
+    await expect(this.page.locator(selector)).toBeVisible();
+    console.log(
+      `Home page navigation elements verified (${
+        isMobile ? "mobile" : "desktop"
+      } mode)`
+    );
   }
 
   /**
@@ -104,7 +138,7 @@ export class HomePage extends BasePage {
    */
   async isOnHomePage(): Promise<boolean> {
     const currentUrl = this.getCurrentUrl();
-    return currentUrl.includes('/school/aitutor/home');
+    return currentUrl.includes("/school/aitutor/home");
   }
 
   /**
@@ -113,7 +147,9 @@ export class HomePage extends BasePage {
    */
   async getNavigationItems(): Promise<string[]> {
     // Look for elements with nav-item pattern in their test-id
-    const navItems = await this.page.locator('[data-testid^="nav-item-"]').all();
+    const navItems = await this.page
+      .locator('[data-testid^="nav-item-"]')
+      .all();
     const navTexts: string[] = [];
 
     for (const item of navItems) {
@@ -121,7 +157,7 @@ export class HomePage extends BasePage {
       if (text) navTexts.push(text.trim());
     }
 
-    console.log(`Found navigation items: ${navTexts.join(', ')}`);
+    console.log(`Found navigation items: ${navTexts.join(", ")}`);
     return navTexts;
   }
 
@@ -138,6 +174,6 @@ export class HomePage extends BasePage {
     // Verify key elements are present
     await this.verifyHomePageElements();
 
-    console.log('Home page fully loaded and verified');
+    console.log("Home page fully loaded and verified");
   }
 }

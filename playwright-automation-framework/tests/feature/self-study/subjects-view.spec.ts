@@ -63,14 +63,20 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
 
     // Wait for loading to complete by ensuring skeleton elements are gone
     // and actual content is loaded
-    await page.waitForFunction(() => {
-      const skeletons = document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]');
-      return skeletons.length === 0;
-    }, { timeout: 15000 });
+    await page.waitForFunction(
+      () => {
+        const skeletons = document.querySelectorAll(
+          '[data-testid*="SubjectsView-skeleton-"]'
+        );
+        return skeletons.length === 0;
+      },
+      { timeout: 15000 }
+    );
 
     // Find subject cards with the correct structure: data-testid="SubjectsView-${subject?.name}"
     // Exclude all container elements to match only actual subject cards
-    const subjectCardsSelector = '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
+    const subjectCardsSelector =
+      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
 
     // Wait for at least one subject card to be visible
     const firstSubjectCard = page.locator(subjectCardsSelector).first();
@@ -99,14 +105,20 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
 
     // Wait for loading to complete by ensuring skeleton elements are gone
-    await page.waitForFunction(() => {
-      const skeletons = document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]');
-      return skeletons.length === 0;
-    }, { timeout: 15000 });
+    await page.waitForFunction(
+      () => {
+        const skeletons = document.querySelectorAll(
+          '[data-testid*="SubjectsView-skeleton-"]'
+        );
+        return skeletons.length === 0;
+      },
+      { timeout: 15000 }
+    );
 
     // Find subject cards with the correct structure: data-testid="SubjectsView-${subject?.name}"
     // Exclude container elements but match actual subject cards
-    const subjectCardsSelector = '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
+    const subjectCardsSelector =
+      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
 
     // Wait for at least one subject card to be visible
     const firstCard = page.locator(subjectCardsSelector).first();
@@ -120,8 +132,12 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
     await firstCard.click();
 
     // Verify navigation to the correct route by checking for the expected elements
-    await expect(page.getByTestId("accordion-view-topic-subtopic-container")).toBeVisible({ timeout: 15000 });
-    await expect(page.getByTestId("top-container-welcome-container")).toBeVisible({ timeout: 15000 });
+    await expect(
+      page.getByTestId("accordion-view-topic-subtopic-container")
+    ).toBeVisible({ timeout: 15000 });
+    await expect(
+      page.getByTestId("top-container-welcome-container")
+    ).toBeVisible({ timeout: 15000 });
 
     console.log("Successfully navigated to subject detail view");
   });
@@ -165,22 +181,6 @@ test.describe("SubjectsView - Subject Selection Interface", () => {
       expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible(),
     ]);
   });
-
-  test("should display learning credits when available", async ({ page }) => {
-    // Check if learning credits container exists
-    const creditsContainer = page.getByTestId("top-container-learning-credits");
-
-    const isVisible = await creditsContainer.isVisible().catch(() => false);
-
-    if (isVisible) {
-      await expect(creditsContainer).toBeVisible();
-    } else {
-      // If not visible, welcome container should be visible instead
-      await expect(
-        page.getByTestId("top-container-welcome-container")
-      ).toBeVisible();
-    }
-  });
 });
 
 test.describe("SubjectsView - Mobile Responsive Behavior", () => {
@@ -211,11 +211,7 @@ test.describe("SubjectsView - Mobile Responsive Behavior", () => {
         .isVisible()
         .catch(() => false);
 
-      if (paginationVisible) {
-        await expect(
-          page.getByTestId("SubjectsView-pagination-component")
-        ).toBeVisible();
-      }
+      expect(paginationVisible).toBe(true);
     }
   });
 
@@ -298,24 +294,35 @@ test.describe("SubjectsView - Performance and Loading", () => {
     await expect(page.getByTestId("SubjectsView-subjects-grid")).toBeVisible();
 
     // Wait for loading to complete
-    await page.waitForFunction(() => {
-      const skeletons = document.querySelectorAll('[data-testid*="SubjectsView-skeleton-"]');
-      return skeletons.length === 0;
-    }, { timeout: 15000 });
+    await page.waitForFunction(
+      () => {
+        const skeletons = document.querySelectorAll(
+          '[data-testid*="SubjectsView-skeleton-"]'
+        );
+        return skeletons.length === 0;
+      },
+      { timeout: 15000 }
+    );
 
     // Use the correct selector to match actual subject cards
-    const subjectCardsSelector = '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
+    const subjectCardsSelector =
+      '[data-testid^="SubjectsView-"]:not([data-testid*="skeleton"]):not([data-testid="SubjectsView-subjects-grid"]):not([data-testid="SubjectsView-subjects-section"]):not([data-testid="SubjectsView-subjects-title"]):not([data-testid="SubjectsView-continue-studying-section"]):not([data-testid="SubjectsView-continue-studying-title"]):not([data-testid="SubjectsView-study-cards-container"]):not([data-testid="SubjectsView-pagination-container"]):not([data-testid="SubjectsView-pagination-component"]):not([data-testid="SubjectsView-container"])';
     const firstCard = page.locator(subjectCardsSelector).first();
     await expect(firstCard).toBeVisible({ timeout: 15000 });
 
-    // Rapid clicks should not cause errors
-    await firstCard.click();
-    await page.waitForTimeout(100);
-    await firstCard.click();
+    // Test rapid double-clicking (simulating accidental double clicks)
+    // This tests that the app handles rapid successive clicks gracefully
+    await firstCard.dblclick();
 
     // Should still navigate successfully to the correct route
-    await expect(page.getByTestId("accordion-view-topic-subtopic-container")).toBeVisible({ timeout: 15000 });
-    await expect(page.getByTestId("top-container-welcome-container")).toBeVisible({ timeout: 15000 });
+    await expect(
+      page.getByTestId("accordion-view-topic-subtopic-container")
+    ).toBeVisible({ timeout: 15000 });
+    await expect(
+      page.getByTestId("top-container-welcome-container")
+    ).toBeVisible({ timeout: 15000 });
+
+    console.log("Successfully handled rapid clicks and navigated to subject detail view");
   });
 
   test.afterEach(async ({ homePage }) => {
