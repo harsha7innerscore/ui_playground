@@ -1,0 +1,755 @@
+element_name: subjects_view_main_container
+    description: The main wrapper container for the entire SubjectsView component
+    locator_type: data-testid
+    locator_tag_type: section
+    locator: 'SubjectsView-container'
+    assertions:
+      - visible: "Should be visible when SubjectsView component is rendered"
+      - accessible: "Should have role='region' and aria-labelledby attributes"
+
+element_name: subjects_view_continue_studying_section
+    description: The main section container for continue studying functionality and subjects selection
+    locator_type: data-testid
+    locator_tag_type: section
+    locator: 'SubjectsView-continue-studying-section'
+    assertions:
+      - visible: "Should be visible when SubjectsView component is rendered"
+      - contains_children: "Should contain subjects section and study cards"
+
+element_name: subjects_view_subjects_section
+    description: The dedicated section container for subjects grid and title
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'SubjectsView-subjects-section'
+    assertions:
+      - visible: "Should be visible when SubjectsView component is rendered"
+      - contains_children: "Should contain subjects title and subjects grid"
+      - layout: "Should apply subjectsSection styling"
+
+element_name: subjects_view_subjects_title
+    description: The heading text element displaying 'Subjects' title
+    locator_type: data-testid
+    locator_tag_type: h2
+    locator: 'SubjectsView-subjects-title'
+    assertions:
+      - visible: "Should be visible when SubjectsView component is rendered"
+      - text_content: "Should display 'Subjects' text"
+
+element_name: subjects_view_subjects_grid
+    description: The grid container that holds all subject cards or skeleton loaders
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'SubjectsView-subjects-grid'
+    assertions:
+      - visible: "Should be visible when SubjectsView component is rendered"
+      - contains_children: "Should contain subject cards or skeleton loaders"
+
+element_name: subjects_view_skeleton_loader
+    description: Skeleton loading placeholder for subject cards (dynamic with index)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'SubjectsView-skeleton-${index}'
+    assertions:
+      - visible: "Should be visible only when isSubjectLoading is true"
+      - count: "Should render 6 skeleton items when loading"
+
+element_name: subjects_view_subject_card
+    description: Individual subject card element (dynamic with subject name)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'SubjectsView-${subject.name}'
+    assertions:
+      - visible: "Should be visible when subjects data is loaded and not loading"
+      - clickable: "Should be clickable with cursor pointer and proper role/tabIndex"
+      - accessible: "Should have role='button' and aria-label attributes"
+      - interactive: "Should show hover effects and selection states"
+
+element_name: subjects_view_continue_studying_title
+    description: The heading text element displaying 'Continue studying' title
+    locator_type: data-testid
+    locator_tag_type: h2
+    locator: 'SubjectsView-continue-studying-title'
+    assertions:
+      - visible: "Should be visible only when task data is available and not loading"
+      - text_content: "Should display 'Continue studying' text"
+      - conditional: "Should appear only when !isTaskLoading && isNotEmptyOrNull(taskData)"
+
+element_name: subjects_view_study_cards_container
+    description: The container that holds task cards for continue studying section
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'SubjectsView-study-cards-container'
+    assertions:
+      - visible: "Should be visible only when task data is available and not loading"
+      - contains_children: "Should contain TaskCard or MobileTaskCard components"
+      - responsive: "Should render different card types based on isMobile prop"
+      - conditional: "Should appear only when !isTaskLoading && isNotEmptyOrNull(taskData)"
+
+element_name: subjects_view_pagination_container
+    description: The container for pagination component in mobile view
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'SubjectsView-pagination-container'
+    assertions:
+      - visible: "Should be visible only on mobile when task data is available"
+      - responsive: "Should only display on medium screens and below"
+      - conditional: "Should appear only when !isTaskLoading && isNotEmptyOrNull(taskData)"
+      - positioning: "Should be aligned to flex-end with bottom margin"
+
+element_name: subjects_view_pagination_component
+    description: The pagination component for navigating through task cards on mobile
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'SubjectsView-pagination-component'
+    assertions:
+      - visible: "Should be visible within pagination container"
+      - interactive: "Should handle next/previous navigation for task cards"
+      - conditional: "Should be configured with isAccordion=true prop"
+      - functional: "Should control pagination between task cards based on currentPage and totalPages"
+
+element_name: top_container_greeting_title
+    description: The greeting title element showing user's first name in TopContainer
+    locator_type: data-testid
+    locator_tag_type: h1
+    locator: 'SubjectsView-greeting'
+    assertions:
+      - visible: "Should be visible when !hideTitle && !noBalance conditions are met"
+      - text_content: "Should display 'Hello {firstName},' format"
+      - conditional: "Should only appear when not hiding title and no balance issues"
+
+element_name: top_container_welcome_text
+    description: The welcome text element displaying guidance message in TopContainer
+    locator_type: data-testid
+    locator_tag_type: p
+    locator: 'top-container-welcomeText'
+    assertions:
+      - visible: "Should be visible when TopContainer is rendered"
+      - text_content: "Should display the welcomeText prop content"
+      - conditional: "Should appear when not showing LearningCreditsContainer"
+      - styling: "Should apply special styling when noBalance is true"
+
+element_name: top_container_assistant_image
+    description: The main container for the assistant avatar image in TopContainer
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'top-container-assistant-image'
+    assertions:
+      - visible: "Should be visible when TopContainer is rendered"
+      - styling: "Should apply assistantImage styles from props"
+
+element_name: top_container_avatar
+    description: The avatar image element displaying the assistant/tutor image
+    locator_type: data-testid
+    locator_tag_type: img
+    locator: 'top-container-avatar'
+    assertions:
+      - visible: "Should be visible when TopContainer is rendered"
+      - image_attributes: "Should have proper src, alt, width, and height attributes"
+      - accessibility: "Should have meaningful alt text for screen readers"
+
+element_name: top_container_learning_credits
+    description: The LearningCreditsContainer component within TopContainer
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'top-container-learning-credits'
+    assertions:
+      - visible: "Should be visible only when showLearningCreditContainer is true"
+      - conditional: "Should appear instead of welcome container when enabled"
+      - contains_children: "Should contain LearningCreditsContainer component"
+
+element_name: top_container_welcome_container
+    description: The main container for welcome text and greeting in TopContainer
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'top-container-welcome-container'
+    assertions:
+      - visible: "Should be visible when not showing LearningCreditsContainer"
+      - conditional: "Should appear when showLearningCreditContainer is false"
+      - styling: "Should apply special background styling when noBalance is true"
+      - contains_children: "Should contain title and welcome text elements"
+
+element_name: top_container_title
+    description: The main title element in TopContainer (dynamic elementId or default)
+    locator_type: data-testid
+    locator_tag_type: h1
+    locator: 'top-container-title'
+    assertions:
+      - visible: "Should be visible when hideTitle is false"
+      - conditional: "Should not appear when hideTitle prop is true"
+      - text_content: "Should display titleText or default greeting format"
+      - dynamic: "Uses elementId prop if provided, otherwise defaults to 'top-container-title'"
+      - styling: "Should apply different styles based on whether titleText is provided"
+
+element_name: accordion_view_main_container
+    description: The main wrapper container for the entire AccordionView component
+    locator_type: data-testid
+    locator_tag_type: section
+    locator: 'accordion-view-container'
+    assertions:
+      - visible: "Should be visible when AccordionView component is rendered"
+      - accessible: "Should have role='region' and aria-labelledby attributes"
+      - conditional: "Should not appear when isMobile && isTopicExplicitlySelected"
+
+element_name: accordion_view_greeting_title
+    description: The greeting title element in AccordionView TopContainer
+    locator_type: data-testid
+    locator_tag_type: h1
+    locator: 'accordion-view-greeting'
+    assertions:
+      - visible: "Should be visible when AccordionView TopContainer is rendered"
+      - text_content: "Should display user's first name"
+      - conditional: "Should appear when hideTitle is false and noBalance is false"
+
+element_name: accordion_view_topic_container
+    description: The container that holds all topic/chapter items
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-topic-container'
+    assertions:
+      - visible: "Should be visible when TopicList component is rendered"
+      - contains_children: "Should contain topic/chapter items"
+
+element_name: accordion_view_breadcrumb_navigation
+    description: The breadcrumb navigation for mobile view
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-breadcrumb-navigation'
+    assertions:
+      - visible: "Should be visible only on mobile when currentSubjectName exists"
+      - clickable: "Should be clickable to trigger onBreadCrumbClick"
+      - conditional: "Should appear only when isMobile && currentSubjectName && !isSideNav"
+
+element_name: accordion_view_subject_tabs_container
+    description: The container for subject selection tabs
+    locator_type: data-testid
+    locator_tag_type: section
+    locator: 'accordion-view-subject-tabs-container'
+    assertions:
+      - visible: "Should be visible when subject tabs are shown"
+      - accessible: "Should have role='tablist' and aria-label attributes"
+      - conditional: "Should not appear when isMobile && isTopicExplicitlySelected"
+
+element_name: accordion_view_subject_tab_dynamic
+    description: Individual subject tab element (dynamic with subject name)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-tab-${subjectName}'
+    assertions:
+      - visible: "Should be visible when subject tabs are rendered"
+      - clickable: "Should be clickable to select the subject"
+      - styling: "Should show selected state when subject is active"
+      - dynamic: "Subject name is used in the testid"
+
+element_name: accordion_view_topic_subtopic_container
+    description: Main container for the topic and subtopic content area
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-topic-subtopic-container'
+    assertions:
+      - visible: "Should be visible when AccordionView component is rendered"
+      - layout: "Should contain subject tabs and topic/subtopic panels"
+      - responsive: "Should adapt layout based on mobile and topic selection states"
+
+element_name: accordion_view_main_content_container
+    description: Container for the main content area with topics and subtopics panels
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-main-content-container'
+    assertions:
+      - visible: "Should be visible when topic/subtopic content is rendered"
+      - layout: "Should contain both topics list panel and subtopics panel"
+      - responsive: "Should have different height based on isSideNav prop"
+
+element_name: accordion_view_topics_list_panel
+    description: Left panel containing the list of topics/chapters
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-topics-list-panel'
+    assertions:
+      - visible: "Should be visible when not in mobile topic-selected state"
+      - conditional: "Should be hidden when isMobile && isTopicExplicitlySelected"
+      - responsive: "Should take 25% width on desktop, 100% on mobile"
+      - contains_children: "Should contain TopicList component"
+
+element_name: accordion_view_subtopics_panel
+    description: Right panel containing the subtopics and task details
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-subtopics-panel'
+    assertions:
+      - visible: "Should be visible when topic is selected or on desktop"
+      - conditional: "Should be visible when isTopicExplicitlySelected on mobile"
+      - responsive: "Should take 75% width on desktop, 100% when topic selected on mobile"
+      - contains_children: "Should contain SubtopicList component"
+
+element_name: accordion_view_topic_item_container
+    description: Individual topic/chapter container (dynamic with topic title)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-${topicTitle}-container'
+    assertions:
+      - visible: "Should be visible when topic data is available"
+      - clickable: "Should be clickable to select the topic"
+      - styling: "Should show selected state when topic is selected"
+
+element_name: accordion_view_topic_item_title
+    description: Individual topic/chapter title (dynamic with topic title)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-${topicTitle}'
+    assertions:
+      - visible: "Should be visible when topic data is available"
+      - text_content: "Should display the topic title"
+      - conditional: "Should appear in both selected and regular states"
+
+element_name: accordion_view_topic_progress_container
+    description: Progress container for selected topic (dynamic with topic title)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-${topicTitle}-progress-container'
+    assertions:
+      - visible: "Should be visible only when topic is selected and not mobile"
+      - contains_children: "Should contain progress bar and count"
+      - conditional: "Should only appear for highlighted/selected chapters"
+
+element_name: accordion_view_topic_progress_count
+    description: Progress count text for topic (dynamic with topic title)
+    locator_type: data-testid
+    locator_tag_type: p
+    locator: 'accordion-view-${topicTitle}-progress-count'
+    assertions:
+      - visible: "Should be visible when topic progress data is loaded"
+      - text_content: "Should display format 'attemptedSubtopics/totalSubtopics'"
+      - conditional: "Should appear when not in loading state"
+
+element_name: accordion_view_chapter_detail_header
+    description: Chapter detail header for mobile view (dynamic with chapter name)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-${selectedChapterName}'
+    assertions:
+      - visible: "Should be visible in SubtopicList when not isSideNav"
+      - text_content: "Should display the selected chapter name"
+      - conditional: "Should only appear when !isSideNav"
+
+element_name: accordion_view_chapter_progress_count_mobile
+    description: Chapter progress count for mobile view (dynamic with chapter name)
+    locator_type: data-testid
+    locator_tag_type: p
+    locator: 'accordion-view-${selectedChapterName}-progress-count'
+    assertions:
+      - visible: "Should be visible in mobile chapter detail header"
+      - text_content: "Should display format 'attemptedSubtopics/totalSubtopics'"
+      - conditional: "Should only appear when !isSideNav"
+
+element_name: accordion_view_revision_container
+    description: The main container for revision section
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-revision-container'
+    assertions:
+      - visible: "Should be visible when revision is enabled for the topic"
+      - conditional: "Should only display when isRevisionEnabled && !isSideNav"
+
+element_name: accordion_view_revision_title
+    description: The revision section title
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-revision'
+    assertions:
+      - visible: "Should be visible when revision container is shown"
+      - text_content: "Should display 'Revision'"
+
+element_name: accordion_view_recap_button
+    description: The recap map button in revision section
+    locator_type: data-testid
+    locator_tag_type: button
+    locator: 'accordion-view-recap-button'
+    assertions:
+      - visible: "Should be visible in revision section"
+      - clickable: "Should trigger handleRecapMapClick when clicked"
+      - text_content: "Should display 'Recap Map'"
+
+element_name: accordion_view_revision_description
+    description: The revision section description text
+    locator_type: data-testid
+    locator_tag_type: p
+    locator: 'accordion-view-revision-text'
+    assertions:
+      - visible: "Should be visible in revision section"
+      - text_content: "Should display different text based on revision task data length"
+      - conditional: "Text changes based on whether user has started revision"
+
+element_name: accordion_view_revision_data_container
+    description: The container for revision task data
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-revision-data'
+    assertions:
+      - visible: "Should be visible when revision task data length > 0"
+      - contains_children: "Should contain ListAccordionView and session data"
+      - conditional: "Should only appear when revisionTaskData?.length > 0"
+
+element_name: accordion_view_revision_task_details_container
+    description: The container for revision session details
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-revision-task-details-container'
+    assertions:
+      - visible: "Should be visible when revision task data is available"
+      - contains_children: "Should contain session date and status information"
+
+element_name: accordion_view_revision_task_details_item
+    description: Individual revision task details item (dynamic with index)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-revision-task-details-${index}'
+    assertions:
+      - visible: "Should be visible for each revision task"
+      - clickable: "Should trigger handleRevisionTaskClick when clicked"
+      - text_content: "Should display session date and status"
+
+element_name: accordion_view_revision_view_more_container
+    description: The container for view more/less button in revision
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-revision-view-more-container'
+    assertions:
+      - visible: "Should be visible when revisionTaskData.length > 1"
+      - clickable: "Should toggle between view more and view less"
+      - conditional: "Should only appear when there are more than 1 revision tasks"
+
+element_name: accordion_view_revision_button
+    description: The main revision action button
+    locator_type: data-testid
+    locator_tag_type: button
+    locator: 'accordion-view-revision-button'
+    assertions:
+      - visible: "Should be visible in revision section"
+      - clickable: "Should trigger handleRevisionTaskClick when clicked"
+      - text_content: "Should display 'Take revision' or 'Continue Revision' based on data"
+
+element_name: accordion_view_subtopic_list_container
+    description: The main container for all subtopic items
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-subtopic-list-container'
+    assertions:
+      - visible: "Should be visible when SubtopicList is rendered"
+      - contains_children: "Should contain subtopic accordion items"
+
+element_name: accordion_view_subtopic_container
+    description: Individual subtopic container (dynamic with subtopic name)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-subtopic-${subtopicName}-container'
+    assertions:
+      - visible: "Should be visible for each subtopic"
+      - styling: "Should show different background colors based on expansion and lock state"
+      - conditional: "Should have reduced opacity when locked"
+
+element_name: accordion_view_subtopic_details_container
+    description: Individual subtopic details header (dynamic with subtopic name)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-subtopic-${subtopicName}-details-container'
+    assertions:
+      - visible: "Should be visible for each subtopic"
+      - clickable: "Should be clickable when not locked"
+      - interactive: "Should trigger handleSubtopicSelect when clicked"
+
+element_name: accordion_task_view_main_container
+    description: The main container for task activities in accordion view
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-task-container'
+    assertions:
+      - visible: "Should be visible when subtopicTaskData length > 0 and not loading"
+      - conditional: "Should not appear when taskProgressListLoading is true"
+      - styling: "Should have different background colors based on isSideNav prop"
+
+element_name: accordion_task_view_individual_task_container
+    description: Individual task container within the task list (dynamic with task index)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-task-${taskIndex}-container'
+    assertions:
+      - visible: "Should be visible for each task in subtopicTaskData"
+      - clickable: "Should be clickable to trigger task action or show tooltip"
+      - interactive: "Should handle click based on isRestricted state"
+      - conditional: "Should show tooltip when restricted due to no balance"
+
+element_name: accordion_task_view_task_date_info
+    description: Task date information display (dynamic with task index)
+    locator_type: data-testid
+    locator_tag_type: p
+    locator: 'accordion-view-task-${taskIndex}-date-info'
+    assertions:
+      - visible: "Should be visible for each task"
+      - text_content: "Should display formatted date based on task status and dates"
+      - dynamic: "Content varies based on dueDate, endedAt, updatedAt, and taskStatus"
+
+element_name: accordion_task_view_task_info_container
+    description: Task info container with icon and type (dynamic with task index)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-task-${taskIndex}-info'
+    assertions:
+      - visible: "Should be visible for each task"
+      - contains_children: "Should contain task icon and task type text"
+      - styling: "Should display task type icon and formatted task type"
+
+element_name: accordion_task_view_self_text
+    description: Self-created task indicator text (dynamic with task index)
+    locator_type: data-testid
+    locator_tag_type: p
+    locator: 'accordion-view-task-${taskIndex}-self-text'
+    assertions:
+      - visible: "Should be visible when task createdBy is 'student' and no levelUpReference"
+      - conditional: "Should only appear for student-created tasks without level up reference"
+      - text_content: "Should display 'Self'"
+
+element_name: accordion_task_view_performance_badge
+    description: Performance badge for completed tasks (dynamic with task index)
+    locator_type: data-testid
+    locator_tag_type: img
+    locator: 'accordion-view-task-${taskIndex}-performance'
+    assertions:
+      - visible: "Should be visible when task analytics percentage exists"
+      - conditional: "Should only appear when taskData.analytics.percentage is available"
+      - image: "Should display appropriate performance badge based on percentage"
+
+element_name: accordion_task_view_task_status_container
+    description: Task status and action container (dynamic with task index)
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-task-${taskIndex}-task-status'
+    assertions:
+      - visible: "Should be visible when not in side navigation mode"
+      - conditional: "Should only appear when !isSideNav"
+      - contains_children: "Should contain status text and action icon"
+      - styling: "Should show different colors based on task status"
+
+element_name: accordion_task_view_more_container
+    description: Container for view more/less functionality
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-task-view-more-container'
+    assertions:
+      - visible: "Should be visible when there are more tasks to show or currently showing all"
+      - conditional: "Should appear based on task count and display limit conditions"
+      - interactive: "Should contain clickable view more/less button"
+
+element_name: accordion_task_view_more_button
+    description: View more/less toggle button
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-task-view-more-button'
+    assertions:
+      - visible: "Should be visible in view more container"
+      - clickable: "Should toggle between view more and view less states"
+      - text_content: "Should display 'View more' or 'View less' based on showingAllTasks state"
+      - interactive: "Should trigger fetchTaskProgressList when expanding and update display limits"
+
+element_name: accordion_task_view_empty_text
+    description: Empty state text when no tasks are available
+    locator_type: data-testid
+    locator_tag_type: p
+    locator: 'accordion-view-empty-task-text'
+    assertions:
+      - visible: "Should be visible when subtopicTaskData length is 0 and not loading"
+      - conditional: "Should only appear when no task data is available"
+      - text_content: "Should display different messages based on assessment type"
+      - dynamic: "Content varies for chapter end, prerequisite, custom, or regular assessments"
+
+element_name: accordion_task_view_empty_tasks_container
+    description: Container for empty state when no tasks are available
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-empty-tasks-container'
+    assertions:
+      - visible: "Should be visible when subtopicTaskData length is 0 and not loading"
+      - conditional: "Should only appear when no task data is available"
+      - contains_children: "Should contain the empty task text element"
+      - styling: "Should apply proper spacing and layout for empty state"
+
+element_name: accordion_self_learn_buttons_container
+    description: The main container for self-learning action buttons
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-self-learn-buttons-container'
+    assertions:
+      - visible: "Should be visible when AccordionSelfLearnButtons component is rendered"
+      - conditional: "Should not appear for custom assessments (returns null)"
+      - contains_children: "Should contain enabled self-learning buttons"
+
+element_name: accordion_self_learn_button_dynamic
+    description: Self-learning action buttons (dynamic with task type)
+    locator_type: data-testid
+    locator_tag_type: button
+    locator: 'accordion-view-self-learn-button-${taskType}'
+    assertions:
+      - visible: "Should be visible when corresponding feature is enabled in topic_features"
+      - clickable: "Should trigger onButtonClick with appropriate label and taskType"
+      - conditional: "Should appear based on assessment type (normal/chapter end/prerequisite) and feature enablement"
+      - styling: "Should use different styles based on taskType (assessmentButton/guidedButton/learnButton)"
+      - dynamic: "taskType values: 'assessment', 'guidedPractise', 'learnSubtopic', 'learnPrerequisite'"
+
+element_name: accordion_view_low_balance_tooltip
+    description: Tooltip displayed when user has low balance for Smart Learn features
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-low-balance-tooltip'
+    assertions:
+      - visible: "Should be visible only when lowbalance prop is true"
+      - conditional: "Should only appear when lowbalance condition is met"
+      - tooltip_content: "Should display 'This is a Smart Learn feature' message"
+      - styling: "Should have proper tooltip styling with arrow, background, and text color"
+
+element_name: accordion_view_low_balance_warning_icon
+    description: Warning icon container displayed for low balance Smart Learn features
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'accordion-view-low-balance-warning-icon'
+    assertions:
+      - visible: "Should be visible only when lowbalance prop is true"
+      - conditional: "Should only appear when lowbalance condition is met"
+      - interactive: "Should have cursor pointer for hover interaction"
+      - contains_children: "Should contain RiErrorWarningLine icon component"
+      - styling: "Should display warning icon with proper padding and margin"
+
+element_name: syllabus_main_container
+    description: The main container wrapper for the entire SyllabusComponent
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-main-container'
+    assertions:
+      - visible: "Should be visible when SyllabusComponent is rendered"
+      - styling: "Should apply mainContainer CSS module styles"
+      - layout: "Should contain syllabus wrapper and bottom containers"
+
+element_name: syllabus_wrapper
+    description: The main wrapper container for syllabus content
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-wrapper'
+    assertions:
+      - visible: "Should be visible when SyllabusComponent is rendered"
+      - styling: "Should apply syllabus CSS module styles"
+      - contains_children: "Should contain syllabus sub-component"
+
+element_name: syllabus_sub_component
+    description: The sub-component container for main syllabus views
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-sub-component'
+    assertions:
+      - visible: "Should be visible when SyllabusComponent is rendered"
+      - styling: "Should apply syllabusSubComponent CSS module styles"
+      - contains_children: "Should contain SubjectsView or AccordionViewComponent based on currentView"
+      - conditional: "Content changes based on currentView prop (subjects vs accordion)"
+
+element_name: syllabus_bottom_container_desktop
+    description: The bottom container for desktop view PlainInput component
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-bottom-container-desktop'
+    assertions:
+      - visible: "Should be visible when currentView is not 'subjects'"
+      - conditional: "Should not appear when currentView === 'subjects'"
+      - styling: "Should apply bottomContainer2 CSS module styles"
+      - contains_children: "Should contain bottom editor and bottom box for desktop"
+
+element_name: syllabus_bottom_editor_desktop
+    description: The bottom editor container containing PlainInput for desktop view
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-bottom-editor-desktop'
+    assertions:
+      - visible: "Should be visible in desktop bottom container"
+      - styling: "Should apply bottomEditor2 CSS module styles"
+      - contains_children: "Should contain PlainInput component with accordion props"
+
+element_name: syllabus_bottom_box_desktop
+    description: The bottom box element for desktop view styling
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-bottom-box-desktop'
+    assertions:
+      - visible: "Should be visible in desktop bottom container"
+      - styling: "Should apply bottomBox2 CSS module styles"
+
+element_name: syllabus_bottom_container_mobile
+    description: The bottom container for mobile view navigation
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-bottom-container-mobile'
+    assertions:
+      - visible: "Should be visible only on mobile devices"
+      - conditional: "Should only appear when isMobile is true"
+      - styling: "Should apply bottomContainer CSS styles with conditional background color"
+      - dynamic: "Background color changes based on currentView === 'subjects'"
+
+element_name: syllabus_bottom_editor_mobile
+    description: The bottom editor container for mobile navigation
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-bottom-editor-mobile'
+    assertions:
+      - visible: "Should be visible in mobile bottom container"
+      - styling: "Should apply bottomEditor CSS styles with conditional background color"
+      - contains_children: "Should contain MobileBottomNavMenu component"
+      - dynamic: "Background color changes based on currentView === 'subjects'"
+
+element_name: syllabus_bottom_box_mobile
+    description: The bottom box element for mobile view styling
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-bottom-box-mobile'
+    assertions:
+      - visible: "Should be visible in mobile bottom container"
+      - styling: "Should apply bottomBox CSS styles with conditional background color"
+      - dynamic: "Background color changes based on currentView === 'subjects'"
+
+element_name: syllabus_time_logs_modal
+    description: The TimeLogsModal component for displaying time logs
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-time-logs-modal'
+    assertions:
+      - visible: "Should be visible when showTimeLogs is true"
+      - conditional: "Should only appear when showTimeLogs prop is true"
+      - interactive: "Should be closable via toggleTimeLogsDrawer function"
+
+element_name: syllabus_tooltip_blur_overlay
+    description: The blur overlay background for tooltip states
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-tooltip-blur-overlay'
+    assertions:
+      - visible: "Should be visible when showTooltipBlur is true"
+      - conditional: "Should only appear when showTooltipBlur state is true"
+      - styling: "Should apply fixed positioning with blur backdrop and semi-transparent background"
+      - interactive: "Should be clickable to trigger handleBlurRegionClick"
+      - positioning: "Should cover entire viewport with z-index 999"
+
+element_name: syllabus_request_modal
+    description: The RequestSentModal component for credit requests
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-request-modal'
+    assertions:
+      - visible: "Should be visible when showRequestModal is true"
+      - conditional: "Should only appear when showRequestModal state is true"
+      - responsive: "Should adapt based on isMobile prop"
+      - interactive: "Should be closable via onClose function"
+
+element_name: syllabus_forbidden_layout
+    description: The ForbiddenLayout component for access denied scenarios
+    locator_type: data-testid
+    locator_tag_type: div
+    locator: 'syllabus-forbidden-layout'
+    assertions:
+      - visible: "Should be visible when showForbiddenLayout is true"
+      - conditional: "Should only appear when showForbiddenLayout state is true"
+      - security: "Should display when user access is denied or unauthorized"

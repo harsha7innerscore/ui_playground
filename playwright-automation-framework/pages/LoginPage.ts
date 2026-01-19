@@ -1,227 +1,162 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { Page, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
 /**
- * Page Object for the Login page
- * Encapsulates login functionality and page elements
+ * LoginPage - Page object for login functionality
+ * Handles authentication flow for self-study feature testing
  */
 export class LoginPage extends BasePage {
-  // Locators for page elements
-  private readonly emailInput: Locator;
-  private readonly passwordInput: Locator;
-  private readonly loginButton: Locator;
-  private readonly forgotPasswordLink: Locator;
-  private readonly signUpLink: Locator;
-  private readonly errorMessage: Locator;
-  private readonly loginForm: Locator;
-  private readonly rememberMeCheckbox: Locator;
+  // Element selectors using id attributes (since HTML uses id, not data-testid)
+  private readonly emailInput = this.page.locator('[id="login-user-id-input"]');
+  private readonly passwordInput = this.page.locator('[id="login-password-input"]');
+  private readonly submitButton = this.page.locator('[id="login-submit-button"]');
 
   constructor(page: Page) {
     super(page);
-
-    // Initialize locators using data-testid (preferred) and fallback selectors
-    this.emailInput = page.getByTestId('email-input').or(page.locator('input[type="email"]'));
-    this.passwordInput = page.getByTestId('password-input').or(page.locator('input[type="password"]'));
-    this.loginButton = page.getByTestId('login-button').or(page.getByRole('button', { name: /log.*in/i }));
-    this.forgotPasswordLink = page.getByTestId('forgot-password-link').or(page.getByText(/forgot.*password/i));
-    this.signUpLink = page.getByTestId('signup-link').or(page.getByText(/sign.*up/i));
-    this.errorMessage = page.getByTestId('error-message').or(page.locator('.error, .alert-danger'));
-    this.loginForm = page.getByTestId('login-form').or(page.locator('form'));
-    this.rememberMeCheckbox = page.getByTestId('remember-me').or(page.locator('input[type="checkbox"]'));
   }
 
   /**
-   * Navigate to the login page
+   * Navigate to the login page using BASE_URL from environment
    */
   async navigateToLogin(): Promise<void> {
-    await this.goto('/login');
-    await this.waitForPageLoad();
+    const loginUrl =
+      process.env.BASE_URL ||
+      "http://localhost:3000/school/aitutor/student/aps";
+    await this.navigateTo(loginUrl);
+    await this.verifyLoginPage();
   }
 
   /**
-   * Perform login with email and password
-   * @param email - User email address
+   * Verify we are on the login page by checking URL
+   * This follows the requirement to "check based on the URL"
+   */
+  async verifyLoginPage(): Promise<void> {
+    const currentUrl = this.getCurrentUrl();
+    // Verify URL indicates this is a login page (contains login-related path)
+    const isLoginPage =
+      currentUrl.includes("student/aps") || currentUrl.includes("login");
+    expect(isLoginPage).toBeTruthy();
+    console.log(`Verified login page: ${currentUrl}`);
+  }
+
+  /**
+   * Fill email input field with test user email from environment
+   */
+  async fillEmail(): Promise<void> {
+    const email = process.env.TEST_USER_EMAIL || "Test1177";
+    await this.waitForElementVisible('[id="login-user-id-input"]');
+    await this.emailInput.clear();
+    await this.emailInput.fill(email);
+
+    // Verify email was entered correctly
+    const filledValue = await this.emailInput.inputValue();
+    expect(filledValue).toBe(email);
+    console.log(`Filled email: ${email}`);
+  }
+
+  /**
+   * Fill password input field with test user password from environment
+   */
+  async fillPassword(): Promise<void> {
+    const password = process.env.TEST_USER_PASSWORD || "Test@123";
+    await this.waitForElementVisible('[id="login-password-input"]');
+    await this.passwordInput.clear();
+    await this.passwordInput.fill(password);
+
+    // Verify password was entered (check length for security)
+    const filledValue = await this.passwordInput.inputValue();
+    expect(filledValue.length).toBe(password.length);
+    console.log("Password filled successfully");
+  }
+
+  /**
+   * Click the submit/login button
+   */
+  async clickSubmitButton(): Promise<void> {
+    await this.waitForElementVisible('[id="login-submit-button"]');
+    await this.submitButton.click();
+    console.log("Login submit button clicked");
+  }
+
+  /**
+   * Wait for login redirect to complete
+   * Expected redirect to: http://localhost:3000/school/aitutor/home
+   */
+  async waitForLoginRedirect(): Promise<void> {
+    // Wait for navigation to complete after login
+    await this.waitForNavigation();
+
+    // Verify redirect to the expected home page URL
+    const expectedHomeUrl = "/school/aitutor/home";
+    await this.waitForUrl(expectedHomeUrl, 15000);
+
+    const currentUrl = this.getCurrentUrl();
+    expect(currentUrl).toContain(expectedHomeUrl);
+    console.log(`Successfully redirected to home page: ${currentUrl}`);
+  }
+
+  /**
+   * Complete login flow with credentials from environment variables
+   * This is the main method that orchestrates the entire login process
+   */
+  async login(): Promise<void> {
+    console.log("Starting login flow...");
+
+    // Step 1: Navigate to login page and verify URL
+    await this.navigateToLogin();
+
+    // Step 2: Fill credentials from environment variables
+    await this.fillEmail();
+    await this.fillPassword();
+
+    // Step 3: Submit login form
+    await this.clickSubmitButton();
+
+    // Step 4: Wait for and verify successful redirect
+    await this.waitForLoginRedirect();
+
+    console.log("Login flow completed successfully");
+  }
+
+  /**
+   * Check if already logged in by checking current URL
+   * Useful for test setup optimization
+   */
+  async isLoggedIn(): Promise<boolean> {
+    const currentUrl = this.getCurrentUrl();
+    return currentUrl.includes("/school/aitutor/home");
+  }
+
+  /**
+   * Perform login with custom credentials (for future test scenarios)
+   * @param email - User email
    * @param password - User password
-   * @param rememberMe - Whether to check remember me option
    */
-  async login(email: string, password: string, rememberMe = false): Promise<void> {
-    await this.waitForLoginFormToBeVisible();
+  async loginWith(email: string, password: string): Promise<void> {
+    console.log(`Starting login flow with custom credentials for: ${email}`);
 
-    // Fill email field
-    await this.fillInput(this.emailInput, email);
+    await this.navigateToLogin();
 
-    // Fill password field
-    await this.fillInput(this.passwordInput, password);
+    // Fill custom credentials
+    await this.emailInput.clear();
+    await this.emailInput.fill(email);
+    await this.passwordInput.clear();
+    await this.passwordInput.fill(password);
 
-    // Handle remember me checkbox if requested
-    if (rememberMe) {
-      await this.checkRememberMe();
-    }
+    await this.clickSubmitButton();
+    await this.waitForLoginRedirect();
 
-    // Submit login form
-    await this.submitLogin();
+    console.log("Custom login flow completed successfully");
   }
 
   /**
-   * Submit the login form
-   */
-  async submitLogin(): Promise<void> {
-    await this.clickWithRetry(this.loginButton);
-  }
-
-  /**
-   * Fill only the email field
-   * @param email - Email address
-   */
-  async fillEmail(email: string): Promise<void> {
-    await this.fillInput(this.emailInput, email);
-  }
-
-  /**
-   * Fill only the password field
-   * @param password - Password
-   */
-  async fillPassword(password: string): Promise<void> {
-    await this.fillInput(this.passwordInput, password);
-  }
-
-  /**
-   * Check the remember me checkbox
-   */
-  async checkRememberMe(): Promise<void> {
-    const isChecked = await this.rememberMeCheckbox.isChecked();
-    if (!isChecked) {
-      await this.rememberMeCheckbox.check();
-    }
-  }
-
-  /**
-   * Click the forgot password link
-   */
-  async clickForgotPassword(): Promise<void> {
-    await this.clickWithRetry(this.forgotPasswordLink);
-  }
-
-  /**
-   * Click the sign up link
-   */
-  async clickSignUp(): Promise<void> {
-    await this.clickWithRetry(this.signUpLink);
-  }
-
-  /**
-   * Wait for the login form to be visible
-   */
-  async waitForLoginFormToBeVisible(): Promise<void> {
-    await this.waitForElement(this.loginForm);
-  }
-
-  /**
-   * Check if the login form is visible
-   * @returns True if login form is visible
-   */
-  async isLoginFormVisible(): Promise<boolean> {
-    return await this.isVisible(this.loginForm);
-  }
-
-  /**
-   * Check if error message is displayed
-   * @returns True if error message is visible
-   */
-  async isErrorMessageVisible(): Promise<boolean> {
-    return await this.isVisible(this.errorMessage);
-  }
-
-  /**
-   * Get the error message text
-   * @returns Error message text
-   */
-  async getErrorMessage(): Promise<string> {
-    await this.waitForElement(this.errorMessage);
-    return await this.getTextContent(this.errorMessage);
-  }
-
-  /**
-   * Verify login form elements are present
+   * Verify login form elements are present and visible
+   * Useful for initial page load validation
    */
   async verifyLoginFormElements(): Promise<void> {
     await expect(this.emailInput).toBeVisible();
     await expect(this.passwordInput).toBeVisible();
-    await expect(this.loginButton).toBeVisible();
-  }
-
-  /**
-   * Verify login button is enabled
-   */
-  async verifyLoginButtonEnabled(): Promise<void> {
-    await expect(this.loginButton).toBeEnabled();
-  }
-
-  /**
-   * Verify login button is disabled
-   */
-  async verifyLoginButtonDisabled(): Promise<void> {
-    await expect(this.loginButton).toBeDisabled();
-  }
-
-  /**
-   * Verify error message contains specific text
-   * @param expectedText - Expected error text
-   */
-  async verifyErrorMessage(expectedText: string): Promise<void> {
-    await expect(this.errorMessage).toBeVisible();
-    await expect(this.errorMessage).toContainText(expectedText);
-  }
-
-  /**
-   * Clear all form fields
-   */
-  async clearForm(): Promise<void> {
-    await this.emailInput.clear();
-    await this.passwordInput.clear();
-  }
-
-  /**
-   * Get email input value
-   * @returns Current value in email field
-   */
-  async getEmailValue(): Promise<string> {
-    return await this.emailInput.inputValue();
-  }
-
-  /**
-   * Get password input value
-   * @returns Current value in password field
-   */
-  async getPasswordValue(): Promise<string> {
-    return await this.passwordInput.inputValue();
-  }
-
-  /**
-   * Check if remember me is checked
-   * @returns True if remember me is checked
-   */
-  async isRememberMeChecked(): Promise<boolean> {
-    return await this.rememberMeCheckbox.isChecked();
-  }
-
-  /**
-   * Verify successful login redirect
-   * @param expectedUrl - Expected URL after login (default: dashboard)
-   */
-  async verifySuccessfulLogin(expectedUrl = '/dashboard'): Promise<void> {
-    await this.waitForNavigation(expectedUrl);
-    await this.verifyUrl(expectedUrl);
-  }
-
-  /**
-   * Perform login and verify success
-   * @param email - User email
-   * @param password - User password
-   * @param expectedRedirectUrl - Expected URL after successful login
-   */
-  async loginAndVerifySuccess(email: string, password: string, expectedRedirectUrl = '/dashboard'): Promise<void> {
-    await this.login(email, password);
-    await this.verifySuccessfulLogin(expectedRedirectUrl);
+    await expect(this.submitButton).toBeVisible();
+    console.log("Login form elements verified");
   }
 }

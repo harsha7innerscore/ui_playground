@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "playwright test",
+    "test:smoke": "playwright test tests/smoke",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:headed": "playwright test --headed",
@@ -28,5 +29,8 @@
     "@types/node": "^25.0.6",
     "playwright": "^1.57.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }

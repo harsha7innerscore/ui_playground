@@ -1,33 +1,33 @@
-import { test as base, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { HomePage } from '../pages/HomePage';
+import { test as base, Page } from "@playwright/test";
+import { LoginPage } from "../pages/LoginPage";
+import { HomePage } from "../pages/HomePage";
+import { SelfStudyPage } from "../pages/SelfStudyPage";
 
 /**
- * Authentication fixture for self-study UI testing
- * Provides utilities for login, logout, and session management
+ * Authentication fixture for self-study feature testing
+ * Provides pre-authenticated page instances and page objects
  */
 
-export interface AuthUser {
-  email: string;
-  password: string;
-}
-
-export interface AuthFixture {
+// Define fixture types
+type AuthFixtures = {
+  // Page objects
   loginPage: LoginPage;
   homePage: HomePage;
-  authenticatedUser: AuthUser;
-  login: (user?: AuthUser) => Promise<void>;
-  logout: () => Promise<void>;
-  ensureAuthenticated: () => Promise<void>;
-}
+  selfStudyPage: SelfStudyPage;
 
-// Test user from environment variables
-const TEST_USER: AuthUser = {
-  email: process.env.TEST_USER_EMAIL || 'user@example.com',
-  password: process.env.TEST_USER_PASSWORD || 'password123'
+  // Pre-authenticated page (for tests that need authenticated state)
+  authenticatedPage: Page;
+
+  // Authenticated page objects (already logged in)
+  authenticatedHomePage: HomePage;
+  authenticatedSelfStudyPage: SelfStudyPage;
 };
 
-export const test = base.extend<AuthFixture>({
+/**
+ * Extended test with authentication fixtures
+ */
+export const test = base.extend<AuthFixtures>({
+  // Basic page objects (not authenticated)
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await use(loginPage);
@@ -38,113 +38,137 @@ export const test = base.extend<AuthFixture>({
     await use(homePage);
   },
 
-  authenticatedUser: async ({}, use) => {
-    await use(TEST_USER);
+  selfStudyPage: async ({ page }, use) => {
+    const selfStudyPage = new SelfStudyPage(page);
+    await use(selfStudyPage);
   },
 
-  login: async ({ page, loginPage, homePage }, use) => {
-    const login = async (user: AuthUser = TEST_USER) => {
-      await loginPage.navigateToLogin();
-      await loginPage.login(user.email, user.password);
-      await homePage.verifyOnHomePage();
-    };
+  // Pre-authenticated page - performs login before test
+  authenticatedPage: async ({ page }, use) => {
+    console.log("Setting up authenticated page...");
 
-    await use(login);
+    // Create login page and perform authentication
+    const loginPage = new LoginPage(page);
+    await loginPage.login();
+
+    console.log("Authentication completed for fixture");
+    await use(page);
   },
 
-  logout: async ({ homePage, loginPage }, use) => {
-    const logout = async () => {
-      await homePage.logout();
-      await loginPage.verifyUrl(/\/login/);
-    };
+  // Authenticated home page - already logged in and on home page
+  authenticatedHomePage: async ({ authenticatedPage }, use) => {
+    const homePage = new HomePage(authenticatedPage);
 
-    await use(logout);
+    // Verify we're on home page after authentication
+    await homePage.verifyHomePage();
+
+    await use(homePage);
   },
 
-  ensureAuthenticated: async ({ page, login, authenticatedUser }, use) => {
-    const ensureAuthenticated = async () => {
-      // Check if already authenticated by looking for home page elements
-      const currentUrl = page.url();
+  // Authenticated self-study page - navigated to self-study page
+  authenticatedSelfStudyPage: async ({ authenticatedHomePage }, use) => {
+    // Navigate from authenticated home page to self-study page
+    await authenticatedHomePage.navigateToSelfStudy();
 
-      if (currentUrl.includes('/login') || currentUrl === 'about:blank' || currentUrl.includes('localhost') && !currentUrl.includes('/dashboard')) {
-        await login(authenticatedUser);
-      } else {
-        // Verify we're still authenticated by checking for user menu
-        try {
-          const homePage = new HomePage(page);
-          const isAuthenticated = await homePage.isUserMenuVisible();
+    // Create self-study page object
+    const selfStudyPage = new SelfStudyPage(authenticatedHomePage.page);
 
-          if (!isAuthenticated) {
-            await login(authenticatedUser);
-          }
-        } catch {
-          // If verification fails, login again
-          await login(authenticatedUser);
-        }
-      }
-    };
+    // Verify we're on self-study page
+    await selfStudyPage.verifySelfStudyPage();
 
-    await use(ensureAuthenticated);
-  }
+    await use(selfStudyPage);
+  },
 });
 
-/**
- * Helper function to create custom user for testing
- * @param email User email
- * @param password User password
- * @returns AuthUser object
- */
-export function createTestUser(email: string, password: string): AuthUser {
-  return { email, password };
-}
+export { expect } from "@playwright/test";
 
 /**
- * Session storage utilities for maintaining authentication state
+ * Test data for authentication scenarios
  */
-export class SessionManager {
-  constructor(private page: any) {}
+export const AuthTestData = {
+  // Default test credentials from environment
+  defaultCredentials: {
+    email: process.env.TEST_USER_EMAIL || "Test1177",
+    password: process.env.TEST_USER_PASSWORD || "Test@123",
+  },
 
+  // Expected URLs for verification
+  urls: {
+    login:
+      process.env.BASE_URL ||
+      "http://localhost:3000/school/aitutor/student/aps",
+    home: "/school/aitutor/home",
+    selfStudy: "/school/aitutor/syllabus",
+  },
+
+  // Timeout configurations
+  timeouts: {
+    login: 15000,
+    navigation: 10000,
+    pageLoad: 15000,
+  },
+};
+
+/**
+ * Helper functions for authentication testing
+ */
+export class AuthTestHelper {
   /**
-   * Save authentication token to session storage
-   * @param token Authentication token
+   * Verify user is logged in by checking URL
    */
-  async saveAuthToken(token: string): Promise<void> {
-    await this.page.evaluate((token: string) => {
-      sessionStorage.setItem('authToken', token);
-    }, token);
+  static async verifyLoggedIn(page: Page): Promise<boolean> {
+    const currentUrl = page.url();
+    return currentUrl.includes(AuthTestData.urls.home);
   }
 
   /**
-   * Get authentication token from session storage
-   * @returns Authentication token or null
+   * Perform manual login with custom credentials
    */
-  async getAuthToken(): Promise<string | null> {
-    return await this.page.evaluate(() => {
-      return sessionStorage.getItem('authToken');
-    });
+  static async loginWith(
+    page: Page,
+    email: string,
+    password: string
+  ): Promise<void> {
+    const loginPage = new LoginPage(page);
+    await loginPage.loginWith(email, password);
   }
 
   /**
-   * Clear authentication data from session storage
+   * Navigate through the complete self-study flow
    */
-  async clearAuthData(): Promise<void> {
-    await this.page.evaluate(() => {
-      sessionStorage.removeItem('authToken');
-      localStorage.removeItem('authToken');
-      // Clear any other auth-related storage items
-    });
+  static async completeFullFlow(page: Page): Promise<void> {
+    console.log("Starting complete self-study flow...");
+
+    // Step 1: Login
+    const loginPage = new LoginPage(page);
+    await loginPage.login();
+
+    // Step 2: Navigate to self-study from home
+    const homePage = new HomePage(page);
+    await homePage.navigateToSelfStudy();
+
+    // Step 3: Verify self-study page
+    const selfStudyPage = new SelfStudyPage(page);
+    await selfStudyPage.completeSelfStudyVerification();
+
+    console.log("Complete self-study flow finished successfully");
   }
 
   /**
-   * Check if user is authenticated based on session data
-   * @returns True if user appears to be authenticated
+   * Setup test data and environment
    */
-  async isAuthenticated(): Promise<boolean> {
-    const token = await this.getAuthToken();
-    return token !== null && token.length > 0;
+  static async setupTestEnvironment(): Promise<void> {
+    // Verify environment variables are set
+    if (!process.env.BASE_URL) {
+      console.warn("BASE_URL not set in environment, using default");
+    }
+    if (!process.env.TEST_USER_EMAIL) {
+      console.warn("TEST_USER_EMAIL not set in environment, using default");
+    }
+    if (!process.env.TEST_USER_PASSWORD) {
+      console.warn("TEST_USER_PASSWORD not set in environment, using default");
+    }
+
+    console.log("Test environment setup completed");
   }
 }
-
-
-// Export for use in tests
-export { expect } from '@playwright/test';

@@ -1,240 +1,237 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, expect } from "@playwright/test";
 
 /**
- * Base page object containing common functionality shared across all pages
- * All page objects should extend this base class
+ * BasePage - Common functionality for all page objects
+ * Following the Page Object Model pattern for self-study feature testing
  */
-export abstract class BasePage {
-  protected readonly page: Page;
+export class BasePage {
+  protected page: Page;
+  protected baseUrl: string;
 
   constructor(page: Page) {
     this.page = page;
+    this.baseUrl = process.env.BASE_URL || "http://localhost:3000";
   }
 
   /**
-   * Navigate to a specific URL
-   * @param url - The URL to navigate to (can be relative or absolute)
+   * Navigate to a specific path
+   * @param path - Path to navigate to (relative to baseUrl)
    */
-  async goto(url: string): Promise<void> {
-    await this.page.goto(url);
+  async navigateTo(path: string): Promise<void> {
+    const fullUrl = path.startsWith("http") ? path : `${this.baseUrl}${path}`;
+    await this.page.goto(fullUrl);
+    await this.waitForPageLoad();
   }
 
   /**
-   * Wait for the page to be fully loaded
-   * @param state - Load state to wait for ('load', 'domcontentloaded', 'networkidle')
+   * Wait for page to be fully loaded
+   * Uses domcontentloaded state for better reliability
    */
-  async waitForPageLoad(state: 'load' | 'domcontentloaded' | 'networkidle' = 'domcontentloaded'): Promise<void> {
-    await this.page.waitForLoadState(state);
+  async waitForPageLoad(): Promise<void> {
+    await this.page.waitForLoadState("domcontentloaded");
+    // Additional wait to ensure dynamic content is loaded
+    await this.page.waitForTimeout(1000);
   }
 
   /**
-   * Wait for a specific element to be visible
-   * @param locator - The element locator
-   * @param timeout - Maximum wait time in milliseconds
+   * Wait for a specific URL pattern with timeout
+   * @param urlPattern - URL pattern to wait for (can be partial URL)
+   * @param timeout - Maximum time to wait in milliseconds
    */
-  async waitForElement(locator: Locator, timeout = 10000): Promise<void> {
-    await locator.waitFor({ state: 'visible', timeout });
+  async waitForUrl(urlPattern: string, timeout: number = 10000): Promise<void> {
+    await this.page.waitForURL(`**${urlPattern}**`, { timeout });
   }
 
   /**
-   * Click an element with retry logic
-   * @param locator - The element to click
-   * @param maxRetries - Maximum number of retry attempts
+   * Verify current URL contains expected pattern
+   * @param expectedUrlPattern - Pattern that should be present in URL
    */
-  async clickWithRetry(locator: Locator, maxRetries = 3): Promise<void> {
-    for (let i = 0; i < maxRetries; i++) {
-      try {
-        await locator.click();
-        return;
-      } catch (error) {
-        if (i === maxRetries - 1) {
-          throw error;
-        }
-        await this.page.waitForTimeout(1000);
-      }
-    }
+  async verifyUrl(expectedUrlPattern: string): Promise<void> {
+    const currentUrl = this.page.url();
+    expect(currentUrl).toContain(expectedUrlPattern);
   }
 
   /**
-   * Fill input field with text
-   * @param locator - The input element
-   * @param text - Text to fill
-   * @param options - Fill options
-   */
-  async fillInput(locator: Locator, text: string, options?: { force?: boolean }): Promise<void> {
-    await locator.clear();
-    await locator.fill(text, options);
-  }
-
-  /**
-   * Get the current page title
-   * @returns The page title
-   */
-  async getPageTitle(): Promise<string> {
-    return await this.page.title();
-  }
-
-  /**
-   * Get the current URL
-   * @returns The current URL
+   * Get current page URL
    */
   getCurrentUrl(): string {
     return this.page.url();
   }
 
   /**
-   * Take a screenshot of the current page
-   * @param path - Path to save the screenshot
+   * Wait for element to be visible with retry logic
+   * @param selector - Element selector
+   * @param timeout - Maximum time to wait
    */
-  async takeScreenshot(path?: string): Promise<Buffer> {
-    return await this.page.screenshot({ path, fullPage: true });
+  async waitForElementVisible(
+    selector: string,
+    timeout: number = 10000
+  ): Promise<void> {
+    await this.page.locator(selector).waitFor({
+      state: "visible",
+      timeout,
+    });
   }
 
   /**
-   * Scroll element into view
-   * @param locator - Element to scroll into view
+   * Click element with wait and retry logic
+   * @param selector - Element selector
+   * @param maxRetries - Maximum number of retry attempts
    */
-  async scrollIntoView(locator: Locator): Promise<void> {
-    await locator.scrollIntoViewIfNeeded();
+  async clickWithRetry(
+    selector: string,
+    maxRetries: number = 3
+  ): Promise<void> {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        await this.waitForElementVisible(selector);
+        await this.page.locator(selector).click();
+        return;
+      } catch (error) {
+        if (attempt === maxRetries) {
+          throw new Error(
+            `Failed to click element "${selector}" after ${maxRetries} attempts: ${error}`
+          );
+        }
+        console.log(`Click attempt ${attempt} failed, retrying...`);
+        await this.page.waitForTimeout(1000);
+      }
+    }
+  }
+
+  /**
+   * Fill input field with validation
+   * @param selector - Input field selector
+   * @param value - Value to fill
+   */
+  async fillInput(selector: string, value: string): Promise<void> {
+    await this.waitForElementVisible(selector);
+    const input = this.page.locator(selector);
+    await input.clear();
+    await input.fill(value);
+
+    // Verify the value was entered correctly
+    const filledValue = await input.inputValue();
+    expect(filledValue).toBe(value);
+  }
+
+  /**
+   * Get element by test ID (preferred selector strategy)
+   * @param testId - data-testid attribute value
+   */
+  getByTestId(testId: string) {
+    return this.page.getByTestId(testId);
   }
 
   /**
    * Wait for navigation to complete
-   * @param url - Optional URL pattern to wait for
+   * Useful after form submissions or link clicks
    */
-  async waitForNavigation(url?: string | RegExp): Promise<void> {
-    await this.page.waitForURL(url || '**');
+  async waitForNavigation(): Promise<void> {
+    await this.page.waitForLoadState("networkidle");
+    await this.waitForPageLoad();
   }
 
   /**
-   * Check if an element is visible
-   * @param locator - Element to check
-   * @returns True if visible, false otherwise
+   * Take screenshot for debugging
+   * @param filename - Screenshot filename (without extension)
    */
-  async isVisible(locator: Locator): Promise<boolean> {
+  async takeScreenshot(filename: string): Promise<void> {
+    await this.page.screenshot({
+      path: `test-results/${filename}.png`,
+      fullPage: true,
+    });
+  }
+
+  /**
+   * Check if element exists on page
+   * @param selector - Element selector
+   */
+  async elementExists(selector: string): Promise<boolean> {
     try {
-      return await locator.isVisible();
+      await this.page
+        .locator(selector)
+        .waitFor({ state: "attached", timeout: 20000 });
+      return true;
     } catch {
       return false;
     }
   }
 
   /**
-   * Check if an element is enabled
-   * @param locator - Element to check
-   * @returns True if enabled, false otherwise
-   */
-  async isEnabled(locator: Locator): Promise<boolean> {
-    try {
-      return await locator.isEnabled();
-    } catch {
-      return false;
-    }
-  }
-
-  /**
-   * Get text content of an element
-   * @param locator - Element to get text from
-   * @returns Text content
-   */
-  async getTextContent(locator: Locator): Promise<string> {
-    return await locator.textContent() || '';
-  }
-
-  /**
-   * Get attribute value of an element
-   * @param locator - Element to get attribute from
-   * @param attribute - Attribute name
-   * @returns Attribute value
-   */
-  async getAttribute(locator: Locator, attribute: string): Promise<string | null> {
-    return await locator.getAttribute(attribute);
-  }
-
-  /**
-   * Wait for element to be hidden
-   * @param locator - Element to wait for
-   * @param timeout - Maximum wait time
-   */
-  async waitForElementToBeHidden(locator: Locator, timeout = 10000): Promise<void> {
-    await locator.waitFor({ state: 'hidden', timeout });
-  }
-
-  /**
-   * Hover over an element
-   * @param locator - Element to hover over
-   */
-  async hover(locator: Locator): Promise<void> {
-    await locator.hover();
-  }
-
-  /**
-   * Double click an element
-   * @param locator - Element to double click
-   */
-  async doubleClick(locator: Locator): Promise<void> {
-    await locator.dblclick();
-  }
-
-  /**
-   * Right click an element
-   * @param locator - Element to right click
-   */
-  async rightClick(locator: Locator): Promise<void> {
-    await locator.click({ button: 'right' });
-  }
-
-  /**
-   * Press a key
-   * @param key - Key to press
-   */
-  async pressKey(key: string): Promise<void> {
-    await this.page.keyboard.press(key);
-  }
-
-  /**
-   * Reload the current page
-   */
-  async reload(): Promise<void> {
-    await this.page.reload();
-  }
-
-  /**
-   * Go back in browser history
-   */
-  async goBack(): Promise<void> {
-    await this.page.goBack();
-  }
-
-  /**
-   * Go forward in browser history
-   */
-  async goForward(): Promise<void> {
-    await this.page.goForward();
-  }
-
-  /**
-   * Check if the page URL contains specific text
-   * @param text - Text to search for in URL
-   * @returns True if URL contains text
-   */
-  urlContains(text: string): boolean {
-    return this.getCurrentUrl().includes(text);
-  }
-
-  /**
-   * Verify page title
-   * @param expectedTitle - Expected page title
+   * Verify page title contains expected text
+   * @param expectedTitle - Expected title text
    */
   async verifyPageTitle(expectedTitle: string): Promise<void> {
-    await expect(this.page).toHaveTitle(expectedTitle);
+    await expect(this.page).toHaveTitle(new RegExp(expectedTitle, "i"));
   }
 
   /**
-   * Verify current URL
-   * @param expectedUrl - Expected URL (can be string or regex)
+   * Wait for specific amount of time
+   * Use sparingly - prefer waiting for specific conditions
+   * @param milliseconds - Time to wait in milliseconds
    */
-  async verifyUrl(expectedUrl: string | RegExp): Promise<void> {
-    await expect(this.page).toHaveURL(expectedUrl);
+  async wait(milliseconds: number): Promise<void> {
+    await this.page.waitForTimeout(milliseconds);
+  }
+
+  /**
+   * Logout functionality - clicks profile icon and logout button
+   * Works from any authenticated page to return to login page
+   */
+  async logout(): Promise<void> {
+    console.log('Starting logout process...');
+
+    try {
+      // Step 1: Click on the profile icon in the app bar
+      const profileIcon = this.getByTestId('appbar-profile-icon');
+      await this.waitForElementVisible('[data-testid="appbar-profile-icon"]');
+      await profileIcon.click();
+      console.log('Profile icon clicked');
+
+      // Step 2: Wait for the menu to appear and click logout button
+      await this.waitForElementVisible('#logout-button', 5000);
+      const logoutButton = this.page.locator('#logout-button');
+      await logoutButton.click();
+      console.log('Logout button clicked');
+
+      // Step 3: Wait for navigation back to login page
+      await this.waitForNavigation();
+
+      // Step 4: Verify we're back on the login page
+      const currentUrl = this.getCurrentUrl();
+      const isOnLoginPage = currentUrl.includes('student/aps') || currentUrl.includes('login');
+
+      if (isOnLoginPage) {
+        console.log(`Successfully logged out. Current URL: ${currentUrl}`);
+      } else {
+        console.warn(`Logout completed but URL unexpected: ${currentUrl}`);
+      }
+
+    } catch (error) {
+      console.error('Logout process failed:', error);
+      throw new Error(`Failed to logout: ${error}`);
+    }
+  }
+
+  /**
+   * Check if user is currently logged in
+   * @returns true if logged in (on home or syllabus page), false if on login page
+   */
+  async isLoggedIn(): Promise<boolean> {
+    const currentUrl = this.getCurrentUrl();
+    return currentUrl.includes('/school/aitutor/home') || currentUrl.includes('/school/aitutor/syllabus');
+  }
+
+  /**
+   * Logout if currently logged in
+   * Safe method that only performs logout if user is authenticated
+   */
+  async logoutIfLoggedIn(): Promise<void> {
+    if (await this.isLoggedIn()) {
+      await this.logout();
+    } else {
+      console.log('User is not logged in, skipping logout');
+    }
   }
 }
