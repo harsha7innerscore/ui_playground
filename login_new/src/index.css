@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-warm text-white px-6 py-3 rounded-luxury font-medium transition-all duration-300 hover:shadow-luxury-lg hover:scale-105 active:scale-95 relative overflow-hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-white/20 transform -translate-x-full transition-transform duration-700 ease-out;
+  }
+
+  .btn-primary:hover::before {
+    @apply translate-x-full;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border-2 border-charcoal-200 rounded-editorial focus:border-terracotta-500 focus:ring-2 focus:ring-terracotta-200 transition-all duration-300 outline-none relative;
+  }
+
+  .input-field:focus {
+    @apply shadow-editorial-lg transform scale-[1.02];
+  }
+
+  .card-luxury {
+    @apply bg-white rounded-luxury shadow-luxury border border-charcoal-100/50 backdrop-blur-sm;
+  }
+
+  .floating-particle {
+    @apply absolute rounded-full bg-golden-400/10 animate-float;
+    animation-duration: 8s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  .social-btn {
+    @apply relative overflow-hidden transition-all duration-300 hover:shadow-editorial-lg;
+  }
+
+  .social-btn::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -translate-x-full transition-transform duration-500;
+  }
+
+  .social-btn:hover::after {
+    @apply translate-x-full;
+  }
+
+  .pulse-ring {
+    @apply absolute inset-0 rounded-full border-2 border-terracotta-400/30 animate-ping;
+    animation-duration: 2s;
+  }
+
+  .glow-text {
+    @apply relative;
+    text-shadow: 0 0 10px rgba(226, 115, 73, 0.3);
+  }
+
+  .shine-effect {
+    @apply relative overflow-hidden;
+  }
+
+  .shine-effect::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent transform -translate-x-full transition-transform duration-1000 ease-in-out;
+  }
+
+  .shine-effect:hover::before {
+    @apply translate-x-full;
+  }
+}
