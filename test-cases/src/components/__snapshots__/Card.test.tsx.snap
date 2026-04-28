@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`MetricCard Snapshot tests matches snapshot with all props 1`] = `
+<div
+  class="card card-hover card-clickable "
+>
+  <div
+    class="metric-card"
+  >
+    <div
+      class="metric-header"
+    >
+      <h3
+        class="metric-title"
+      >
+        Total Users
+      </h3>
+      <div
+        class="metric-icon"
+        style="color: rgb(59, 130, 246);"
+      >
+        <div
+          data-size="24"
+          data-testid="icon-users"
+        >
+          users
+        </div>
+      </div>
+    </div>
+    <div
+      class="metric-value"
+    >
+      2,847
+    </div>
+    <div
+      class="metric-change metric-change-increase"
+    >
+      +12.5%
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MetricCard Snapshot tests matches snapshot with minimal props 1`] = `
+<div
+  class="card card-hover  "
+>
+  <div
+    class="metric-card"
+  >
+    <div
+      class="metric-header"
+    >
+      <h3
+        class="metric-title"
+      >
+        Simple Metric
+      </h3>
+    </div>
+    <div
+      class="metric-value"
+    >
+      100
+    </div>
+  </div>
+</div>
+`;

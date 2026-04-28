@@ -1,0 +1,558 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`AnalyticsDashboard Snapshot tests matches snapshot for complete dashboard 1`] = `
+<div
+  class="dashboard"
+>
+  <div
+    class="dashboard-header"
+  >
+    <div>
+      <h1
+        class="dashboard-title"
+      >
+        Analytics Dashboard
+      </h1>
+      <p
+        class="dashboard-subtitle"
+      >
+        Monitor your business performance and key metrics
+      </p>
+    </div>
+    <div
+      class="time-range-selector"
+    >
+      <button
+        class="time-range-btn "
+      >
+        7 Days
+      </button>
+      <button
+        class="time-range-btn active"
+      >
+        30 Days
+      </button>
+      <button
+        class="time-range-btn "
+      >
+        90 Days
+      </button>
+      <button
+        class="time-range-btn "
+      >
+        1 Year
+      </button>
+    </div>
+  </div>
+  <div
+    class="metrics-grid"
+  >
+    <div
+      class="card card-hover card-clickable "
+    >
+      <div
+        class="metric-card"
+      >
+        <div
+          class="metric-header"
+        >
+          <h3
+            class="metric-title"
+          >
+            Total Users
+          </h3>
+          <div
+            class="metric-icon"
+            style="color: rgb(59, 130, 246);"
+          >
+            <div
+              data-size="24"
+              data-testid="icon-users"
+            >
+              users
+            </div>
+          </div>
+        </div>
+        <div
+          class="metric-value"
+        >
+          2,847
+        </div>
+        <div
+          class="metric-change metric-change-increase"
+        >
+          +12.5%
+        </div>
+      </div>
+    </div>
+    <div
+      class="card card-hover card-clickable "
+    >
+      <div
+        class="metric-card"
+      >
+        <div
+          class="metric-header"
+        >
+          <h3
+            class="metric-title"
+          >
+            Active Projects
+          </h3>
+          <div
+            class="metric-icon"
+            style="color: rgb(16, 185, 129);"
+          >
+            <div
+              data-size="24"
+              data-testid="icon-folder-kanban"
+            >
+              folder-kanban
+            </div>
+          </div>
+        </div>
+        <div
+          class="metric-value"
+        >
+          24
+        </div>
+        <div
+          class="metric-change metric-change-increase"
+        >
+          +3
+        </div>
+      </div>
+    </div>
+    <div
+      class="card card-hover card-clickable "
+    >
+      <div
+        class="metric-card"
+      >
+        <div
+          class="metric-header"
+        >
+          <h3
+            class="metric-title"
+          >
+            Revenue
+          </h3>
+          <div
+            class="metric-icon"
+            style="color: rgb(139, 92, 246);"
+          >
+            <div
+              data-size="24"
+              data-testid="icon-dollar-sign"
+            >
+              dollar-sign
+            </div>
+          </div>
+        </div>
+        <div
+          class="metric-value"
+        >
+          $94,567
+        </div>
+        <div
+          class="metric-change metric-change-increase"
+        >
+          +8.2%
+        </div>
+      </div>
+    </div>
+    <div
+      class="card card-hover card-clickable "
+    >
+      <div
+        class="metric-card"
+      >
+        <div
+          class="metric-header"
+        >
+          <h3
+            class="metric-title"
+          >
+            Tasks Completed
+          </h3>
+          <div
+            class="metric-icon"
+            style="color: rgb(245, 158, 11);"
+          >
+            <div
+              data-size="24"
+              data-testid="icon-check-circle"
+            >
+              check-circle
+            </div>
+          </div>
+        </div>
+        <div
+          class="metric-value"
+        >
+          1,264
+        </div>
+        <div
+          class="metric-change metric-change-decrease"
+        >
+          -2.1%
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="charts-grid"
+  >
+    <div
+      class="card card-hover  chart-card"
+    >
+      <div
+        class="chart-header"
+      >
+        <h3
+          class="chart-title"
+        >
+          User Growth
+        </h3>
+        <div
+          class="chart-icon"
+        >
+          <div
+            data-size="20"
+            data-testid="icon-trending-up"
+          >
+            trending-up
+          </div>
+        </div>
+      </div>
+      <div
+        class="chart-container"
+      >
+        <div
+          data-testid="responsive-container"
+        >
+          <div
+            data-chart-data="[{"month":"Jan","users":1240},{"month":"Feb","users":1456},{"month":"Mar","users":1789},{"month":"Apr","users":2134},{"month":"May","users":2456},{"month":"Jun","users":2847}]"
+            data-testid="line-chart"
+          >
+            <div
+              data-stroke-dasharray="3 3"
+              data-testid="cartesian-grid"
+            />
+            <div
+              data-key="month"
+              data-testid="x-axis"
+            />
+            <div
+              data-testid="y-axis"
+            />
+            <div
+              data-content-style="{"backgroundColor":"var(--color-bg-alt)","border":"1px solid var(--color-border)","borderRadius":"8px"}"
+              data-has-formatter="false"
+              data-testid="tooltip"
+            />
+            <div
+              data-key="users"
+              data-stroke="var(--color-primary)"
+              data-stroke-width="3"
+              data-testid="line"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card card-hover  chart-card"
+    >
+      <div
+        class="chart-header"
+      >
+        <h3
+          class="chart-title"
+        >
+          Monthly Revenue
+        </h3>
+        <div
+          class="chart-icon"
+        >
+          <div
+            data-size="20"
+            data-testid="icon-dollar-sign"
+          >
+            dollar-sign
+          </div>
+        </div>
+      </div>
+      <div
+        class="chart-container"
+      >
+        <div
+          data-testid="responsive-container"
+        >
+          <div
+            data-chart-data="[{"month":"Jan","revenue":45000},{"month":"Feb","revenue":52000},{"month":"Mar","revenue":48000},{"month":"Apr","revenue":61000},{"month":"May","revenue":74000},{"month":"Jun","revenue":94567}]"
+            data-testid="bar-chart"
+          >
+            <div
+              data-stroke-dasharray="3 3"
+              data-testid="cartesian-grid"
+            />
+            <div
+              data-key="month"
+              data-testid="x-axis"
+            />
+            <div
+              data-testid="y-axis"
+            />
+            <div
+              data-content-style="{"backgroundColor":"var(--color-bg-alt)","border":"1px solid var(--color-border)","borderRadius":"8px"}"
+              data-has-formatter="true"
+              data-testid="tooltip"
+            />
+            <div
+              data-fill="var(--color-primary)"
+              data-key="revenue"
+              data-radius="[4,4,0,0]"
+              data-testid="bar"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card card-hover  chart-card"
+    >
+      <div
+        class="chart-header"
+      >
+        <h3
+          class="chart-title"
+        >
+          Project Status
+        </h3>
+        <div
+          class="chart-icon"
+        >
+          <div
+            data-size="20"
+            data-testid="icon-folder-kanban"
+          >
+            folder-kanban
+          </div>
+        </div>
+      </div>
+      <div
+        class="chart-container"
+      >
+        <div
+          data-testid="responsive-container"
+        >
+          <div
+            data-testid="pie-chart"
+          >
+            <div
+              data-key="value"
+              data-pie-data="[{"name":"Active","value":12,"color":"#10b981"},{"name":"Completed","value":8,"color":"#3b82f6"},{"name":"On Hold","value":3,"color":"#f59e0b"},{"name":"Planning","value":1,"color":"#8b5cf6"}]"
+              data-testid="pie"
+            >
+              <div
+                data-fill="#10b981"
+                data-testid="cell"
+              />
+              <div
+                data-fill="#3b82f6"
+                data-testid="cell"
+              />
+              <div
+                data-fill="#f59e0b"
+                data-testid="cell"
+              />
+              <div
+                data-fill="#8b5cf6"
+                data-testid="cell"
+              />
+            </div>
+            <div
+              data-content-style="{"backgroundColor":"var(--color-bg-alt)","border":"1px solid var(--color-border)","borderRadius":"8px"}"
+              data-has-formatter="false"
+              data-testid="tooltip"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card card-hover  chart-card activity-card"
+    >
+      <div
+        class="chart-header"
+      >
+        <h3
+          class="chart-title"
+        >
+          Recent Activity
+        </h3>
+        <div
+          class="chart-icon"
+        >
+          <div
+            data-size="20"
+            data-testid="icon-activity"
+          >
+            activity
+          </div>
+        </div>
+      </div>
+      <div
+        class="activity-list"
+      >
+        <div
+          class="activity-item"
+        >
+          <div
+            class="activity-dot"
+          />
+          <div
+            class="activity-content"
+          >
+            <h4
+              class="activity-title"
+            >
+              New user registered
+            </h4>
+            <p
+              class="activity-description"
+            >
+              David Kim joined as a Developer
+            </p>
+            <span
+              class="activity-time"
+            >
+              4/22/2024
+               at
+               
+              04:00 PM
+            </span>
+          </div>
+        </div>
+        <div
+          class="activity-item"
+        >
+          <div
+            class="activity-dot"
+          />
+          <div
+            class="activity-content"
+          >
+            <h4
+              class="activity-title"
+            >
+              Project completed
+            </h4>
+            <p
+              class="activity-description"
+            >
+              API Documentation project was completed successfully
+            </p>
+            <span
+              class="activity-time"
+            >
+              4/22/2024
+               at
+               
+              02:45 PM
+            </span>
+          </div>
+        </div>
+        <div
+          class="activity-item"
+        >
+          <div
+            class="activity-dot"
+          />
+          <div
+            class="activity-content"
+          >
+            <h4
+              class="activity-title"
+            >
+              New project created
+            </h4>
+            <p
+              class="activity-description"
+            >
+              Security Audit project was created
+            </p>
+            <span
+              class="activity-time"
+            >
+              4/22/2024
+               at
+               
+              02:15 PM
+            </span>
+          </div>
+        </div>
+        <div
+          class="activity-item"
+        >
+          <div
+            class="activity-dot"
+          />
+          <div
+            class="activity-content"
+          >
+            <h4
+              class="activity-title"
+            >
+              User role updated
+            </h4>
+            <p
+              class="activity-description"
+            >
+              Sarah Williams was promoted to Senior Project Manager
+            </p>
+            <span
+              class="activity-time"
+            >
+              4/21/2024
+               at
+               
+              09:50 PM
+            </span>
+          </div>
+        </div>
+        <div
+          class="activity-item"
+        >
+          <div
+            class="activity-dot"
+          />
+          <div
+            class="activity-content"
+          >
+            <h4
+              class="activity-title"
+            >
+              Project milestone reached
+            </h4>
+            <p
+              class="activity-description"
+            >
+              E-commerce Platform reached 85% completion
+            </p>
+            <span
+              class="activity-time"
+            >
+              4/21/2024
+               at
+               
+              07:40 PM
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
