@@ -1,0 +1,8 @@
+export { GeneralSettings } from './GeneralSettings'
+export { ProfileSettings } from './ProfileSettings'
+export { NotificationSettings } from './NotificationSettings'
+export { PrivacySettings } from './PrivacySettings'
+export { DataManagement } from './DataManagement'
+export { ToggleSwitch } from './ToggleSwitch'
+export { SettingItem } from './SettingItem'
+export { FormField } from './FormField'
