@@ -1,5 +1,3 @@
-The compressed content was passed inline — I'll output the fixed file directly with only the mismatched code blocks restored.
-
 # React Unit Test Generator Agent — Specification
 
 **Version**: 1.0  
@@ -10,7 +8,7 @@ The compressed content was passed inline — I'll output the fixed file directly
 
 ## 1. Purpose
 
-CLI agent: accepts React module file, docs, output dir → generates unit test files → writes to repo. Adapts to project test framework + code conventions.
+Build a CLI agent that accepts a React module file, its documentation, and a target output directory, then automatically generates comprehensive unit test files and writes them into the repository. The agent adapts to the project's existing test framework and code conventions.
 
 ---
 
@@ -23,13 +21,13 @@ $ node dist/index.js \
     --output-path ./src/components/__tests__
 ```
 
-Agent then:
+The agent then:
 
-1. Reads module and docs files
-2. Scans repo for test framework + existing test conventions
+1. Reads the module and documentation files
+2. Scans the repo for test framework and existing test conventions
 3. Sends all context to Claude
-4. Writes generated test file to output path
-5. Prints summary
+4. Writes the generated test file to the output path
+5. Prints a summary
 
 ---
 
@@ -56,15 +54,15 @@ react-test-gen-agent/
 
 ### 4.1 `src/index.ts` — CLI Entrypoint
 
-**Responsibility**: Parse CLI args, call each module in sequence, handle errors.
+**Responsibility**: Parse CLI arguments, call each module in sequence, handle errors.
 
 **CLI Arguments**:
 
 | Flag            | Required | Description                                                            |
 | --------------- | -------- | ---------------------------------------------------------------------- |
-| `--module-path` | ✅       | Absolute or relative path to React component/module file               |
-| `--docs-path`   | ✅       | Absolute or relative path to docs file                                 |
-| `--output-path` | ✅       | Directory where test file will be written                              |
+| `--module-path` | ✅       | Absolute or relative path to the React component/module file           |
+| `--docs-path`   | ✅       | Absolute or relative path to the documentation file                    |
+| `--output-path` | ✅       | Directory where the test file will be written                          |
 | `--dry-run`     | ❌       | If present, prints generated test to stdout instead of writing to disk |
 
 **Logic**:
@@ -84,15 +82,15 @@ react-test-gen-agent/
 
 **Error Handling**:
 
-- Missing required args → print usage, exit code 1
-- File not found → print path that failed, exit code 1
-- Claude API error → print API error message, exit code 1
+- Missing required args → print usage and exit with code 1
+- File not found → print clear message with the path that failed and exit with code 1
+- Claude API error → print the API error message and exit with code 1
 
 ---
 
 ### 4.2 `src/reader.ts` — File Reader
 
-**Responsibility**: Read source files from disk, return contents as strings.
+**Responsibility**: Read source files from disk and return their contents as strings.
 
 **Exports**:
 
@@ -113,15 +111,15 @@ export async function readFiles(
 
 **Notes**:
 
-- No parse or transform — return raw file text
-- Throw descriptive error if either file unreadable (caller handles)
-- Support any extension: `.tsx`, `.ts`, `.jsx`, `.js`, `.md`, `.mdx`, `.txt`
+- Do not parse or transform the content — return raw file text
+- Throw a descriptive error if either file cannot be read (caller handles it)
+- Support any file extension: `.tsx`, `.ts`, `.jsx`, `.js`, `.md`, `.mdx`, `.txt`
 
 ---
 
 ### 4.3 `src/detector.ts` — Context Detector
 
-**Responsibility**: Scan repo to determine test framework, optionally find existing test file as style reference.
+**Responsibility**: Scan the repository to determine the test framework in use and optionally find an existing test file to use as a style reference.
 
 **Exports**:
 
@@ -161,7 +159,7 @@ export async function detectContext(
 
 ### 4.4 `src/agent.ts` — Claude Agent
 
-**Responsibility**: Build prompt, call Anthropic Claude API, return generated test code as string.
+**Responsibility**: Build the prompt, call the Anthropic Claude API, and return the generated test code as a string.
 
 **Exports**:
 
@@ -265,7 +263,7 @@ Rules:
 
 ### 4.5 `src/writer.ts` — Test File Writer
 
-**Responsibility**: Derive correct test filename, write generated test code to disk.
+**Responsibility**: Derive the correct test filename and write the generated test code to disk.
 
 **Exports**:
 
@@ -348,7 +346,7 @@ export async function writeTestFile(
 ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-Agent reads at startup via `dotenv`. Key missing → print clear error, exit.
+The agent reads this at startup using `dotenv`. If the key is missing, print a clear error and exit.
 
 ---
 
@@ -383,18 +381,18 @@ index.ts
 
 ## 9. Example Output
 
-Input `Button.tsx` + `Button.md` → agent writes:
+Given input `Button.tsx` + `Button.md`, the agent writes:
 
 ```
 ./src/components/__tests__/Button.test.tsx
 ```
 
-Tests cover:
+Containing tests for:
 
 - Renders with default props
 - Renders with all prop variants (`variant`, `size`, `disabled`, `loading`)
 - Click handler fires on click
-- Click handler silent when disabled
+- Click handler does not fire when disabled
 - Shows spinner when `loading={true}`
 - Matches accessibility role `button`
 - Forwards `ref` correctly (if applicable)
@@ -405,8 +403,8 @@ Tests cover:
 
 - Multi-file / multi-component generation in one run
 - Interactive prompting (all inputs via flags only)
-- Running generated tests automatically
+- Running the generated tests automatically
 - Test fix/retry loop if generated tests fail
 - GUI or web interface
 
-Add in v2 after core loop validated.
+These can be added in v2 after the core loop is validated.
