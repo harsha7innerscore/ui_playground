@@ -24,20 +24,28 @@ export async function generateTests(input: AgentInput): Promise<string> {
   });
 
   if (!response.ok) {
-    throw new Error(`Claude API error: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `Claude API error: ${response.status} ${response.statusText} ${await response.text()}`,
+    );
   }
 
-  const data = await response.json() as any;
+  const data = (await response.json()) as any;
   let testCode = data.content[0].text;
 
   // Strip any accidental markdown fences
-  testCode = testCode.replace(/^```[\w]*\n/gm, '').replace(/\n```$/gm, '');
+  testCode = testCode.replace(/^```[\w]*\n/gm, "").replace(/\n```$/gm, "");
 
   return testCode;
 }
 
 function buildPrompt(input: AgentInput): string {
-  const { moduleContent, docsContent, testingLibrary, exampleTest, moduleName } = input;
+  const {
+    moduleContent,
+    docsContent,
+    testingLibrary,
+    exampleTest,
+    moduleName,
+  } = input;
 
   let prompt = `You are an expert React testing engineer. Your job is to generate a complete,
 production-quality unit test file for the React module below.
