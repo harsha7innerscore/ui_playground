@@ -41,9 +41,8 @@ class Config:
     port: int
 
     # The Claude model to use for reviews.
-    # claude-opus-4-7 is the most capable model — ideal for code review
     # which requires deep reasoning about code quality, bugs, and patterns.
-    model: str = "claude-sonnet-4-5"
+    model: str
 
 
 def load_config() -> Config:
@@ -56,6 +55,7 @@ def load_config() -> Config:
     """
     required_vars = {
         "ANTHROPIC_API_KEY": "Get from https://console.anthropic.com",
+        "ANTHROPIC_MODEL": "Claude model to use (e.g. claude-sonnet-4-5)",
         "GITHUB_CLIENT_ID": "GitHub OAuth App Client ID",
         "GITHUB_CLIENT_SECRET": "GitHub OAuth App Client Secret",
     }
@@ -73,6 +73,7 @@ def load_config() -> Config:
 
     return Config(
         anthropic_api_key=os.environ["ANTHROPIC_API_KEY"],
+        model=os.environ["ANTHROPIC_MODEL"],
         github_client_id=os.environ["GITHUB_CLIENT_ID"],
         github_client_secret=os.environ["GITHUB_CLIENT_SECRET"],
         session_secret=os.getenv("SESSION_SECRET", secrets.token_urlsafe(32)),

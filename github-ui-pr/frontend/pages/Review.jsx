@@ -11,9 +11,16 @@ const Review = () => {
 
   if (!reviewData) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <p>No review data found</p>
-        <button onClick={() => navigate('/home')}>Go Back</button>
+      <div className="page-container-narrow">
+        <div className="card">
+          <div className="card-body text-center">
+            <h3 className="mb-3">No review data found</h3>
+            <p className="text-muted mb-4">Please start a new review from the home page.</p>
+            <button onClick={() => navigate('/home')} className="btn btn-primary">
+              Go Back
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -58,143 +65,114 @@ const Review = () => {
     navigate('/home');
   };
 
-  const getSeverityColor = (severity) => {
+  const getSeverityClass = (severity) => {
     switch (severity) {
-      case 'critical': return '#dc3545';
-      case 'warning': return '#ffc107';
-      default: return '#28a745';
+      case 'critical': return 'severity-critical';
+      case 'warning': return 'severity-warning';
+      default: return 'severity-normal';
     }
   };
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '50px auto', padding: '20px' }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '30px'
-      }}>
-        <h1>Review Preview</h1>
-        <button onClick={() => navigate('/home')}>Back to Home</button>
+    <div className="page-container">
+      <div className="page-header">
+        <h1 className="page-title">Review Preview</h1>
+        <button onClick={() => navigate('/home')} className="btn btn-secondary">
+          Back to Home
+        </button>
       </div>
 
-      <div style={{
-        background: '#f8f9fa',
-        padding: '20px',
-        borderRadius: '8px',
-        marginBottom: '30px'
-      }}>
+      <div className="review-summary">
         <h3>PR Summary</h3>
-        <p><strong>Repository:</strong> {reviewData.owner}/{reviewData.repo}</p>
-        <p><strong>PR Number:</strong> #{reviewData.pr_number}</p>
-        <p><strong>Total Files:</strong> {reviewData.total_files}</p>
-        <p><strong>Total Comments:</strong> {reviewData.total_comments}</p>
+        <div className="summary-grid">
+          <div className="summary-item">
+            <div className="summary-label">Repository</div>
+            <div className="summary-value">{reviewData.owner}/{reviewData.repo}</div>
+          </div>
+          <div className="summary-item">
+            <div className="summary-label">PR Number</div>
+            <div className="summary-value">#{reviewData.pr_number}</div>
+          </div>
+          <div className="summary-item">
+            <div className="summary-label">Total Files</div>
+            <div className="summary-value">{reviewData.total_files}</div>
+          </div>
+          <div className="summary-item">
+            <div className="summary-label">Total Comments</div>
+            <div className="summary-value">{reviewData.total_comments}</div>
+          </div>
+        </div>
       </div>
 
-      <div style={{ marginBottom: '30px' }}>
-        <h3>AI Summary</h3>
-        <div style={{
-          background: 'white',
-          border: '1px solid #ddd',
-          borderRadius: '8px',
-          padding: '15px'
-        }}>
+      <div className="card mb-5">
+        <div className="card-header">
+          <h3 className="mb-0">AI Summary</h3>
+        </div>
+        <div className="card-body">
           {reviewData.summary}
         </div>
       </div>
 
-      <h3>Review Comments ({reviewData.comments.length})</h3>
-      <div style={{ marginBottom: '30px' }}>
+      <h3 className="mb-4">Review Comments ({reviewData.comments.length})</h3>
+      <div className="comment-list">
         {reviewData.comments.map((comment, index) => (
-          <div
-            key={index}
-            style={{
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              marginBottom: '15px',
-              background: 'white'
-            }}
-          >
-            <div style={{
-              background: '#f8f9fa',
-              padding: '10px 15px',
-              borderBottom: '1px solid #ddd',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <span><strong>{comment.path}:{comment.line}</strong></span>
-              <span
-                style={{
-                  color: getSeverityColor(comment.severity),
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  fontSize: '12px'
-                }}
-              >
+          <div key={index} className="comment-item">
+            <div className="comment-header">
+              <span className="comment-location">{comment.path}:{comment.line}</span>
+              <span className={`comment-severity ${getSeverityClass(comment.severity)}`}>
                 {comment.severity || 'normal'}
               </span>
             </div>
-            <div style={{ padding: '15px' }}>
+            <div className="comment-body">
               {comment.body}
             </div>
           </div>
         ))}
       </div>
 
-      <div style={{
-        background: '#f8f9fa',
-        padding: '20px',
-        borderRadius: '8px',
-        textAlign: 'center'
-      }}>
-        <h3>Actions</h3>
-        <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+      <div className="actions-section">
+        <h3 className="actions-title">Actions</h3>
+        <div className="actions-buttons">
           <button
             onClick={() => handleSubmit('COMMENT')}
             disabled={submitting}
-            style={{
-              background: '#28a745',
-              color: 'white',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '6px',
-              fontSize: '16px',
-              cursor: submitting ? 'not-allowed' : 'pointer'
-            }}
+            className="btn btn-success btn-lg"
           >
-            {submitting ? 'Submitting...' : 'Post Review'}
+            {submitting ? (
+              <>
+                <div className="loading-spinner"></div>
+                Submitting...
+              </>
+            ) : (
+              <>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                </svg>
+                Post Review
+              </>
+            )}
           </button>
 
           <button
             onClick={handleRegenerate}
             disabled={submitting}
-            style={{
-              background: '#6c757d',
-              color: 'white',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '6px',
-              fontSize: '16px',
-              cursor: 'pointer'
-            }}
+            className="btn btn-secondary btn-lg"
           >
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+              <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+            </svg>
             Regenerate
           </button>
 
           <button
             onClick={() => navigate('/home')}
             disabled={submitting}
-            style={{
-              background: '#dc3545',
-              color: 'white',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '6px',
-              fontSize: '16px',
-              cursor: 'pointer'
-            }}
+            className="btn btn-danger btn-lg"
           >
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+            </svg>
             Cancel
           </button>
         </div>

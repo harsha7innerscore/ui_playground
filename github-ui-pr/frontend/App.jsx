@@ -6,12 +6,13 @@ import Login from './pages/Login';
 import Callback from './pages/Callback';
 import Home from './pages/Home';
 import Review from './pages/Review';
+import './styles.css';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div style={{ fontFamily: 'Arial, sans-serif', minHeight: '100vh' }}>
+        <div className="app-container">
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
