@@ -1,6 +1,7 @@
 # AnalyticsDashboard Module — Test Documentation
 
 ## 1. Module Overview
+
 - **Entry point**: `src/pages/AnalyticsDashboard.tsx`
 - **Route**: Not directly routed (standalone component)
 - **Purpose**: Displays business analytics dashboard with key metrics, charts, and recent activity data for monitoring performance.
@@ -11,15 +12,15 @@
 ## 2. Component Tree
 
 ```
-AnalyticsDashboard (src/pages/AnalyticsDashboard.tsx)
-├── MetricCard (src/components/Card.tsx) × 4 instances
-│   └── Card (src/components/Card.tsx)
-├── Card (src/components/Card.tsx) × 4 chart containers
+AnalyticsDashboard (/Users/coschool/Desktop/code/ui_playground/test-cases/src/pages/AnalyticsDashboard.tsx)
+├── MetricCard (/Users/coschool/Desktop/code/ui_playground/test-cases/src/components/Card.tsx) × 4 instances
+│   └── Card (/Users/coschool/Desktop/code/ui_playground/test-cases/src/components/Card.tsx)
+├── Card (/Users/coschool/Desktop/code/ui_playground/test-cases/src/components/Card.tsx) × 4 chart containers
 │   ├── LineChart (recharts) — User Growth
-│   ├── BarChart (recharts) — Monthly Revenue  
+│   ├── BarChart (recharts) — Monthly Revenue
 │   ├── PieChart (recharts) — Project Status
 │   └── Activity List (local component) — Recent Activity
-└── mockData (src/data/mockData.ts) — Data source
+└── mockData (/Users/coschool/Desktop/code/ui_playground/test-cases/src/data/mockData.ts) — Data source
 ```
 
 ---
@@ -33,32 +34,40 @@ AnalyticsDashboard (src/pages/AnalyticsDashboard.tsx)
 **Exported**: `export function AnalyticsDashboard()`
 
 **Props / Signature**
+
 ```ts
 // No props interface - standalone page component
-export function AnalyticsDashboard(): JSX.Element
+export function AnalyticsDashboard(): JSX.Element;
 ```
 
 **State**
+
 - `selectedTimeRange: '7d' | '30d' | '90d' | '1y'` — controlled by local useState, defaults to '30d'
 
 **Side Effects**
+
 - None — component uses static mock data
 
 **Event Handlers**
+
 - `handleMetricClick(title: string)` — logs metric title to console, placeholder for navigation
 - `setSelectedTimeRange(option.value)` — updates time range state on button click
 
 **API Interactions**
+
 - None — uses static mock data from `mockData.ts`
 
 **Conditional Rendering**
+
 - Time range buttons: active state based on `selectedTimeRange === option.value`
 - Activity list: renders only first 5 items from `mockActivity.slice(0, 5)`
 
 **Routing**
+
 - None — no routing logic within component
 
 **Testable Units (this file)**
+
 1. Renders dashboard title and subtitle correctly
 2. Renders all 4 time range buttons with correct labels
 3. Sets active class on selected time range button
@@ -81,45 +90,52 @@ export function AnalyticsDashboard(): JSX.Element
 **Exported**: `export function Card`, `export function MetricCard`, `export function UserCard`, `export function ProjectCard`
 
 **Props / Signature**
+
 ```ts
 interface BaseCardProps {
-  className?: string
-  children: React.ReactNode
-  onClick?: () => void
-  hover?: boolean
+  className?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+  hover?: boolean;
 }
 
 interface MetricCardProps {
-  title: string
-  value: string | number
+  title: string;
+  value: string | number;
   change?: {
-    value: string
-    type: 'increase' | 'decrease' | 'neutral'
-  }
-  icon?: LucideIcon
-  iconColor?: string
-  onClick?: () => void
+    value: string;
+    type: "increase" | "decrease" | "neutral";
+  };
+  icon?: LucideIcon;
+  iconColor?: string;
+  onClick?: () => void;
 }
 ```
 
 **State**
+
 - None — stateless presentational components
 
 **Side Effects**
+
 - None
 
 **Event Handlers**
+
 - `onClick` — forwarded to Card component, triggers parent callback
 
 **API Interactions**
+
 - None
 
 **Conditional Rendering**
+
 - `Icon && <Icon />` — renders icon only if provided
 - `change &&` — renders change indicator only if change prop provided
 - CSS classes applied conditionally: `hover`, `card-clickable`, `active` states
 
 **Testable Units (this file)**
+
 1. Card renders children correctly
 2. Card applies hover class when hover=true
 3. Card applies clickable class when onClick provided
@@ -139,32 +155,38 @@ interface MetricCardProps {
 **Exported**: `export const mockMetrics`, `export const chartData`, `export const mockActivity`, type interfaces
 
 **Props / Signature**
+
 ```ts
 interface MetricData {
-  title: string
-  value: string | number
+  title: string;
+  value: string | number;
   change?: {
-    value: string
-    type: 'increase' | 'decrease' | 'neutral'
-  }
-  icon?: string
-  iconColor?: string
+    value: string;
+    type: "increase" | "decrease" | "neutral";
+  };
+  icon?: string;
+  iconColor?: string;
 }
 
 interface ActivityItem {
-  id: string
-  type: 'user_joined' | 'project_created' | 'project_completed' | 'user_updated'
-  title: string
-  description: string
-  timestamp: string
+  id: string;
+  type:
+    | "user_joined"
+    | "project_created"
+    | "project_completed"
+    | "user_updated";
+  title: string;
+  description: string;
+  timestamp: string;
   user?: {
-    name: string
-    avatar?: string
-  }
+    name: string;
+    avatar?: string;
+  };
 }
 ```
 
 **Testable Units (this file)**
+
 1. mockMetrics contains exactly 4 metric objects
 2. Each metric has required title, value, change properties
 3. chartData.userGrowth contains 6 months of data
@@ -177,31 +199,34 @@ interface ActivityItem {
 
 ## 4. Custom Hooks Reference
 
-*No custom hooks in this module.*
+_No custom hooks in this module._
 
 ---
 
 ## 5. API Contract Summary
 
-*No API calls in this module — uses static mock data only.*
+_No API calls in this module — uses static mock data only._
 
 | Method | Endpoint | Trigger | Success shape | Error handling |
-|--------|----------|---------|---------------|----------------|
-| N/A | N/A | N/A | N/A | N/A |
+| ------ | -------- | ------- | ------------- | -------------- |
+| N/A    | N/A      | N/A     | N/A           | N/A            |
 
 ---
 
 ## 6. State Management
 
-*No external state management (Redux/Zustand) — uses only local React state.*
+_No external state management (Redux/Zustand) — uses only local React state._
 
 ### Local State
+
 - **State shape**:
+
 ```ts
 {
-  selectedTimeRange: '7d' | '30d' | '90d' | '1y'
+  selectedTimeRange: "7d" | "30d" | "90d" | "1y";
 }
 ```
+
 - **Updates**: Direct setState via `setSelectedTimeRange`
 - **Jest approach**: test state changes via user interactions, assert UI updates
 
@@ -209,13 +234,13 @@ interface ActivityItem {
 
 ## 7. Form Validation Rules
 
-*No forms in this module.*
+_No forms in this module._
 
 ---
 
 ## 8. Permission / Auth Guards
 
-*No authentication or authorization logic in this module.*
+_No authentication or authorization logic in this module._
 
 ---
 
@@ -262,15 +287,16 @@ Format: `[PRIORITY] FileName > describe block > it description`
 
 Describes what must be mocked in Jest for this module to work in isolation.
 
-| What | How to mock | Notes |
-|------|-------------|-------|
-| `recharts` components | `jest.mock('recharts')` with mock components returning test IDs | Use simple divs with data-testid for chart testing |
-| `lucide-react` icons | `jest.mock('lucide-react')` returning mock icon components | Return simple divs with icon name as data-testid |
-| `console.log` | `jest.spyOn(console, 'log').mockImplementation(() => {})` | Verify handleMetricClick calls |
-| CSS modules | Use `identity-obj-proxy` in jest config | CSS classes become strings |
-| Date formatting | `jest.spyOn(Date.prototype, 'toLocaleDateString').mockReturnValue('1/1/2024')` | Control date output for consistent tests |
+| What                  | How to mock                                                                    | Notes                                              |
+| --------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------- |
+| `recharts` components | `jest.mock('recharts')` with mock components returning test IDs                | Use simple divs with data-testid for chart testing |
+| `lucide-react` icons  | `jest.mock('lucide-react')` returning mock icon components                     | Return simple divs with icon name as data-testid   |
+| `console.log`         | `jest.spyOn(console, 'log').mockImplementation(() => {})`                      | Verify handleMetricClick calls                     |
+| CSS modules           | Use `identity-obj-proxy` in jest config                                        | CSS classes become strings                         |
+| Date formatting       | `jest.spyOn(Date.prototype, 'toLocaleDateString').mockReturnValue('1/1/2024')` | Control date output for consistent tests           |
 
 ### Standard test wrapper factory
+
 ```ts
 // tests/utils/renderWithProviders.tsx
 import { render } from '@testing-library/react'
@@ -301,6 +327,7 @@ export function renderWithRouter(
 ```
 
 ### Mock implementations
+
 ```ts
 // __mocks__/recharts.tsx
 export const ResponsiveContainer = ({ children }: any) => <div data-testid="responsive-container">{children}</div>
