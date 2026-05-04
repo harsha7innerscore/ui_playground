@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getAuthHeaders } from '../utils/auth';
+import { useAuth } from '../components/AuthContext';
+import { GitHubClient } from '../src/services/github-api';
 
 const Review = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const reviewData = location.state?.reviewData;
+  const { token } = useAuth();
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -29,33 +31,31 @@ const Review = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/review/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...getAuthHeaders()
-        },
-        body: JSON.stringify({
-          owner: reviewData.owner,
-          repo: reviewData.repo,
-          pr_number: reviewData.pr_number,
-          comments: reviewData.comments,
-          summary: reviewData.summary,
-          event: event
-        }),
-        credentials: 'same-origin'
-      });
+      const githubClient = new GitHubClient(token);
 
-      if (response.ok) {
-        const result = await response.json();
-        alert('Review submitted successfully!');
-        navigate('/home');
-      } else {
-        const error = await response.text();
-        alert('Error submitting review: ' + error);
-      }
+      // First get PR details to get the head_sha (needed for submitting reviews)
+      const prDetails = await githubClient.getPrDetails(
+        reviewData.owner,
+        reviewData.repo,
+        reviewData.pr_number
+      );
+
+      // Submit the review using GitHub API
+      const result = await githubClient.postReview(
+        reviewData.owner,
+        reviewData.repo,
+        reviewData.pr_number,
+        prDetails.head_sha,
+        reviewData.summary || 'AI-generated review',
+        event,
+        reviewData.comments || []
+      );
+
+      alert('Review submitted successfully!');
+      navigate('/home');
     } catch (error) {
-      alert('Error: ' + error.message);
+      console.error('Error submitting review:', error);
+      alert(`Error submitting review: ${error.message}`);
     } finally {
       setSubmitting(false);
     }

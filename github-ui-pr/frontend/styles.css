@@ -607,3 +607,9 @@ html {
 .form-input.error:focus {
   box-shadow: 0 0 0 3px rgba(207, 34, 46, 0.15);
 }
+
+/* Spinner animation for loading states */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './components/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
-import Callback from './pages/Callback';
 import Home from './pages/Home';
 import Review from './pages/Review';
 import './styles.css';
@@ -16,7 +15,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/callback" element={<Callback />} />
             <Route
               path="/home"
               element={

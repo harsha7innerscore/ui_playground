@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
-import { getAuthHeaders } from '../utils/auth';
+import { parsePrUrl } from '../src/services/github-api';
+import { reviewPR } from '../src/services/claude-api';
 
 const Home = () => {
   const [prUrl, setPrUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const { user, logout } = useAuth();
+  const [progress, setProgress] = useState({ type: '', message: '' });
+  const { user, token, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,27 +16,76 @@ const Home = () => {
     if (!prUrl.trim()) return;
 
     setLoading(true);
+    setProgress({ type: 'start', message: 'Starting PR analysis...' });
 
     try {
-      const response = await fetch('/api/review/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...getAuthHeaders()
-        },
-        body: JSON.stringify({ pr_url: prUrl }),
-        credentials: 'same-origin'
+      // Parse PR URL
+      const { owner, repo, prNumber } = parsePrUrl(prUrl);
+
+      setProgress({ type: 'parsing', message: `Parsed PR: ${owner}/${repo}#${prNumber}` });
+
+      // Start PR review with progress tracking
+      const result = await reviewPR(owner, repo, prNumber, token, (progressUpdate) => {
+        switch (progressUpdate.type) {
+          case 'iteration':
+            setProgress({
+              type: 'iteration',
+              message: `Analysis iteration ${progressUpdate.iteration}...`
+            });
+            break;
+          case 'tool_call':
+            setProgress({
+              type: 'tool_call',
+              message: `Calling ${progressUpdate.toolName}...`
+            });
+            break;
+          case 'message':
+            setProgress({
+              type: 'message',
+              message: progressUpdate.message
+            });
+            break;
+          case 'complete':
+            setProgress({
+              type: 'complete',
+              message: 'Review analysis completed!'
+            });
+            break;
+          case 'error':
+            setProgress({
+              type: 'error',
+              message: `Error: ${progressUpdate.error}`
+            });
+            break;
+        }
       });
 
-      if (response.ok) {
-        const reviewData = await response.json();
-        navigate('/review', { state: { reviewData } });
+      if (result.success) {
+        // For now, just show success and navigate back
+        // In a real implementation, you'd want to extract the review data
+        // from Claude's final response and format it for the Review component
+        alert('Review completed successfully! (Integration with Review page coming soon)');
+        console.log('Review result:', result);
+
+        // Navigate to review page with mock data for now
+        const mockReviewData = {
+          owner,
+          repo,
+          pr_number: prNumber,
+          summary: result.finalMessage || 'Review completed successfully',
+          comments: [], // Would extract from Claude's response
+          total_files: 0,
+          total_comments: 0
+        };
+
+        navigate('/review', { state: { reviewData: mockReviewData } });
       } else {
-        const error = await response.text();
-        alert('Error: ' + error);
+        alert(`Review failed: ${result.error}`);
       }
     } catch (error) {
-      alert('Error: ' + error.message);
+      console.error('Error analyzing PR:', error);
+      alert(`Error: ${error.message}`);
+      setProgress({ type: 'error', message: `Error: ${error.message}` });
     } finally {
       setLoading(false);
     }
@@ -119,16 +170,13 @@ const Home = () => {
           <div className="loading-steps">
             <div className="loading-step">
               <div className="loading-spinner"></div>
-              Fetching PR data...
+              {progress.message || 'Starting analysis...'}
             </div>
-            <div className="loading-step">
-              <div className="loading-spinner"></div>
-              Running AI analysis...
-            </div>
-            <div className="loading-step">
-              <div className="loading-spinner"></div>
-              Generating review comments...
-            </div>
+            {progress.type === 'error' && (
+              <div className="loading-step" style={{ color: 'red' }}>
+                ❌ {progress.message}
+              </div>
+            )}
             <p className="text-muted mt-3">
               <em>This may take 1-3 minutes depending on PR size.</em>
             </p>

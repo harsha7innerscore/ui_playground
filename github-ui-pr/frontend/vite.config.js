@@ -10,13 +10,15 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/api': {
-          target: 'http://localhost:8000',
-          changeOrigin: true
+        '/github-api': {
+          target: 'https://api.github.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/github-api/, '')
         },
-        '/auth': {
-          target: 'http://localhost:8000',
-          changeOrigin: true
+        '/anthropic-api': {
+          target: 'https://api.anthropic.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/anthropic-api/, '')
         }
       }
     },
