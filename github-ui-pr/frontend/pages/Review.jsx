@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getAuthHeaders } from '../utils/auth';
 
 const Review = () => {
   const location = useLocation();
@@ -25,6 +26,7 @@ const Review = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...getAuthHeaders()
         },
         body: JSON.stringify({
           owner: reviewData.owner,

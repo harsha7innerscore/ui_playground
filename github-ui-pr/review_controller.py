@@ -5,7 +5,7 @@ API endpoints for triggering and managing PR reviews.
 User-driven reviews instead of webhook automation.
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Cookie
+from fastapi import APIRouter, HTTPException, Depends, Cookie, Header
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 from session_store import session_store
@@ -51,8 +51,28 @@ class ReviewSubmission(BaseModel):
 router = APIRouter(prefix="/api/review")
 
 
-def get_current_session(session_id: Optional[str] = Cookie(None)):
-    """Get current user session from cookie."""
+class AuthInfo:
+    """Authentication information - either from session or token."""
+    def __init__(self, access_token: str, github_username: str = None, user_id: str = None):
+        self.access_token = access_token
+        self.github_username = github_username
+        self.user_id = user_id
+
+
+def get_current_session(
+    session_id: Optional[str] = Cookie(None),
+    authorization: Optional[str] = Header(None)
+):
+    """Get current user session from cookie or Bearer token."""
+
+    # Try Bearer token first
+    if authorization and authorization.startswith("Bearer "):
+        token = authorization.split(" ", 1)[1]
+        # For Bearer tokens, return minimal auth info
+        # Frontend should have stored user info separately
+        return AuthInfo(access_token=token, github_username="github_user")
+
+    # Fallback to session cookie
     if not session_id:
         raise HTTPException(status_code=401, detail="Not authenticated")
 
@@ -60,20 +80,24 @@ def get_current_session(session_id: Optional[str] = Cookie(None)):
     if not session:
         raise HTTPException(status_code=401, detail="Session expired")
 
-    return session
+    return AuthInfo(
+        access_token=session.access_token,
+        github_username=session.github_username,
+        user_id=str(session.user_id)
+    )
 
 
 @router.post("/generate", response_model=ReviewResponse)
 async def generate_review(
     request: ReviewRequest,
-    session = Depends(get_current_session)
+    auth_info = Depends(get_current_session)
 ):
     """
     Generate AI review for PR (doesn't post to GitHub).
 
     Args:
         request: PR URL to review
-        session: Current user session
+        auth_info: Current user authentication info
 
     Returns:
         Generated review comments and summary
@@ -88,7 +112,7 @@ async def generate_review(
             owner=owner,
             repo=repo,
             pr_number=pr_number,
-            access_token=session.access_token
+            access_token=auth_info.access_token
         )
 
         if not result["success"]:
@@ -117,14 +141,14 @@ async def generate_review(
 @router.post("/submit")
 async def submit_review(
     submission: ReviewSubmission,
-    session = Depends(get_current_session)
+    auth_info = Depends(get_current_session)
 ):
     """
     Submit review to GitHub.
 
     Args:
         submission: Review to submit
-        session: Current user session
+        auth_info: Current user authentication info
 
     Returns:
         Success confirmation
@@ -138,7 +162,7 @@ async def submit_review(
             comments=submission.comments,
             summary=submission.summary,
             event=submission.event,
-            access_token=session.access_token
+            access_token=auth_info.access_token
         )
 
         if not success:

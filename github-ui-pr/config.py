@@ -43,7 +43,7 @@ class Config:
     # The Claude model to use for reviews.
     # claude-opus-4-7 is the most capable model — ideal for code review
     # which requires deep reasoning about code quality, bugs, and patterns.
-    model: str = "claude-opus-4-7"
+    model: str = "claude-sonnet-4-5"
 
 
 def load_config() -> Config:
