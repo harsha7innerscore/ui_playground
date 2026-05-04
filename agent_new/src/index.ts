@@ -7,7 +7,7 @@ import path from "path";
 import { readFiles } from "./reader";
 import { detectContext } from "./detector";
 import { generateTests } from "./agent";
-import { writeTestFile } from "./writer";
+import { writeTestFiles } from "./writer";
 
 // Load environment variables
 config();
@@ -88,7 +88,7 @@ async function main() {
     // Step 3: Generate tests with Claude
     console.log("Generating tests with Claude...");
     const moduleName = path.basename(modulePath, path.extname(modulePath));
-    const testCode = await generateTests({
+    const generatedFiles = await generateTests({
       moduleContent,
       docsContent,
       testingLibrary: context.testingLibrary,
@@ -96,19 +96,18 @@ async function main() {
       moduleName,
     });
 
-    // Step 4: Write or print test file
+    // Step 4: Write or print test files
     if (options.dryRun) {
-      console.log("\n--- Generated Test File ---\n");
-      console.log(testCode);
+      console.log("\n--- Generated Test Files ---\n");
+      for (const file of generatedFiles) {
+        console.log(`\n=== ${file.path} ===\n`);
+        console.log(file.content);
+      }
     } else {
-      console.log("Writing test file...");
-      const writtenPath = await writeTestFile(
-        modulePath,
-        outputPath,
-        testCode,
-        context.fileExtension,
-      );
-      console.log(`✅ Test file written to: ${writtenPath}`);
+      console.log("Writing test files...");
+      const writtenPaths = await writeTestFiles(outputPath, generatedFiles);
+      console.log(`✅ ${writtenPaths.length} test files written:`);
+      writtenPaths.forEach(path => console.log(`   ${path}`));
     }
   } catch (error: any) {
     console.error(`Error: ${error.message}`);

@@ -1,6 +1,7 @@
 # UserManagement Module — Test Documentation
 
 ## 1. Module Overview
+
 - **Entry point**: `src/pages/UserManagement.tsx`
 - **Route**: `/users`
 - **Purpose**: User management interface for viewing, filtering, searching, and managing team members with their roles and statuses.
@@ -11,12 +12,12 @@
 ## 2. Component Tree
 
 ```
-UserManagement (src/pages/UserManagement.tsx)
-├── Card (src/components/Card.tsx)                    ← base card wrapper
-├── UserCard (src/components/Card.tsx)                ← user display component
-├── mockUsers (src/data/mockData.ts)                  ← data source
+UserManagement (/Users/coschool/Desktop/code/ui_playground/test-cases/src/pages/UserManagement.tsx)
+├── Card (/Users/coschool/Desktop/code/ui_playground/test-cases/src/components/Card.tsx)                    ← base card wrapper
+├── UserCard (/Users/coschool/Desktop/code/ui_playground/test-cases/src/components/Card.tsx)                ← user display component
+├── mockUsers (/Users/coschool/Desktop/code/ui_playground/test-cases/src/data/mockData.ts)                  ← data source
 ├── Icons (lucide-react)                              ← Search, Plus, Filter, Users, UserCheck, UserX, Clock
-└── CSS (src/pages/Dashboard.css)                     ← styling
+└── CSS (/Users/coschool/Desktop/code/ui_playground/test-cases/src/pages/Dashboard.css)                     ← styling
 ```
 
 ---
@@ -30,21 +31,25 @@ UserManagement (src/pages/UserManagement.tsx)
 **Exported**: `export function UserManagement()`
 
 **Props / Signature**
+
 ```ts
 // No props - top-level page component
-export function UserManagement(): JSX.Element
+export function UserManagement(): JSX.Element;
 ```
 
 **State**
+
 - `searchTerm: string` — controlled by useState, filters users by name/email
 - `selectedRole: string` — controlled by useState, filters by role ('all' or specific role)
 - `selectedStatus: string` — controlled by useState, filters by status ('all', 'active', 'inactive', 'pending')
 - `showAddUserModal: boolean` — controlled by useState, shows/hides add user modal
 
 **Side Effects**
+
 - No useEffect hooks - component is purely reactive to state changes
 
 **Event Handlers**
+
 - `handleEditUser(userId: string)` — logs editing action (placeholder implementation)
 - `handleDeleteUser(userId: string)` — logs deletion action (placeholder implementation)
 - `setSearchTerm` onChange for search input
@@ -53,17 +58,21 @@ export function UserManagement(): JSX.Element
 - `setShowAddUserModal` onClick for add user buttons and modal overlay
 
 **API Interactions**
+
 - Uses static mock data from `mockUsers` - no actual API calls
 
 **Conditional Rendering**
+
 - `filteredUsers.length > 0` → renders UserCard list
 - `filteredUsers.length === 0` → renders empty state with "No users found"
 - `showAddUserModal` → renders modal overlay
 
 **Routing**
+
 - No routing logic within component - is a route target at `/users`
 
 **Testable Units (this file)**
+
 1. Renders correct number of stat cards with calculated values
 2. Filters users correctly based on search term (name and email)
 3. Filters users correctly based on selected role
@@ -85,48 +94,55 @@ export function UserManagement(): JSX.Element
 **Exported**: `export function Card`, `export function UserCard`, `export function MetricCard`, `export function ProjectCard`
 
 **Props / Signature**
+
 ```ts
 interface BaseCardProps {
-  className?: string
-  children: React.ReactNode
-  onClick?: () => void
-  hover?: boolean
+  className?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+  hover?: boolean;
 }
 
 interface UserCardProps {
   user: {
-    id: string
-    name: string
-    email: string
-    avatar?: string
-    role: string
-    status: 'active' | 'inactive' | 'pending'
-  }
-  onEdit?: (userId: string) => void
-  onDelete?: (userId: string) => void
+    id: string;
+    name: string;
+    email: string;
+    avatar?: string;
+    role: string;
+    status: "active" | "inactive" | "pending";
+  };
+  onEdit?: (userId: string) => void;
+  onDelete?: (userId: string) => void;
 }
 ```
 
 **State**
+
 - No internal state - pure presentational components
 
 **Side Effects**
+
 - No side effects
 
 **Event Handlers**
+
 - `onClick` callback for Card component
 - `onEdit(user.id)` when Edit button clicked in UserCard
 - `onDelete(user.id)` when Remove button clicked in UserCard
 
 **API Interactions**
+
 - None - purely presentational
 
 **Conditional Rendering**
+
 - UserCard: shows avatar image or placeholder initials
 - UserCard: shows Edit button only if onEdit prop provided
 - UserCard: shows Remove button only if onDelete prop provided
 
 **Testable Units (this file)**
+
 1. Card renders children and applies correct CSS classes
 2. Card calls onClick when clicked (if provided)
 3. UserCard displays user information correctly
@@ -146,37 +162,44 @@ interface UserCardProps {
 **Exported**: `export const mockUsers: User[]`, `export interface User`
 
 **Props / Signature**
+
 ```ts
 export interface User {
-  id: string
-  name: string
-  email: string
-  avatar?: string
-  role: string
-  status: 'active' | 'inactive' | 'pending'
-  lastActive: string
-  joinDate: string
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  role: string;
+  status: "active" | "inactive" | "pending";
+  lastActive: string;
+  joinDate: string;
 }
 
-export const mockUsers: User[]
+export const mockUsers: User[];
 ```
 
 **State**
+
 - Static data export - no state
 
 **Side Effects**
+
 - No side effects
 
 **Event Handlers**
+
 - No event handlers
 
 **API Interactions**
+
 - No API calls - static mock data
 
 **Conditional Rendering**
+
 - Not applicable
 
 **Testable Units (this file)**
+
 1. mockUsers array contains expected number of users
 2. Each user object has required properties
 3. User status values are valid enum values
@@ -192,13 +215,14 @@ No custom hooks are used in this module. All functionality uses built-in React h
 
 ## 5. API Contract Summary
 
-| Method | Endpoint | Trigger | Success shape | Error handling |
-|--------|----------|---------|---------------|----------------|
-| N/A | Static mock data | Component mount | `User[]` from mockUsers | No error handling needed |
+| Method | Endpoint         | Trigger         | Success shape           | Error handling           |
+| ------ | ---------------- | --------------- | ----------------------- | ------------------------ |
+| N/A    | Static mock data | Component mount | `User[]` from mockUsers | No error handling needed |
 
 **Note**: This module currently uses static mock data. Future API integration would likely involve:
+
 - GET `/api/users` for fetching users
-- PUT `/api/users/:id` for editing users  
+- PUT `/api/users/:id` for editing users
 - DELETE `/api/users/:id` for deleting users
 - POST `/api/users` for creating users
 
@@ -207,15 +231,18 @@ No custom hooks are used in this module. All functionality uses built-in React h
 ## 6. State Management
 
 ### Local Component State (useState)
+
 - **State shape**:
+
 ```ts
 interface UserManagementState {
   searchTerm: string;
   selectedRole: string;
-  selectedStatus: string;  
+  selectedStatus: string;
   showAddUserModal: boolean;
 }
 ```
+
 - **State updates**: Direct useState setters for each state variable
 - **Jest approach**: test state transitions via user interactions; assert DOM changes reflect state updates
 
@@ -224,21 +251,24 @@ interface UserManagementState {
 ## 7. Form Validation Rules
 
 ### Search Input
+
 - **Library**: Native HTML input (no form library)
 - **Validation**: No validation - accepts any text input
 - **Jest approach**: test that search term updates component state and filters results
 
-### Filter Selects  
+### Filter Selects
+
 - **Library**: Native HTML select elements
 - **Validation**: Constrained to predefined options
 - **Options**:
 
-| Filter | Options |
-|--------|---------|
-| Role | 'all', 'administrator', 'project manager', 'developer', 'designer', 'qa engineer' |
-| Status | 'all', 'active', 'inactive', 'pending' |
+| Filter | Options                                                                           |
+| ------ | --------------------------------------------------------------------------------- |
+| Role   | 'all', 'administrator', 'project manager', 'developer', 'designer', 'qa engineer' |
+| Status | 'all', 'active', 'inactive', 'pending'                                            |
 
 ### Add User Modal
+
 - **Current implementation**: Placeholder with no actual form
 - **Jest approach**: test modal visibility and close functionality only
 
@@ -306,15 +336,16 @@ Format: `[PRIORITY] FileName > describe block > it description`
 
 Describes what must be mocked in Jest for this module to work in isolation.
 
-| What | How to mock | Notes |
-|------|-------------|-------|
-| React Router | Wrap with `MemoryRouter initialEntries={['/users']}` | UserManagement is a route target |
-| Theme Context | Mock `useTheme` hook or wrap with `ThemeProvider` | Layout component uses theme context |
-| mockData import | `jest.mock('../data/mockData')` if testing data isolation | Usually not needed - use real mock data |
-| lucide-react icons | `jest.mock('lucide-react', () => ({ IconName: 'IconName' }))` | Simplify icon rendering |
-| CSS imports | Use `identity-obj-proxy` in jest config | Already configured |
+| What               | How to mock                                                   | Notes                                   |
+| ------------------ | ------------------------------------------------------------- | --------------------------------------- |
+| React Router       | Wrap with `MemoryRouter initialEntries={['/users']}`          | UserManagement is a route target        |
+| Theme Context      | Mock `useTheme` hook or wrap with `ThemeProvider`             | Layout component uses theme context     |
+| mockData import    | `jest.mock('../data/mockData')` if testing data isolation     | Usually not needed - use real mock data |
+| lucide-react icons | `jest.mock('lucide-react', () => ({ IconName: 'IconName' }))` | Simplify icon rendering                 |
+| CSS imports        | Use `identity-obj-proxy` in jest config                       | Already configured                      |
 
 ### Standard test wrapper factory
+
 ```ts
 // tests/utils/renderWithProviders.tsx
 import { ReactElement } from 'react'
@@ -337,6 +368,7 @@ export function renderWithProviders(
 ```
 
 ### Mock implementations
+
 ```ts
 // Mock lucide-react icons
 jest.mock('lucide-react', () => ({
