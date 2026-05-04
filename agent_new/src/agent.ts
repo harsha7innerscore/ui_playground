@@ -1,6 +1,7 @@
 export interface AgentInput {
   moduleContent: string;
   docsContent: string;
+  errorContent?: string;
   testingLibrary: boolean;
   exampleTest: string | null;
   moduleName: string;
@@ -73,6 +74,7 @@ function buildPrompt(input: AgentInput): string {
   const {
     moduleContent,
     docsContent,
+    errorContent,
     testingLibrary,
     exampleTest,
     moduleName,
@@ -94,7 +96,13 @@ ${moduleContent}
 ${docsContent}
 
 ---
+${errorContent ? `
+## Common Issues & Solutions
 
+${errorContent}
+
+---
+` : ''}
 ## Test Framework & Environment
 
 - Framework: Jest (always)
@@ -150,7 +158,8 @@ Rules:
 - Use 'screen' queries from @testing-library/react when available
 - Prefer userEvent over fireEvent for interactions
 - Implement ALL mocks specified in mocking guide section
-- Do not mock things that do not need to be mocked unless specified in docs`;
+- Do not mock things that do not need to be mocked unless specified in docs
+- Avoid common issues mentioned in the Common Issues & Solutions section${errorContent ? '\n- Apply fixes and patterns from the error documentation' : ''}`;
 
   return prompt;
 }

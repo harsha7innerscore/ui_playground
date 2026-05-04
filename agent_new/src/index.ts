@@ -34,6 +34,10 @@ async function main() {
       "Directory where test file will be written",
     )
     .option(
+      "--error-docs-path <path>",
+      "Optional path to error documentation file",
+    )
+    .option(
       "--dry-run",
       "If present, prints generated test to stdout instead of writing to disk",
     );
@@ -55,6 +59,7 @@ async function main() {
     const modulePath = path.resolve(options.modulePath);
     const docsPath = path.resolve(options.docsPath);
     const outputPath = path.resolve(options.outputPath);
+    const errorDocsPath = options.errorDocsPath ? path.resolve(options.errorDocsPath) : undefined;
 
     // Validate that module and docs files exist
     try {
@@ -76,9 +81,10 @@ async function main() {
 
     // Step 1: Read files
     console.log("Reading module and docs files...");
-    const { moduleContent, docsContent } = await readFiles(
+    const { moduleContent, docsContent, errorContent } = await readFiles(
       modulePath,
       docsPath,
+      errorDocsPath,
     );
 
     // Step 2: Detect context
@@ -91,6 +97,7 @@ async function main() {
     const generatedFiles = await generateTests({
       moduleContent,
       docsContent,
+      errorContent,
       testingLibrary: context.testingLibrary,
       exampleTest: context.exampleTest,
       moduleName,

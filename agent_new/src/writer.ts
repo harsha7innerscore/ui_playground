@@ -30,8 +30,16 @@ export async function writeTestFiles(
   const writtenPaths: string[] = [];
 
   for (const file of files) {
+    // Put test files in src/tests/ subdirectory
+    let filePath = file.path;
+    if (filePath.endsWith('.test.tsx') || filePath.endsWith('.test.ts') || filePath.endsWith('.test.js')) {
+      // Extract filename and put in src/tests/
+      const filename = path.basename(filePath);
+      filePath = path.join('src', 'tests', filename);
+    }
+
     // Resolve full path
-    const fullPath = path.resolve(outputPath, file.path);
+    const fullPath = path.resolve(outputPath, filePath);
 
     // Create directory if needed
     const dir = path.dirname(fullPath);
