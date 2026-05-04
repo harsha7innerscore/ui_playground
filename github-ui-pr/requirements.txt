@@ -1,0 +1,24 @@
+# ============================================================
+# GitHub PR Review Agent — OAuth UI System
+# ============================================================
+
+# Anthropic SDK — the official Python library for the Claude API.
+anthropic>=0.50.0
+
+# FastAPI — modern, fast web framework for building the OAuth web server.
+fastapi>=0.115.0
+
+# Uvicorn — ASGI server that runs FastAPI.
+uvicorn[standard]>=0.32.0
+
+# Requests — HTTP library for GitHub REST API and OAuth flow.
+requests>=2.32.0
+
+# python-dotenv — loads .env files into environment variables.
+python-dotenv>=1.0.0
+
+# Pydantic — data validation and serialization for API models.
+pydantic>=2.10.0
+
+# Python-multipart — required for FastAPI form data handling.
+python-multipart>=0.0.12
