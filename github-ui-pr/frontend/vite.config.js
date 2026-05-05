@@ -10,6 +10,11 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       proxy: {
+        '/github-api/login': {
+          target: 'https://github.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/github-api/, '')
+        },
         '/github-api': {
           target: 'https://api.github.com',
           changeOrigin: true,
@@ -18,7 +23,15 @@ export default defineConfig(({ mode }) => {
         '/anthropic-api': {
           target: 'https://api.anthropic.com',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/anthropic-api/, '')
+          rewrite: (path) => path.replace(/^\/anthropic-api/, ''),
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyReq, req) => {
+              // Ensure auth headers are preserved
+              if (req.headers.authorization) {
+                proxyReq.setHeader('authorization', req.headers.authorization);
+              }
+            });
+          }
         }
       }
     },
