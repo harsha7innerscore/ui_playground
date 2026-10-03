@@ -11,7 +11,9 @@ Step 2 (ops_mongo): for every journey_id found, ai-tutor.ocr-worksheet-details
 filtered by journey_id/journeyId gives the actual worksheet + image urls.
 
 Dumps everything to output/<task_id>.json for Problem 2 (submission linking)
-analysis, scoped to one task as goal.md requires.
+analysis, scoped to one task as goal.md requires. Also writes
+output/<task_id>_submissions.json: a flat [{user_id, image_urls, ...}] list,
+the direct input shape Problem 2's pairwise comparison needs.
 """
 
 import json
@@ -48,19 +50,20 @@ def find_values_by_key(doc, key_substring, path=""):
     return found
 
 
-def find_s3_urls(doc, path=""):
-    found = []
-    if isinstance(doc, dict):
-        for key, value in doc.items():
-            key_path = f"{path}.{key}" if path else key
-            if isinstance(value, str) and ("s3://" in value or "s3" in key.lower() or "url" in key.lower()):
-                found.append((key_path, value))
-            else:
-                found.extend(find_s3_urls(value, key_path))
-    elif isinstance(doc, list):
-        for i, item in enumerate(doc):
-            found.extend(find_s3_urls(item, f"{path}[{i}]"))
-    return found
+def build_submissions(worksheets_by_journey):
+    """Flatten worksheet docs into one {user_id, image_urls, ...} record per worksheet."""
+    submissions = []
+    for journey_id, docs in worksheets_by_journey.items():
+        for doc in docs:
+            submissions.append(
+                {
+                    "user_id": doc.get("user_id"),
+                    "journey_id": journey_id,
+                    "worksheet_id": doc.get("worksheet_id"),
+                    "image_urls": doc.get("image_urls", []),
+                }
+            )
+    return submissions
 
 
 def main():
@@ -121,15 +124,16 @@ def main():
         )
     print(f"\nRaw data written to {out_path}")
 
-    print("\nCandidate s3/url fields across all fetched worksheets:")
-    for journey_id, docs in worksheets_by_journey.items():
-        for i, doc in enumerate(docs):
-            hits = find_s3_urls(doc)
-            if not hits:
-                continue
-            print(f"\n  journey={journey_id} doc[{i}] (_id={doc.get('_id')}):")
-            for key_path, value in hits:
-                print(f"    {key_path} = {value}")
+    submissions = build_submissions(worksheets_by_journey)
+    submissions_path = OUTPUT_DIR / f"{task_id}_submissions.json"
+    with submissions_path.open("w") as f:
+        json.dump(submissions, f, indent=2, default=str)
+    print(f"Submissions (user_id -> image_urls) written to {submissions_path}")
+
+    print("\nuser_id -> image_urls:")
+    for sub in submissions:
+        for url in sub["image_urls"]:
+            print(f"  {sub['user_id']}  {url}")
 
 
 if __name__ == "__main__":
