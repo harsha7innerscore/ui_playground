@@ -562,14 +562,18 @@ layer deeper than expected:
 - As predicted, `camera_geometry` and `encoder_fingerprint` fired for ~100% of pairs
   and were auto-suppressed; `lighting_match` fired for 59% and was suppressed too.
 - But `paper_match` still flagged everyone, because its **sub-signals** weren't
-  independently suppressed. Two separate bugs, both the same failure mode in
-  miniature:
-  1. The fold-line detector read the printed left-margin rule line — present at the
-     same position and angle on every page by stationery design — as an "accidental
-     fold." 100% of pairs matched on it.
-  2. `paper_colour_score` matched >70 on 92% of pairs — confirms the README's own
-     low-information table (narrow paper-colour range) exactly, but nothing was
-     downweighting it per-task.
+  independently suppressed. Measuring each sub-signal's fire-rate across all 903
+  image pairs in the task shows exactly which one did it:
+
+  | Paper sub-signal | Fire rate across all pairs | Verdict |
+  |---|---|---|
+  | `paper_colour_score` > 70 | **92.2%** | The flood. Confirms the README's own low-information table (narrow paper-colour range) precisely |
+  | `ruling_pitch_score` > 70 | 33.3% | High, as predicted for ~4 common ruling sizes, but under the suppression threshold |
+  | `stain_match_pct` > 60 | 1.2% | Genuinely rare — behaving as a high-information clue should |
+  | `fold_match_pct` > 60 | 0.9% | Genuinely rare — but see the under-detection caveat below |
+
+  So the 55/55 flood came through one channel: paper colour, which matched on
+  almost every pair and tipped every pair into `weak_paper_only`.
 
 **Fix:** baseline suppression now runs on `paper_match`'s four sub-components
 (fold, stain, ruling pitch, paper colour) independently, not just on the six
@@ -580,6 +584,17 @@ stationery, correctly kept weak, with nothing strong enough to reach
 `SAME_SESSION`/`SAME_DEVICE` on this upload path. That matches the second-probe
 prediction: PDF-rasterised submissions have no camera/lighting/encoder signal left,
 so paper-type matching alone is the ceiling, and it should stay capped low.
+
+**Open problem — the high-information clues are barely firing.** Fold detection
+found at most **one** candidate line per image and a mean of 0.23 across the 43
+images; stain matching fired on 1.2% of pairs. Their low fire-rates above are
+therefore ambiguous: it could mean these accidents are genuinely rare (good — that
+is what makes them high-information), or that the detectors are under-sensitive on
+rasterised, contrast-flattened scans and are missing real folds and stains. Those two
+readings have opposite implications and the current data cannot separate them. Until
+this is resolved by eyeballing a sample of pages against what the detector found,
+the only clue doing real work on this upload path is paper colour/ruling — both
+low-information. **This is the single biggest open question for Problem 2.**
 
 **Lesson for future clues:** "baseline suppression" isn't a property of the six named
 signals — it has to run on every sub-score that feeds a verdict, at whatever level
