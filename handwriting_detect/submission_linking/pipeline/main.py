@@ -28,7 +28,7 @@ import requests
 from classify import classify_pair
 from grouping import group_links
 from scoring import score_pair
-from suppression import compute_suppressed_clues
+from suppression import compute_suppressed_clues, compute_suppressed_paper_subclues
 from s3_timing import get_last_modified, seconds_apart
 from features import extract_features
 
@@ -111,11 +111,13 @@ def main():
         raw_results.append((a, b, signals))
 
     suppressed = compute_suppressed_clues([signals for _, _, signals in raw_results])
+    suppressed_paper_subclues = compute_suppressed_paper_subclues([signals for _, _, signals in raw_results])
     print(f"Suppressed clues for this task: {suppressed or 'none'}")
+    print(f"Suppressed paper sub-clues for this task: {suppressed_paper_subclues or 'none'}")
 
     student_pair_best = {}
     for a, b, signals in raw_results:
-        verdict = classify_pair(signals, suppressed)
+        verdict = classify_pair(signals, suppressed, suppressed_paper_subclues)
         key = tuple(sorted((a["user_id"], b["user_id"])))
         current = student_pair_best.get(key)
         if current is None or verdict["score"] > current["verdict"]["score"]:
@@ -143,12 +145,26 @@ def main():
 
     groups = group_links(links)
 
+    # README's output design rule #1: raw distances for every pair evaluated,
+    # not just flagged ones — needed later for impossible-pairs calibration.
+    all_pairs = [
+        {
+            "student_a": key[0],
+            "student_b": key[1],
+            "link_type": best["verdict"]["link_type"],
+            "score": best["verdict"]["score"],
+            "signals": best["signals"],
+        }
+        for key, best in student_pair_best.items()
+    ]
+
     report = {
         "task_id": task_id,
         "students_submitted": len({img["user_id"] for img in images}),
         "pairs_compared": len(student_pair_best),
         "pairs_flagged": len(links),
         "suppressed_clues": suppressed,
+        "suppressed_paper_subclues": suppressed_paper_subclues,
         "links": links,
         "groups": [sorted(g) for g in groups],
     }
@@ -158,8 +174,13 @@ def main():
     with out_path.open("w") as f:
         json.dump(report, f, indent=2, default=str)
 
+    all_pairs_path = OUTPUT_DIR / f"{task_id}_all_pairs.json"
+    with all_pairs_path.open("w") as f:
+        json.dump(all_pairs, f, indent=2, default=str)
+
     print(f"\n{len(links)} flagged pair(s) out of {len(student_pair_best)} compared.")
     print(f"Report written to {out_path}")
+    print(f"Raw scores for all pairs (for calibration) written to {all_pairs_path}")
 
 
 if __name__ == "__main__":

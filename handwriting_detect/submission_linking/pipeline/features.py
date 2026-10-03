@@ -83,7 +83,7 @@ def fold_lines(gray):
     if lines is None:
         return results
     for line in lines[:20]:  # cap for cost; longest lines come first from Hough in practice
-        x1, y1, x2, y2 = line[0]
+        x1, y1, x2, y2 = np.ravel(line)
         angle = float(np.degrees(np.arctan2(y2 - y1, x2 - x1)))
         offset = float(((x1 + x2) / 2) / w if abs(angle) > 45 else ((y1 + y2) / 2) / h)
         results.append((angle, offset))

@@ -7,16 +7,23 @@ def usable(signals, suppressed, name):
     return name not in suppressed and signals[name]["score"] is not None
 
 
-def classify_pair(signals, suppressed):
+def classify_pair(signals, suppressed, suppressed_paper_subclues=()):
     dup = signals["image_near_duplicate"]
     if dup["fired"]:
         return {"link_type": "SAME_IMAGE", "score": round(dup["score"], 1)}
 
     paper = signals["paper_match"]["detail"]
-    strong_paper = paper["fold_match_pct"] > 60 or paper["stain_match_pct"] > 60
-    weak_paper_only = not strong_paper and any(
-        v is not None and v > 70 for v in (paper["ruling_pitch_score"], paper["paper_colour_score"])
+    strong_paper = (
+        paper["fold_match_pct"] > 60 and "fold_match_pct" not in suppressed_paper_subclues
+    ) or (
+        paper["stain_match_pct"] > 60 and "stain_match_pct" not in suppressed_paper_subclues
     )
+    weak_paper_candidates = [
+        paper[name]
+        for name in ("ruling_pitch_score", "paper_colour_score")
+        if name not in suppressed_paper_subclues
+    ]
+    weak_paper_only = not strong_paper and any(v is not None and v > 70 for v in weak_paper_candidates)
 
     session_clues = [
         n for n in ("lighting_match", "camera_geometry", "upload_proximity")

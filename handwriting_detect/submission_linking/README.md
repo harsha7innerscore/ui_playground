@@ -552,6 +552,40 @@ A first pipeline lives in [`pipeline/`](pipeline/), built in the order above:
 Not yet done: impossible-pairs calibration (thresholds above are starting points,
 not measured), and the Clue 4/5/6 suppression confirmation on more than one task.
 
+### First real run — confirms the predictions, and finds a deeper version of the same bug
+
+Ran against the 14-student task from the second probe above. First pass flagged
+**55 out of 55 possible pairs** — every student in the task "linked" to every other
+student. That's the correlated-false-positive flood the README warns about, just one
+layer deeper than expected:
+
+- As predicted, `camera_geometry` and `encoder_fingerprint` fired for ~100% of pairs
+  and were auto-suppressed; `lighting_match` fired for 59% and was suppressed too.
+- But `paper_match` still flagged everyone, because its **sub-signals** weren't
+  independently suppressed. Two separate bugs, both the same failure mode in
+  miniature:
+  1. The fold-line detector read the printed left-margin rule line — present at the
+     same position and angle on every page by stationery design — as an "accidental
+     fold." 100% of pairs matched on it.
+  2. `paper_colour_score` matched >70 on 92% of pairs — confirms the README's own
+     low-information table (narrow paper-colour range) exactly, but nothing was
+     downweighting it per-task.
+
+**Fix:** baseline suppression now runs on `paper_match`'s four sub-components
+(fold, stain, ruling pitch, paper colour) independently, not just on the six
+top-level signals — same principle (`suppression.py`'s `compute_suppressed_paper_subclues`),
+applied one level deeper. After the fix: 39/55 flagged, all `SAME_PAPER_SOURCE`
+(the weak category), scores 12–45 — i.e. real evidence that students share
+stationery, correctly kept weak, with nothing strong enough to reach
+`SAME_SESSION`/`SAME_DEVICE` on this upload path. That matches the second-probe
+prediction: PDF-rasterised submissions have no camera/lighting/encoder signal left,
+so paper-type matching alone is the ceiling, and it should stay capped low.
+
+**Lesson for future clues:** "baseline suppression" isn't a property of the six named
+signals — it has to run on every sub-score that feeds a verdict, at whatever level
+that sub-score is computed, or a shared-stationery/shared-pipeline classroom will
+flood through the one level that wasn't checked.
+
 ## Modelling
 
 None. No machine learning at any point, and no labelled examples of past cheating.
