@@ -471,6 +471,37 @@ Three of the seven clues can be destroyed before the image ever reaches S3:
 Half an hour checking real S3 objects from `ocr-worksheet-details` establishes which
 clues actually exist. Everything in this document is contingent on that result.
 
+### Probe results (real sample)
+
+One worksheet pulled via [`../scripts/fetch_journey_worksheets.py`](../scripts/fetch_journey_worksheets.py)
+(journey `6abb24b2c656dbb3664cf827`, image downloaded directly from
+`student-handwritten.s3.amazonaws.com` and its raw JPEG segments walked by hand).
+Single sample — confirms what's possible, not yet a population-level guarantee.
+
+| Clue dependency | Status | Detail |
+|---|---|---|
+| EXIF | **Dead** | Only an `APP0 JFIF` marker present, no `APP1 Exif` segment at all. Upload pipeline strips or never writes it. Clue 6 loses its EXIF half entirely. |
+| JPEG quantisation tables | **Alive** | Two `DQT` segments present, baseline `SOF0`, standard 4 Huffman tables. Clue 6's encoder-fingerprint half is usable as-is — hash/compare the DQT bytes. |
+| S3 object `Last-Modified` | **Alive** | Present on the object's HTTP headers independent of Mongo's `created_at`/`updated_at`. Clue 7 should read this directly off S3 (HEAD request), not trust the Mongo timestamp, since Mongo's write time can lag the actual upload. |
+| Auto-crop / straighten (Clue 5) | **Unconfirmed** | One image, 1023×1538 portrait, not obviously force-cropped to a fixed aspect ratio — but can't confirm corner geometry survives without comparing multiple images from the same pipeline. Needs a same-student, multi-submission sample. |
+| Content-Type header | N/A for any clue | Stored as `binary/octet-stream` instead of `image/jpeg` — sloppy upload, not a blocker, just noted. |
+
+**Schema found in `ocr-worksheet-details`** (for whoever writes the extraction step):
+
+- Submitter is `user_id`, not `student_id`. Page images are `image_urls` (array of
+  `https://` S3 urls, not `s3://` scheme) and duplicated per-page under `pages[].image`.
+- `quality_checks[<image_url>].cv_quality_metrics` already computes `brightness`,
+  `contrast`, `shadows`, and `hough_orientation_angle` per image. This overlaps Clue 4
+  (lighting) and partially Clue 5 (orientation) — worth reusing instead of
+  recomputing, pending a check that its brightness/contrast definitions match what
+  Clue 4 needs (plane-fit slope, not a single scalar).
+
+**Implication for build order:** Clue 6 is now a one-sided clue (quant table only,
+no EXIF) — weaker than assumed, since quant tables are shared by every image from the
+same phone/app/quality-setting, which is exactly the low-information failure mode
+Clue 6 was already flagged for. Clue 7 should be built against S3 metadata, not Mongo
+timestamps. Clue 5 still needs its own probe before being trusted.
+
 ## Modelling
 
 None. No machine learning at any point, and no labelled examples of past cheating.
