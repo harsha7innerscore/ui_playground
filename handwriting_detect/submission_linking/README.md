@@ -502,6 +502,56 @@ same phone/app/quality-setting, which is exactly the low-information failure mod
 Clue 6 was already flagged for. Clue 7 should be built against S3 metadata, not Mongo
 timestamps. Clue 5 still needs its own probe before being trusted.
 
+### Second probe: a real task's submissions — a different, harder upload path
+
+The first probe was one ad-hoc journey. Pulling a full task via
+[`../scripts/get_task_worksheets/`](../scripts/get_task_worksheets/) (14 students, 3-4
+pages each) surfaced a second, more consequential upload path: every image key is
+`pdf-pages/<worksheet_id>/page_N_<hash>.jpg`. These pages were not uploaded as
+individual phone photos — a PDF was uploaded and the server rasterised it into one
+image per page. Confirmed by inspecting the actual files:
+
+| Property | Finding |
+|---|---|
+| Encoding | **Progressive JPEG**, 96 DPI density — the signature of a server-side rasteriser (e.g. a PDF-to-image library), not a phone camera, which writes baseline JPEG with no DPI tag and real EXIF |
+| Quantisation tables (Clue 6) | **Identical across different students.** Two unrelated students' pages hashed to the exact same DQT bytes. Not a classroom-correlation problem — this is the whole student population sharing one fingerprint. Clue 6 carries **zero information** on this upload path, not just "weak" |
+| Page framing (Clue 5) | Page fills the frame edge-to-edge, no background/desk visible. There are no real corners to find — a corner-detector will return the image boundary itself for every single image, i.e. a perfect, identical "distortion" value for everyone. Clue 5 is **dead** here, confirming the risk flagged in the prerequisite table |
+| Visual appearance | Clean, evenly-lit, white background — consistent with scan/PDF enhancement (contrast flattening), not a raw photo. **Suspect Clue 4 (lighting) is also suppressed** on this path, though not yet measured directly — worth checking the fitted plane's steepness distribution once the pipeline runs on more tasks |
+| Still alive | Clue 1 (near-duplicate hash), Clue 3 (paper: ruling/fold/stain — content of the scan itself, unaffected by re-rastering), Clue 7 (S3 `Last-Modified`, confirmed independent per page) |
+
+**Implication:** submissions arrive by at least two different routes — direct photo
+upload (first probe) and PDF-rasterised pages (this probe) — with very different
+clue availability. The per-task baseline-suppression mechanism already designed above
+handles this correctly *if* it's measured per task rather than assumed globally: a
+task where everyone's pages are PDF-rasterised will auto-suppress Clues 5 and 6 (and
+likely 4) because the fire-rate will be ~100%, leaving Clue 1/3/7 to carry the task.
+Do not hardcode "PDF path = clues 4/5/6 are dead" — detect it from the measured
+fire-rate per task, since the upload route isn't a field we're given directly.
+
+## Implementation
+
+A first pipeline lives in [`pipeline/`](pipeline/), built in the order above:
+
+- `features.py` — per-image extraction for all seven clues (dhash, ink/paper masks,
+  ruling pitch, paper colour, fold lines, stain blobs, lighting plane fit, page-quad
+  distortion, JPEG quant-table hash). Uses OpenCV + numpy only, no ML.
+- `s3_timing.py` — Clue 7 via an S3 HEAD request's `Last-Modified`, not Mongo's
+  timestamp (see probe above).
+- `scoring.py` — turns two images' features into the six named signals from the
+  output schema below, with raw distances kept alongside every score.
+- `suppression.py` — measures each clue's fire-rate across all of one task's pairs
+  and disables any clue above a threshold, per the correlated-false-positive fix.
+- `classify.py` — rule-based (not averaged) combination into `link_type` + `score`.
+- `grouping.py` — union-find to collapse linked pairs into groups.
+- `main.py` — orchestrator: takes a `*_submissions.json` from
+  [`../scripts/get_task_worksheets/`](../scripts/get_task_worksheets/), extracts
+  features once per image (cached by url under `pipeline/cache/`), scores every
+  cross-student image pair, aggregates to student-pairs by max score across their
+  page-pairs, and writes `pipeline/output/<task_id>_links.json`.
+
+Not yet done: impossible-pairs calibration (thresholds above are starting points,
+not measured), and the Clue 4/5/6 suppression confirmation on more than one task.
+
 ## Modelling
 
 None. No machine learning at any point, and no labelled examples of past cheating.
