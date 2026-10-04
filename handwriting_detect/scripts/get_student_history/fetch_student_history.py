@@ -3,6 +3,7 @@
 
 Usage:
     python3 fetch_student_history.py [--limit N] [--students <submissions.json>]
+    python3 fetch_student_history.py --recent-records 1000 [--limit 0]
 
 Where the sibling get_task_worksheets script is task-scoped (one task, every
 student's single worksheet for it), this one is student-scoped: for each user_id
@@ -17,7 +18,15 @@ distinct-date count in the coverage report.
 Source: ops_mongo -> ai-tutor.ocr-worksheet-details, filtered by user_id, sorted
 created_at descending.
 
-Student ids default to the ones already pulled by get_task_worksheets.
+Student ids default to the ones already pulled by get_task_worksheets. That
+set is 11 students from one task — too small a candidate pool to measure Case 1
+honestly (random top-1 baseline is 1/11 = 9.1%). --recent-records builds a much
+larger cohort instead: take the N most recently created worksheets, keep every
+distinct user_id appearing in them, then pull that student's full history. This
+yields a recent, naturally co-occurring group of students, which is the shape
+real scoring runs against.
+
+--limit 0 means no cap: fetch every worksheet a student has.
 
 Writes:
     output/student_history.json        raw worksheet docs, grouped by student
@@ -50,6 +59,29 @@ DEFAULT_STUDENTS_FILE = (
 DEFAULT_LIMIT = 6
 
 
+def recent_student_ids(collection, n_records, require_pages=True):
+    """Distinct user_ids among the N most recently created worksheets.
+
+    require_pages drops students whose recent worksheets carry no image_urls at
+    all — worksheet count and page count diverge sharply in this collection
+    (students exist with 200 worksheets and 3 pages), and a student with no page
+    images cannot be fingerprinted, so admitting them only inflates the
+    candidate pool with entries that can never match.
+    """
+    docs = collection.find(
+        {"user_id": {"$ne": None}}, {"user_id": 1, "created_at": 1, "image_urls": 1}
+    ).sort("created_at", -1).limit(n_records)
+
+    seen = []
+    for doc in docs:
+        user_id = doc.get("user_id")
+        if require_pages and not doc.get("image_urls"):
+            continue
+        if user_id not in seen:
+            seen.append(user_id)
+    return seen
+
+
 def load_student_ids(path):
     """Read distinct user_ids out of a get_task_worksheets submissions dump."""
     if not path.exists():
@@ -69,10 +101,13 @@ def load_student_ids(path):
 
 
 def fetch_history(collection, user_id, limit):
-    """That student's most recent worksheets, newest first."""
-    return list(
-        collection.find({"user_id": user_id}).sort("created_at", -1).limit(limit)
-    )
+    """That student's most recent worksheets, newest first. limit=0 or None
+    fetches the student's entire history.
+    """
+    cursor = collection.find({"user_id": user_id}).sort("created_at", -1)
+    if limit:
+        cursor = cursor.limit(limit)
+    return list(cursor)
 
 
 def answer_crop_urls(doc):
@@ -120,19 +155,31 @@ def print_coverage(history_by_student):
     same-student-different-date pages against different-student pages, and a
     student whose worksheets all land on one date cannot take part in it.
     """
+    total = len(history_by_student)
+    verbose = total <= 30
+
     print("\nCoverage")
-    print(f"  {'user_id':26} {'worksheets':>10} {'dates':>6} {'pages':>6} {'crops':>6}")
+    if verbose:
+        print(f"  {'user_id':26} {'worksheets':>10} {'dates':>6} {'pages':>6} {'crops':>6}")
 
     usable = 0
+    all_pages = 0
     for user_id, docs in history_by_student.items():
         dates = {d for d in (date_of(doc) for doc in docs) if d}
         pages = sum(len(doc.get("image_urls") or []) for doc in docs)
         crops = sum(len(answer_crop_urls(doc)) for doc in docs)
-        print(f"  {user_id:26} {len(docs):>10} {len(dates):>6} {pages:>6} {crops:>6}")
+        all_pages += pages
+        if verbose:
+            print(f"  {user_id:26} {len(docs):>10} {len(dates):>6} {pages:>6} {crops:>6}")
         if len(docs) >= 4 and len(dates) >= 3:
             usable += 1
 
-    total = len(history_by_student)
+    if not verbose:
+        worksheets = [len(d) for d in history_by_student.values()]
+        print(f"  {total} students, {sum(worksheets)} worksheets, {all_pages} pages")
+        print(f"  worksheets/student: min {min(worksheets)}, median "
+              f"{sorted(worksheets)[len(worksheets) // 2]}, max {max(worksheets)}")
+
     print(f"\n  {usable}/{total} students meet the gate bar (4+ worksheets, 3+ dates)")
     if usable < total:
         print("  Students below the bar can still be scored, but cannot validate the gate.")
@@ -144,7 +191,14 @@ def main():
         "--limit",
         type=int,
         default=DEFAULT_LIMIT,
-        help=f"most recent worksheets per student (default {DEFAULT_LIMIT})",
+        help=f"most recent worksheets per student, 0 for all (default {DEFAULT_LIMIT})",
+    )
+    parser.add_argument(
+        "--recent-records",
+        type=int,
+        default=None,
+        help="build the cohort from the distinct students in the N most recent "
+             "worksheets, instead of reading ids from --students",
     )
     parser.add_argument(
         "--students",
@@ -160,18 +214,28 @@ def main():
         print("OPS_MONGO_URL not set in .env", file=sys.stderr)
         sys.exit(1)
 
-    student_ids = load_student_ids(args.students)
-    print(f"Loaded {len(student_ids)} distinct student id(s) from {args.students}")
-
     ops_client = MongoClient(ops_mongo_url)
     worksheet_collection = ops_client[OPS_DB_NAME][WORKSHEET_COLLECTION]
+
+    if args.recent_records:
+        student_ids = recent_student_ids(worksheet_collection, args.recent_records)
+        print(
+            f"Cohort: {len(student_ids)} distinct page-bearing student(s) "
+            f"in the {args.recent_records} most recent worksheets"
+        )
+    else:
+        student_ids = load_student_ids(args.students)
+        print(f"Loaded {len(student_ids)} distinct student id(s) from {args.students}")
 
     history_by_student = defaultdict(list)
     for user_id in student_ids:
         docs = fetch_history(worksheet_collection, user_id, args.limit)
         history_by_student[user_id] = docs
         dates = sorted({d for d in (date_of(doc) for doc in docs) if d})
-        print(f"  {user_id} -> {len(docs)} worksheet(s), dates {dates}")
+        if len(student_ids) <= 30:
+            print(f"  {user_id} -> {len(docs)} worksheet(s), dates {dates}")
+        elif len(history_by_student) % 25 == 0:
+            print(f"  ... {len(history_by_student)}/{len(student_ids)} students fetched")
 
     ops_client.close()
 
