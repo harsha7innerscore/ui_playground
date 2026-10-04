@@ -4,6 +4,7 @@
 Takes one image (url or local file) and ranks the enrolled students by how
 closely it matches their handwriting signature.
 
+    python3 identify.py --list-students
     python3 identify.py <image-url-or-path>
     python3 identify.py <image> --cohort <student_id> <student_id> ...
     python3 identify.py <image> --submitted-by <student_id>
@@ -65,6 +66,63 @@ def build_index(cache_versions=("features", "features_v2")):
         by_student[w["user_id"]].append(w)
 
     return transform, by_student, worksheets
+
+
+def list_students():
+    """Every enrolled student, with how much reference work backs their
+    signature.
+
+    Needed to use the tool at all: --cohort takes student ids, and the ranking
+    comes back as student ids, so there has to be a way to see which ids exist
+    and how well each is supported. Worksheet and date counts are shown because
+    a signature built from two worksheets on one day describes that sitting
+    rather than the student -- case1_identification.md asks for 4+ worksheets
+    across 3+ dates, and this is where you check that.
+    """
+    _, by_student, _ = build_index()
+    meta = confound_diagnosis.load_metadata()
+
+    rows = []
+    for student, group in by_student.items():
+        dates = {meta.get(w["worksheet_id"], {}).get("date") for w in group}
+        dates.discard(None)
+        rows.append(
+            {
+                "student_id": student,
+                "worksheets": len(group),
+                "distinct_dates": len(dates),
+                "pages": sum(w.get("n_pages", 1) for w in group),
+                "meets_reference_bar": len(group) >= 4 and len(dates) >= 3,
+            }
+        )
+    rows.sort(key=lambda r: (-r["worksheets"], r["student_id"]))
+    return rows
+
+
+def cohorts_available():
+    """Worksheets sat by more than one student -- the realistic candidate sets.
+
+    --cohort is meant to hold the students actually assigned one worksheet,
+    since that is the configuration the 85.3% figure was measured in. This
+    shows which such groups exist in the fetched data, so a cohort can be
+    copied straight out rather than guessed at.
+    """
+    _, by_student, worksheets = build_index()
+    meta = confound_diagnosis.load_metadata()
+
+    by_questions = defaultdict(set)
+    for w in worksheets:
+        questions = meta.get(w["worksheet_id"], {}).get("questions")
+        if questions:
+            by_questions[questions].add(w["user_id"])
+
+    groups = [
+        {"students": sorted(members), "size": len(members)}
+        for members in by_questions.values()
+        if len(members) > 1
+    ]
+    groups.sort(key=lambda g: -g["size"])
+    return groups
 
 
 def fingerprint_image(source):
@@ -191,7 +249,13 @@ def _corpus_scalar_stats():
 def main_cli():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("image", help="image url or local path")
+    parser.add_argument("image", nargs="?", help="image url or local path")
+    parser.add_argument("--list-students", action="store_true",
+                        help="list enrolled student ids and how much reference "
+                             "work backs each signature, then exit")
+    parser.add_argument("--list-cohorts", action="store_true",
+                        help="list worksheets sat by more than one student, as "
+                             "ready-made --cohort arguments, then exit")
     parser.add_argument("--cohort", nargs="+", default=None,
                         help="restrict candidates to these student ids (the realistic "
                              "setting: the students assigned this worksheet)")
@@ -199,6 +263,38 @@ def main_cli():
                         help="who handed it in; reports where they ranked")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
+
+    if args.list_students:
+        rows = list_students()
+        if args.json:
+            print(json.dumps(rows, indent=2))
+            return
+        qualified = sum(1 for r in rows if r["meets_reference_bar"])
+        print(f"\n{len(rows)} enrolled students "
+              f"({qualified} with 4+ worksheets across 3+ dates)\n")
+        print(f"{'student_id':26} {'worksheets':>10} {'dates':>6} {'pages':>6}  reference")
+        for row in rows:
+            bar = "ok" if row["meets_reference_bar"] else "THIN"
+            print(f"{row['student_id']:26} {row['worksheets']:>10} "
+                  f"{row['distinct_dates']:>6} {row['pages']:>6}  {bar}")
+        print("\nPass any of these to --cohort. THIN means the signature rests on")
+        print("too little work to be trusted (case1_identification.md: 4+ worksheets,")
+        print("3+ dates) -- such a student can still be ranked, just not relied on.")
+        return
+
+    if args.list_cohorts:
+        groups = cohorts_available()
+        if args.json:
+            print(json.dumps(groups, indent=2))
+            return
+        print(f"\n{len(groups)} worksheets were sat by more than one student.\n")
+        for group in groups[:15]:
+            print(f"  {group['size']} students:")
+            print(f"    --cohort {' '.join(group['students'])}\n")
+        return
+
+    if not args.image:
+        parser.error("an image is required unless --list-students or --list-cohorts is given")
 
     try:
         result = identify(args.image, args.cohort, args.submitted_by)
