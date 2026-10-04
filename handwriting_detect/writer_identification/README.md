@@ -2,6 +2,19 @@
 
 > Parent context: [`../goal.md`](../goal.md)
 
+**Current state:** 67.1% top-1 over 105 students (leave-one-out, closed-set,
+random baseline 0.95%, lift 70.4x). One blocking caveat: the content-confound
+control sits at 0.432, below chance -- two different students writing the same
+worksheet look *more* alike than one student across two days. See
+[`SESSION_LOG_2.md`](SESSION_LOG_2.md) section 7 before building on this.
+
+| Doc | What |
+|---|---|
+| [`SESSION_LOG_2.md`](SESSION_LOG_2.md) | Latest session: data expansion, the metric fix, current numbers, open problems |
+| [`SESSION_LOG.md`](SESSION_LOG.md) | Earlier session: fingerprint groundwork, the gate, the Hinge swap |
+| [`approaches.md`](approaches.md) | Literature survey -- every route to higher accuracy, by cost |
+| [`improvements.md`](improvements.md) | The backlog, with the acceptance rule |
+
 Problem 1 is asked in two different ways. Each has its own doc:
 
 | Doc | Question | Needs history? |
@@ -72,8 +85,17 @@ No training. No labelled cheating examples. Two options:
 - **Classic** — local descriptors aggregated into a fixed-length vector. Only
   fitting step is computing statistics over our own unlabelled images, CPU only,
   minutes. Starting point.
-- **Pretrained** — published writer-identification model, inference only. Drop-in
-  upgrade to the same pipeline if the classic route proves marginal.
+- **Pretrained** — published writer-identification model, inference only.
+
+  **Correction (session 2):** this is not actually available off the shelf.
+  Public pretrained handwriting models do transcription, generation or
+  signature verification; writer-ID papers publish results, not weights. See
+  [`approaches.md`](approaches.md) Tier 6.
+
+  Also note what "no training" means here: it means no labelled *cheating*
+  examples, which genuinely do not exist. It does **not** mean no model can be
+  trained -- every page carries the submitter's user_id, which is exactly the
+  label writer-ID models train on. See [`approaches.md`](approaches.md) Tier 5.
 
 ## Known limits
 
