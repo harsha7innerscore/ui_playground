@@ -2,6 +2,16 @@
 
 > Parent context: [`../goal.md`](../goal.md)
 
+Problem 1 is asked in two different ways. Each has its own doc:
+
+| Doc | Question | Needs history? |
+|---|---|---|
+| [`case1_identification.md`](case1_identification.md) | Which student wrote this page? | **Yes** — 4+ worksheets per student |
+| [`case2_verification.md`](case2_verification.md) | Did these two pages come from one hand? | **No** — works on a first submission |
+
+Both share one fingerprint extractor and one go/no-go gate. This document is the
+overall design; the case docs are the practical specs.
+
 ## Question
 
 Whose handwriting is on this page?
