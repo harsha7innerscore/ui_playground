@@ -22,9 +22,11 @@ import numpy as np
 # Below this, a component is compression speckle, not a stroke or letter part.
 MIN_COMPONENT_AREA = 6
 
-# Orientation histogram bins, degrees, covering a half-circle (orientation has
-# no direction, a stroke tilted +30 deg looks the same rotated 180).
-SLANT_BINS = 18
+# Hinge feature (Bulacu & Schomaker): how far along the contour each "leg" of
+# the angle reaches, and how finely the angle pair is binned. 7px / 12 bins
+# are the literature's usual starting point -- see commit for sources.
+HINGE_LEG_PX = 7
+HINGE_BINS = 12
 
 
 def decode_gray(raw_bytes):
@@ -112,81 +114,62 @@ def stroke_width(mask):
     return float(4.0 * ink.mean()), float(2.0 * np.percentile(ink, 95))
 
 
-def component_stats(mask):
-    """Per connected-component shape stats, each weighted by the component's
-    own ink area so a handful of large letters don't get drowned out by many
-    small speckle-sized fragments, and vice versa.
+def hinge_histogram(mask, leg_px=HINGE_LEG_PX, bins=HINGE_BINS):
+    """The Hinge feature (Bulacu & Schomaker, 2007) -- the field's standard
+    answer to exactly the problem the gate found: per-letter shape stats
+    (solidity, aspect ratio, per-component orientation -- what this function
+    replaces) are tied to which letter it was, so two students writing the
+    same short answer score as similar even when their handwriting is not.
 
-    Returns a dict of area-weighted mean/std across components:
-      - orientation: angle of the component's major axis (cv2.fitEllipse),
-        degrees, folded into 0-180 (orientation has no direction) -> feeds the
-        slant histogram.
-      - solidity: ink area / convex-hull area. Round, looping letters fill
-        their hull; angular print-style letters leave gaps. Low = angular,
-        high = round.
-      - aspect_ratio: bounding-box height/width. Tall narrow strokes vs wide
-        flat ones.
-      - rel_area: component area relative to the whole ink bounding box, i.e.
-        letter size relative to this writer's overall scale.
+    Method: walk every point along the ink's contour. At each point, look a
+    fixed number of pixels back and forward along the *same* contour -- two
+    "legs" hinged at that point -- and record the pair of directions they
+    point in. Over an entire page this produces thousands of (angle, angle)
+    pairs, one per contour point, binned into a joint histogram.
+
+    Why this fixes the content problem: a single digit or short word
+    contributes only a handful of points to a histogram built from thousands.
+    What survives at that scale is the population statistic of how sharply
+    this writer bends a stroke -- not the identity of any letter they used to
+    produce it. Letter-level stats have no such averaging: a page with one
+    answer has only as many components as there are letters, so one unusual
+    letter shape (or one that happens to match another student's) can swing
+    the whole fingerprint.
+
+    phi1/phi2 are sorted (phi1 <= phi2) before binning: swapping which leg is
+    "forward" describes the same hinge shape, so folding them together halves
+    the histogram without losing information, per the standard formulation.
+
+    Runs over cv2.RETR_LIST contours (not RETR_EXTERNAL, used by the stats
+    this replaces) so the inner contour of a loop -- the hole in an "o" or
+    "a" -- contributes its own hinge angles too; loop shape is exactly the
+    kind of habit this feature is meant to capture.
     """
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    xs, ys, ws, hs = [], [], [], []
-    orientations, solidities, aspect_ratios, areas = [], [], [], []
+    contours, _ = cv2.findContours(mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+    bin_width = 360.0 / bins
+    counts = np.zeros(bins * bins, dtype=np.int64)
+    total = 0
 
     for c in contours:
-        area = cv2.contourArea(c)
-        if area < MIN_COMPONENT_AREA:
+        pts = c.reshape(-1, 2).astype(np.float64)
+        n = len(pts)
+        if n < 2 * leg_px + 1:
             continue
-        x, y, w, h = cv2.boundingRect(c)
-        xs.append(x)
-        ys.append(y)
-        ws.append(w)
-        hs.append(h)
-        areas.append(area)
+        idx = np.arange(n)
+        back_vec = pts[(idx - leg_px) % n] - pts
+        fwd_vec = pts[(idx + leg_px) % n] - pts
+        angle_back = (np.degrees(np.arctan2(back_vec[:, 1], back_vec[:, 0])) + 360) % 360
+        angle_fwd = (np.degrees(np.arctan2(fwd_vec[:, 1], fwd_vec[:, 0])) + 360) % 360
+        phi1 = np.minimum(angle_back, angle_fwd)
+        phi2 = np.maximum(angle_back, angle_fwd)
+        b1 = np.clip((phi1 // bin_width).astype(np.int64), 0, bins - 1)
+        b2 = np.clip((phi2 // bin_width).astype(np.int64), 0, bins - 1)
+        counts += np.bincount(b1 * bins + b2, minlength=bins * bins)
+        total += n
 
-        hull = cv2.convexHull(c)
-        hull_area = cv2.contourArea(hull)
-        solidities.append(area / hull_area if hull_area > 0 else 0.0)
-        aspect_ratios.append(h / w if w > 0 else 0.0)
-
-        if len(c) >= 5:
-            (_, _), (_, _), angle = cv2.fitEllipse(c)
-            orientations.append(angle % 180.0)
-
-    if not areas:
+    if total == 0:
         return None
-
-    areas = np.array(areas, dtype=float)
-    weights = areas / areas.sum()
-
-    def weighted(values):
-        values = np.array(values, dtype=float)
-        mean = float(np.average(values, weights=weights[: len(values)]))
-        var = float(np.average((values - mean) ** 2, weights=weights[: len(values)]))
-        return mean, float(np.sqrt(var))
-
-    ink_bbox_area = (max(xs) + max(ws) - min(xs)) * (max(ys) + max(hs) - min(ys)) if xs else 1
-    rel_areas = areas / max(ink_bbox_area, 1)
-
-    solidity_mean, solidity_std = weighted(solidities)
-    aspect_mean, aspect_std = weighted(aspect_ratios)
-    rel_area_mean, rel_area_std = weighted(rel_areas)
-
-    orientation_hist = None
-    if orientations:
-        hist, _ = np.histogram(orientations, bins=SLANT_BINS, range=(0, 180))
-        orientation_hist = (hist / hist.sum()).tolist() if hist.sum() > 0 else [0.0] * SLANT_BINS
-
-    return {
-        "num_components": len(areas),
-        "solidity_mean": solidity_mean,
-        "solidity_std": solidity_std,
-        "aspect_ratio_mean": aspect_mean,
-        "aspect_ratio_std": aspect_std,
-        "rel_area_mean": rel_area_mean,
-        "rel_area_std": rel_area_std,
-        "orientation_hist": orientation_hist or [0.0] * SLANT_BINS,
-    }
+    return (counts / total).tolist()
 
 
 def horizontal_gaps(mask):
@@ -230,11 +213,11 @@ def extract_fingerprint(gray):
         return None
 
     stroke_mean, stroke_ridge = stroke_width(mask)
-    comp = component_stats(mask)
+    hinge = hinge_histogram(mask)
     gap_mean, gap_std = horizontal_gaps(mask)
     density = ink_density(mask)
 
-    if comp is None:
+    if hinge is None:
         return None
 
     return {
@@ -244,24 +227,21 @@ def extract_fingerprint(gray):
         "ink_density": density,
         "gap_mean": gap_mean,
         "gap_std": gap_std,
-        **comp,
+        "hinge_histogram": hinge,
     }
 
 
-# Fixed order for turning a fingerprint dict into a vector. Histogram bins are
-# expanded individually (orientation_hist_0 .. orientation_hist_{N-1}).
+# Fixed order for turning a fingerprint dict into a vector. The hinge
+# histogram bins are expanded individually (hinge_0_0 .. hinge_{B-1}_{B-1}).
+# stroke width, ink density and gap stats are kept alongside the hinge
+# histogram -- they describe pressure and spacing, not letter shape, so they
+# carry their own content-light signal rather than competing with it.
 SCALAR_FIELDS = [
     "stroke_width_mean",
     "stroke_width_ridge",
     "ink_density",
     "gap_mean",
     "gap_std",
-    "solidity_mean",
-    "solidity_std",
-    "aspect_ratio_mean",
-    "aspect_ratio_std",
-    "rel_area_mean",
-    "rel_area_std",
 ]
 
 
@@ -272,8 +252,11 @@ def flatten(fingerprint):
     """
     values = [fingerprint.get(f) for f in SCALAR_FIELDS]
     values = [float(v) if v is not None else float("nan") for v in values]
-    values.extend(float(v) for v in fingerprint.get("orientation_hist", [float("nan")] * SLANT_BINS))
+    hinge_len = HINGE_BINS * HINGE_BINS
+    values.extend(float(v) for v in fingerprint.get("hinge_histogram", [float("nan")] * hinge_len))
     return np.array(values, dtype=float)
 
 
-FEATURE_NAMES = SCALAR_FIELDS + [f"orientation_hist_{i}" for i in range(SLANT_BINS)]
+FEATURE_NAMES = SCALAR_FIELDS + [
+    f"hinge_{i}_{j}" for i in range(HINGE_BINS) for j in range(HINGE_BINS)
+]
