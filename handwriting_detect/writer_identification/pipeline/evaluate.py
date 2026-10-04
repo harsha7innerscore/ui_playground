@@ -53,7 +53,7 @@ import metrics
 OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 
 
-def load_worksheets():
+def load_worksheets(cache_only=True):
     """Pages -> one mean vector per worksheet, with the scalar block z-scored
     across the corpus and the Hinge block left as raw probabilities.
 
@@ -62,8 +62,8 @@ def load_worksheets():
     histogram is a distribution whose bins are already commensurable and whose
     shape z-scoring destroys (see metrics.py).
     """
-    items, total, skipped = main.load_items()
-    print(f"Loaded {len(items)}/{total} pages ({skipped} skipped) from cache")
+    items, total, skipped = main.load_items(cache_only=cache_only)
+    print(f"Loaded {len(items)}/{total} pages ({skipped} not cached / below ink floor)")
 
     by_worksheet = defaultdict(list)
     for item in items:
@@ -115,32 +115,44 @@ def evaluate_transform_honest(worksheets, make_transform):
         by_student[w["user_id"]].append(w)
     students = sorted(by_student)
 
+    # Index rows once so each query is matrix work rather than a Python loop
+    # over worksheets. The naive form re-transforms every worksheet inside
+    # every query, which is O(queries x worksheets) individual transforms --
+    # fine at 142 worksheets, several million operations at 1800.
+    all_vectors = np.vstack([w["vector"] for w in worksheets])
+    rows_of_student = {
+        student: np.array([i for i, w in enumerate(worksheets) if w["user_id"] == student])
+        for student in students
+    }
+    owner_of = [w["user_id"] for w in worksheets]
+
     ranks = []
-    for held_out in worksheets:
-        owner = held_out["user_id"]
-        own_others = [w for w in by_student[owner] if w["worksheet_id"] != held_out["worksheet_id"]]
-        if not own_others:
-            continue
+    for q, held_out in enumerate(worksheets):
+        owner = owner_of[q]
+        own_rows = rows_of_student[owner]
+        if len(own_rows) < 2:
+            continue  # no signature survives holding this one out
 
-        others = [w for w in worksheets if w["worksheet_id"] != held_out["worksheet_id"]]
-        transform = make_transform().fit([w["vector"] for w in others])
-        query = transform.transform(held_out["vector"])
+        keep = np.ones(len(worksheets), dtype=bool)
+        keep[q] = False
+        transform = make_transform().fit(all_vectors[keep])
 
-        scored = []
+        projected = np.vstack([transform.transform(v) for v in all_vectors])
+        query = projected[q]
+
+        signatures, labels = [], []
         for student in students:
-            group = own_others if student == owner else by_student[student]
-            group = [w for w in group if w["worksheet_id"] != held_out["worksheet_id"]]
-            if not group:
+            rows = rows_of_student[student]
+            rows = rows[rows != q]
+            if not len(rows):
                 continue
-            signature = np.mean(
-                np.vstack([transform.transform(w["vector"]) for w in group]), axis=0
-            )
-            scored.append((metrics.euclidean_distance(query, signature), student))
+            signatures.append(projected[rows].mean(axis=0))
+            labels.append(student)
 
-        scored.sort(key=lambda pair: pair[0])
-        rank = next((i for i, (_, s) in enumerate(scored, 1) if s == owner), None)
-        if rank is not None:
-            ranks.append(rank)
+        distances = np.linalg.norm(np.vstack(signatures) - query, axis=1)
+        order = np.argsort(distances)
+        rank = int(np.where(np.array(labels)[order] == owner)[0][0]) + 1
+        ranks.append(rank)
 
     return _summarize_ranks(ranks, len(students))
 

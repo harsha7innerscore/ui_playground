@@ -53,10 +53,19 @@ def page_urls(doc):
     return list(doc.get("image_urls") or [])
 
 
+CACHE_ONLY = False
+
+
 def fingerprint_url(url):
     cached = load_cached_fingerprint(url)
     if cached is not None:
         return cached if cached != {} else None  # {} marks a prior "no ink" result
+
+    if CACHE_ONLY:
+        # Analysis reruns must never silently turn into a download. A partially
+        # filled cache (prefetch stopped early, say) would otherwise make every
+        # evaluation re-fetch thousands of pages one at a time.
+        return None
 
     try:
         raw = fetch_bytes(url)
@@ -73,11 +82,14 @@ def fingerprint_url(url):
     return fp
 
 
-def load_items(limit_pages_per_worksheet=None):
+def load_items(limit_pages_per_worksheet=None, cache_only=False):
     """Fingerprint every page in image_urls across the fetched student history
     (cached by url, so a rerun with nothing new costs no network calls).
     Returns (items, total_pages, skipped_low_ink).
     """
+    global CACHE_ONLY
+    CACHE_ONLY = cache_only
+
     if not HISTORY_FILE.exists():
         print(f"History file not found: {HISTORY_FILE}", file=sys.stderr)
         print("Run scripts/get_student_history/fetch_student_history.py first.", file=sys.stderr)

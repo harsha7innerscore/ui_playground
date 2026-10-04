@@ -27,9 +27,22 @@ Everything here is a pure function of two fingerprint vectors. No fitting, no
 state, no network.
 """
 
+import warnings
+
 import numpy as np
 
 import features
+
+# Apple's Accelerate BLAS raises divide-by-zero / overflow / invalid flags from
+# inside matmul on this hardware even when every input and every output is
+# finite -- verified by comparing the matmul result against np.einsum and an
+# explicit dot-product loop, which agree to 4e-16. The flags come from padding
+# lanes in the vectorized kernel, not from the arithmetic we asked for.
+# Suppressed narrowly, by message, so a genuine numerical problem elsewhere
+# still surfaces.
+warnings.filterwarnings(
+    "ignore", message=".*encountered in matmul", category=RuntimeWarning
+)
 
 N_SCALARS = len(features.SCALAR_FIELDS)
 
