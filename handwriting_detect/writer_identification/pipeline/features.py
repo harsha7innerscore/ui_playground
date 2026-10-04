@@ -28,6 +28,32 @@ MIN_COMPONENT_AREA = 6
 HINGE_LEG_PX = 7
 HINGE_BINS = 12
 
+# Resample every page so its pen stroke is this many pixels wide before the
+# Hinge histogram is taken.
+#
+# Why: HINGE_LEG_PX is a distance in *pixels*, so on a page with 4px strokes a
+# 7px leg reaches most of the way across a letter, while on a page with 15px
+# strokes it barely leaves the stroke itself. Those are different measurements
+# wearing the same name. Measured stroke width across our worksheets spans
+# 4.01 to 15.23px -- nearly 4x -- and among pairs written by DIFFERENT people,
+# the correlation between stroke-width difference and fingerprint distance is
+# 0.428. That is the fingerprint reading pen and scan scale rather than the
+# hand.
+#
+# It also explains part of the same-day confound: pages captured in one batch
+# share a resolution and a pen, so they share a scale, so they look alike for
+# a reason that has nothing to do with who held the pen.
+#
+# 7px is the median of the corpus, so the median page is left roughly
+# untouched and only the outliers move.
+TARGET_STROKE_PX = 7.0
+
+# Bump when anything that changes a fingerprint's VALUE changes. fetch.py puts
+# this in the cache path, so a stale vector computed by an older definition can
+# never be silently mixed with a new one -- the failure mode would be invisible,
+# since both are well-formed float vectors.
+FEATURE_VERSION = 2
+
 
 def decode_gray(raw_bytes):
     arr = np.frombuffer(raw_bytes, dtype=np.uint8)
@@ -203,9 +229,38 @@ def ink_density(mask):
     return float(ys.size / max(bbox_area, 1))
 
 
-def extract_fingerprint(gray):
+def normalize_stroke_scale(gray, measured_stroke, target=TARGET_STROKE_PX):
+    """Resample so the pen stroke is `target` pixels wide. Returns (gray, scale).
+
+    Resamples the greyscale image and re-thresholds, rather than resizing the
+    binary mask: scaling a mask quantizes stroke edges and would change exactly
+    the contour micro-shape the Hinge feature reads.
+
+    The scale factor is clamped. A page whose measured stroke is wildly off
+    (a near-blank crop, a mask that latched onto page furniture) would
+    otherwise be blown up or shrunk to the point where the resample itself
+    invents the texture being measured.
+    """
+    if not measured_stroke or measured_stroke <= 0:
+        return gray, 1.0
+    scale = float(np.clip(target / measured_stroke, 0.25, 4.0))
+    if abs(scale - 1.0) < 0.05:
+        return gray, 1.0
+    interpolation = cv2.INTER_AREA if scale < 1 else cv2.INTER_CUBIC
+    resized = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=interpolation)
+    return resized, scale
+
+
+def extract_fingerprint(gray, normalize_scale=True):
     """gray -> dict of named features, or None if there isn't enough ink to
     say anything (see MIN_INK_PX in gate.py for the cutoff this feeds).
+
+    The shape features are measured on a scale-normalized copy of the page (see
+    TARGET_STROKE_PX) so that "how sharply this person bends a stroke" is not
+    confounded with "how thick their pen was and how big the scan was". The
+    raw, un-normalized stroke width is still reported as its own feature -- pen
+    choice is a genuine writer habit, it just must not be smuggled into the
+    shape histogram as well.
     """
     mask = ink_mask(gray)
     ink_px = int((mask > 0).sum())
@@ -213,6 +268,15 @@ def extract_fingerprint(gray):
         return None
 
     stroke_mean, stroke_ridge = stroke_width(mask)
+
+    scale = 1.0
+    if normalize_scale:
+        normalized_gray, scale = normalize_stroke_scale(gray, stroke_mean)
+        if scale != 1.0:
+            mask = ink_mask(normalized_gray)
+            if int((mask > 0).sum()) < MIN_COMPONENT_AREA:
+                return None
+
     hinge = hinge_histogram(mask)
     gap_mean, gap_std = horizontal_gaps(mask)
     density = ink_density(mask)
@@ -225,8 +289,11 @@ def extract_fingerprint(gray):
         "stroke_width_mean": stroke_mean,
         "stroke_width_ridge": stroke_ridge,
         "ink_density": density,
+        # gaps are measured on the scale-normalized page, so a wide-spacing
+        # habit is no longer indistinguishable from a higher-resolution scan
         "gap_mean": gap_mean,
         "gap_std": gap_std,
+        "scale_applied": scale,
         "hinge_histogram": hinge,
     }
 

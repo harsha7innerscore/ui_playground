@@ -55,8 +55,17 @@ def page_urls(doc):
 
 CACHE_ONLY = False
 
+# When set, only these urls are loaded. Used to hold the page set FIXED while a
+# feature definition changes: comparing feature v1 on 3676 pages against v2 on
+# some larger set would confound the feature change with a data change, and the
+# two are not separable after the fact.
+URL_ALLOWLIST = None
+
 
 def fingerprint_url(url):
+    if URL_ALLOWLIST is not None and url not in URL_ALLOWLIST:
+        return None
+
     cached = load_cached_fingerprint(url)
     if cached is not None:
         return cached if cached != {} else None  # {} marks a prior "no ink" result

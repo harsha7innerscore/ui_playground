@@ -10,9 +10,16 @@ from pathlib import Path
 
 import requests
 
+import features
+
 PIPELINE_DIR = Path(__file__).resolve().parent
 IMAGE_CACHE = PIPELINE_DIR / "cache" / "images"
-FEATURE_CACHE = PIPELINE_DIR / "cache" / "features"
+# Versioned: a fingerprint computed under an older feature definition is still
+# a well-formed float vector, so mixing one into a new run fails silently and
+# looks like noise rather than an error. Images are NOT versioned -- the bytes
+# at a url do not change, and re-downloading 2.6GB to change a feature would
+# make iteration unaffordable.
+FEATURE_CACHE = PIPELINE_DIR / "cache" / f"features_v{features.FEATURE_VERSION}"
 
 
 def _key(url):

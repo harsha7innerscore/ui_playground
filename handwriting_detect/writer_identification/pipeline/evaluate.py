@@ -46,11 +46,43 @@ from pathlib import Path
 
 import numpy as np
 
+import fetch
 import gate
 import main
 import metrics
 
 OUTPUT_DIR = Path(__file__).resolve().parent / "output"
+PIPELINE_DIR = Path(__file__).resolve().parent
+
+
+def restrict_to_shared_pages(*cache_dirs):
+    """Limit the run to pages every named feature-cache version holds.
+
+    Changing a feature definition means re-extracting, and re-extraction can
+    easily end up covering a different set of pages than the previous version
+    did. Comparing across that difference measures the feature change and the
+    data change together. This pins both versions to their intersection so the
+    only thing that varies is the feature.
+    """
+    import main
+
+    key_sets = []
+    for name in cache_dirs:
+        directory = PIPELINE_DIR / "cache" / name
+        key_sets.append({p.stem for p in directory.glob("*.json")})
+    shared = set.intersection(*key_sets)
+
+    with main.HISTORY_FILE.open() as f:
+        history = json.load(f)
+    allowed = set()
+    for docs in history.values():
+        for doc in docs:
+            for url in main.page_urls(doc):
+                if fetch._key(url) in shared:
+                    allowed.add(url)
+    main.URL_ALLOWLIST = allowed
+    print(f"Restricted to {len(allowed)} pages shared by {', '.join(cache_dirs)}")
+    return allowed
 
 
 def load_worksheets(cache_only=True):
