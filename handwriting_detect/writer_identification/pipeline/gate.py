@@ -77,11 +77,18 @@ def distance(a, b):
     return float(np.sqrt(np.sum(diff ** 2) * (len(a) / shared.sum())))
 
 
-def build_buckets(items, seed=0):
+def build_buckets(items, seed=0, distance_fn=None):
     """items: list of dicts with user_id, worksheet_id, content_key, vector.
     Returns {bucket_name: [distances]}.
+
+    distance_fn lets a caller supply a different metric (see metrics.py) while
+    keeping bucket construction identical, so two metrics can be compared on
+    exactly the same pairs rather than on separately-sampled ones. Defaults to
+    the z-scored Euclidean this module has always used.
     """
     rng = random.Random(seed)
+    if distance_fn is None:
+        distance_fn = distance
     buckets = {name: [] for name in BUCKET_ORDER}
 
     by_worksheet = {}
@@ -92,7 +99,7 @@ def build_buckets(items, seed=0):
     # construction -- one worksheet belongs to one student).
     for group in by_worksheet.values():
         for a, b in combinations(group, 2):
-            d = distance(a["vector"], b["vector"])
+            d = distance_fn(a["vector"], b["vector"])
             if d is not None:
                 buckets["same_sitting"].append(d)
 
@@ -123,7 +130,7 @@ def build_buckets(items, seed=0):
         if counts[name] >= MAX_PAIRS_PER_BUCKET:
             continue
 
-        d = distance(a["vector"], b["vector"])
+        d = distance_fn(a["vector"], b["vector"])
         if d is not None:
             buckets[name].append(d)
             counts[name] += 1
