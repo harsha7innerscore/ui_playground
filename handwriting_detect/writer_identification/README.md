@@ -2,11 +2,16 @@
 
 > Parent context: [`../goal.md`](../goal.md)
 
-**Current state:** 67.1% top-1 over 105 students (leave-one-out, closed-set,
-random baseline 0.95%, lift 70.4x). One blocking caveat: the content-confound
-control sits at 0.432, below chance -- two different students writing the same
-worksheet look *more* alike than one student across two days. See
-[`SESSION_LOG_2.md`](SESSION_LOG_2.md) section 7 before building on this.
+**Current state: 85.3% top-1 / 91.6% top-2** ranking a page against the students
+actually assigned that worksheet (median cohort 16, random 11.8%). Against the
+full 105-student roster: 69.0% top-1, random 0.95%. Leave-one-out, closed-set.
+
+Try it: `cd pipeline && python3 identify.py <image-url> --cohort <ids...>`
+
+**Usable for ranked suggestions to a human. Not usable for flagging.** It is
+closed-set, so a page written by someone not enrolled still returns a confident
+name; and 14.7% of genuine submissions rank someone else first. See
+[`SESSION_LOG_2.md`](SESSION_LOG_2.md) section 14.
 
 | Doc | What |
 |---|---|

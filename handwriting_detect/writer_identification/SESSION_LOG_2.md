@@ -13,22 +13,30 @@
 
 ## Headline
 
+**The number to quote: 85.3% top-1, 91.6% top-2, in the deployment
+configuration** — ranking a page against the students actually assigned that
+worksheet (median cohort 16, random 11.8%, lift 7.2×). See §12.
+
+Across the whole 105-student roster, which is a harder but less realistic
+task: 67.9% top-1 (69.0% with content-blind signatures), random 0.95%,
+lift ~72×.
+
 | | Session 1 end | Session 2 end |
 |---|---|---|
-| Top-1 accuracy | 40.8% | **67.1%** |
+| Top-1, full roster | 40.8% | **69.0%** |
 | Candidate pool | 11 students | **105 students** |
 | Random baseline | 9.1% | **0.95%** |
-| Lift over random | 4.5× | **70.4×** |
-| Top-5 | 73.9% | 81.9% |
-| Median rank | 2 | **1** |
+| Lift over random | 4.5× | **~72×** |
 | Worksheets | 142 | 1283 |
 | Pages fingerprinted | 319 | 3676 |
+| **Top-1, deployment cohort** | not measured | **85.3%** |
 
-Accuracy more than doubled **and** the problem got ~10× harder at the same time.
+Accuracy more than doubled **and** the candidate pool got ~10× harder.
 
-**But** the content-confound control went from 0.505 (chance) to **0.432 (worse
-than chance)**. See §7 — this is the most important open item and it undercuts
-the deployment scenario specifically.
+**Note on §7 below:** it records a content-confound alarm that later turned out
+to be overstated. §12 is the correction and supersedes it. §7 is kept because
+the decomposition in it is sound and still the best map of what leaks where —
+only the conclusion drawn from it was wrong.
 
 ---
 
@@ -384,3 +392,205 @@ coherent orders:
 Either way: **do not build Case 1's verdict/output layer until AUCcon is
 understood**, or it will encode a metric that fails in the deployment
 configuration.
+
+
+---
+
+## 12. The confound, chased down — and the alarm partly retracted
+
+§7 reported AUCcon at 0.432 (below chance) and concluded the fingerprint would
+fail in the deployment configuration, where a whole class does one worksheet on
+one day. That conclusion was **asserted from a pairwise number, never measured
+on the deployment task**. Measured, it is wrong. Here is the full chase.
+
+### 12a. First: attribute the confound before fixing it
+
+`gate.py`'s `content_key` is `subject:topic:date`. Two students sharing it share
+their *words* — but also their day, class, notebook and capture batch. Problem 2
+established that shared-environment effects on this data are big enough to flood
+every pair in a classroom at once. A fix for leaked content and a fix for leaked
+paper have nothing in common, so the two had to be separated first.
+
+The worksheet documents carry `questions[].question_id`, so content identity can
+be stated **exactly** rather than proxied. That allows a four-way split
+(`confound_diagnosis.py`):
+
+| Pair type | median distance | AUC vs real writer match |
+|---|---|---|
+| Same writer, different day | 8.645 | — |
+| Diff writer, **same questions**, diff day | 8.244 | **0.464** ← words alone |
+| Diff writer, diff questions, **same day** | 8.412 | **0.485** ← day alone |
+| Diff writer, diff questions, diff day | 10.506 | 0.612 (clean baseline) |
+
+Writer identity buys 10.506 → 8.645. Content alone buys *more*. Same-day capture
+buys about as much. **Both leaks are real, roughly equal, and compound to 0.397.**
+
+This decomposition is the durable artifact of the session. It still stands.
+
+### 12b. Attempt 1 — scale normalization. Worked mechanically, fixed nothing.
+
+**Hypothesis.** `HINGE_LEG_PX` is a distance in *pixels*. Measured stroke width
+spans 4.01–15.23px across our worksheets — nearly 4×. On a thin-pen page a 7px
+leg crosses a whole letter; on a thick-pen page it barely leaves the stroke.
+Same name, different measurement. Pages captured in one batch share a pen and a
+resolution, hence a scale — a candidate mechanism for the day leak.
+
+Supporting number: among pairs by **different** writers, correlation between
+stroke-width difference and fingerprint distance was 0.428.
+
+**Fix.** Resample every page to a 7px stroke before the histogram
+(`features.normalize_stroke_scale`, `FEATURE_VERSION = 2`).
+
+**It worked mechanically.** 76% of pages resampled, stroke-width spread cut 61%
+(std 1.21 → 0.48), median landing at 6.87 against a 7.0 target.
+
+**It changed nothing that mattered**, on the same 3728 pages:
+
+| Control | v1 | v2 |
+|---|---|---|
+| same questions, same day | 0.397 | 0.400 |
+| same questions, diff day | 0.464 | 0.468 |
+| **diff questions, same day** ← target | **0.485** | **0.482** |
+| diff questions, diff day | 0.612 | 0.607 |
+| top-1 (`sqrt+pca`) | 66.7% | 67.4% |
+
+**Verdict: implementation sound, hypothesis wrong.** Scale is not the mechanism.
+
+**Where the reasoning went wrong, recorded so it is not repeated:** the 0.428
+correlation was never clean evidence of leakage. Different writers genuinely
+differ in pen thickness and writing size, so part of that correlation is the
+signal we want. The AUC decomposition was the real test all along.
+
+**Kept, not reverted.** Normalizing a pixel-denominated feature is correct
+regardless, and all our data arrives by one upload path — a direct-photo path at
+a different resolution would make a fixed-pixel leg actively wrong.
+
+### 12c. Attempt 2 — content-blind signatures. Worked, and cost nothing.
+
+**Correction to session 1's deferred option.** It was phrased as *"exclude or
+down-weight any candidate who shares a worksheet with the page being checked."*
+**That is wrong for the scenario the product exists to catch.** When C hands in
+a paper A wrote, A sat the *same assigned worksheet*. Excluding same-worksheet
+candidates removes the true writer from the candidate list.
+
+The exclusion belongs one level down: keep every candidate, but build each
+candidate's signature only from worksheets whose questions differ from the
+query. A stays rankable; the evidence that ranks them can no longer be "these
+two pages contain the same words."
+
+| Signatures built from | full roster top-1 | deployment cohort top-1 |
+|---|---|---|
+| all worksheets | 67.9% | 82.9% |
+| **content-disjoint only** | **69.0%** | **85.3%** |
+
+Expected to cost accuracy by discarding reference material. It does not — it
+helps slightly in both configurations. **Adopt it.**
+
+### 12d. The correction: the deployment configuration is the *easier* task
+
+§7 claimed the within-task case would collapse. `deployment_test.py` measures it
+directly — query is one worksheet, candidates are only students assigned that
+same worksheet, signatures content-blind:
+
+| | Full roster | **Deployment cohort** |
+|---|---|---|
+| Candidates | 105 | median 16 (range 2–21) |
+| Random baseline | 0.95% | 11.8% |
+| **Top-1** | 69.0% | **85.3%** |
+| Top-2 | — | **91.6%** |
+| Lift | ~72× | 7.2× |
+| Queries scored | 1255 | 956 |
+
+**Why §7 was wrong:** the confound is real at the level it was measured — *page
+versus page*. Case 1 does not score that way. It scores a page against a
+signature averaged over many worksheets, and that averaging dilutes the shared
+content. The pairwise AUC does not transfer to the ranking task. Two different
+mechanisms; one number was treated as evidence about the other.
+
+Note the two numbers are **not comparable**: 16 candidates is a far easier
+ranking problem than 105, which is why lift falls while top-1 rises. Both are
+honest for their own configuration, and the baseline must always be quoted
+alongside.
+
+### 12e. What this does *not* fix
+
+**14.7% of genuine submissions still rank someone else first.** Flagging on a
+top-1 mismatch alone would wrongly implicate roughly one honest student in seven.
+That is the real blocker now — not the confound. It needs:
+
+- a **confidence/margin layer** (how far ahead is the top match; a narrow margin
+  is a coin flip and must be reported as one), and
+- **open-set handling** — the writer may be a parent, sibling or tutor in no
+  cohort at all, and a pure ranker always returns a name.
+
+---
+
+## 13. Scripts added in the confound work
+
+| File | What |
+|---|---|
+| `pipeline/confound_diagnosis.py` | Four-way split of the confound using exact `question_id` sets. Separates "the words" from "the day". |
+| `pipeline/content_blind_test.py` | Signatures built from content-disjoint worksheets only. |
+| `pipeline/deployment_test.py` | **The number that matters.** Ranks within the real assigned-worksheet cohort, with the per-cohort random baseline. |
+| `pipeline/identify.py` | Single-image inference — see §14. |
+
+Two methodology guards added, both keepers:
+
+- **`features.FEATURE_VERSION`**, used in the feature-cache path. Changing a
+  feature while the cache keys on url alone silently blends old and new vectors.
+  Both are well-formed float arrays, so the failure looks like noise, not an
+  error.
+- **`evaluate.restrict_to_shared_pages` / `main.URL_ALLOWLIST`.** `prefetch` had
+  continued past the pages it owed, so v2 covered more pages than v1. Comparing
+  across that would have measured a feature change and a data change together,
+  inseparably.
+
+
+---
+
+## 14. Can it be used? — `identify.py`
+
+```bash
+cd pipeline
+python3 identify.py <image-url-or-path>
+python3 identify.py <image> --cohort <student_id> <student_id> ...   # the realistic setting
+python3 identify.py <image> --submitted-by <student_id>              # reports where they ranked
+python3 identify.py <image> --json
+```
+
+Takes one image, returns the enrolled students ranked by handwriting
+similarity, with a confidence derived from the margin to the runner-up.
+
+**Yes for:** ranked suggestions shown to a human who decides. "Of these
+candidates, this page looks most like X, and here is how far ahead X sits."
+
+**No for:** automated flagging, verdicts, or anything a student sees. Three
+hard limits, all in the tool's own output:
+
+1. **Closed-set.** Every score is relative to the candidates given. A page
+   written by a parent, sibling or tutor still returns a ranked list of
+   enrolled students, and the top entry is *wrong*, not absent. Open-set
+   rejection is not implemented.
+2. **14.7% of genuine submissions rank someone else first.** Flagging on a
+   top-1 mismatch would wrongly implicate roughly one honest student in seven.
+3. **No verdict layer.** `identify.py` deliberately emits no
+   OK/MISMATCH/UNKNOWN_WRITER, because the threshold that would justify one has
+   not been calibrated.
+
+**Always pass `--cohort`** with the students actually assigned the worksheet.
+That is the configuration the 85.3% was measured in. Against the full
+105-student roster the number is 69.0%, and against candidates with no history
+it cannot answer at all.
+
+**One caveat on demonstrations:** if the image is already in a student's
+fetched history, its own fingerprint is inside that student's signature and the
+result flatters itself. The 85.3%/69.0% figures are leave-one-out and do not
+have that problem; an ad-hoc run on a known page does.
+
+### Before this could drive a flag
+
+- **Open-set rejection** — an absolute "is the top match close enough to name
+  at all" threshold. Without it the system accuses whoever is nearest.
+- **Threshold calibration** on hand-reviewed results, per school.
+- **A margin-aware confidence** that is validated, not just computed — the
+  current one is a reasonable formula, not a calibrated probability.
