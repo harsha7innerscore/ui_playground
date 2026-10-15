@@ -282,8 +282,9 @@ def section_reading_real_data() -> None:
     demo("shape", df.shape)
     demo("dtypes", df.dtypes)
     note(
-        "study_minutes and attendance_pct came back as object, not float, because a "
-        "handful of values are text like '1,200 min' and '93.2%'. Script 03 fixes this."
+        "study_minutes and attendance_pct came back as a text dtype rather than float, "
+        "because a handful of values are strings like '1,200 min' and '93.2%'. "
+        "Script 03 fixes this."
     )
 
     section("first look")
