@@ -1,16 +1,18 @@
 # ml_playground
 
-Learning sandbox for the Python data stack: NumPy, pandas, data cleaning, exploration, and matplotlib.
+Learning sandbox for the Python data stack and core ML concepts: NumPy, pandas, data cleaning,
+exploration, matplotlib, and scikit-learn.
 Each script is a standalone, runnable lesson — run it, read the printed output, then read the source.
 
 ## Tech Stack & Version Constraints
 
-| Tool       | Version  | Note |
-|------------|----------|------|
-| Python     | 3.12     | System Python is 3.9.6; the venv pins 3.12 via `uv`. |
-| NumPy      | >=2.0    | NumPy 2.x — `np.float_`, `np.NaN`, `np.product` are gone. |
-| pandas     | >=2.2    | Copy-on-Write semantics; `applymap` is `DataFrame.map`. |
-| matplotlib | >=3.9    | `Agg` backend used so scripts run headless. |
+| Tool         | Version  | Note |
+|--------------|----------|------|
+| Python       | 3.12     | System Python is 3.9.6; the venv pins 3.12 via `uv`. |
+| NumPy        | >=2.0    | NumPy 2.x — `np.float_`, `np.NaN`, `np.product` are gone. |
+| pandas       | >=2.2    | Copy-on-Write semantics; `applymap` is `DataFrame.map`. |
+| matplotlib   | >=3.9    | `Agg` backend used so scripts run headless. |
+| scikit-learn | >=1.5    | Used from script 06 onward; brings scipy/joblib/threadpoolctl as transitive deps. |
 
 Node constraints in the workspace root `CLAUDE.md` do not apply here — this project has no Node dependency.
 
@@ -30,6 +32,14 @@ uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python 03_data_cleaning.py       # missing values, dtypes, duplicates, outliers
 .venv/bin/python 04_exploration.py         # describe, distributions, correlation, pivots
 .venv/bin/python 05_matplotlib_visualization.py  # figures/axes, chart types, styling
+.venv/bin/python 06_supervised_vs_unsupervised.py   # labelled vs. unlabelled learning
+.venv/bin/python 07_regression_vs_classification.py # continuous target vs. discrete target
+.venv/bin/python 08_linear_regression.py            # normal equation, coefficients, residuals
+.venv/bin/python 09_logistic_regression.py          # sigmoid, odds ratios, decision threshold
+.venv/bin/python 10_decision_trees.py               # tree rules, feature importance, overfitting by depth
+.venv/bin/python 11_kmeans_clustering.py            # scaling, elbow/silhouette, cluster profiles
+.venv/bin/python 12_train_val_test_overfitting.py   # three-way split, under/overfitting, learning curves
+.venv/bin/python 13_precision_recall_f1.py          # confusion matrix, precision/recall/F1, threshold tradeoff
 ./run_all.sh                               # all of the above in order
 ```
 
