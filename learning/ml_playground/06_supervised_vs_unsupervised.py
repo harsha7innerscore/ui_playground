@@ -53,11 +53,13 @@ def section_supervised_learns_from_labelled_examples() -> None:
     demo("rows held back to judge it", len(X_test))
 
     model = LinearRegression().fit(X_train, y_train)
-    demo("learned coefficients", dict(zip(FEATURES, model.coef_.round(3))))
+    demo("learned coefficients", {name: round(float(c), 3) for name, c in zip(FEATURES, model.coef_)})
     demo("R-squared on unseen students", round(model.score(X_test, y_test), 3))
     note("The model never saw the test students' scores during training. R-squared "
          "here answers a concrete question: how well does this generalize? That "
-         "question only makes sense because we had ground truth to compare against.")
+         "question only makes sense because we had ground truth to compare against -- "
+         "the negative value says these two features barely predict average_score on "
+         "this split; see 08_linear_regression.py for a closer look at the fit.")
 
 
 def section_unsupervised_finds_structure_without_labels() -> None:
