@@ -15,6 +15,7 @@ name; and 14.7% of genuine submissions rank someone else first. See
 
 | Doc | What |
 |---|---|
+| [`HOW_IT_WORKS.md`](HOW_IT_WORKS.md) | **Start here.** Full technical account: what was built, how, every issue and its fix, the output, the limits, and a walkthrough for briefing someone else |
 | [`SESSION_LOG_2.md`](SESSION_LOG_2.md) | Latest session: data expansion, the metric fix, current numbers, open problems |
 | [`SESSION_LOG.md`](SESSION_LOG.md) | Earlier session: fingerprint groundwork, the gate, the Hinge swap |
 | [`approaches.md`](approaches.md) | Literature survey -- every route to higher accuracy, by cost |

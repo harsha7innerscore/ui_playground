@@ -1,0 +1,426 @@
+student_id,name,school,city,grade,gender,device,enrolled_on,study_minutes,attendance_pct,math_score,science_score,english_score
+STU0052,Student 052,Chirec,DELHI ,8,F,web,2025-05-11 00:00:00,333.0,100.0,79.2,66.1,91.1
+STU0032,Student 032,Narayana,Bengaluru,8,FEMALE,android,2025/05/06,169.0,72.3,54.3,69.0,77.7
+STU0099,Student 099,Oakridge,Delhi,9,M,android,2026-01-08 00:00:00,69.0,81.6,66.8,43.6,57.7
+STU0293,Student 293,Narayana,Bengaluru,6,M,android,2025-06-17 00:00:00,238.0,93.2,67.7,999,69.1
+STU0301,Student 301,Chirec,Pune,9,M,android,2025-05-16 00:00:00,81.0,75.1,54.5,null,63.6
+STU0389,Student 389,Oakridge,Pune,6,F,ios,2025-11-14 00:00:00,207.0,94.8,73.7,null,79.5
+STU0271,Student 271,Oakridge,Delhi,7,F,iOS,2025/10/01,192.0,91.8,65.0,69.7,74.3
+STU0400,Student 400,Chirec,Bengaluru,8,F,web,2025-12-14 00:00:00,220.0,81.6,64.7,64.6,72.8
+STU0140,Student 140,Narayana,Pune,7,F,android,2025-12-17 00:00:00,95.0,81.5,64.4,68.4,70.0
+STU0379,Student 379,Chirec,Delhi,9,M,android,2025-06-10 00:00:00,168.0,93.2,76.7,76.9,77.5
+STU0057,Student 057,Oakridge,Pune,10,F,Web ,2025-05-21 00:00:00,159.0,80.9%,70.7,57.8,75.6
+STU0066,Student 066,Oakridge,Delhi,6,M,android,2025-09-23 00:00:00,93.0,97.0%,88.2,65.4,77.0
+STU0336,  Student 336  ,Sri Chaitanya,Delhi,9,m,ios,2025-10-31 00:00:00,158 min,88.3,71.6,null,63.2
+STU0304,Student 304,Sri Chaitanya,Pune,10,F,web,2026-01-16 00:00:00,233.0,99.1,63.5,68.0,85.9
+STU0142,  Student 142  ,Sri Chaitanya,Chennai,9,female,ios,2025-10-25 00:00:00,139.0,81.0,69.7,56.3,58.8
+STU0031,Student 031,Narayana,Bengaluru,8,M,android,2026-01-13 00:00:00,1294.0,75.1,71.4,55.2,53.1
+STU0061,  Student 061  ,Chirec,Pune,7,F,ANDROID,2025-11-15 00:00:00,102.0,100.0,78.8,null,68.2
+STU0203,Student 203,Chirec,Bengaluru,6,M,android,18/01/2026,193.0,96.3%,61.8,90.5,62.2
+STU0121,Student 121,Oakridge,Chennai,8,F,web,2025-11-01 00:00:00,253.0,77.2,83.5,82.8,37.3
+STU0275,Student 275,Delhi Public School,Hyderabad,6,M,ANDROID,09/04/2025,381.0,79.7,79.5,69.1,70.4
+STU0241,Student 241,Oakridge,DELHI ,10,F,Web ,10/07/2025,108.0,98.6,65.0,74.0,55.4
+STU0304,Student 304,Sri Chaitanya,Pune,10,F,web,2026-01-16 00:00:00,233.0,99.1,63.5,68.0,85.9
+STU0085,Student 085,Oakridge,Delhi,6,M,Android,2025-11-14 00:00:00,201.0,79.4,70.7,53.4,58.3
+STU0379,Student 379,Chirec,Delhi,9,M,android,2025-06-10 00:00:00,168.0,93.2,76.7,76.9,77.5
+STU0282,Student 282,Narayana,-,9,F,android,2025-04-21 00:00:00,450.0,81.6,72.6,null,85.6
+STU0278,Student 278,Delhi Public School,Bengaluru,8,F,web,2025-08-23 00:00:00,160 min,,67.0,61.4,53.3
+STU0297,Student 297,Delhi Public School,Bengaluru,6,M,ios,2025-07-05 00:00:00,115.0,100.0,47.1,80.8,68.7
+STU0164,  Student 164  ,Delhi Public School,Delhi,10,M,android,2025-11-23 00:00:00,90.0,87.4,51.9,44.3,71.9
+STU0244,Student 244,Sri Chaitanya,Bengaluru,9,M,web,2025-09-16 00:00:00,100.0,100.0,73.4,65.2,85.2
+STU0343,Student 343,Oakridge,Pune,7,M,android,16/04/2025,241.0,92.9,54.9,68.7,61.3
+STU0308,Student 308,Sri Chaitanya,Bengaluru,9,FEMALE,web,2025-04-01 00:00:00,201.0,87.1,58.9,999,70.8
+STU0391,Student 391,Sri Chaitanya, delhi,6,F,android,2025/09/08,37.0,68.3,,52.0,64.9
+STU0386,Student 386,Delhi Public School,Hyderabad,6,M,Android,16/09/2025,47.0,82.8,68.6,null,57.5
+STU0003,Student 003,Oakridge,Hyderabad,9,F,android,20/09/2025,251.0,86.6,76.8,56.5,85.1
+STU0119,Student 119,Oakridge,Delhi,7,M,ios,13/07/2025,140.0,84.4,52.8,59.2,66.1
+STU0362,Student 362,Narayana,Hyderabad,10,F,android,29/04/2025,168.0,89.6,58.8,68.2,61.3
+STU0303,Student 303,Delhi Public School,Hyderabad,9,M,android,2025-07-25 00:00:00,-60,80.4,51.6,40.6,67.0
+STU0368,Student 368,Oakridge,Hyderabad,8,F,android,2026-01-17 00:00:00,N/A,,,79.8,66.3
+STU0250,Student 250,Oakridge,Delhi,9,F,android,2025-08-26 00:00:00,494.0,96.2,76.8,100.0,98.0
+STU0239,Student 239,Delhi Public School,Chennai,10,M,ios,2025-05-06 00:00:00,103.0,90.6,66.3,46.1,60.3
+STU0053,Student 053,Chirec,Chennai,10,M,web,2025-09-10 00:00:00,160.0,70.2,65.4,58.4,82.3
+STU0146,Student 146,Sri Chaitanya,Bengaluru,10,F,android,2025-10-17 00:00:00,92.0,87.6,65.4,55.3,61.3
+STU0169,Student 169,Sri Chaitanya,Pune,7,F,android,2025/09/11,165.0,86.5,79.0,73.2,59.9
+STU0027,Student 027,Chirec,Chennai,10,M,android,2025-08-13 00:00:00,47.0,81.5,46.1,74.6,67.9
+STU0353,  Student 353  ,Oakridge,Hyderabad,6,F,Android,2025-04-01 00:00:00,181.0,76.4,54.9,67.0,57.6
+STU0171,Student 171,Oakridge,HYDERABAD,10,Male,web,10/12/2025,117.0,97.4%,80.0,55.3,62.4
+STU0081,Student 081,Sri Chaitanya,HYDERABAD,8,female,android,2026-01-05 00:00:00,162.0,77.6,46.1,57.0,55.6
+STU0227,Student 227,Oakridge,Hyderabad,8,M,ios,2025-07-06 00:00:00,98.0,74.5,51.4,65.4,83.4
+STU0165,Student 165,Chirec,Chennai,7,F,ios,2025-04-17 00:00:00,156.0,88.9,61.7,67.7,78.2
+STU0205,Student 205,Delhi Public School,Bengaluru,9,F,android,2025-07-06 00:00:00,101.0,98.2%,63.6,42.8,70.9
+STU0166,Student 166,Chirec,Chennai,8,F,ios,2025-11-01 00:00:00,150.0,100.0,82.5,67.3,95.7
+STU0213,Student 213,Oakridge,Delhi,6,M,web,2025/05/22,243.0,84.7,70.5,58.0,75.0
+STU0267,Student 267,Chirec,Delhi,6,M,android,2025-11-02 00:00:00,53.0,100.0,62.3,50.9,81.8
+STU0306,Student 306,Chirec,Pune,9,M,android,2025-11-20 00:00:00,226.0,100.0,77.7,86.2,55.8
+STU0015,Student 015,Narayana,Chennai,8,M,web,2025-10-31 00:00:00,203.0,100.0,62.2,69.9,81.7
+STU0194,Student 194,Narayana,hyderabad,6,M,android,2026-01-18 00:00:00,1217.0,87.3,,64.0,60.5
+STU0274,Student 274,Delhi Public School,Hyderabad,10,M,Web ,2025-06-27 00:00:00,58 min,83.6,57.0,55.6,55.8
+STU0334,Student 334,Delhi Public School, delhi,8,M,web,2025/08/12,152.0,100.0,48.5,999,65.0
+STU0148,Student 148,Chirec,Pune,9,F,ios,2025-12-26 00:00:00,95.0,93.8%,76.3,56.7,75.5
+STU0004,Student 004,Narayana,Pune,10,f,web,2026-01-14 00:00:00,252.0,88.7,,64.3,66.9
+STU0236,Student 236,Narayana,Bengaluru,6,M,android,30/12/2025,185.0,84.8,59.6,61.2,61.4
+STU0116,Student 116,Sri Chaitanya,Chennai,7,F,android,2025-11-09 00:00:00,90.0,86.1,59.2,53.5,56.6
+STU0156,Student 156,Narayana,Chennai,10,F,android,28-Apr-2025,50.0,99.7,77.0,50.6,52.7
+STU0106,Student 106,Chirec,Hyderabad,6,F,android,2025-10-16 00:00:00,245.0,81.9,65.1,63.3,60.5
+STU0115,Student 115,Oakridge,Delhi,8,M,web,2025-11-15 00:00:00,276.0,83.1,84.4,59.4,69.6
+STU0097,Student 097,Delhi Public School,Bengaluru,9,M,android,2026-01-21 00:00:00,154.0,68.7,,62.0,74.2
+STU0217,Student 217,Oakridge,hyderabad,10,M,ios,19-Aug-2025,310 min,96.0,74.0,60.1,77.8
+STU0394,Student 394,Delhi Public School,Chennai,6,FEMALE, web,2026-01-04 00:00:00,199.0,96.6,61.5,63.8,80.5
+STU0112,Student 112,Chirec,Pune,6,M,web,2025-04-25 00:00:00,115.0,95.1,69.7,60.2,77.2
+STU0178,Student 178,Chirec,Hyderabad,8,F,iOS,2025-12-07 00:00:00,178.0,78.9,65.0,46.8,79.5
+STU0347,Student 347,Sri Chaitanya,HYDERABAD,6,F,android,2025/06/12,130 min,86.1,55.3,71.8,75.8
+STU0029,Student 029,Sri Chaitanya,Hyderabad,8,F,ios,2026-01-04 00:00:00,309.0,86.0,88.2,62.6,79.3
+STU0042,Student 042,Delhi Public School,Hyderabad,7,F,android,2025-07-31 00:00:00,188 min,87.5,69.8,null,68.0
+STU0208,Student 208,Narayana,-,8,M,android,2025-07-01 00:00:00,164.0,86.4,63.0,50.8,63.0
+STU0023,  Student 023  ,Sri Chaitanya,Chennai,7,M,ios,14/08/2025,238.0,71.7,63.0,59.3,71.4
+STU0254,Student 254,Oakridge,Bengaluru,6,F,web,2025-05-25 00:00:00,211.0,94.0,66.4,57.2,74.8
+STU0033,Student 033,Sri Chaitanya,Delhi,8,M,android,2025-11-02 00:00:00,168.0,78.4,53.5,71.2,86.3
+STU0280,  Student 280  ,Oakridge,Hyderabad,10,F,   ,2025-04-18 00:00:00,130.0,87.2,60.6,61.4,71.1
+STU0259,Student 259,Delhi Public School,Bengaluru,7,F,web,23/10/2025,149.0,,61.4,71.2,43.4
+STU0058,Student 058,Delhi Public School,Delhi,9,F,android,2025-12-01 00:00:00,N/A,85.6,79.1,50.4,57.5
+STU0063,Student 063,Oakridge,Hyderabad,7,F,android,17/08/2025,73.0,78.0%,72.0,65.8,67.3
+STU0182,Student 182,Narayana,Hyderabad,6,M,web,2025-07-11 00:00:00,200.0,82.7%,,71.4,83.2
+STU0322,Student 322,Narayana,Delhi,7,F,ios,01/08/2025,94.0,73.7,69.8,54.3,56.8
+STU0137,  Student 137  ,Oakridge,Chennai,8,F,android,2025-09-27 00:00:00,200.0,83.6,63.6,60.4,69.5
+STU0160,Student 160,Delhi Public School,Hyderabad,0,m,ios,2025-09-29 00:00:00,303.0,82.5,78.5,69.7,63.7
+STU0335,  Student 335  ,Oakridge,Bengaluru,8,F,   ,2025-10-16 00:00:00,240.0,100.0,72.3,80.2,81.6
+STU0397,Student 397,Narayana,DELHI ,8,M,Android,2025-06-12 00:00:00,152.0,89.3,46.2,47.0,77.2
+STU0149,Student 149,Delhi Public School,Delhi,8,M,Android,2025-04-10 00:00:00,136.0,76.0,50.6,51.3,68.3
+STU0090,  Student 090  ,Narayana,Pune,9,FEMALE,android,2025-07-02 00:00:00,446 min,78.0,74.6,81.0,78.3
+STU0395,Student 395,Chirec,Bengaluru,0,M,android,2025-04-30 00:00:00,98.0,99.1,73.5,47.0,60.5
+STU0289,Student 289,Chirec,HYDERABAD,7,F,android,2025/04/24,330.0,91.0,82.9,69.1,77.4
+STU0390,Student 390,Chirec,Hyderabad,6,M,web,2025/09/22,158.0,100.0,76.8,57.2,77.9
+STU0307,Student 307,Narayana, delhi,7,M,web,2025-08-18 00:00:00,296.0,97.0,,69.0,89.6
+STU0102,  Student 102  ,Delhi Public School,Hyderabad,7,M,android,2025-10-31 00:00:00,N/A,79.8,53.1,66.4,58.7
+STU0195,  Student 195  ,Sri Chaitanya,hyderabad,9,F,ios,11-Nov-2025,204 min,71.1%,75.3,64.8,65.0
+STU0262,Student 262,Chirec, delhi,10,M,android,2025-12-09 00:00:00,109.0,79.1,73.8,62.0,47.7
+STU0317,  Student 317  ,Sri Chaitanya,Chennai,9,F,android,2025-09-16 00:00:00,162.0,79.8,73.2,52.1,83.1
+STU0382,Student 382,Delhi Public School,-,6,F,android,2025/11/17,292.0,93.1,70.9,64.5,78.5
+STU0014,Student 014,Delhi Public School, delhi,6,M,web,2025/07/09,213 min,91.3,70.4,58.3,62.6
+STU0355,Student 355,Delhi Public School,Bengaluru,9,f,android,2025-09-14 00:00:00,408.0,81.6,93.4,68.0,83.9
+STU0130,Student 130,Oakridge,Bengaluru,8,M,android,2025-08-12 00:00:00,170.0,86.9,64.8,75.3,63.1
+STU0091,Student 091,Oakridge,Hyderabad,6,F,android,11/07/2025,107.0,85.6,69.1,61.5,65.4
+STU0260,Student 260,Chirec, delhi,7,M,android,28/07/2025,N/A,,86.7,72.4,70.8
+STU0060,Student 060,Sri Chaitanya,-,8,F,android,16-Jun-2025,62 min,89.1,57.5,60.0,75.4
+STU0147,Student 147,Sri Chaitanya,Hyderabad,6,F,ios,2026-01-17 00:00:00,-60,97.5,71.4,62.8,87.7
+STU0158,Student 158,Delhi Public School,Delhi,8,M,android,2025-08-21 00:00:00,157.0,91.2,74.5,53.6,72.0
+STU0075,Student 075,Chirec,Bengaluru,8,F,ANDROID,2025-11-20 00:00:00,74.0,67.9,58.0,51.7,75.7
+STU0080,Student 080,Sri Chaitanya,DELHI ,6,M,android,2025-09-03 00:00:00,192.0,98.6,72.5,60.3,74.8
+STU0242,Student 242,Sri Chaitanya,Delhi,6,M,android,10/10/2025,184.0,98.9,61.4,56.0,69.8
+STU0139,Student 139,Delhi Public School,Bengaluru,10,M,android,2025-05-21 00:00:00,108.0,89.4,68.3,68.1,69.5
+STU0082,Student 082,Delhi Public School,Pune,7,F,ios,2025-04-22 00:00:00,158.0,95.8,56.4,83.5,60.7
+STU0133,Student 133,Delhi Public School,Bengaluru,6,F,web,24/04/2025,88.0,78.2,46.3,48.0,72.1
+STU0051,Student 051,Narayana,Bengaluru,6,f,android,2025-08-17 00:00:00,148.0,87.6,56.4,64.8,59.8
+STU0266,  Student 266  ,Delhi Public School,Hyderabad,7,FEMALE,android,2025-09-21 00:00:00,401.0,77.8,75.4,89.7,93.5
+STU0320,Student 320,Sri Chaitanya,Delhi,6,M,android,2025/07/28,242.0,87.5,71.4,77.2,72.8
+STU0256,Student 256,Sri Chaitanya,Bengaluru,7,M,ios,2025-07-06 00:00:00,361.0,96.3,73.9,78.9,73.9
+STU0359,Student 359,Delhi Public School,Hyderabad,10,F,android,25-May-2025,161.0,,71.7,46.6,56.8
+STU0130,Student 130,Oakridge,Bengaluru,8,M,android,2025-08-12 00:00:00,170.0,86.9,64.8,75.3,63.1
+STU0237,Student 237,Oakridge,Hyderabad,10,F,android,2025-06-11 00:00:00,155.0,81.9,65.2,null,64.0
+STU0054,Student 054,Oakridge,Bengaluru,8,F,   ,2025-12-22 00:00:00,116.0,85.3,49.9,68.8,67.7
+STU0373,Student 373,Chirec,Pune,6,M,android,30/10/2025,136 min,,65.9,null,77.3
+STU0163,Student 163,Sri Chaitanya,Delhi,9,F,web,2025-09-29 00:00:00,109.0,79.5,60.8,999,49.8
+STU0110,Student 110,Delhi Public School,Bengaluru,7,f,Web ,2025-11-09 00:00:00,86.0,90.7,51.4,68.9,71.9
+STU0381,Student 381,Oakridge,Delhi,10,F,Android,05-May-2025,184.0,93.6,58.6,62.8,92.3
+STU0270,  Student 270  ,Oakridge,-,10,F,Web ,14/11/2025,196.0,90.1,76.2,61.7,74.3
+STU0364,Student 364,Chirec,-,10,M,ios,07-Jun-2025,255.0,100.0,61.6,84.2,82.5
+STU0201,Student 201,Oakridge,Delhi,8,M,android,2025-07-18 00:00:00,93.0,96.1,70.9,62.9,52.8
+STU0360,Student 360,Narayana,Chennai,6,F,android,2025-09-07 00:00:00,182.0,75.9%,71.4,64.7,72.3
+STU0067,Student 067,Delhi Public School,Bengaluru,6,M,web,2025-04-29 00:00:00,407.0,80.6,91.7,77.6,76.2
+STU0348,Student 348,Oakridge,Chennai,6,M,ios,2025-10-16 00:00:00,142.0,90.5,59.9,53.0,63.2
+STU0317,  Student 317  ,Sri Chaitanya,Chennai,9,F,android,2025-09-16 00:00:00,162.0,79.8,73.2,52.1,83.1
+STU0298,Student 298,Narayana,Delhi,8,M,android,2025-08-11 00:00:00,193.0,89.5,72.4,59.4,74.7
+STU0100,Student 100,Narayana,Delhi,10,F,web,19-Oct-2025,149.0,89.2,65.2,75.3,63.8
+STU0016,Student 016,Narayana,Chennai,10,F,android,21-Jul-2025,115.0,,64.0,63.8,69.7
+STU0229,Student 229,Chirec,Delhi,7,F,web,2025-07-26 00:00:00,N/A,,56.3,47.1,71.4
+STU0228,Student 228,Sri Chaitanya,hyderabad,10,F,android,2025-10-06 00:00:00,183.0,80.3,55.8,63.8,64.4
+STU0087,Student 087,Narayana,Pune,10,Male,android,2026-01-18 00:00:00,234.0,73.6,56.9,68.8,65.9
+STU0038,Student 038,Chirec,hyderabad,9,M,ANDROID,2025-09-27 00:00:00,164.0,93.9%,61.0,55.2,62.2
+STU0376,Student 376,Narayana,Chennai,6,M,ios,2025/09/03,115.0,75.7,72.6,50.6,76.7
+STU0323,Student 323,Delhi Public School,Chennai,7,F,android,19-Jul-2025,127.0,98.0%,65.6,56.1,49.2
+STU0074,Student 074,Sri Chaitanya,Delhi,7,M,android,2025-07-12 00:00:00,N/A,81.7,67.8,69.0,78.7
+STU0255,Student 255,Narayana,Delhi,10,M,Web ,2025-12-07 00:00:00,N/A,90.0,59.6,54.0,68.2
+STU0105,Student 105,Oakridge,Pune,6,F, web,2025-08-15 00:00:00,81.0,91.1,58.7,66.0,65.8
+STU0369,  Student 369  ,Sri Chaitanya,DELHI ,10,female,android,10/05/2025,290.0,85.1,72.9,51.6,75.3
+STU0175,Student 175,Narayana,Delhi,6,F,web,2025-11-20 00:00:00,94 min,79.7,71.5,46.0,67.4
+STU0017,Student 017,Delhi Public School, delhi,6,M,iOS,2025-09-24 00:00:00,100.0,82.0,60.0,70.2,53.1
+STU0189,Student 189,Narayana,Chennai,8,F, web,2025-05-17 00:00:00,67.0,90.0,61.4,50.3,61.5
+STU0089,Student 089,Chirec,Delhi,9,F,android,10-Aug-2025,113 min,66.4%,53.2,48.0,59.8
+STU0240,Student 240,Oakridge,Delhi,10,FEMALE,web,2025-12-09 00:00:00,70 min,93.8,56.4,67.3,63.8
+STU0141,Student 141,Oakridge,Hyderabad,6,M,iOS,2025-07-26 00:00:00,52.0,98.3,46.9,48.9,66.6
+STU0103,Student 103,Sri Chaitanya,Bengaluru,9,M,ANDROID,22/12/2025,201.0,,58.4,75.8,64.0
+STU0188,Student 188,Oakridge,Chennai,8,F,web,2025/08/08,260.0,85.0,64.4,67.4,73.3
+STU0345,Student 345,Oakridge,Chennai,8,F,android,2025-04-01 00:00:00,97.0,100.0,63.2,65.0,62.7
+STU0071,Student 071,Oakridge,Hyderabad,10,M,web,2026-01-13 00:00:00,99.0,84.6,62.5,53.5,54.7
+STU0134,Student 134,Narayana,Delhi,8,Male,web,2025-11-28 00:00:00,160.0,100.0,87.0,71.5,70.7
+STU0223,Student 223,Sri Chaitanya,Hyderabad,9,M,android,2025-05-20 00:00:00,66 min,85.8,57.3,53.2,65.2
+STU0246,Student 246,Oakridge,Bengaluru,9,M,ios,2025/08/25,163 min,74.2,60.6,37.7,67.0
+STU0257,Student 257,Sri Chaitanya,Delhi,6,M,Web ,2025-04-28 00:00:00,N/A,97.6%,70.6,63.6,55.2
+STU0309,Student 309,Narayana,Delhi,6,M,android,2025-04-11 00:00:00,69.0,86.2,53.2,62.2,51.8
+STU0372,Student 372,Oakridge,Pune,6,M,web,2025-06-18 00:00:00,157.0,77.6,,null,63.6
+STU0222,Student 222,Delhi Public School,Delhi,9,M,ANDROID,2025-06-10 00:00:00,196 min,91.6,65.1,71.6,72.2
+STU0019,Student 019,Sri Chaitanya,Pune,6,M,iOS,2025/10/12,196.0,91.9,80.4,74.3,68.7
+STU0325,Student 325,Sri Chaitanya, delhi,10,female,ios,28/07/2025,178.0,93.6,69.7,68.9,85.3
+STU0021,Student 021,Sri Chaitanya,Bengaluru,10,f,android,2025-12-16 00:00:00,157.0,88.4,,72.3,85.1
+STU0056,Student 056,Delhi Public School,Hyderabad,10,F,   ,2026-01-21 00:00:00,137.0,84.8%,,74.3,61.9
+STU0352,Student 352,Narayana,Delhi,8,M,   ,2025-07-29 00:00:00,229.0,81.1,65.4,74.8,71.9
+STU0358,Student 358,Narayana,hyderabad,9,FEMALE,android,2025-05-04 00:00:00,75.0,83.6,,66.8,63.1
+STU0302,Student 302,Delhi Public School,Delhi,7,M,android,01/01/2026,115.0,100.0,55.9,56.3,76.2
+STU0035,Student 035,Delhi Public School,Pune,10,M,Web ,2025-11-28 00:00:00,90 min,79.3,72.9,50.6,70.9
+STU0151,Student 151,Oakridge,Chennai,10,F,android,2025-07-04 00:00:00,N/A,100.0,78.4,75.0,88.1
+STU0174,Student 174,Oakridge,Pune,8,M,android,2025-12-30 00:00:00,131.0,73.2,59.9,50.4,68.0
+STU0321,Student 321,Sri Chaitanya,Delhi,8,M,android,2025-10-08 00:00:00,127.0,95.0%,76.8,70.8,64.6
+STU0246,Student 246,Oakridge,Bengaluru,9,M,ios,2025/08/25,163 min,74.2,60.6,37.7,67.0
+STU0098,Student 098,Oakridge,Hyderabad,8,M,android,2025-10-14 00:00:00,137.0,88.0,88.4,57.1,51.3
+STU0335,  Student 335  ,Oakridge,Bengaluru,8,F,   ,2025-10-16 00:00:00,240.0,100.0,72.3,80.2,81.6
+STU0155,Student 155,Chirec,Bengaluru,9,M,web,2026-01-16 00:00:00,133.0,100.0,63.2,68.2,56.6
+STU0123,Student 123,Narayana, delhi,8,F,android,2025-10-27 00:00:00,94 min,80.0,67.1,60.7,45.1
+STU0114,Student 114,Oakridge,Pune,10,F,android,2025-06-03 00:00:00,265.0,86.1,78.3,70.7,65.9
+STU0221,Student 221,Chirec,Delhi,8,F,android,2025/05/27,66.0,80.5,68.7,54.6,51.0
+STU0279,Student 279,Oakridge,Hyderabad,10,F,android,19-Dec-2025,924.0,91.0,66.8,46.4,58.1
+STU0224,Student 224,Delhi Public School,Bengaluru,10,M,android,2025-06-02 00:00:00,211.0,93.5%,72.0,68.6,69.7
+STU0109,Student 109,Delhi Public School,Pune,8,Male,web,2025-05-12 00:00:00,N/A,74.8,59.3,57.6,57.9
+STU0387,Student 387,Sri Chaitanya,Delhi,7,M,ios,2025-07-31 00:00:00,229.0,68.7,71.2,59.7,39.8
+STU0095,Student 095,Chirec,Bengaluru,7,F,web,2025-05-16 00:00:00,275 min,86.1,74.2,47.2,80.4
+STU0388,Student 388,Sri Chaitanya,Delhi,8,M,android,2025-10-04 00:00:00,237.0,85.5,55.3,53.2,80.4
+STU0126,Student 126,Oakridge,Hyderabad,9,F,web,2025-12-07 00:00:00,146.0,91.3,69.6,null,70.3
+STU0264,Student 264,Delhi Public School, delhi,8,M,iOS,07/01/2026,35.0,98.7,67.1,null,71.4
+STU0116,Student 116,Sri Chaitanya,Chennai,7,F,android,2025-11-09 00:00:00,90.0,86.1,59.2,53.5,56.6
+STU0092,Student 092,Sri Chaitanya,Delhi,9,M,ios,2025-10-29 00:00:00,160.0,86.0,71.2,null,65.8
+STU0296,Student 296,Chirec,Delhi,8,Male,android,2025-08-01 00:00:00,135 min,97.5,67.7,66.3,70.2
+STU0356,Student 356,Narayana,Bengaluru,10,M,android,2025/10/07,237.0,76.2,60.7,59.4,69.2
+STU0243,  Student 243  ,Narayana,Chennai,10,F,ios,27/12/2025,138.0,98.7,69.8,51.6,76.2
+STU0354,Student 354,Delhi Public School,Delhi,9,M,android,2025/08/12,283.0,88.6,83.4,60.8,84.3
+STU0207,Student 207,Sri Chaitanya,Pune,6,M,ios,2025-11-11 00:00:00,200.0,86.7,66.1,65.2,61.2
+STU0112,Student 112,Chirec,Pune,6,M,web,2025-04-25 00:00:00,115.0,95.1,69.7,60.2,77.2
+STU0025,Student 025,Chirec,Pune,9,F,android,2025-11-27 00:00:00,N/A,68.0,,67.1,64.5
+STU0272,Student 272,Delhi Public School,Bengaluru,8,M,Android,2025-10-17 00:00:00,139 min,81.7,59.1,72.6,73.5
+STU0294,Student 294,Narayana,DELHI ,6,F,web,2025-10-04 00:00:00,114.0,100.0,63.3,60.1,78.4
+STU0351,Student 351,Narayana,DELHI ,9,F,android,2025-10-03 00:00:00,95.0,91.5,56.7,62.1,55.3
+STU0127,  Student 127  ,Chirec,Hyderabad,10,F,ios,2025/07/08,221.0,92.5,62.3,66.0,68.8
+STU0383,Student 383,Chirec,Delhi,10,M,android,2025-05-13 00:00:00,-60,72.0,70.8,67.1,68.9
+STU0079,Student 079,Chirec,-,9,FEMALE,android,2025-09-25 00:00:00,148 min,100.0,61.7,53.1,69.4
+STU0245,Student 245,Narayana,Hyderabad,8,M, web,2025/12/29,92.0,94.0,56.0,54.2,71.9
+STU0179,Student 179,Delhi Public School,Hyderabad,7,F,ios,2025-06-06 00:00:00,130.0,84.6,,60.1,55.7
+STU0327,Student 327,Delhi Public School,HYDERABAD,8,M,web,2025/05/28,244 min,64.7%,56.3,63.7,77.1
+STU0238,Student 238,Sri Chaitanya,Delhi,8,M,web,09-Sep-2025,175.0,85.0,81.0,66.2,69.4
+STU0314,Student 314,Sri Chaitanya,DELHI ,7,F,android,2026-01-12 00:00:00,157.0,100.0%,64.3,62.5,56.5
+STU0249,Student 249,Oakridge,Delhi,6,M,ANDROID,2025-10-06 00:00:00,91.0,84.6,62.9,53.4,78.1
+STU0299,Student 299,Narayana,Pune,8,F,web,2025-09-16 00:00:00,148.0,74.6,49.0,63.2,72.9
+STU0062,Student 062,Oakridge,-,8,F,android,2025-05-28 00:00:00,107.0,98.3,51.8,62.1,73.3
+STU0295,Student 295,Oakridge,Bengaluru,0,F,   ,20/10/2025,1256.0,91.8,58.7,69.3,69.5
+STU0094,Student 094,Sri Chaitanya,-,6,F,android,23-Apr-2025,84.0,90.4,54.1,56.3,60.6
+STU0341,Student 341,Chirec,Chennai,9,F,ANDROID,11-Dec-2025,245 min,94.5,66.1,91.0,77.1
+STU0247,Student 247,Sri Chaitanya,Delhi,10,f,Android,2026-01-09 00:00:00,136.0,,74.4,68.0,76.8
+STU0070,Student 070,Sri Chaitanya,Chennai,9,F,android,16/01/2026,87.0,95.8,61.8,69.1,63.8
+STU0037,Student 037,Oakridge,Chennai,9,F,ios,2025/08/09,N/A,78.5,63.3,55.5,59.8
+STU0041,  Student 041  ,Chirec,Delhi,8,F,android,2025-10-01 00:00:00,200.0,85.1,999,59.9,62.0
+STU0161,Student 161,Delhi Public School,Hyderabad,8,M,Android,2026-01-10 00:00:00,153.0,78.5,62.1,58.1,52.1
+STU0328,Student 328,Narayana,Hyderabad,6,M,   ,2025-06-11 00:00:00,158.0,81.2,61.4,69.4,60.9
+STU0012,Student 012,Oakridge,Hyderabad,10,F,android,30/10/2025,66.0,84.2,39.9,42.4,65.9
+STU0145,Student 145,Chirec,hyderabad,8,F,   ,2025-11-25 00:00:00,91.0,69.9,66.7,53.1,57.0
+STU0290,Student 290,Delhi Public School,DELHI ,8,M,android,2025-04-30 00:00:00,114.0,82.6%,48.7,48.0,64.1
+STU0296,Student 296,Chirec,Delhi,8,Male,android,2025-08-01 00:00:00,135 min,97.5,67.7,66.3,70.2
+STU0172,  Student 172  ,Sri Chaitanya,Pune,9,M,ios,2025-08-19 00:00:00,N/A,83.6%,61.3,68.7,58.7
+STU0128,Student 128,Narayana,Chennai,6,F,ios,2025-10-16 00:00:00,223.0,91.2,63.8,69.3,70.4
+STU0233,Student 233,Narayana,Hyderabad,9,F,web,2025-07-05 00:00:00,1336.0,74.3,51.7,59.1,55.6
+STU0185,Student 185,Delhi Public School,Delhi,8,F,Android,2025-04-22 00:00:00,66.0,77.6,64.8,60.2,49.2
+STU0047,Student 047,Oakridge,Chennai,6,M,Android,2025/10/01,122.0,,46.0,56.4,57.0
+STU0010,Student 010,Chirec,Chennai,7,F,android,2025-08-21 00:00:00,169.0,91.2%,,69.7,56.6
+STU0315,Student 315,Sri Chaitanya,Bengaluru,9,M,android,2025-07-08 00:00:00,173.0,72.7,,null,69.6
+STU0378,Student 378,Chirec,Pune,0,M,Android,11-Aug-2025,126 min,92.8,58.2,null,70.6
+STU0177,Student 177,Narayana,Chennai,10,F,Android,13/04/2025,81.0,88.4,61.6,53.6,69.5
+STU0232,Student 232,Oakridge,Bengaluru,9,F,android,2025-07-10 00:00:00,184.0,90.0,70.4,79.5,70.7
+STU0211,Student 211,Delhi Public School,-,9,F,ANDROID,2025-09-06 00:00:00,359.0,89.9,,76.8,85.9
+STU0129,Student 129,Narayana, delhi,8,F,web,2025/06/24,88.0,88.5,56.3,61.2,62.8
+STU0144,Student 144,Sri Chaitanya, delhi,7,M,android,20-Jan-2026,169.0,81.4%,47.6,62.4,81.6
+STU0008,Student 008,Delhi Public School,Delhi,7,F,android,07-Nov-2025,248.0,92.2,85.7,57.6,64.5
+STU0366,Student 366,Delhi Public School,Bengaluru,10,F,android,2025-10-04 00:00:00,271.0,81.9,79.2,74.6,82.8
+STU0265,Student 265,Sri Chaitanya,Hyderabad,10,M,android,05-May-2025,188.0,83.6,53.2,62.6,69.1
+STU0319,  Student 319  ,Sri Chaitanya,Chennai,6,M,   ,2025-05-05 00:00:00,128.0,95.6,,50.0,47.7
+STU0180,Student 180,Narayana,Chennai,7,M,web,2025-08-05 00:00:00,59.0,88.3,55.0,45.3,58.2
+STU0173,Student 173,Sri Chaitanya,Bengaluru,8,F,android,2025/07/06,178.0,80.6,56.8,74.2,999
+STU0218,Student 218,Sri Chaitanya,hyderabad,7,F,android,2025-12-16 00:00:00,327.0,96.9,89.3,66.6,84.4
+STU0311,Student 311,Oakridge,Pune,10,M,android,2025/09/26,73.0,89.6,65.5,57.3,55.5
+STU0285,Student 285,Delhi Public School,DELHI ,10,M,android,2025-07-18 00:00:00,148.0,86.9,55.3,78.2,61.9
+STU0009,Student 009,Delhi Public School,Bengaluru,6,F,ios,2025-12-21 00:00:00,42.0,80.6,57.3,null,49.3
+STU0157,Student 157,Chirec,Hyderabad,10,F,ANDROID,2025-11-12 00:00:00,162.0,,57.8,61.4,71.9
+STU0028,Student 028,Delhi Public School,Bengaluru,8,M,ANDROID,21-Dec-2025,113.0,,62.7,61.4,65.0
+STU0339,Student 339,Delhi Public School,-,6,M, web,2025-09-15 00:00:00,1095.0,95.9,46.7,51.5,67.0
+STU0371,Student 371,Sri Chaitanya,Hyderabad,7,F,iOS,2025-07-19 00:00:00,87.0,85.0,68.2,55.2,59.1
+STU0059,Student 059,Chirec,Pune,8,M,web,2025-08-29 00:00:00,147.0,75.6,69.6,67.7,77.1
+STU0206,Student 206,Chirec,Bengaluru,8,female,android,2025-10-22 00:00:00,N/A,,,58.0,54.7
+STU0065,Student 065,Oakridge,Bengaluru,10,M,Android,2025-09-14 00:00:00,182.0,84.4,41.1,69.1,58.6
+STU0083,Student 083,Oakridge,Bengaluru,10,F,ios,2025/08/08,384.0,98.4,92.7,79.1,83.6
+STU0243,  Student 243  ,Narayana,Chennai,10,F,ios,27/12/2025,138.0,98.7,69.8,51.6,76.2
+STU0214,Student 214,Sri Chaitanya,Bengaluru,8,F,   ,2025-10-24 00:00:00,162.0,,51.5,null,999
+STU0269,Student 269,Chirec,Bengaluru,6,F,android,2025/06/25,172.0,76.9,44.3,47.8,75.0
+STU0154,Student 154,Chirec,Pune,10,M,web,09-Dec-2025,316.0,97.5,77.8,69.5,77.2
+STU0049,Student 049,Delhi Public School,DELHI ,8,M,web,2025/08/22,230.0,85.8,56.3,53.3,60.2
+STU0209,Student 209,Delhi Public School,Chennai,8,M,ios,2025-08-25 00:00:00,23.0,95.4,56.1,48.8,54.7
+STU0002,Student 002,Oakridge,Delhi,9,M,android,2025-06-20 00:00:00,333.0,85.8,100.0,59.3,77.6
+STU0275,Student 275,Delhi Public School,Hyderabad,6,M,ANDROID,09/04/2025,381.0,79.7,79.5,69.1,70.4
+STU0281,Student 281,Delhi Public School,Hyderabad,9,F,android,2025-11-01 00:00:00,88.0,100.0,59.7,61.5,66.2
+STU0096,Student 096,Narayana,Hyderabad,8,M,android,04-May-2025,127.0,98.2,65.6,68.4,74.4
+STU0121,Student 121,Oakridge,Chennai,8,F,web,2025-11-01 00:00:00,253.0,77.2,83.5,82.8,37.3
+STU0268,Student 268,Sri Chaitanya,DELHI ,7,M,android,2025-05-01 00:00:00,81.0,83.9,58.2,54.6,51.6
+STU0117,Student 117,Oakridge,Hyderabad,8,M, web,2025-06-09 00:00:00,129.0,83.0,69.3,58.9,66.6
+STU0046,Student 046,Narayana,Pune,9,M,ios,2025-04-05 00:00:00,165 min,89.1,62.7,68.1,62.0
+STU0162,Student 162,Oakridge,Bengaluru,6,M,iOS,2025-04-18 00:00:00,159.0,88.5,42.0,65.7,64.9
+STU0338,  Student 338  ,Chirec,Hyderabad,7,F,web,2025-10-09 00:00:00,56.0,73.4,57.2,53.3,76.7
+STU0118,Student 118,Chirec,Pune,10,M,android,2025-05-28 00:00:00,123.0,94.7,89.8,56.8,69.0
+STU0078,Student 078,Delhi Public School,DELHI ,10,F,ios,2025-05-08 00:00:00,125.0,92.3,86.1,58.7,62.3
+STU0331,Student 331,Delhi Public School,Chennai,10,M,web,26/06/2025,324 min,90.6,81.3,57.9,75.8
+STU0064,Student 064,Delhi Public School,Chennai,7,Male,android,05/09/2025,139.0,80.1%,56.8,66.8,78.7
+STU0231,  Student 231  ,Sri Chaitanya,Pune,8,M,ios,2025-05-19 00:00:00,137 min,99.7,59.7,72.8,46.4
+STU0187,Student 187,Sri Chaitanya,Bengaluru,9,F,Android,23-May-2025,186 min,68.3,61.0,55.8,62.2
+STU0284,Student 284,Chirec,Delhi,8,M,iOS,2025/06/08,234.0,87.5,80.4,53.8,64.7
+STU0200,Student 200,Sri Chaitanya,Pune,6,M,Web ,2025/04/02,140.0,93.8,62.9,51.1,64.6
+STU0288,Student 288,Narayana,Pune,10,F,android,2025-12-01 00:00:00,172.0,,65.2,71.2,79.7
+STU0122,  Student 122  ,Chirec,HYDERABAD,9,M,ios,2025-06-18 00:00:00,165.0,87.6,69.8,74.4,68.8
+STU0048,Student 048,Delhi Public School,Bengaluru,6,F,iOS,15-Jan-2026,263.0,93.3,68.8,63.4,91.8
+STU0365,Student 365,Sri Chaitanya,Delhi,9,F,android,2025-07-28 00:00:00,178.0,74.5,50.7,64.3,60.1
+STU0159,Student 159,Narayana,-,7,F,web,2026-01-23 00:00:00,907.0,93.6,55.6,69.9,67.0
+STU0086,Student 086,Oakridge,Chennai,8,M,   ,2025-05-07 00:00:00,71.0,87.0%,60.1,60.3,66.1
+STU0226,Student 226,Delhi Public School,Bengaluru,6,M,ios,2025-10-14 00:00:00,145.0,87.7,44.5,73.2,71.8
+STU0263,Student 263,Narayana,Delhi,10,female,ios,2025-06-23 00:00:00,N/A,89.8,66.4,null,72.1
+STU0380,Student 380,Oakridge,Pune,7,M,android,2025-07-23 00:00:00,131.0,82.2,64.0,61.7,67.4
+STU0077,Student 077,Sri Chaitanya,Hyderabad,9,F,android,2026-01-20 00:00:00,96.0,82.3,61.6,75.6,73.5
+STU0329,Student 329,Chirec,Hyderabad,9,F, web,06-May-2025,N/A,90.0,76.9,61.4,93.1
+STU0332,  Student 332  ,Delhi Public School,Hyderabad,8,Male,web,2025-09-14 00:00:00,286.0,90.3,999,null,85.3
+STU0088,Student 088,Narayana,Bengaluru,10,F,android,2025-06-30 00:00:00,57.0,100.0,60.0,75.8,74.3
+STU0265,Student 265,Sri Chaitanya,Hyderabad,10,M,android,05-May-2025,188.0,83.6,53.2,62.6,69.1
+STU0183,Student 183,Chirec, delhi,10,F,web,2025-12-28 00:00:00,144.0,85.7%,53.9,54.7,78.0
+STU0106,Student 106,Chirec,Hyderabad,6,F,android,2025-10-16 00:00:00,245.0,81.9,65.1,63.3,60.5
+STU0050,Student 050,Narayana,Chennai,6,Male,android,2025-08-16 00:00:00,184.0,95.5,67.7,54.8,61.5
+STU0006,Student 006,Chirec,Chennai,9,M,web,09/04/2025,58.0,97.3,75.7,null,57.3
+STU0018,Student 018,Oakridge,Delhi,9,F,web,2025-09-03 00:00:00,-60,,79.4,54.4,61.5
+STU0235,  Student 235  ,Delhi Public School,Hyderabad,9,F,web,2025-12-09 00:00:00,N/A,99.3,85.7,73.1,81.8
+STU0337,Student 337,Delhi Public School,Bengaluru,7,M,ios,2025-08-20 00:00:00,293.0,86.0,65.7,43.8,58.5
+STU0107,Student 107,Chirec,Bengaluru,9,F,android,28/07/2025,49.0,100.0,69.4,58.6,76.7
+STU0135,Student 135,Chirec,Delhi,10,F,ios,2025-04-26 00:00:00,65.0,88.3,71.3,48.1,71.3
+STU0342,Student 342,Oakridge,Delhi,8,M,   ,2025-07-11 00:00:00,252.0,99.4,81.6,65.5,61.7
+STU0227,Student 227,Oakridge,Hyderabad,8,M,ios,2025-07-06 00:00:00,98.0,74.5,51.4,65.4,83.4
+STU0215,Student 215,Delhi Public School,Chennai,7,F,android,2025-05-16 00:00:00,398.0,80.0,82.7,68.5,81.6
+STU0191,Student 191,Chirec,Bengaluru,8,M,android,2025-06-17 00:00:00,135.0,80.7,50.6,64.9,61.0
+STU0374,Student 374,Narayana,Delhi,6,M,ios,14-May-2025,1321.0,91.0,62.8,53.4,89.3
+STU0283,Student 283,Oakridge,Hyderabad,8,M,Web ,2025-05-06 00:00:00,145.0,100.0,67.4,55.4,53.0
+STU0030,Student 030,Sri Chaitanya,-,8,f,web,2025-07-04 00:00:00,83.0,,,65.3,70.4
+STU0170,  Student 170  ,Oakridge,-,10,M,android,2025-07-21 00:00:00,171.0,91.9,,54.0,38.3
+STU0181,  Student 181  ,Delhi Public School,hyderabad,9,M,ios,14/04/2025,187.0,92.5,86.3,54.0,57.9
+STU0101,Student 101,Narayana,Bengaluru,9,F,android,2025-10-25 00:00:00,267 min,90.0,70.6,71.1,75.7
+STU0198,Student 198,Oakridge,Pune,6,M,   ,2025-04-17 00:00:00,236.0,83.1,88.4,60.4,68.3
+STU0210,Student 210,Chirec,Delhi,10,F,web,2025-05-30 00:00:00,1066.0,75.7,50.6,59.0,57.2
+STU0136,Student 136,Sri Chaitanya,Bengaluru,6,F,android,2025-10-15 00:00:00,109.0,81.3%,68.0,74.2,61.1
+STU0398,Student 398,Narayana,Pune,10,Male,   ,19-Jan-2026,153 min,77.5,72.0,65.8,68.3
+STU0363,Student 363,Sri Chaitanya,Delhi,9,f,web,2025-07-23 00:00:00,124.0,91.7,63.2,65.4,75.1
+STU0199,Student 199,Sri Chaitanya,Pune,10,M,android,2025-05-25 00:00:00,276.0,90.0,78.9,68.4,77.3
+STU0167,Student 167,Narayana,Bengaluru,6,F,web,09/12/2025,96.0,80.3,50.0,55.5,70.3
+STU0396,Student 396,Chirec,Chennai,7,M,ios,2026-01-10 00:00:00,163.0,96.8,58.6,51.9,67.0
+STU0137,  Student 137  ,Oakridge,Chennai,8,F,android,2025-09-27 00:00:00,200.0,83.6,63.6,60.4,69.5
+STU0286,Student 286,Chirec,Pune,8,M,iOS,2025-09-30 00:00:00,189.0,94.5,82.7,53.4,71.3
+STU0132,Student 132,Oakridge,Bengaluru,7,M,android,2025-06-22 00:00:00,57.0,94.8,66.0,77.2,55.5
+STU0040,Student 040,Oakridge,Delhi,10,M,   ,2025/05/16,128.0,90.7,61.7,null,75.4
+STU0216,Student 216,Oakridge,Pune,9,M,ios,2025-04-06 00:00:00,-60,87.8%,,57.8,61.0
+STU0044,Student 044,Chirec,Delhi,6,M,android,2025-06-19 00:00:00,143.0,100.0,73.3,67.1,68.4
+STU0055,Student 055,Sri Chaitanya,hyderabad,10,F,android,2025-12-20 00:00:00,213.0,,63.4,76.5,66.2
+STU0144,Student 144,Sri Chaitanya, delhi,7,M,android,20-Jan-2026,169.0,81.4%,47.6,62.4,81.6
+STU0300,Student 300,Sri Chaitanya,Chennai,10,M,android,03-Dec-2025,108.0,77.4,54.3,45.5,70.8
+STU0385,Student 385,Oakridge,HYDERABAD,7,M,iOS,2025-07-24 00:00:00,382.0,91.7%,79.9,70.5,77.2
+STU0305,Student 305,Oakridge,Bengaluru,9,F,ios,02/07/2025,198.0,93.3,69.1,64.5,71.0
+STU0036,Student 036,Delhi Public School,Pune,9,F,android,2025-12-10 00:00:00,113.0,100.0,87.5,64.3,55.5
+STU0316,  Student 316  ,Narayana,Delhi,7,M,ios,2025-04-25 00:00:00,N/A,90.3%,72.6,66.3,67.9
+STU0310,Student 310,Sri Chaitanya,Bengaluru,9,M,web,2025-05-16 00:00:00,144.0,,56.8,75.9,65.3
+STU0277,Student 277,Narayana,DELHI ,10,M,android,2025-05-07 00:00:00,113.0,94.9,56.6,50.7,66.1
+STU0125,Student 125,Chirec,Bengaluru,8,F,ios,2025-04-24 00:00:00,107.0,97.4,59.2,81.5,77.4
+STU0143,Student 143,Delhi Public School,Chennai,6,Male,web,2025-12-10 00:00:00,162.0,,87.7,44.7,55.8
+STU0111,Student 111,Narayana,Hyderabad,7,F,web,2025-04-10 00:00:00,150.0,100.0%,83.1,65.9,63.6
+STU0324,Student 324,Narayana,-,10,M,android,2025-06-20 00:00:00,69.0,,,53.9,65.3
+STU0333,Student 333,Chirec,Chennai,6,F,android,2025-04-24 00:00:00,260.0,75.3,70.6,66.0,74.9
+STU0370,  Student 370  ,Narayana,Bengaluru,10,M,android,25-Jan-2026,290.0,100.0,70.2,84.0,71.2
+STU0108,  Student 108  ,Narayana, delhi,7,F,   ,2025-09-13 00:00:00,222 min,100.0,68.6,67.9,83.2
+STU0013,Student 013,Narayana,Bengaluru,10,FEMALE,android,2025/04/09,N/A,100.0,49.9,78.3,90.3
+STU0273,Student 273,Sri Chaitanya,Pune,7,F,android,18-Oct-2025,123.0,,999,56.1,61.1
+STU0048,Student 048,Delhi Public School,Bengaluru,6,F,iOS,15-Jan-2026,263.0,93.3,68.8,63.4,91.8
+STU0204,Student 204,Oakridge,Delhi,9,M,android,23/04/2025,135.0,,67.8,64.5,75.2
+STU0361,Student 361,Narayana,Delhi,10,M,android,2025-06-10 00:00:00,190.0,73.3,74.2,65.8,64.7
+STU0120,Student 120,Narayana,Chennai,8,F,web,07/09/2025,77.0,84.0%,70.8,51.2,57.2
+STU0022,Student 022,Delhi Public School,Bengaluru,7,F,web,2025-07-08 00:00:00,69.0,85.4,53.1,49.8,45.0
+STU0084,Student 084,Chirec,Delhi,10,M,android,2025-05-04 00:00:00,-60,81.3,56.2,69.6,63.8
+STU0131,  Student 131  ,Sri Chaitanya,Bengaluru,7,F,android,2025/10/13,N/A,85.2,63.1,58.1,58.5
+STU0330,  Student 330  ,Delhi Public School,Pune,9,Male,android,2025-05-01 00:00:00,984.0,100.0,52.8,63.2,70.5
+STU0230,Student 230,Narayana,HYDERABAD,0,female,web,05-Jul-2025,98.0,77.2,,46.8,65.1
+STU0392,Student 392,Oakridge,Hyderabad,9,F,ios,2025-10-21 00:00:00,91.0,100.0,74.3,78.3,82.2
+STU0287,Student 287,Chirec,Bengaluru,10,M,ios,2025-07-17 00:00:00,338.0,96.0,85.2,88.1,74.3
+STU0124,Student 124,Delhi Public School,Bengaluru,9,female,web,08-Aug-2025,124.0,86.4,74.9,59.4,67.6
+STU0034,  Student 034  ,Oakridge,Hyderabad,10,M,ios,2025-09-26 00:00:00,217.0,69.6,53.2,55.7,75.2
+STU0132,Student 132,Oakridge,Bengaluru,7,M,android,2025-06-22 00:00:00,57.0,94.8,66.0,77.2,55.5
+STU0005,Student 005,Oakridge,Chennai,8,m,android,2025-05-09 00:00:00,N/A,79.9,64.9,72.9,999
+STU0020,Student 020,Narayana, delhi,8,F,ios,2025-12-29 00:00:00,72.0,88.6,,null,56.9
+STU0220,Student 220,Narayana,Delhi,8,M,ios,2025-09-18 00:00:00,242.0,,65.2,51.8,67.8
+STU0039,Student 039,Chirec,Hyderabad,0,M,android,2025-11-08 00:00:00,362.0,75.7,80.2,75.4,70.6
+STU0357,Student 357,Chirec,Bengaluru,10,Male,android,2025-07-25 00:00:00,174.0,,48.2,59.8,53.7
+STU0150,Student 150,Narayana,DELHI ,6,F,ANDROID,13/09/2025,22.0,81.1,58.0,57.7,54.9
+STU0225,  Student 225  ,Narayana,Pune,10,F,android,2025-09-30 00:00:00,127.0,100.0,76.7,53.4,62.1
+STU0248,Student 248,Narayana,Pune,8,M,   ,2025-10-22 00:00:00,233.0,90.8%,,68.4,81.7
+STU0377,Student 377,Oakridge,Pune,7,M,android,2025-12-06 00:00:00,162.0,79.1,59.2,64.6,65.3
+STU0152,  Student 152  ,Narayana,Delhi,10,Male,android,2025-10-31 00:00:00,88.0,90.9,60.7,41.7,999
+STU0318,Student 318,Chirec,HYDERABAD,7,M,web,2025-09-02 00:00:00,501.0,89.7,,92.4,77.5
+STU0292,Student 292,Oakridge, delhi,10,M,web,2025-04-07 00:00:00,317 min,92.6,64.0,87.7,84.0
+STU0234,Student 234,Chirec,Delhi,10,f,Android,2025/08/18,293.0,93.9,75.7,82.3,89.1
+STU0011,Student 011,Sri Chaitanya,Bengaluru,7,F,   ,2025-11-19 00:00:00,168.0,,65.5,62.9,56.4
+STU0280,  Student 280  ,Oakridge,Hyderabad,10,F,   ,2025-04-18 00:00:00,130.0,87.2,60.6,61.4,71.1
+STU0072,Student 072,Oakridge,Delhi,7,F,android,2025/12/30,334.0,77.9,59.5,85.0,60.5
+STU0253,Student 253,Chirec,Chennai,6,F,android,2025-09-21 00:00:00,135.0,100.0%,87.0,64.8,71.0
+STU0093,Student 093,Narayana,hyderabad,8,F,android,19-Jul-2025,84.0,89.5,56.8,58.3,58.0
+STU0350,Student 350,Sri Chaitanya,DELHI ,6,m,   ,2025-11-28 00:00:00,163.0,91.7,59.4,55.0,74.3
+STU0375,Student 375,Sri Chaitanya,Chennai,8,F,android,2025-10-05 00:00:00,203.0,90.7,72.2,61.9,999
+STU0193,Student 193,Oakridge,-,6,female,web,24/06/2025,156.0,88.0,61.1,62.1,69.8
+STU0258,Student 258,Oakridge,Hyderabad,6,M,android,18-Dec-2025,110.0,91.1%,69.7,null,59.8
+STU0340,Student 340,Chirec,Pune,10,F,web,11-Jan-2026,306.0,100.0,,82.9,73.3
+STU0298,Student 298,Narayana,Delhi,8,M,android,2025-08-11 00:00:00,193.0,89.5,72.4,59.4,74.7
+STU0196,Student 196,Narayana,Delhi,7,M, web,2025-04-30 00:00:00,175.0,86.7,72.3,79.3,64.3
+STU0344,Student 344,Delhi Public School,Hyderabad,9,M,ios,2025-12-21 00:00:00,179.0,79.1,70.9,58.9,62.1
+STU0138,Student 138,Delhi Public School,Hyderabad,10,F,android,10-Aug-2025,110.0,81.9%,60.7,57.5,62.0
+STU0261,Student 261,Chirec,-,7,F,ANDROID,2025-09-09 00:00:00,58.0,83.9%,61.1,null,61.2
+STU0039,Student 039,Chirec,Hyderabad,0,M,android,2025-11-08 00:00:00,362.0,75.7,80.2,75.4,70.6
+STU0202,  Student 202  ,Chirec,Chennai,10,M,android,05-Jan-2026,220.0,83.5,71.7,65.8,78.1
+STU0395,Student 395,Chirec,Bengaluru,0,M,android,2025-04-30 00:00:00,98.0,99.1,73.5,47.0,60.5
+STU0291,Student 291,Oakridge,Bengaluru,9,M,android,2025-06-10 00:00:00,229.0,83.2,52.8,74.3,70.5
+STU0190,Student 190,Narayana, delhi,7,M,android,2025-05-19 00:00:00,116.0,,47.0,74.8,69.2
+STU0252,Student 252,Narayana,Bengaluru,7,FEMALE,android,2025-11-04 00:00:00,413.0,79.7,72.9,67.4,82.0
+STU0113,Student 113,Sri Chaitanya,Bengaluru,7,M,android,2025-06-13 00:00:00,59.0,90.0,76.8,null,60.8
+STU0184,  Student 184  ,Sri Chaitanya,Hyderabad,10,F,web,2025-06-23 00:00:00,205.0,71.6,59.8,60.0,72.9
+STU0153,Student 153,Delhi Public School,Delhi,8,M,web,2025-05-08 00:00:00,66.0,88.0,56.8,56.1,67.6
+STU0313,Student 313,Narayana,Delhi,7,M,android,2025-05-20 00:00:00,57.0,87.7,71.2,61.2,66.5
+STU0326,  Student 326  ,Oakridge,HYDERABAD,10,M,ios,2025-06-21 00:00:00,54.0,89.6,61.2,63.6,45.2
+STU0192,Student 192,Delhi Public School,Delhi,9,F,ios,2025-12-05 00:00:00,366 min,87.5,84.4,63.6,86.7
+STU0045,Student 045,Narayana,Hyderabad,10,M,android,2025-08-18 00:00:00,N/A,89.8%,68.2,null,76.2
+STU0276,Student 276,Narayana,Delhi,8,M,ios,2025-12-15 00:00:00,N/A,89.6,62.8,64.1,69.5
+STU0007,Student 007,Sri Chaitanya,Delhi,10,f,web,11/10/2025,92.0,84.4,75.5,64.4,71.0
+STU0251,Student 251,Oakridge,Pune,7,M,android,2026-01-18 00:00:00,156.0,84.8,57.2,62.5,65.7
+STU0312,Student 312,Delhi Public School,Bengaluru,10,M,ios,2025-09-24 00:00:00,174.0,83.2,47.0,71.2,86.3
+STU0076,Student 076,Chirec,DELHI ,6,F,web,2025-09-23 00:00:00,328.0,94.7,87.5,null,84.6
+STU0001,Student 001,Oakridge,Chennai,10,M,ios,2025-05-23 00:00:00,258.0,84.9,47.7,54.3,66.8
+STU0392,Student 392,Oakridge,Hyderabad,9,F,ios,2025-10-21 00:00:00,91.0,100.0,74.3,78.3,82.2
+STU0384,Student 384,Chirec,Pune,8,F,android,2025-10-30 00:00:00,-60,85.2,72.4,56.1,83.5
+STU0069,Student 069,Chirec,Pune,10,F,android,2025-05-28 00:00:00,194.0,96.0%,71.2,68.2,72.6
+STU0168,Student 168,Narayana,Hyderabad,6,M,web,2026-01-06 00:00:00,122.0,86.9,53.6,68.8,60.1
+STU0393,Student 393,Delhi Public School,Hyderabad,6,M,web,2025-08-15 00:00:00,146.0,77.9,57.6,64.6,64.1
+STU0219,Student 219,Sri Chaitanya,Chennai,10,FEMALE,android,2025-07-19 00:00:00,149.0,87.3,58.6,67.4,67.4
+STU0043,  Student 043  ,Sri Chaitanya,Chennai,10,m,web,2025-07-19 00:00:00,172.0,93.1,70.3,61.8,52.6
+STU0367,Student 367,Narayana,Bengaluru,10,m,android,2025-05-20 00:00:00,111.0,96.2,59.1,66.7,64.5
+STU0346,Student 346,Sri Chaitanya,-,9,M,android,2025-07-25 00:00:00,208.0,76.9,72.9,null,68.3
+STU0073,Student 073,Chirec,Bengaluru,9,M,web,2025-06-29 00:00:00,217.0,74.1%,59.3,61.0,59.0
+STU0024,Student 024,Sri Chaitanya,Delhi,7,F,ios,26/04/2025,172.0,86.0,74.2,79.5,70.9
+STU0399,Student 399,Oakridge,Pune,10,M,ios,2025-09-27 00:00:00,167.0,93.6,61.1,57.2,57.6
+STU0186,Student 186,Oakridge,Pune,8,F,   ,2025-06-04 00:00:00,288.0,100.0,81.8,79.7,79.4
+STU0349,Student 349,Delhi Public School,Bengaluru,9,M,android,2025-04-06 00:00:00,154.0,95.9,87.6,78.1,73.9
+STU0104,Student 104,Sri Chaitanya,HYDERABAD,8,M,Android,03/11/2025,N/A,95.1,64.6,65.5,82.7
+STU0389,Student 389,Oakridge,Pune,6,F,ios,2025-11-14 00:00:00,207.0,94.8,73.7,null,79.5
+STU0212,Student 212,Chirec,-,7,Male,   ,2025-06-13 00:00:00,193.0,83.2,66.0,61.4,66.3
+STU0068,Student 068,Chirec,Chennai,6,M,android,2025/12/20,148.0,81.8,54.3,62.2,58.7
+STU0026,Student 026,Delhi Public School, delhi,7,F,web,2025-04-12 00:00:00,39.0,91.3%,57.5,57.5,63.3
+STU0197,Student 197,Narayana,Delhi,10,M,web,22-Jul-2025,107.0,80.3,61.2,69.8,70.3
+STU0176,Student 176,Sri Chaitanya,Hyderabad,7,F,web,2025-08-02 00:00:00,-60,92.8,73.6,55.7,68.8

@@ -1,0 +1,395 @@
+student_id,name,school,city,grade,gender,device,enrolled_on,study_minutes,attendance_pct,math_score,science_score,english_score,study_minutes_imputed,attendance_pct_imputed,math_score_imputed,science_score_imputed,english_score_imputed,average_score,study_hours,study_band,performance,enrolled_month,is_outlier_study
+STU0001,Student 001,Oakridge,Chennai,10,male,ios,2025-05-23,258.0,84.9,47.7,54.3,66.8,False,False,False,False,False,56.3,4.3,3-6h,fair,2025-05,False
+STU0002,Student 002,Oakridge,Delhi,9,male,android,2025-06-20,333.0,85.8,100.0,59.3,77.6,False,False,False,False,False,79.0,5.55,3-6h,good,2025-06,False
+STU0003,Student 003,Oakridge,Hyderabad,9,female,android,2025-09-20,251.0,86.6,76.8,56.5,85.1,False,False,False,False,False,72.8,4.18,3-6h,good,2025-09,False
+STU0004,Student 004,Narayana,Pune,10,female,web,2026-01-14,252.0,88.7,65.1,64.3,66.9,False,False,True,False,False,65.4,4.2,3-6h,fair,2026-01,False
+STU0005,Student 005,Oakridge,Chennai,8,male,android,2025-05-09,151.0,79.9,64.9,72.9,68.3,True,False,False,False,True,68.7,2.52,1-3h,fair,2025-05,False
+STU0006,Student 006,Chirec,Chennai,9,male,web,2025-04-09,58.0,97.3,75.7,64.0,57.3,False,False,False,True,False,65.7,0.97,<1h,fair,2025-04,False
+STU0007,Student 007,Sri Chaitanya,Delhi,10,female,web,2025-10-11,92.0,84.4,75.5,64.4,71.0,False,False,False,False,False,70.3,1.53,1-3h,good,2025-10,False
+STU0008,Student 008,Delhi Public School,Delhi,7,female,android,2025-11-07,248.0,92.2,85.7,57.6,64.5,False,False,False,False,False,69.3,4.13,3-6h,fair,2025-11,False
+STU0009,Student 009,Delhi Public School,Bengaluru,6,female,ios,2025-12-21,42.0,80.6,57.3,62.2,49.3,False,False,False,True,False,56.3,0.7,<1h,fair,2025-12,False
+STU0010,Student 010,Chirec,Chennai,7,female,android,2025-08-21,169.0,91.2,65.5,69.7,56.6,False,False,True,False,False,63.9,2.82,1-3h,fair,2025-08,False
+STU0011,Student 011,Sri Chaitanya,Bengaluru,7,female,unknown,2025-11-19,168.0,86.6,65.5,62.9,56.4,False,True,False,False,False,61.6,2.8,1-3h,fair,2025-11,False
+STU0012,Student 012,Oakridge,Hyderabad,10,female,android,2025-10-30,66.0,84.2,39.9,42.4,65.9,False,False,False,False,False,49.4,1.1,1-3h,needs work,2025-10,False
+STU0013,Student 013,Narayana,Bengaluru,10,female,android,2025-04-09,160.0,100.0,49.9,78.3,90.3,True,False,False,False,False,72.8,2.67,1-3h,good,2025-04,False
+STU0014,Student 014,Delhi Public School,Delhi,6,male,web,2025-07-09,213.0,91.3,70.4,58.3,62.6,False,False,False,False,False,63.8,3.55,3-6h,fair,2025-07,False
+STU0015,Student 015,Narayana,Chennai,8,male,web,2025-10-31,203.0,100.0,62.2,69.9,81.7,False,False,False,False,False,71.3,3.38,3-6h,good,2025-10,False
+STU0016,Student 016,Narayana,Chennai,10,female,android,2025-07-21,115.0,89.5,64.0,63.8,69.7,False,True,False,False,False,65.8,1.92,1-3h,fair,2025-07,False
+STU0017,Student 017,Delhi Public School,Delhi,6,male,ios,2025-09-24,100.0,82.0,60.0,70.2,53.1,False,False,False,False,False,61.1,1.67,1-3h,fair,2025-09,False
+STU0018,Student 018,Oakridge,Delhi,9,female,web,2025-09-03,164.0,87.6,79.4,54.4,61.5,True,True,False,False,False,65.1,2.73,1-3h,fair,2025-09,False
+STU0019,Student 019,Sri Chaitanya,Pune,6,male,ios,2025-10-12,196.0,91.9,80.4,74.3,68.7,False,False,False,False,False,74.5,3.27,3-6h,good,2025-10,False
+STU0020,Student 020,Narayana,Delhi,8,female,ios,2025-12-29,72.0,88.6,64.5,61.4,56.9,False,False,True,True,False,60.9,1.2,1-3h,fair,2025-12,False
+STU0021,Student 021,Sri Chaitanya,Bengaluru,10,female,android,2025-12-16,157.0,88.4,65.1,72.3,85.1,False,False,True,False,False,74.2,2.62,1-3h,good,2025-12,False
+STU0022,Student 022,Delhi Public School,Bengaluru,7,female,web,2025-07-08,69.0,85.4,53.1,49.8,45.0,False,False,False,False,False,49.3,1.15,1-3h,needs work,2025-07,False
+STU0023,Student 023,Sri Chaitanya,Chennai,7,male,ios,2025-08-14,238.0,71.7,63.0,59.3,71.4,False,False,False,False,False,64.6,3.97,3-6h,fair,2025-08,False
+STU0024,Student 024,Sri Chaitanya,Delhi,7,female,ios,2025-04-26,172.0,86.0,74.2,79.5,70.9,False,False,False,False,False,74.9,2.87,1-3h,good,2025-04,False
+STU0025,Student 025,Chirec,Pune,9,female,android,2025-11-27,164.0,68.0,69.5,67.1,64.5,True,False,True,False,False,67.0,2.73,1-3h,fair,2025-11,False
+STU0026,Student 026,Delhi Public School,Delhi,7,female,web,2025-04-12,39.0,91.3,57.5,57.5,63.3,False,False,False,False,False,59.4,0.65,<1h,fair,2025-04,False
+STU0027,Student 027,Chirec,Chennai,10,male,android,2025-08-13,47.0,81.5,46.1,74.6,67.9,False,False,False,False,False,62.9,0.78,<1h,fair,2025-08,False
+STU0028,Student 028,Delhi Public School,Bengaluru,8,male,android,2025-12-21,113.0,86.6,62.7,61.4,65.0,False,True,False,False,False,63.0,1.88,1-3h,fair,2025-12,False
+STU0029,Student 029,Sri Chaitanya,Hyderabad,8,female,ios,2026-01-04,309.0,86.0,88.2,62.6,79.3,False,False,False,False,False,76.7,5.15,3-6h,good,2026-01,False
+STU0030,Student 030,Sri Chaitanya,unknown,8,female,web,2025-07-04,83.0,86.6,64.5,65.3,70.4,False,True,True,False,False,66.7,1.38,1-3h,fair,2025-07,False
+STU0031,Student 031,Narayana,Bengaluru,8,male,android,2026-01-13,1294.0,75.1,71.4,55.2,53.1,False,False,False,False,False,59.9,21.57,6h+,fair,2026-01,True
+STU0032,Student 032,Narayana,Bengaluru,8,female,android,2025-05-06,169.0,72.3,54.3,69.0,77.7,False,False,False,False,False,67.0,2.82,1-3h,fair,2025-05,False
+STU0033,Student 033,Sri Chaitanya,Delhi,8,male,android,2025-11-02,168.0,78.4,53.5,71.2,86.3,False,False,False,False,False,70.3,2.8,1-3h,good,2025-11,False
+STU0034,Student 034,Oakridge,Hyderabad,10,male,ios,2025-09-26,217.0,69.6,53.2,55.7,75.2,False,False,False,False,False,61.4,3.62,3-6h,fair,2025-09,False
+STU0035,Student 035,Delhi Public School,Pune,10,male,web,2025-11-28,90.0,79.3,72.9,50.6,70.9,False,False,False,False,False,64.8,1.5,1-3h,fair,2025-11,False
+STU0036,Student 036,Delhi Public School,Pune,9,female,android,2025-12-10,113.0,100.0,87.5,64.3,55.5,False,False,False,False,False,69.1,1.88,1-3h,fair,2025-12,False
+STU0037,Student 037,Oakridge,Chennai,9,female,ios,2025-08-09,164.0,78.5,63.3,55.5,59.8,True,False,False,False,False,59.5,2.73,1-3h,fair,2025-08,False
+STU0038,Student 038,Chirec,Hyderabad,9,male,android,2025-09-27,164.0,93.9,61.0,55.2,62.2,False,False,False,False,False,59.5,2.73,1-3h,fair,2025-09,False
+STU0040,Student 040,Oakridge,Delhi,10,male,unknown,2025-05-16,128.0,90.7,61.7,63.7,75.4,False,False,False,True,False,66.9,2.13,1-3h,fair,2025-05,False
+STU0041,Student 041,Chirec,Delhi,8,female,android,2025-10-01,200.0,85.1,64.5,59.9,62.0,False,False,True,False,False,62.1,3.33,3-6h,fair,2025-10,False
+STU0042,Student 042,Delhi Public School,Hyderabad,7,female,android,2025-07-31,188.0,87.5,69.8,65.8,68.0,False,False,False,True,False,67.9,3.13,3-6h,fair,2025-07,False
+STU0043,Student 043,Sri Chaitanya,Chennai,10,male,web,2025-07-19,172.0,93.1,70.3,61.8,52.6,False,False,False,False,False,61.6,2.87,1-3h,fair,2025-07,False
+STU0044,Student 044,Chirec,Delhi,6,male,android,2025-06-19,143.0,100.0,73.3,67.1,68.4,False,False,False,False,False,69.6,2.38,1-3h,fair,2025-06,False
+STU0045,Student 045,Narayana,Hyderabad,10,male,android,2025-08-18,160.0,89.8,68.2,63.7,76.2,True,False,False,True,False,69.4,2.67,1-3h,fair,2025-08,False
+STU0046,Student 046,Narayana,Pune,9,male,ios,2025-04-05,165.0,89.1,62.7,68.1,62.0,False,False,False,False,False,64.3,2.75,1-3h,fair,2025-04,False
+STU0047,Student 047,Oakridge,Chennai,6,male,android,2025-10-01,122.0,87.8,46.0,56.4,57.0,False,True,False,False,False,53.1,2.03,1-3h,fair,2025-10,False
+STU0048,Student 048,Delhi Public School,Bengaluru,6,female,ios,2026-01-15,263.0,93.3,68.8,63.4,91.8,False,False,False,False,False,74.7,4.38,3-6h,good,2026-01,False
+STU0049,Student 049,Delhi Public School,Delhi,8,male,web,2025-08-22,230.0,85.8,56.3,53.3,60.2,False,False,False,False,False,56.6,3.83,3-6h,fair,2025-08,False
+STU0050,Student 050,Narayana,Chennai,6,male,android,2025-08-16,184.0,95.5,67.7,54.8,61.5,False,False,False,False,False,61.3,3.07,3-6h,fair,2025-08,False
+STU0051,Student 051,Narayana,Bengaluru,6,female,android,2025-08-17,148.0,87.6,56.4,64.8,59.8,False,False,False,False,False,60.3,2.47,1-3h,fair,2025-08,False
+STU0052,Student 052,Chirec,Delhi,8,female,web,2025-05-11,333.0,100.0,79.2,66.1,91.1,False,False,False,False,False,78.8,5.55,3-6h,good,2025-05,False
+STU0053,Student 053,Chirec,Chennai,10,male,web,2025-09-10,160.0,70.2,65.4,58.4,82.3,False,False,False,False,False,68.7,2.67,1-3h,fair,2025-09,False
+STU0054,Student 054,Oakridge,Bengaluru,8,female,unknown,2025-12-22,116.0,85.3,49.9,68.8,67.7,False,False,False,False,False,62.1,1.93,1-3h,fair,2025-12,False
+STU0055,Student 055,Sri Chaitanya,Hyderabad,10,female,android,2025-12-20,213.0,89.5,63.4,76.5,66.2,False,True,False,False,False,68.7,3.55,3-6h,fair,2025-12,False
+STU0056,Student 056,Delhi Public School,Hyderabad,10,female,unknown,2026-01-21,137.0,84.8,65.1,74.3,61.9,False,False,True,False,False,67.1,2.28,1-3h,fair,2026-01,False
+STU0057,Student 057,Oakridge,Pune,10,female,web,2025-05-21,159.0,80.9,70.7,57.8,75.6,False,False,False,False,False,68.0,2.65,1-3h,fair,2025-05,False
+STU0058,Student 058,Delhi Public School,Delhi,9,female,android,2025-12-01,164.0,85.6,79.1,50.4,57.5,True,False,False,False,False,62.3,2.73,1-3h,fair,2025-12,False
+STU0059,Student 059,Chirec,Pune,8,male,web,2025-08-29,147.0,75.6,69.6,67.7,77.1,False,False,False,False,False,71.5,2.45,1-3h,good,2025-08,False
+STU0060,Student 060,Sri Chaitanya,unknown,8,female,android,2025-06-16,62.0,89.1,57.5,60.0,75.4,False,False,False,False,False,64.3,1.03,1-3h,fair,2025-06,False
+STU0061,Student 061,Chirec,Pune,7,female,android,2025-11-15,102.0,100.0,78.8,65.8,68.2,False,False,False,True,False,70.9,1.7,1-3h,good,2025-11,False
+STU0062,Student 062,Oakridge,unknown,8,female,android,2025-05-28,107.0,98.3,51.8,62.1,73.3,False,False,False,False,False,62.4,1.78,1-3h,fair,2025-05,False
+STU0063,Student 063,Oakridge,Hyderabad,7,female,android,2025-08-17,73.0,78.0,72.0,65.8,67.3,False,False,False,False,False,68.4,1.22,1-3h,fair,2025-08,False
+STU0064,Student 064,Delhi Public School,Chennai,7,male,android,2025-09-05,139.0,80.1,56.8,66.8,78.7,False,False,False,False,False,67.4,2.32,1-3h,fair,2025-09,False
+STU0065,Student 065,Oakridge,Bengaluru,10,male,android,2025-09-14,182.0,84.4,41.1,69.1,58.6,False,False,False,False,False,56.3,3.03,3-6h,fair,2025-09,False
+STU0066,Student 066,Oakridge,Delhi,6,male,android,2025-09-23,93.0,97.0,88.2,65.4,77.0,False,False,False,False,False,76.9,1.55,1-3h,good,2025-09,False
+STU0067,Student 067,Delhi Public School,Bengaluru,6,male,web,2025-04-29,407.0,80.6,91.7,77.6,76.2,False,False,False,False,False,81.8,6.78,6h+,good,2025-04,True
+STU0068,Student 068,Chirec,Chennai,6,male,android,2025-12-20,148.0,81.8,54.3,62.2,58.7,False,False,False,False,False,58.4,2.47,1-3h,fair,2025-12,False
+STU0069,Student 069,Chirec,Pune,10,female,android,2025-05-28,194.0,96.0,71.2,68.2,72.6,False,False,False,False,False,70.7,3.23,3-6h,good,2025-05,False
+STU0070,Student 070,Sri Chaitanya,Chennai,9,female,android,2026-01-16,87.0,95.8,61.8,69.1,63.8,False,False,False,False,False,64.9,1.45,1-3h,fair,2026-01,False
+STU0071,Student 071,Oakridge,Hyderabad,10,male,web,2026-01-13,99.0,84.6,62.5,53.5,54.7,False,False,False,False,False,56.9,1.65,1-3h,fair,2026-01,False
+STU0072,Student 072,Oakridge,Delhi,7,female,android,2025-12-30,334.0,77.9,59.5,85.0,60.5,False,False,False,False,False,68.3,5.57,3-6h,fair,2025-12,False
+STU0073,Student 073,Chirec,Bengaluru,9,male,web,2025-06-29,217.0,74.1,59.3,61.0,59.0,False,False,False,False,False,59.8,3.62,3-6h,fair,2025-06,False
+STU0074,Student 074,Sri Chaitanya,Delhi,7,male,android,2025-07-12,158.0,81.7,67.8,69.0,78.7,True,False,False,False,False,71.8,2.63,1-3h,good,2025-07,False
+STU0075,Student 075,Chirec,Bengaluru,8,female,android,2025-11-20,74.0,67.9,58.0,51.7,75.7,False,False,False,False,False,61.8,1.23,1-3h,fair,2025-11,False
+STU0076,Student 076,Chirec,Delhi,6,female,web,2025-09-23,328.0,94.7,87.5,62.2,84.6,False,False,False,True,False,78.1,5.47,3-6h,good,2025-09,False
+STU0077,Student 077,Sri Chaitanya,Hyderabad,9,female,android,2026-01-20,96.0,82.3,61.6,75.6,73.5,False,False,False,False,False,70.2,1.6,1-3h,good,2026-01,False
+STU0078,Student 078,Delhi Public School,Delhi,10,female,ios,2025-05-08,125.0,92.3,86.1,58.7,62.3,False,False,False,False,False,69.0,2.08,1-3h,fair,2025-05,False
+STU0079,Student 079,Chirec,unknown,9,female,android,2025-09-25,148.0,100.0,61.7,53.1,69.4,False,False,False,False,False,61.4,2.47,1-3h,fair,2025-09,False
+STU0080,Student 080,Sri Chaitanya,Delhi,6,male,android,2025-09-03,192.0,98.6,72.5,60.3,74.8,False,False,False,False,False,69.2,3.2,3-6h,fair,2025-09,False
+STU0081,Student 081,Sri Chaitanya,Hyderabad,8,female,android,2026-01-05,162.0,77.6,46.1,57.0,55.6,False,False,False,False,False,52.9,2.7,1-3h,fair,2026-01,False
+STU0082,Student 082,Delhi Public School,Pune,7,female,ios,2025-04-22,158.0,95.8,56.4,83.5,60.7,False,False,False,False,False,66.9,2.63,1-3h,fair,2025-04,False
+STU0083,Student 083,Oakridge,Bengaluru,10,female,ios,2025-08-08,384.0,98.4,92.7,79.1,83.6,False,False,False,False,False,85.1,6.4,6h+,excellent,2025-08,True
+STU0084,Student 084,Chirec,Delhi,10,male,android,2025-05-04,160.0,81.3,56.2,69.6,63.8,True,False,False,False,False,63.2,2.67,1-3h,fair,2025-05,False
+STU0085,Student 085,Oakridge,Delhi,6,male,android,2025-11-14,201.0,79.4,70.7,53.4,58.3,False,False,False,False,False,60.8,3.35,3-6h,fair,2025-11,False
+STU0086,Student 086,Oakridge,Chennai,8,male,unknown,2025-05-07,71.0,87.0,60.1,60.3,66.1,False,False,False,False,False,62.2,1.18,1-3h,fair,2025-05,False
+STU0087,Student 087,Narayana,Pune,10,male,android,2026-01-18,234.0,73.6,56.9,68.8,65.9,False,False,False,False,False,63.9,3.9,3-6h,fair,2026-01,False
+STU0088,Student 088,Narayana,Bengaluru,10,female,android,2025-06-30,57.0,100.0,60.0,75.8,74.3,False,False,False,False,False,70.0,0.95,<1h,fair,2025-06,False
+STU0089,Student 089,Chirec,Delhi,9,female,android,2025-08-10,113.0,66.4,53.2,48.0,59.8,False,False,False,False,False,53.7,1.88,1-3h,fair,2025-08,False
+STU0090,Student 090,Narayana,Pune,9,female,android,2025-07-02,446.0,78.0,74.6,81.0,78.3,False,False,False,False,False,78.0,7.43,6h+,good,2025-07,True
+STU0091,Student 091,Oakridge,Hyderabad,6,female,android,2025-07-11,107.0,85.6,69.1,61.5,65.4,False,False,False,False,False,65.3,1.78,1-3h,fair,2025-07,False
+STU0092,Student 092,Sri Chaitanya,Delhi,9,male,ios,2025-10-29,160.0,86.0,71.2,64.0,65.8,False,False,False,True,False,67.0,2.67,1-3h,fair,2025-10,False
+STU0093,Student 093,Narayana,Hyderabad,8,female,android,2025-07-19,84.0,89.5,56.8,58.3,58.0,False,False,False,False,False,57.7,1.4,1-3h,fair,2025-07,False
+STU0094,Student 094,Sri Chaitanya,unknown,6,female,android,2025-04-23,84.0,90.4,54.1,56.3,60.6,False,False,False,False,False,57.0,1.4,1-3h,fair,2025-04,False
+STU0095,Student 095,Chirec,Bengaluru,7,female,web,2025-05-16,275.0,86.1,74.2,47.2,80.4,False,False,False,False,False,67.3,4.58,3-6h,fair,2025-05,False
+STU0096,Student 096,Narayana,Hyderabad,8,male,android,2025-05-04,127.0,98.2,65.6,68.4,74.4,False,False,False,False,False,69.5,2.12,1-3h,fair,2025-05,False
+STU0097,Student 097,Delhi Public School,Bengaluru,9,male,android,2026-01-21,154.0,68.7,69.5,62.0,74.2,False,False,True,False,False,68.6,2.57,1-3h,fair,2026-01,False
+STU0098,Student 098,Oakridge,Hyderabad,8,male,android,2025-10-14,137.0,88.0,88.4,57.1,51.3,False,False,False,False,False,65.6,2.28,1-3h,fair,2025-10,False
+STU0099,Student 099,Oakridge,Delhi,9,male,android,2026-01-08,69.0,81.6,66.8,43.6,57.7,False,False,False,False,False,56.0,1.15,1-3h,fair,2026-01,False
+STU0100,Student 100,Narayana,Delhi,10,female,web,2025-10-19,149.0,89.2,65.2,75.3,63.8,False,False,False,False,False,68.1,2.48,1-3h,fair,2025-10,False
+STU0101,Student 101,Narayana,Bengaluru,9,female,android,2025-10-25,267.0,90.0,70.6,71.1,75.7,False,False,False,False,False,72.5,4.45,3-6h,good,2025-10,False
+STU0102,Student 102,Delhi Public School,Hyderabad,7,male,android,2025-10-31,158.0,79.8,53.1,66.4,58.7,True,False,False,False,False,59.4,2.63,1-3h,fair,2025-10,False
+STU0103,Student 103,Sri Chaitanya,Bengaluru,9,male,android,2025-12-22,201.0,87.6,58.4,75.8,64.0,False,True,False,False,False,66.1,3.35,3-6h,fair,2025-12,False
+STU0104,Student 104,Sri Chaitanya,Hyderabad,8,male,android,2025-11-03,151.0,95.1,64.6,65.5,82.7,True,False,False,False,False,70.9,2.52,1-3h,good,2025-11,False
+STU0105,Student 105,Oakridge,Pune,6,female,web,2025-08-15,81.0,91.1,58.7,66.0,65.8,False,False,False,False,False,63.5,1.35,1-3h,fair,2025-08,False
+STU0106,Student 106,Chirec,Hyderabad,6,female,android,2025-10-16,245.0,81.9,65.1,63.3,60.5,False,False,False,False,False,63.0,4.08,3-6h,fair,2025-10,False
+STU0107,Student 107,Chirec,Bengaluru,9,female,android,2025-07-28,49.0,100.0,69.4,58.6,76.7,False,False,False,False,False,68.2,0.82,<1h,fair,2025-07,False
+STU0108,Student 108,Narayana,Delhi,7,female,unknown,2025-09-13,222.0,100.0,68.6,67.9,83.2,False,False,False,False,False,73.2,3.7,3-6h,good,2025-09,False
+STU0109,Student 109,Delhi Public School,Pune,8,male,web,2025-05-12,151.0,74.8,59.3,57.6,57.9,True,False,False,False,False,58.3,2.52,1-3h,fair,2025-05,False
+STU0110,Student 110,Delhi Public School,Bengaluru,7,female,web,2025-11-09,86.0,90.7,51.4,68.9,71.9,False,False,False,False,False,64.1,1.43,1-3h,fair,2025-11,False
+STU0111,Student 111,Narayana,Hyderabad,7,female,web,2025-04-10,150.0,100.0,83.1,65.9,63.6,False,False,False,False,False,70.9,2.5,1-3h,good,2025-04,False
+STU0112,Student 112,Chirec,Pune,6,male,web,2025-04-25,115.0,95.1,69.7,60.2,77.2,False,False,False,False,False,69.0,1.92,1-3h,fair,2025-04,False
+STU0113,Student 113,Sri Chaitanya,Bengaluru,7,male,android,2025-06-13,59.0,90.0,76.8,65.8,60.8,False,False,False,True,False,67.8,0.98,<1h,fair,2025-06,False
+STU0114,Student 114,Oakridge,Pune,10,female,android,2025-06-03,265.0,86.1,78.3,70.7,65.9,False,False,False,False,False,71.6,4.42,3-6h,good,2025-06,False
+STU0115,Student 115,Oakridge,Delhi,8,male,web,2025-11-15,276.0,83.1,84.4,59.4,69.6,False,False,False,False,False,71.1,4.6,3-6h,good,2025-11,False
+STU0116,Student 116,Sri Chaitanya,Chennai,7,female,android,2025-11-09,90.0,86.1,59.2,53.5,56.6,False,False,False,False,False,56.4,1.5,1-3h,fair,2025-11,False
+STU0117,Student 117,Oakridge,Hyderabad,8,male,web,2025-06-09,129.0,83.0,69.3,58.9,66.6,False,False,False,False,False,64.9,2.15,1-3h,fair,2025-06,False
+STU0118,Student 118,Chirec,Pune,10,male,android,2025-05-28,123.0,94.7,89.8,56.8,69.0,False,False,False,False,False,71.9,2.05,1-3h,good,2025-05,False
+STU0119,Student 119,Oakridge,Delhi,7,male,ios,2025-07-13,140.0,84.4,52.8,59.2,66.1,False,False,False,False,False,59.4,2.33,1-3h,fair,2025-07,False
+STU0120,Student 120,Narayana,Chennai,8,female,web,2025-09-07,77.0,84.0,70.8,51.2,57.2,False,False,False,False,False,59.7,1.28,1-3h,fair,2025-09,False
+STU0121,Student 121,Oakridge,Chennai,8,female,web,2025-11-01,253.0,77.2,83.5,82.8,37.3,False,False,False,False,False,67.9,4.22,3-6h,fair,2025-11,False
+STU0122,Student 122,Chirec,Hyderabad,9,male,ios,2025-06-18,165.0,87.6,69.8,74.4,68.8,False,False,False,False,False,71.0,2.75,1-3h,good,2025-06,False
+STU0123,Student 123,Narayana,Delhi,8,female,android,2025-10-27,94.0,80.0,67.1,60.7,45.1,False,False,False,False,False,57.6,1.57,1-3h,fair,2025-10,False
+STU0124,Student 124,Delhi Public School,Bengaluru,9,female,web,2025-08-08,124.0,86.4,74.9,59.4,67.6,False,False,False,False,False,67.3,2.07,1-3h,fair,2025-08,False
+STU0125,Student 125,Chirec,Bengaluru,8,female,ios,2025-04-24,107.0,97.4,59.2,81.5,77.4,False,False,False,False,False,72.7,1.78,1-3h,good,2025-04,False
+STU0126,Student 126,Oakridge,Hyderabad,9,female,web,2025-12-07,146.0,91.3,69.6,64.0,70.3,False,False,False,True,False,68.0,2.43,1-3h,fair,2025-12,False
+STU0127,Student 127,Chirec,Hyderabad,10,female,ios,2025-07-08,221.0,92.5,62.3,66.0,68.8,False,False,False,False,False,65.7,3.68,3-6h,fair,2025-07,False
+STU0128,Student 128,Narayana,Chennai,6,female,ios,2025-10-16,223.0,91.2,63.8,69.3,70.4,False,False,False,False,False,67.8,3.72,3-6h,fair,2025-10,False
+STU0129,Student 129,Narayana,Delhi,8,female,web,2025-06-24,88.0,88.5,56.3,61.2,62.8,False,False,False,False,False,60.1,1.47,1-3h,fair,2025-06,False
+STU0130,Student 130,Oakridge,Bengaluru,8,male,android,2025-08-12,170.0,86.9,64.8,75.3,63.1,False,False,False,False,False,67.7,2.83,1-3h,fair,2025-08,False
+STU0131,Student 131,Sri Chaitanya,Bengaluru,7,female,android,2025-10-13,158.0,85.2,63.1,58.1,58.5,True,False,False,False,False,59.9,2.63,1-3h,fair,2025-10,False
+STU0132,Student 132,Oakridge,Bengaluru,7,male,android,2025-06-22,57.0,94.8,66.0,77.2,55.5,False,False,False,False,False,66.2,0.95,<1h,fair,2025-06,False
+STU0133,Student 133,Delhi Public School,Bengaluru,6,female,web,2025-04-24,88.0,78.2,46.3,48.0,72.1,False,False,False,False,False,55.5,1.47,1-3h,fair,2025-04,False
+STU0134,Student 134,Narayana,Delhi,8,male,web,2025-11-28,160.0,100.0,87.0,71.5,70.7,False,False,False,False,False,76.4,2.67,1-3h,good,2025-11,False
+STU0135,Student 135,Chirec,Delhi,10,female,ios,2025-04-26,65.0,88.3,71.3,48.1,71.3,False,False,False,False,False,63.6,1.08,1-3h,fair,2025-04,False
+STU0136,Student 136,Sri Chaitanya,Bengaluru,6,female,android,2025-10-15,109.0,81.3,68.0,74.2,61.1,False,False,False,False,False,67.8,1.82,1-3h,fair,2025-10,False
+STU0137,Student 137,Oakridge,Chennai,8,female,android,2025-09-27,200.0,83.6,63.6,60.4,69.5,False,False,False,False,False,64.5,3.33,3-6h,fair,2025-09,False
+STU0138,Student 138,Delhi Public School,Hyderabad,10,female,android,2025-08-10,110.0,81.9,60.7,57.5,62.0,False,False,False,False,False,60.1,1.83,1-3h,fair,2025-08,False
+STU0139,Student 139,Delhi Public School,Bengaluru,10,male,android,2025-05-21,108.0,89.4,68.3,68.1,69.5,False,False,False,False,False,68.6,1.8,1-3h,fair,2025-05,False
+STU0140,Student 140,Narayana,Pune,7,female,android,2025-12-17,95.0,81.5,64.4,68.4,70.0,False,False,False,False,False,67.6,1.58,1-3h,fair,2025-12,False
+STU0141,Student 141,Oakridge,Hyderabad,6,male,ios,2025-07-26,52.0,98.3,46.9,48.9,66.6,False,False,False,False,False,54.1,0.87,<1h,fair,2025-07,False
+STU0142,Student 142,Sri Chaitanya,Chennai,9,female,ios,2025-10-25,139.0,81.0,69.7,56.3,58.8,False,False,False,False,False,61.6,2.32,1-3h,fair,2025-10,False
+STU0143,Student 143,Delhi Public School,Chennai,6,male,web,2025-12-10,162.0,87.8,87.7,44.7,55.8,False,True,False,False,False,62.7,2.7,1-3h,fair,2025-12,False
+STU0144,Student 144,Sri Chaitanya,Delhi,7,male,android,2026-01-20,169.0,81.4,47.6,62.4,81.6,False,False,False,False,False,63.9,2.82,1-3h,fair,2026-01,False
+STU0145,Student 145,Chirec,Hyderabad,8,female,unknown,2025-11-25,91.0,69.9,66.7,53.1,57.0,False,False,False,False,False,58.9,1.52,1-3h,fair,2025-11,False
+STU0146,Student 146,Sri Chaitanya,Bengaluru,10,female,android,2025-10-17,92.0,87.6,65.4,55.3,61.3,False,False,False,False,False,60.7,1.53,1-3h,fair,2025-10,False
+STU0147,Student 147,Sri Chaitanya,Hyderabad,6,female,ios,2026-01-17,157.0,97.5,71.4,62.8,87.7,True,False,False,False,False,74.0,2.62,1-3h,good,2026-01,False
+STU0148,Student 148,Chirec,Pune,9,female,ios,2025-12-26,95.0,93.8,76.3,56.7,75.5,False,False,False,False,False,69.5,1.58,1-3h,fair,2025-12,False
+STU0149,Student 149,Delhi Public School,Delhi,8,male,android,2025-04-10,136.0,76.0,50.6,51.3,68.3,False,False,False,False,False,56.7,2.27,1-3h,fair,2025-04,False
+STU0150,Student 150,Narayana,Delhi,6,female,android,2025-09-13,22.0,81.1,58.0,57.7,54.9,False,False,False,False,False,56.9,0.37,<1h,fair,2025-09,False
+STU0151,Student 151,Oakridge,Chennai,10,female,android,2025-07-04,160.0,100.0,78.4,75.0,88.1,True,False,False,False,False,80.5,2.67,1-3h,good,2025-07,False
+STU0152,Student 152,Narayana,Delhi,10,male,android,2025-10-31,88.0,90.9,60.7,41.7,69.2,False,False,False,False,True,57.2,1.47,1-3h,fair,2025-10,False
+STU0153,Student 153,Delhi Public School,Delhi,8,male,web,2025-05-08,66.0,88.0,56.8,56.1,67.6,False,False,False,False,False,60.2,1.1,1-3h,fair,2025-05,False
+STU0154,Student 154,Chirec,Pune,10,male,web,2025-12-09,316.0,97.5,77.8,69.5,77.2,False,False,False,False,False,74.8,5.27,3-6h,good,2025-12,False
+STU0155,Student 155,Chirec,Bengaluru,9,male,web,2026-01-16,133.0,100.0,63.2,68.2,56.6,False,False,False,False,False,62.7,2.22,1-3h,fair,2026-01,False
+STU0156,Student 156,Narayana,Chennai,10,female,android,2025-04-28,50.0,99.7,77.0,50.6,52.7,False,False,False,False,False,60.1,0.83,<1h,fair,2025-04,False
+STU0157,Student 157,Chirec,Hyderabad,10,female,android,2025-11-12,162.0,89.5,57.8,61.4,71.9,False,True,False,False,False,63.7,2.7,1-3h,fair,2025-11,False
+STU0158,Student 158,Delhi Public School,Delhi,8,male,android,2025-08-21,157.0,91.2,74.5,53.6,72.0,False,False,False,False,False,66.7,2.62,1-3h,fair,2025-08,False
+STU0159,Student 159,Narayana,unknown,7,female,web,2026-01-23,907.0,93.6,55.6,69.9,67.0,False,False,False,False,False,64.2,15.12,6h+,fair,2026-01,True
+STU0161,Student 161,Delhi Public School,Hyderabad,8,male,android,2026-01-10,153.0,78.5,62.1,58.1,52.1,False,False,False,False,False,57.4,2.55,1-3h,fair,2026-01,False
+STU0162,Student 162,Oakridge,Bengaluru,6,male,ios,2025-04-18,159.0,88.5,42.0,65.7,64.9,False,False,False,False,False,57.5,2.65,1-3h,fair,2025-04,False
+STU0163,Student 163,Sri Chaitanya,Delhi,9,female,web,2025-09-29,109.0,79.5,60.8,64.0,49.8,False,False,False,True,False,58.2,1.82,1-3h,fair,2025-09,False
+STU0164,Student 164,Delhi Public School,Delhi,10,male,android,2025-11-23,90.0,87.4,51.9,44.3,71.9,False,False,False,False,False,56.0,1.5,1-3h,fair,2025-11,False
+STU0165,Student 165,Chirec,Chennai,7,female,ios,2025-04-17,156.0,88.9,61.7,67.7,78.2,False,False,False,False,False,69.2,2.6,1-3h,fair,2025-04,False
+STU0166,Student 166,Chirec,Chennai,8,female,ios,2025-11-01,150.0,100.0,82.5,67.3,95.7,False,False,False,False,False,81.8,2.5,1-3h,good,2025-11,False
+STU0167,Student 167,Narayana,Bengaluru,6,female,web,2025-12-09,96.0,80.3,50.0,55.5,70.3,False,False,False,False,False,58.6,1.6,1-3h,fair,2025-12,False
+STU0168,Student 168,Narayana,Hyderabad,6,male,web,2026-01-06,122.0,86.9,53.6,68.8,60.1,False,False,False,False,False,60.8,2.03,1-3h,fair,2026-01,False
+STU0169,Student 169,Sri Chaitanya,Pune,7,female,android,2025-09-11,165.0,86.5,79.0,73.2,59.9,False,False,False,False,False,70.7,2.75,1-3h,good,2025-09,False
+STU0170,Student 170,Oakridge,unknown,10,male,android,2025-07-21,171.0,91.9,65.1,54.0,38.3,False,False,True,False,False,52.5,2.85,1-3h,fair,2025-07,False
+STU0171,Student 171,Oakridge,Hyderabad,10,male,web,2025-12-10,117.0,97.4,80.0,55.3,62.4,False,False,False,False,False,65.9,1.95,1-3h,fair,2025-12,False
+STU0172,Student 172,Sri Chaitanya,Pune,9,male,ios,2025-08-19,164.0,83.6,61.3,68.7,58.7,True,False,False,False,False,62.9,2.73,1-3h,fair,2025-08,False
+STU0173,Student 173,Sri Chaitanya,Bengaluru,8,female,android,2025-07-06,178.0,80.6,56.8,74.2,68.3,False,False,False,False,True,66.4,2.97,1-3h,fair,2025-07,False
+STU0174,Student 174,Oakridge,Pune,8,male,android,2025-12-30,131.0,73.2,59.9,50.4,68.0,False,False,False,False,False,59.4,2.18,1-3h,fair,2025-12,False
+STU0175,Student 175,Narayana,Delhi,6,female,web,2025-11-20,94.0,79.7,71.5,46.0,67.4,False,False,False,False,False,61.6,1.57,1-3h,fair,2025-11,False
+STU0176,Student 176,Sri Chaitanya,Hyderabad,7,female,web,2025-08-02,158.0,92.8,73.6,55.7,68.8,True,False,False,False,False,66.0,2.63,1-3h,fair,2025-08,False
+STU0177,Student 177,Narayana,Chennai,10,female,android,2025-04-13,81.0,88.4,61.6,53.6,69.5,False,False,False,False,False,61.6,1.35,1-3h,fair,2025-04,False
+STU0178,Student 178,Chirec,Hyderabad,8,female,ios,2025-12-07,178.0,78.9,65.0,46.8,79.5,False,False,False,False,False,63.8,2.97,1-3h,fair,2025-12,False
+STU0179,Student 179,Delhi Public School,Hyderabad,7,female,ios,2025-06-06,130.0,84.6,65.5,60.1,55.7,False,False,True,False,False,60.4,2.17,1-3h,fair,2025-06,False
+STU0180,Student 180,Narayana,Chennai,7,male,web,2025-08-05,59.0,88.3,55.0,45.3,58.2,False,False,False,False,False,52.8,0.98,<1h,fair,2025-08,False
+STU0181,Student 181,Delhi Public School,Hyderabad,9,male,ios,2025-04-14,187.0,92.5,86.3,54.0,57.9,False,False,False,False,False,66.1,3.12,3-6h,fair,2025-04,False
+STU0182,Student 182,Narayana,Hyderabad,6,male,web,2025-07-11,200.0,82.7,64.4,71.4,83.2,False,False,True,False,False,73.0,3.33,3-6h,good,2025-07,False
+STU0183,Student 183,Chirec,Delhi,10,female,web,2025-12-28,144.0,85.7,53.9,54.7,78.0,False,False,False,False,False,62.2,2.4,1-3h,fair,2025-12,False
+STU0184,Student 184,Sri Chaitanya,Hyderabad,10,female,web,2025-06-23,205.0,71.6,59.8,60.0,72.9,False,False,False,False,False,64.2,3.42,3-6h,fair,2025-06,False
+STU0185,Student 185,Delhi Public School,Delhi,8,female,android,2025-04-22,66.0,77.6,64.8,60.2,49.2,False,False,False,False,False,58.1,1.1,1-3h,fair,2025-04,False
+STU0186,Student 186,Oakridge,Pune,8,female,unknown,2025-06-04,288.0,100.0,81.8,79.7,79.4,False,False,False,False,False,80.3,4.8,3-6h,good,2025-06,False
+STU0187,Student 187,Sri Chaitanya,Bengaluru,9,female,android,2025-05-23,186.0,68.3,61.0,55.8,62.2,False,False,False,False,False,59.7,3.1,3-6h,fair,2025-05,False
+STU0188,Student 188,Oakridge,Chennai,8,female,web,2025-08-08,260.0,85.0,64.4,67.4,73.3,False,False,False,False,False,68.4,4.33,3-6h,fair,2025-08,False
+STU0189,Student 189,Narayana,Chennai,8,female,web,2025-05-17,67.0,90.0,61.4,50.3,61.5,False,False,False,False,False,57.7,1.12,1-3h,fair,2025-05,False
+STU0190,Student 190,Narayana,Delhi,7,male,android,2025-05-19,116.0,86.6,47.0,74.8,69.2,False,True,False,False,False,63.7,1.93,1-3h,fair,2025-05,False
+STU0191,Student 191,Chirec,Bengaluru,8,male,android,2025-06-17,135.0,80.7,50.6,64.9,61.0,False,False,False,False,False,58.8,2.25,1-3h,fair,2025-06,False
+STU0192,Student 192,Delhi Public School,Delhi,9,female,ios,2025-12-05,366.0,87.5,84.4,63.6,86.7,False,False,False,False,False,78.2,6.1,6h+,good,2025-12,True
+STU0193,Student 193,Oakridge,unknown,6,female,web,2025-06-24,156.0,88.0,61.1,62.1,69.8,False,False,False,False,False,64.3,2.6,1-3h,fair,2025-06,False
+STU0194,Student 194,Narayana,Hyderabad,6,male,android,2026-01-18,1217.0,87.3,64.4,64.0,60.5,False,False,True,False,False,63.0,20.28,6h+,fair,2026-01,True
+STU0195,Student 195,Sri Chaitanya,Hyderabad,9,female,ios,2025-11-11,204.0,71.1,75.3,64.8,65.0,False,False,False,False,False,68.4,3.4,3-6h,fair,2025-11,False
+STU0196,Student 196,Narayana,Delhi,7,male,web,2025-04-30,175.0,86.7,72.3,79.3,64.3,False,False,False,False,False,72.0,2.92,1-3h,good,2025-04,False
+STU0197,Student 197,Narayana,Delhi,10,male,web,2025-07-22,107.0,80.3,61.2,69.8,70.3,False,False,False,False,False,67.1,1.78,1-3h,fair,2025-07,False
+STU0198,Student 198,Oakridge,Pune,6,male,unknown,2025-04-17,236.0,83.1,88.4,60.4,68.3,False,False,False,False,False,72.4,3.93,3-6h,good,2025-04,False
+STU0199,Student 199,Sri Chaitanya,Pune,10,male,android,2025-05-25,276.0,90.0,78.9,68.4,77.3,False,False,False,False,False,74.9,4.6,3-6h,good,2025-05,False
+STU0200,Student 200,Sri Chaitanya,Pune,6,male,web,2025-04-02,140.0,93.8,62.9,51.1,64.6,False,False,False,False,False,59.5,2.33,1-3h,fair,2025-04,False
+STU0201,Student 201,Oakridge,Delhi,8,male,android,2025-07-18,93.0,96.1,70.9,62.9,52.8,False,False,False,False,False,62.2,1.55,1-3h,fair,2025-07,False
+STU0202,Student 202,Chirec,Chennai,10,male,android,2026-01-05,220.0,83.5,71.7,65.8,78.1,False,False,False,False,False,71.9,3.67,3-6h,good,2026-01,False
+STU0203,Student 203,Chirec,Bengaluru,6,male,android,2026-01-18,193.0,96.3,61.8,90.5,62.2,False,False,False,False,False,71.5,3.22,3-6h,good,2026-01,False
+STU0204,Student 204,Oakridge,Delhi,9,male,android,2025-04-23,135.0,87.6,67.8,64.5,75.2,False,True,False,False,False,69.2,2.25,1-3h,fair,2025-04,False
+STU0205,Student 205,Delhi Public School,Bengaluru,9,female,android,2025-07-06,101.0,98.2,63.6,42.8,70.9,False,False,False,False,False,59.1,1.68,1-3h,fair,2025-07,False
+STU0206,Student 206,Chirec,Bengaluru,8,female,android,2025-10-22,151.0,86.6,64.5,58.0,54.7,True,True,True,False,False,59.1,2.52,1-3h,fair,2025-10,False
+STU0207,Student 207,Sri Chaitanya,Pune,6,male,ios,2025-11-11,200.0,86.7,66.1,65.2,61.2,False,False,False,False,False,64.2,3.33,3-6h,fair,2025-11,False
+STU0208,Student 208,Narayana,unknown,8,male,android,2025-07-01,164.0,86.4,63.0,50.8,63.0,False,False,False,False,False,58.9,2.73,1-3h,fair,2025-07,False
+STU0209,Student 209,Delhi Public School,Chennai,8,male,ios,2025-08-25,23.0,95.4,56.1,48.8,54.7,False,False,False,False,False,53.2,0.38,<1h,fair,2025-08,False
+STU0210,Student 210,Chirec,Delhi,10,female,web,2025-05-30,1066.0,75.7,50.6,59.0,57.2,False,False,False,False,False,55.6,17.77,6h+,fair,2025-05,True
+STU0211,Student 211,Delhi Public School,unknown,9,female,android,2025-09-06,359.0,89.9,69.5,76.8,85.9,False,False,True,False,False,77.4,5.98,3-6h,good,2025-09,True
+STU0212,Student 212,Chirec,unknown,7,male,unknown,2025-06-13,193.0,83.2,66.0,61.4,66.3,False,False,False,False,False,64.6,3.22,3-6h,fair,2025-06,False
+STU0213,Student 213,Oakridge,Delhi,6,male,web,2025-05-22,243.0,84.7,70.5,58.0,75.0,False,False,False,False,False,67.8,4.05,3-6h,fair,2025-05,False
+STU0214,Student 214,Sri Chaitanya,Bengaluru,8,female,unknown,2025-10-24,162.0,86.6,51.5,61.4,68.3,False,True,False,True,True,60.4,2.7,1-3h,fair,2025-10,False
+STU0215,Student 215,Delhi Public School,Chennai,7,female,android,2025-05-16,398.0,80.0,82.7,68.5,81.6,False,False,False,False,False,77.6,6.63,6h+,good,2025-05,True
+STU0216,Student 216,Oakridge,Pune,9,male,ios,2025-04-06,164.0,87.8,69.5,57.8,61.0,True,False,True,False,False,62.8,2.73,1-3h,fair,2025-04,False
+STU0217,Student 217,Oakridge,Hyderabad,10,male,ios,2025-08-19,310.0,96.0,74.0,60.1,77.8,False,False,False,False,False,70.6,5.17,3-6h,good,2025-08,False
+STU0218,Student 218,Sri Chaitanya,Hyderabad,7,female,android,2025-12-16,327.0,96.9,89.3,66.6,84.4,False,False,False,False,False,80.1,5.45,3-6h,good,2025-12,False
+STU0219,Student 219,Sri Chaitanya,Chennai,10,female,android,2025-07-19,149.0,87.3,58.6,67.4,67.4,False,False,False,False,False,64.5,2.48,1-3h,fair,2025-07,False
+STU0220,Student 220,Narayana,Delhi,8,male,ios,2025-09-18,242.0,86.6,65.2,51.8,67.8,False,True,False,False,False,61.6,4.03,3-6h,fair,2025-09,False
+STU0221,Student 221,Chirec,Delhi,8,female,android,2025-05-27,66.0,80.5,68.7,54.6,51.0,False,False,False,False,False,58.1,1.1,1-3h,fair,2025-05,False
+STU0222,Student 222,Delhi Public School,Delhi,9,male,android,2025-06-10,196.0,91.6,65.1,71.6,72.2,False,False,False,False,False,69.6,3.27,3-6h,fair,2025-06,False
+STU0223,Student 223,Sri Chaitanya,Hyderabad,9,male,android,2025-05-20,66.0,85.8,57.3,53.2,65.2,False,False,False,False,False,58.6,1.1,1-3h,fair,2025-05,False
+STU0224,Student 224,Delhi Public School,Bengaluru,10,male,android,2025-06-02,211.0,93.5,72.0,68.6,69.7,False,False,False,False,False,70.1,3.52,3-6h,good,2025-06,False
+STU0225,Student 225,Narayana,Pune,10,female,android,2025-09-30,127.0,100.0,76.7,53.4,62.1,False,False,False,False,False,64.1,2.12,1-3h,fair,2025-09,False
+STU0226,Student 226,Delhi Public School,Bengaluru,6,male,ios,2025-10-14,145.0,87.7,44.5,73.2,71.8,False,False,False,False,False,63.2,2.42,1-3h,fair,2025-10,False
+STU0227,Student 227,Oakridge,Hyderabad,8,male,ios,2025-07-06,98.0,74.5,51.4,65.4,83.4,False,False,False,False,False,66.7,1.63,1-3h,fair,2025-07,False
+STU0228,Student 228,Sri Chaitanya,Hyderabad,10,female,android,2025-10-06,183.0,80.3,55.8,63.8,64.4,False,False,False,False,False,61.3,3.05,3-6h,fair,2025-10,False
+STU0229,Student 229,Chirec,Delhi,7,female,web,2025-07-26,158.0,86.6,56.3,47.1,71.4,True,True,False,False,False,58.3,2.63,1-3h,fair,2025-07,False
+STU0231,Student 231,Sri Chaitanya,Pune,8,male,ios,2025-05-19,137.0,99.7,59.7,72.8,46.4,False,False,False,False,False,59.6,2.28,1-3h,fair,2025-05,False
+STU0232,Student 232,Oakridge,Bengaluru,9,female,android,2025-07-10,184.0,90.0,70.4,79.5,70.7,False,False,False,False,False,73.5,3.07,3-6h,good,2025-07,False
+STU0233,Student 233,Narayana,Hyderabad,9,female,web,2025-07-05,1336.0,74.3,51.7,59.1,55.6,False,False,False,False,False,55.5,22.27,6h+,fair,2025-07,True
+STU0234,Student 234,Chirec,Delhi,10,female,android,2025-08-18,293.0,93.9,75.7,82.3,89.1,False,False,False,False,False,82.4,4.88,3-6h,good,2025-08,False
+STU0235,Student 235,Delhi Public School,Hyderabad,9,female,web,2025-12-09,164.0,99.3,85.7,73.1,81.8,True,False,False,False,False,80.2,2.73,1-3h,good,2025-12,False
+STU0236,Student 236,Narayana,Bengaluru,6,male,android,2025-12-30,185.0,84.8,59.6,61.2,61.4,False,False,False,False,False,60.7,3.08,3-6h,fair,2025-12,False
+STU0237,Student 237,Oakridge,Hyderabad,10,female,android,2025-06-11,155.0,81.9,65.2,63.7,64.0,False,False,False,True,False,64.3,2.58,1-3h,fair,2025-06,False
+STU0238,Student 238,Sri Chaitanya,Delhi,8,male,web,2025-09-09,175.0,85.0,81.0,66.2,69.4,False,False,False,False,False,72.2,2.92,1-3h,good,2025-09,False
+STU0239,Student 239,Delhi Public School,Chennai,10,male,ios,2025-05-06,103.0,90.6,66.3,46.1,60.3,False,False,False,False,False,57.6,1.72,1-3h,fair,2025-05,False
+STU0240,Student 240,Oakridge,Delhi,10,female,web,2025-12-09,70.0,93.8,56.4,67.3,63.8,False,False,False,False,False,62.5,1.17,1-3h,fair,2025-12,False
+STU0241,Student 241,Oakridge,Delhi,10,female,web,2025-07-10,108.0,98.6,65.0,74.0,55.4,False,False,False,False,False,64.8,1.8,1-3h,fair,2025-07,False
+STU0242,Student 242,Sri Chaitanya,Delhi,6,male,android,2025-10-10,184.0,98.9,61.4,56.0,69.8,False,False,False,False,False,62.4,3.07,3-6h,fair,2025-10,False
+STU0243,Student 243,Narayana,Chennai,10,female,ios,2025-12-27,138.0,98.7,69.8,51.6,76.2,False,False,False,False,False,65.9,2.3,1-3h,fair,2025-12,False
+STU0244,Student 244,Sri Chaitanya,Bengaluru,9,male,web,2025-09-16,100.0,100.0,73.4,65.2,85.2,False,False,False,False,False,74.6,1.67,1-3h,good,2025-09,False
+STU0245,Student 245,Narayana,Hyderabad,8,male,web,2025-12-29,92.0,94.0,56.0,54.2,71.9,False,False,False,False,False,60.7,1.53,1-3h,fair,2025-12,False
+STU0246,Student 246,Oakridge,Bengaluru,9,male,ios,2025-08-25,163.0,74.2,60.6,37.7,67.0,False,False,False,False,False,55.1,2.72,1-3h,fair,2025-08,False
+STU0247,Student 247,Sri Chaitanya,Delhi,10,female,android,2026-01-09,136.0,89.5,74.4,68.0,76.8,False,True,False,False,False,73.1,2.27,1-3h,good,2026-01,False
+STU0248,Student 248,Narayana,Pune,8,male,unknown,2025-10-22,233.0,90.8,64.5,68.4,81.7,False,False,True,False,False,71.5,3.88,3-6h,good,2025-10,False
+STU0249,Student 249,Oakridge,Delhi,6,male,android,2025-10-06,91.0,84.6,62.9,53.4,78.1,False,False,False,False,False,64.8,1.52,1-3h,fair,2025-10,False
+STU0250,Student 250,Oakridge,Delhi,9,female,android,2025-08-26,494.0,96.2,76.8,100.0,98.0,False,False,False,False,False,91.6,8.23,6h+,excellent,2025-08,True
+STU0251,Student 251,Oakridge,Pune,7,male,android,2026-01-18,156.0,84.8,57.2,62.5,65.7,False,False,False,False,False,61.8,2.6,1-3h,fair,2026-01,False
+STU0252,Student 252,Narayana,Bengaluru,7,female,android,2025-11-04,413.0,79.7,72.9,67.4,82.0,False,False,False,False,False,74.1,6.88,6h+,good,2025-11,True
+STU0253,Student 253,Chirec,Chennai,6,female,android,2025-09-21,135.0,100.0,87.0,64.8,71.0,False,False,False,False,False,74.3,2.25,1-3h,good,2025-09,False
+STU0254,Student 254,Oakridge,Bengaluru,6,female,web,2025-05-25,211.0,94.0,66.4,57.2,74.8,False,False,False,False,False,66.1,3.52,3-6h,fair,2025-05,False
+STU0255,Student 255,Narayana,Delhi,10,male,web,2025-12-07,160.0,90.0,59.6,54.0,68.2,True,False,False,False,False,60.6,2.67,1-3h,fair,2025-12,False
+STU0256,Student 256,Sri Chaitanya,Bengaluru,7,male,ios,2025-07-06,361.0,96.3,73.9,78.9,73.9,False,False,False,False,False,75.6,6.02,6h+,good,2025-07,True
+STU0257,Student 257,Sri Chaitanya,Delhi,6,male,web,2025-04-28,157.0,97.6,70.6,63.6,55.2,True,False,False,False,False,63.1,2.62,1-3h,fair,2025-04,False
+STU0258,Student 258,Oakridge,Hyderabad,6,male,android,2025-12-18,110.0,91.1,69.7,62.2,59.8,False,False,False,True,False,63.9,1.83,1-3h,fair,2025-12,False
+STU0259,Student 259,Delhi Public School,Bengaluru,7,female,web,2025-10-23,149.0,86.6,61.4,71.2,43.4,False,True,False,False,False,58.7,2.48,1-3h,fair,2025-10,False
+STU0260,Student 260,Chirec,Delhi,7,male,android,2025-07-28,158.0,86.6,86.7,72.4,70.8,True,True,False,False,False,76.6,2.63,1-3h,good,2025-07,False
+STU0261,Student 261,Chirec,unknown,7,female,android,2025-09-09,58.0,83.9,61.1,65.8,61.2,False,False,False,True,False,62.7,0.97,<1h,fair,2025-09,False
+STU0262,Student 262,Chirec,Delhi,10,male,android,2025-12-09,109.0,79.1,73.8,62.0,47.7,False,False,False,False,False,61.2,1.82,1-3h,fair,2025-12,False
+STU0263,Student 263,Narayana,Delhi,10,female,ios,2025-06-23,160.0,89.8,66.4,63.7,72.1,True,False,False,True,False,67.4,2.67,1-3h,fair,2025-06,False
+STU0264,Student 264,Delhi Public School,Delhi,8,male,ios,2026-01-07,35.0,98.7,67.1,61.4,71.4,False,False,False,True,False,66.6,0.58,<1h,fair,2026-01,False
+STU0265,Student 265,Sri Chaitanya,Hyderabad,10,male,android,2025-05-05,188.0,83.6,53.2,62.6,69.1,False,False,False,False,False,61.6,3.13,3-6h,fair,2025-05,False
+STU0266,Student 266,Delhi Public School,Hyderabad,7,female,android,2025-09-21,401.0,77.8,75.4,89.7,93.5,False,False,False,False,False,86.2,6.68,6h+,excellent,2025-09,True
+STU0267,Student 267,Chirec,Delhi,6,male,android,2025-11-02,53.0,100.0,62.3,50.9,81.8,False,False,False,False,False,65.0,0.88,<1h,fair,2025-11,False
+STU0268,Student 268,Sri Chaitanya,Delhi,7,male,android,2025-05-01,81.0,83.9,58.2,54.6,51.6,False,False,False,False,False,54.8,1.35,1-3h,fair,2025-05,False
+STU0269,Student 269,Chirec,Bengaluru,6,female,android,2025-06-25,172.0,76.9,44.3,47.8,75.0,False,False,False,False,False,55.7,2.87,1-3h,fair,2025-06,False
+STU0270,Student 270,Oakridge,unknown,10,female,web,2025-11-14,196.0,90.1,76.2,61.7,74.3,False,False,False,False,False,70.7,3.27,3-6h,good,2025-11,False
+STU0271,Student 271,Oakridge,Delhi,7,female,ios,2025-10-01,192.0,91.8,65.0,69.7,74.3,False,False,False,False,False,69.7,3.2,3-6h,fair,2025-10,False
+STU0272,Student 272,Delhi Public School,Bengaluru,8,male,android,2025-10-17,139.0,81.7,59.1,72.6,73.5,False,False,False,False,False,68.4,2.32,1-3h,fair,2025-10,False
+STU0273,Student 273,Sri Chaitanya,Pune,7,female,android,2025-10-18,123.0,86.6,65.5,56.1,61.1,False,True,True,False,False,60.9,2.05,1-3h,fair,2025-10,False
+STU0274,Student 274,Delhi Public School,Hyderabad,10,male,web,2025-06-27,58.0,83.6,57.0,55.6,55.8,False,False,False,False,False,56.1,0.97,<1h,fair,2025-06,False
+STU0275,Student 275,Delhi Public School,Hyderabad,6,male,android,2025-04-09,381.0,79.7,79.5,69.1,70.4,False,False,False,False,False,73.0,6.35,6h+,good,2025-04,True
+STU0276,Student 276,Narayana,Delhi,8,male,ios,2025-12-15,151.0,89.6,62.8,64.1,69.5,True,False,False,False,False,65.5,2.52,1-3h,fair,2025-12,False
+STU0277,Student 277,Narayana,Delhi,10,male,android,2025-05-07,113.0,94.9,56.6,50.7,66.1,False,False,False,False,False,57.8,1.88,1-3h,fair,2025-05,False
+STU0278,Student 278,Delhi Public School,Bengaluru,8,female,web,2025-08-23,160.0,86.6,67.0,61.4,53.3,False,True,False,False,False,60.6,2.67,1-3h,fair,2025-08,False
+STU0279,Student 279,Oakridge,Hyderabad,10,female,android,2025-12-19,924.0,91.0,66.8,46.4,58.1,False,False,False,False,False,57.1,15.4,6h+,fair,2025-12,True
+STU0280,Student 280,Oakridge,Hyderabad,10,female,unknown,2025-04-18,130.0,87.2,60.6,61.4,71.1,False,False,False,False,False,64.4,2.17,1-3h,fair,2025-04,False
+STU0281,Student 281,Delhi Public School,Hyderabad,9,female,android,2025-11-01,88.0,100.0,59.7,61.5,66.2,False,False,False,False,False,62.5,1.47,1-3h,fair,2025-11,False
+STU0282,Student 282,Narayana,unknown,9,female,android,2025-04-21,450.0,81.6,72.6,64.0,85.6,False,False,False,True,False,74.1,7.5,6h+,good,2025-04,True
+STU0283,Student 283,Oakridge,Hyderabad,8,male,web,2025-05-06,145.0,100.0,67.4,55.4,53.0,False,False,False,False,False,58.6,2.42,1-3h,fair,2025-05,False
+STU0284,Student 284,Chirec,Delhi,8,male,ios,2025-06-08,234.0,87.5,80.4,53.8,64.7,False,False,False,False,False,66.3,3.9,3-6h,fair,2025-06,False
+STU0285,Student 285,Delhi Public School,Delhi,10,male,android,2025-07-18,148.0,86.9,55.3,78.2,61.9,False,False,False,False,False,65.1,2.47,1-3h,fair,2025-07,False
+STU0286,Student 286,Chirec,Pune,8,male,ios,2025-09-30,189.0,94.5,82.7,53.4,71.3,False,False,False,False,False,69.1,3.15,3-6h,fair,2025-09,False
+STU0287,Student 287,Chirec,Bengaluru,10,male,ios,2025-07-17,338.0,96.0,85.2,88.1,74.3,False,False,False,False,False,82.5,5.63,3-6h,good,2025-07,False
+STU0288,Student 288,Narayana,Pune,10,female,android,2025-12-01,172.0,89.5,65.2,71.2,79.7,False,True,False,False,False,72.0,2.87,1-3h,good,2025-12,False
+STU0289,Student 289,Chirec,Hyderabad,7,female,android,2025-04-24,330.0,91.0,82.9,69.1,77.4,False,False,False,False,False,76.5,5.5,3-6h,good,2025-04,False
+STU0290,Student 290,Delhi Public School,Delhi,8,male,android,2025-04-30,114.0,82.6,48.7,48.0,64.1,False,False,False,False,False,53.6,1.9,1-3h,fair,2025-04,False
+STU0291,Student 291,Oakridge,Bengaluru,9,male,android,2025-06-10,229.0,83.2,52.8,74.3,70.5,False,False,False,False,False,65.9,3.82,3-6h,fair,2025-06,False
+STU0292,Student 292,Oakridge,Delhi,10,male,web,2025-04-07,317.0,92.6,64.0,87.7,84.0,False,False,False,False,False,78.6,5.28,3-6h,good,2025-04,False
+STU0293,Student 293,Narayana,Bengaluru,6,male,android,2025-06-17,238.0,93.2,67.7,62.2,69.1,False,False,False,True,False,66.3,3.97,3-6h,fair,2025-06,False
+STU0294,Student 294,Narayana,Delhi,6,female,web,2025-10-04,114.0,100.0,63.3,60.1,78.4,False,False,False,False,False,67.3,1.9,1-3h,fair,2025-10,False
+STU0296,Student 296,Chirec,Delhi,8,male,android,2025-08-01,135.0,97.5,67.7,66.3,70.2,False,False,False,False,False,68.1,2.25,1-3h,fair,2025-08,False
+STU0297,Student 297,Delhi Public School,Bengaluru,6,male,ios,2025-07-05,115.0,100.0,47.1,80.8,68.7,False,False,False,False,False,65.5,1.92,1-3h,fair,2025-07,False
+STU0298,Student 298,Narayana,Delhi,8,male,android,2025-08-11,193.0,89.5,72.4,59.4,74.7,False,False,False,False,False,68.8,3.22,3-6h,fair,2025-08,False
+STU0299,Student 299,Narayana,Pune,8,female,web,2025-09-16,148.0,74.6,49.0,63.2,72.9,False,False,False,False,False,61.7,2.47,1-3h,fair,2025-09,False
+STU0300,Student 300,Sri Chaitanya,Chennai,10,male,android,2025-12-03,108.0,77.4,54.3,45.5,70.8,False,False,False,False,False,56.9,1.8,1-3h,fair,2025-12,False
+STU0301,Student 301,Chirec,Pune,9,male,android,2025-05-16,81.0,75.1,54.5,64.0,63.6,False,False,False,True,False,60.7,1.35,1-3h,fair,2025-05,False
+STU0302,Student 302,Delhi Public School,Delhi,7,male,android,2026-01-01,115.0,100.0,55.9,56.3,76.2,False,False,False,False,False,62.8,1.92,1-3h,fair,2026-01,False
+STU0303,Student 303,Delhi Public School,Hyderabad,9,male,android,2025-07-25,164.0,80.4,51.6,40.6,67.0,True,False,False,False,False,53.1,2.73,1-3h,fair,2025-07,False
+STU0304,Student 304,Sri Chaitanya,Pune,10,female,web,2026-01-16,233.0,99.1,63.5,68.0,85.9,False,False,False,False,False,72.5,3.88,3-6h,good,2026-01,False
+STU0305,Student 305,Oakridge,Bengaluru,9,female,ios,2025-07-02,198.0,93.3,69.1,64.5,71.0,False,False,False,False,False,68.2,3.3,3-6h,fair,2025-07,False
+STU0306,Student 306,Chirec,Pune,9,male,android,2025-11-20,226.0,100.0,77.7,86.2,55.8,False,False,False,False,False,73.2,3.77,3-6h,good,2025-11,False
+STU0307,Student 307,Narayana,Delhi,7,male,web,2025-08-18,296.0,97.0,65.5,69.0,89.6,False,False,True,False,False,74.7,4.93,3-6h,good,2025-08,False
+STU0308,Student 308,Sri Chaitanya,Bengaluru,9,female,web,2025-04-01,201.0,87.1,58.9,64.0,70.8,False,False,False,True,False,64.6,3.35,3-6h,fair,2025-04,False
+STU0309,Student 309,Narayana,Delhi,6,male,android,2025-04-11,69.0,86.2,53.2,62.2,51.8,False,False,False,False,False,55.7,1.15,1-3h,fair,2025-04,False
+STU0310,Student 310,Sri Chaitanya,Bengaluru,9,male,web,2025-05-16,144.0,87.6,56.8,75.9,65.3,False,True,False,False,False,66.0,2.4,1-3h,fair,2025-05,False
+STU0311,Student 311,Oakridge,Pune,10,male,android,2025-09-26,73.0,89.6,65.5,57.3,55.5,False,False,False,False,False,59.4,1.22,1-3h,fair,2025-09,False
+STU0312,Student 312,Delhi Public School,Bengaluru,10,male,ios,2025-09-24,174.0,83.2,47.0,71.2,86.3,False,False,False,False,False,68.2,2.9,1-3h,fair,2025-09,False
+STU0313,Student 313,Narayana,Delhi,7,male,android,2025-05-20,57.0,87.7,71.2,61.2,66.5,False,False,False,False,False,66.3,0.95,<1h,fair,2025-05,False
+STU0314,Student 314,Sri Chaitanya,Delhi,7,female,android,2026-01-12,157.0,100.0,64.3,62.5,56.5,False,False,False,False,False,61.1,2.62,1-3h,fair,2026-01,False
+STU0315,Student 315,Sri Chaitanya,Bengaluru,9,male,android,2025-07-08,173.0,72.7,69.5,64.0,69.6,False,False,True,True,False,67.7,2.88,1-3h,fair,2025-07,False
+STU0316,Student 316,Narayana,Delhi,7,male,ios,2025-04-25,158.0,90.3,72.6,66.3,67.9,True,False,False,False,False,68.9,2.63,1-3h,fair,2025-04,False
+STU0317,Student 317,Sri Chaitanya,Chennai,9,female,android,2025-09-16,162.0,79.8,73.2,52.1,83.1,False,False,False,False,False,69.5,2.7,1-3h,fair,2025-09,False
+STU0318,Student 318,Chirec,Hyderabad,7,male,web,2025-09-02,501.0,89.7,65.5,92.4,77.5,False,False,True,False,False,78.5,8.35,6h+,good,2025-09,True
+STU0319,Student 319,Sri Chaitanya,Chennai,6,male,unknown,2025-05-05,128.0,95.6,64.4,50.0,47.7,False,False,True,False,False,54.0,2.13,1-3h,fair,2025-05,False
+STU0320,Student 320,Sri Chaitanya,Delhi,6,male,android,2025-07-28,242.0,87.5,71.4,77.2,72.8,False,False,False,False,False,73.8,4.03,3-6h,good,2025-07,False
+STU0321,Student 321,Sri Chaitanya,Delhi,8,male,android,2025-10-08,127.0,95.0,76.8,70.8,64.6,False,False,False,False,False,70.7,2.12,1-3h,good,2025-10,False
+STU0322,Student 322,Narayana,Delhi,7,female,ios,2025-08-01,94.0,73.7,69.8,54.3,56.8,False,False,False,False,False,60.3,1.57,1-3h,fair,2025-08,False
+STU0323,Student 323,Delhi Public School,Chennai,7,female,android,2025-07-19,127.0,98.0,65.6,56.1,49.2,False,False,False,False,False,57.0,2.12,1-3h,fair,2025-07,False
+STU0324,Student 324,Narayana,unknown,10,male,android,2025-06-20,69.0,89.5,65.1,53.9,65.3,False,True,True,False,False,61.4,1.15,1-3h,fair,2025-06,False
+STU0325,Student 325,Sri Chaitanya,Delhi,10,female,ios,2025-07-28,178.0,93.6,69.7,68.9,85.3,False,False,False,False,False,74.6,2.97,1-3h,good,2025-07,False
+STU0326,Student 326,Oakridge,Hyderabad,10,male,ios,2025-06-21,54.0,89.6,61.2,63.6,45.2,False,False,False,False,False,56.7,0.9,<1h,fair,2025-06,False
+STU0327,Student 327,Delhi Public School,Hyderabad,8,male,web,2025-05-28,244.0,64.7,56.3,63.7,77.1,False,False,False,False,False,65.7,4.07,3-6h,fair,2025-05,False
+STU0328,Student 328,Narayana,Hyderabad,6,male,unknown,2025-06-11,158.0,81.2,61.4,69.4,60.9,False,False,False,False,False,63.9,2.63,1-3h,fair,2025-06,False
+STU0329,Student 329,Chirec,Hyderabad,9,female,web,2025-05-06,164.0,90.0,76.9,61.4,93.1,True,False,False,False,False,77.1,2.73,1-3h,good,2025-05,False
+STU0330,Student 330,Delhi Public School,Pune,9,male,android,2025-05-01,984.0,100.0,52.8,63.2,70.5,False,False,False,False,False,62.2,16.4,6h+,fair,2025-05,True
+STU0331,Student 331,Delhi Public School,Chennai,10,male,web,2025-06-26,324.0,90.6,81.3,57.9,75.8,False,False,False,False,False,71.7,5.4,3-6h,good,2025-06,False
+STU0332,Student 332,Delhi Public School,Hyderabad,8,male,web,2025-09-14,286.0,90.3,64.5,61.4,85.3,False,False,True,True,False,70.4,4.77,3-6h,good,2025-09,False
+STU0333,Student 333,Chirec,Chennai,6,female,android,2025-04-24,260.0,75.3,70.6,66.0,74.9,False,False,False,False,False,70.5,4.33,3-6h,good,2025-04,False
+STU0334,Student 334,Delhi Public School,Delhi,8,male,web,2025-08-12,152.0,100.0,48.5,61.4,65.0,False,False,False,True,False,58.3,2.53,1-3h,fair,2025-08,False
+STU0335,Student 335,Oakridge,Bengaluru,8,female,unknown,2025-10-16,240.0,100.0,72.3,80.2,81.6,False,False,False,False,False,78.0,4.0,3-6h,good,2025-10,False
+STU0336,Student 336,Sri Chaitanya,Delhi,9,male,ios,2025-10-31,158.0,88.3,71.6,64.0,63.2,False,False,False,True,False,66.3,2.63,1-3h,fair,2025-10,False
+STU0337,Student 337,Delhi Public School,Bengaluru,7,male,ios,2025-08-20,293.0,86.0,65.7,43.8,58.5,False,False,False,False,False,56.0,4.88,3-6h,fair,2025-08,False
+STU0338,Student 338,Chirec,Hyderabad,7,female,web,2025-10-09,56.0,73.4,57.2,53.3,76.7,False,False,False,False,False,62.4,0.93,<1h,fair,2025-10,False
+STU0339,Student 339,Delhi Public School,unknown,6,male,web,2025-09-15,1095.0,95.9,46.7,51.5,67.0,False,False,False,False,False,55.1,18.25,6h+,fair,2025-09,True
+STU0340,Student 340,Chirec,Pune,10,female,web,2026-01-11,306.0,100.0,65.1,82.9,73.3,False,False,True,False,False,73.8,5.1,3-6h,good,2026-01,False
+STU0341,Student 341,Chirec,Chennai,9,female,android,2025-12-11,245.0,94.5,66.1,91.0,77.1,False,False,False,False,False,78.1,4.08,3-6h,good,2025-12,False
+STU0342,Student 342,Oakridge,Delhi,8,male,unknown,2025-07-11,252.0,99.4,81.6,65.5,61.7,False,False,False,False,False,69.6,4.2,3-6h,fair,2025-07,False
+STU0343,Student 343,Oakridge,Pune,7,male,android,2025-04-16,241.0,92.9,54.9,68.7,61.3,False,False,False,False,False,61.6,4.02,3-6h,fair,2025-04,False
+STU0344,Student 344,Delhi Public School,Hyderabad,9,male,ios,2025-12-21,179.0,79.1,70.9,58.9,62.1,False,False,False,False,False,64.0,2.98,1-3h,fair,2025-12,False
+STU0345,Student 345,Oakridge,Chennai,8,female,android,2025-04-01,97.0,100.0,63.2,65.0,62.7,False,False,False,False,False,63.6,1.62,1-3h,fair,2025-04,False
+STU0346,Student 346,Sri Chaitanya,unknown,9,male,android,2025-07-25,208.0,76.9,72.9,64.0,68.3,False,False,False,True,False,68.4,3.47,3-6h,fair,2025-07,False
+STU0347,Student 347,Sri Chaitanya,Hyderabad,6,female,android,2025-06-12,130.0,86.1,55.3,71.8,75.8,False,False,False,False,False,67.6,2.17,1-3h,fair,2025-06,False
+STU0348,Student 348,Oakridge,Chennai,6,male,ios,2025-10-16,142.0,90.5,59.9,53.0,63.2,False,False,False,False,False,58.7,2.37,1-3h,fair,2025-10,False
+STU0349,Student 349,Delhi Public School,Bengaluru,9,male,android,2025-04-06,154.0,95.9,87.6,78.1,73.9,False,False,False,False,False,79.9,2.57,1-3h,good,2025-04,False
+STU0350,Student 350,Sri Chaitanya,Delhi,6,male,unknown,2025-11-28,163.0,91.7,59.4,55.0,74.3,False,False,False,False,False,62.9,2.72,1-3h,fair,2025-11,False
+STU0351,Student 351,Narayana,Delhi,9,female,android,2025-10-03,95.0,91.5,56.7,62.1,55.3,False,False,False,False,False,58.0,1.58,1-3h,fair,2025-10,False
+STU0352,Student 352,Narayana,Delhi,8,male,unknown,2025-07-29,229.0,81.1,65.4,74.8,71.9,False,False,False,False,False,70.7,3.82,3-6h,good,2025-07,False
+STU0353,Student 353,Oakridge,Hyderabad,6,female,android,2025-04-01,181.0,76.4,54.9,67.0,57.6,False,False,False,False,False,59.8,3.02,3-6h,fair,2025-04,False
+STU0354,Student 354,Delhi Public School,Delhi,9,male,android,2025-08-12,283.0,88.6,83.4,60.8,84.3,False,False,False,False,False,76.2,4.72,3-6h,good,2025-08,False
+STU0355,Student 355,Delhi Public School,Bengaluru,9,female,android,2025-09-14,408.0,81.6,93.4,68.0,83.9,False,False,False,False,False,81.8,6.8,6h+,good,2025-09,True
+STU0356,Student 356,Narayana,Bengaluru,10,male,android,2025-10-07,237.0,76.2,60.7,59.4,69.2,False,False,False,False,False,63.1,3.95,3-6h,fair,2025-10,False
+STU0357,Student 357,Chirec,Bengaluru,10,male,android,2025-07-25,174.0,89.5,48.2,59.8,53.7,False,True,False,False,False,53.9,2.9,1-3h,fair,2025-07,False
+STU0358,Student 358,Narayana,Hyderabad,9,female,android,2025-05-04,75.0,83.6,69.5,66.8,63.1,False,False,True,False,False,66.5,1.25,1-3h,fair,2025-05,False
+STU0359,Student 359,Delhi Public School,Hyderabad,10,female,android,2025-05-25,161.0,89.5,71.7,46.6,56.8,False,True,False,False,False,58.4,2.68,1-3h,fair,2025-05,False
+STU0360,Student 360,Narayana,Chennai,6,female,android,2025-09-07,182.0,75.9,71.4,64.7,72.3,False,False,False,False,False,69.5,3.03,3-6h,fair,2025-09,False
+STU0361,Student 361,Narayana,Delhi,10,male,android,2025-06-10,190.0,73.3,74.2,65.8,64.7,False,False,False,False,False,68.2,3.17,3-6h,fair,2025-06,False
+STU0362,Student 362,Narayana,Hyderabad,10,female,android,2025-04-29,168.0,89.6,58.8,68.2,61.3,False,False,False,False,False,62.8,2.8,1-3h,fair,2025-04,False
+STU0363,Student 363,Sri Chaitanya,Delhi,9,female,web,2025-07-23,124.0,91.7,63.2,65.4,75.1,False,False,False,False,False,67.9,2.07,1-3h,fair,2025-07,False
+STU0364,Student 364,Chirec,unknown,10,male,ios,2025-06-07,255.0,100.0,61.6,84.2,82.5,False,False,False,False,False,76.1,4.25,3-6h,good,2025-06,False
+STU0365,Student 365,Sri Chaitanya,Delhi,9,female,android,2025-07-28,178.0,74.5,50.7,64.3,60.1,False,False,False,False,False,58.4,2.97,1-3h,fair,2025-07,False
+STU0366,Student 366,Delhi Public School,Bengaluru,10,female,android,2025-10-04,271.0,81.9,79.2,74.6,82.8,False,False,False,False,False,78.9,4.52,3-6h,good,2025-10,False
+STU0367,Student 367,Narayana,Bengaluru,10,male,android,2025-05-20,111.0,96.2,59.1,66.7,64.5,False,False,False,False,False,63.4,1.85,1-3h,fair,2025-05,False
+STU0368,Student 368,Oakridge,Hyderabad,8,female,android,2026-01-17,151.0,86.6,64.5,79.8,66.3,True,True,True,False,False,70.2,2.52,1-3h,good,2026-01,False
+STU0369,Student 369,Sri Chaitanya,Delhi,10,female,android,2025-05-10,290.0,85.1,72.9,51.6,75.3,False,False,False,False,False,66.6,4.83,3-6h,fair,2025-05,False
+STU0370,Student 370,Narayana,Bengaluru,10,male,android,2026-01-25,290.0,100.0,70.2,84.0,71.2,False,False,False,False,False,75.1,4.83,3-6h,good,2026-01,False
+STU0371,Student 371,Sri Chaitanya,Hyderabad,7,female,ios,2025-07-19,87.0,85.0,68.2,55.2,59.1,False,False,False,False,False,60.8,1.45,1-3h,fair,2025-07,False
+STU0372,Student 372,Oakridge,Pune,6,male,web,2025-06-18,157.0,77.6,64.4,62.2,63.6,False,False,True,True,False,63.4,2.62,1-3h,fair,2025-06,False
+STU0373,Student 373,Chirec,Pune,6,male,android,2025-10-30,136.0,87.8,65.9,62.2,77.3,False,True,False,True,False,68.5,2.27,1-3h,fair,2025-10,False
+STU0374,Student 374,Narayana,Delhi,6,male,ios,2025-05-14,1321.0,91.0,62.8,53.4,89.3,False,False,False,False,False,68.5,22.02,6h+,fair,2025-05,True
+STU0375,Student 375,Sri Chaitanya,Chennai,8,female,android,2025-10-05,203.0,90.7,72.2,61.9,68.3,False,False,False,False,True,67.5,3.38,3-6h,fair,2025-10,False
+STU0376,Student 376,Narayana,Chennai,6,male,ios,2025-09-03,115.0,75.7,72.6,50.6,76.7,False,False,False,False,False,66.6,1.92,1-3h,fair,2025-09,False
+STU0377,Student 377,Oakridge,Pune,7,male,android,2025-12-06,162.0,79.1,59.2,64.6,65.3,False,False,False,False,False,63.0,2.7,1-3h,fair,2025-12,False
+STU0379,Student 379,Chirec,Delhi,9,male,android,2025-06-10,168.0,93.2,76.7,76.9,77.5,False,False,False,False,False,77.0,2.8,1-3h,good,2025-06,False
+STU0380,Student 380,Oakridge,Pune,7,male,android,2025-07-23,131.0,82.2,64.0,61.7,67.4,False,False,False,False,False,64.4,2.18,1-3h,fair,2025-07,False
+STU0381,Student 381,Oakridge,Delhi,10,female,android,2025-05-05,184.0,93.6,58.6,62.8,92.3,False,False,False,False,False,71.2,3.07,3-6h,good,2025-05,False
+STU0382,Student 382,Delhi Public School,unknown,6,female,android,2025-11-17,292.0,93.1,70.9,64.5,78.5,False,False,False,False,False,71.3,4.87,3-6h,good,2025-11,False
+STU0383,Student 383,Chirec,Delhi,10,male,android,2025-05-13,160.0,72.0,70.8,67.1,68.9,True,False,False,False,False,68.9,2.67,1-3h,fair,2025-05,False
+STU0384,Student 384,Chirec,Pune,8,female,android,2025-10-30,151.0,85.2,72.4,56.1,83.5,True,False,False,False,False,70.7,2.52,1-3h,good,2025-10,False
+STU0385,Student 385,Oakridge,Hyderabad,7,male,ios,2025-07-24,382.0,91.7,79.9,70.5,77.2,False,False,False,False,False,75.9,6.37,6h+,good,2025-07,True
+STU0386,Student 386,Delhi Public School,Hyderabad,6,male,android,2025-09-16,47.0,82.8,68.6,62.2,57.5,False,False,False,True,False,62.8,0.78,<1h,fair,2025-09,False
+STU0387,Student 387,Sri Chaitanya,Delhi,7,male,ios,2025-07-31,229.0,68.7,71.2,59.7,39.8,False,False,False,False,False,56.9,3.82,3-6h,fair,2025-07,False
+STU0388,Student 388,Sri Chaitanya,Delhi,8,male,android,2025-10-04,237.0,85.5,55.3,53.2,80.4,False,False,False,False,False,63.0,3.95,3-6h,fair,2025-10,False
+STU0389,Student 389,Oakridge,Pune,6,female,ios,2025-11-14,207.0,94.8,73.7,62.2,79.5,False,False,False,True,False,71.8,3.45,3-6h,good,2025-11,False
+STU0390,Student 390,Chirec,Hyderabad,6,male,web,2025-09-22,158.0,100.0,76.8,57.2,77.9,False,False,False,False,False,70.6,2.63,1-3h,good,2025-09,False
+STU0391,Student 391,Sri Chaitanya,Delhi,6,female,android,2025-09-08,37.0,68.3,64.4,52.0,64.9,False,False,True,False,False,60.4,0.62,<1h,fair,2025-09,False
+STU0392,Student 392,Oakridge,Hyderabad,9,female,ios,2025-10-21,91.0,100.0,74.3,78.3,82.2,False,False,False,False,False,78.3,1.52,1-3h,good,2025-10,False
+STU0393,Student 393,Delhi Public School,Hyderabad,6,male,web,2025-08-15,146.0,77.9,57.6,64.6,64.1,False,False,False,False,False,62.1,2.43,1-3h,fair,2025-08,False
+STU0394,Student 394,Delhi Public School,Chennai,6,female,web,2026-01-04,199.0,96.6,61.5,63.8,80.5,False,False,False,False,False,68.6,3.32,3-6h,fair,2026-01,False
+STU0396,Student 396,Chirec,Chennai,7,male,ios,2026-01-10,163.0,96.8,58.6,51.9,67.0,False,False,False,False,False,59.2,2.72,1-3h,fair,2026-01,False
+STU0397,Student 397,Narayana,Delhi,8,male,android,2025-06-12,152.0,89.3,46.2,47.0,77.2,False,False,False,False,False,56.8,2.53,1-3h,fair,2025-06,False
+STU0398,Student 398,Narayana,Pune,10,male,unknown,2026-01-19,153.0,77.5,72.0,65.8,68.3,False,False,False,False,False,68.7,2.55,1-3h,fair,2026-01,False
+STU0399,Student 399,Oakridge,Pune,10,male,ios,2025-09-27,167.0,93.6,61.1,57.2,57.6,False,False,False,False,False,58.6,2.78,1-3h,fair,2025-09,False
+STU0400,Student 400,Chirec,Bengaluru,8,female,web,2025-12-14,220.0,81.6,64.7,64.6,72.8,False,False,False,False,False,67.4,3.67,3-6h,fair,2025-12,False
