@@ -1,0 +1,16 @@
+{
+  "name": "water-reminder",
+  "version": "1.0.0",
+  "description": "Neo reminds you to drink water, Matrix-style — menu bar companion app.",
+  "main": "main.js",
+  "private": true,
+  "engines": {
+    "node": "18.20.4"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^28.3.3"
+  }
+}
