@@ -14,15 +14,15 @@ const DEFAULT_CONFIG = {
   onboarded: false,
 };
 
-const GREETINGS = [
-  (name) => `Wake up${name ? ", " + name : ""}... it's time to drink water.`,
-  () => "There is no spoon. There is only thirst. Drink some water.",
-  () => "Follow the white rabbit — it's holding a water bottle.",
-  (name) => `${name ? name + ", f" : "F"}ree your mind. And drink some water.`,
-  () => "Unfortunately, no one can be told what dehydration feels like. You have to drink water.",
-];
+const GREETING = (name) => `The Matrix wants you${name ? ", " + name : ""} to drink water.`;
 
-const CHEERS = ["Whoa.", "I know kung fu. And hydration.", "Neo approves."];
+const CHEERS = [
+  "Whoa. Hydration achieved.",
+  "I know kung fu. And proper hydration.",
+  "There is no spoon. There is only water, and you just drank it.",
+  "Neo approves.",
+  "Free your mind. Refill your bottle.",
+];
 
 function loadConfig() {
   try {
@@ -113,7 +113,7 @@ function showReminder() {
   positionReminderWindow();
   const send = () =>
     reminderWin.webContents.send("reminder", {
-      greeting: pick(GREETINGS)(config.name),
+      greeting: GREETING(config.name),
       snoozeMin: config.snoozeMin,
     });
   if (reminderWin.webContents.isLoading()) {
