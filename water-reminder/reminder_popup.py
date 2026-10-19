@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pops an always-on-top window reminding you to drink water, with an animated GIF."""
+"""Shows a small animated toast in the bottom-left corner for 5s, reminding to drink water."""
 import os
 import tkinter as tk
 
@@ -7,17 +7,16 @@ from PIL import Image, ImageTk
 
 ASSET_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
 PANEL_PATHS = [os.path.join(ASSET_DIR, f"panel_{i}.png") for i in range(1, 7)]
-DURATIONS_MS = [1100, 900, 1100, 900, 1300, 1600]
-AUTO_CLOSE_MS = 60_000
-TARGET_HEIGHT = 480
+TOTAL_MS = 5000
+TARGET_HEIGHT = 220
+SCREEN_MARGIN = 24
 
 
-class WaterReminder:
+class WaterToast:
     def __init__(self, root):
         self.root = root
-        self.root.title("Water break")
+        self.root.overrideredirect(True)
         self.root.attributes("-topmost", True)
-        self.root.resizable(False, False)
 
         panels = [Image.open(p).convert("RGB") for p in PANEL_PATHS]
         max_w = 0
@@ -33,51 +32,32 @@ class WaterReminder:
             canvas = Image.new("RGB", (max_w, TARGET_HEIGHT), (17, 17, 17))
             canvas.paste(im, ((max_w - im.width) // 2, 0))
             self.frames.append(ImageTk.PhotoImage(canvas))
-        self.durations = DURATIONS_MS
+        self.duration_per_frame = TOTAL_MS // len(self.frames)
 
-        w, h = max_w, TARGET_HEIGHT
-        frame = tk.Frame(root, bg="#111111", padx=18, pady=18)
+        frame = tk.Frame(root, bg="#111111", highlightbackground="#2fa8ff", highlightthickness=2)
         frame.pack()
 
         self.label = tk.Label(frame, bg="#111111")
         self.label.pack()
 
-        tk.Label(
-            frame,
-            text="Time for a water break 💧",
-            fg="white",
-            bg="#111111",
-            font=("Helvetica", 15, "bold"),
-        ).pack(pady=(12, 10))
-
-        btn = tk.Button(
-            frame,
-            text="Got it, drinking now",
-            command=self.root.destroy,
-            font=("Helvetica", 12),
-            padx=10,
-            pady=4,
-        )
-        btn.pack()
-
-        self._center(w + 80, h + 140)
+        self._place_bottom_left(max_w, TARGET_HEIGHT)
         self._animate(0)
-        self.root.after(AUTO_CLOSE_MS, self._safe_destroy)
-        self.root.bind("<Escape>", lambda e: self.root.destroy())
+        self.root.after(TOTAL_MS, self._safe_destroy)
+        self.root.bind("<Button-1>", lambda e: self.root.destroy())
 
-    def _center(self, w, h):
+    def _place_bottom_left(self, w, h):
         self.root.update_idletasks()
-        sw, sh = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
-        x, y = (sw - w) // 2, (sh - h) // 2
+        sh = self.root.winfo_screenheight()
+        x = SCREEN_MARGIN
+        y = sh - h - SCREEN_MARGIN - 4
         self.root.geometry(f"{w}x{h}+{x}+{y}")
 
     def _animate(self, idx):
         if not self.root.winfo_exists():
             return
-        frame = self.frames[idx]
-        self.label.configure(image=frame)
+        self.label.configure(image=self.frames[idx])
         next_idx = (idx + 1) % len(self.frames)
-        self.root.after(self.durations[idx], self._animate, next_idx)
+        self.root.after(self.duration_per_frame, self._animate, next_idx)
 
     def _safe_destroy(self):
         if self.root.winfo_exists():
@@ -86,7 +66,7 @@ class WaterReminder:
 
 def main():
     root = tk.Tk()
-    WaterReminder(root)
+    WaterToast(root)
     root.mainloop()
 
 

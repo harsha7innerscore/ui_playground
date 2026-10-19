@@ -23,4 +23,8 @@ launchctl start com.harsha.waterreminder
 
 ## What it looks like
 
-An always-on-top window centered on screen, cycling through 6 frames of the "drink some water" comic, with a "Got it, drinking now" button. Closes itself after 60s if ignored.
+A small borderless toast in the bottom-left corner, cycling through 6 frames of the "drink some water" comic. Disappears on its own after 5 seconds (or click it to dismiss early).
+
+## Requirement
+
+Needs `brew install python-tk@3.12` once (system Python's Tk is too old to render images on modern macOS). `install.sh` sets up its own venv automatically.
