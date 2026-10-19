@@ -8,12 +8,34 @@ const confettiLayer = document.getElementById("confetti");
 const AUTO_DISMISS_MS = 120000;
 const IDLE_LOOP_MS = 2200;
 const DRINK_SEQUENCE = ["reach.png", "raise.png", "drinking.png", "good.png"];
-const DRINK_FRAME_MS = 420;
+const DRINK_FRAME_MS = 320;
+const IDLE_FRAMES = ["idle.png", "reach.png"];
+const ALL_FRAMES = ["idle.png", "reach.png", "raise.png", "drinking.png", "good.png"];
+
+ALL_FRAMES.forEach((f) => {
+  const img = new Image();
+  img.src = `../assets/${f}`;
+});
+
+function setSprite(file) {
+  sprite.src = `../assets/${file}`;
+  // retrigger the pop animation even if the same class is already present
+  sprite.classList.remove("pop");
+  void sprite.offsetWidth;
+  sprite.classList.add("pop");
+}
+
+function setMessage(text) {
+  msg.classList.add("fade");
+  return wait(150).then(() => {
+    msg.textContent = text;
+    msg.classList.remove("fade");
+  });
+}
 
 let autoTimer = null;
 let idleTimer = null;
 let idleFrame = 0;
-const IDLE_FRAMES = ["idle.png", "reach.png"];
 
 function clearAuto() {
   clearTimeout(autoTimer);
@@ -25,7 +47,7 @@ function startIdleLoop() {
   idleFrame = 0;
   idleTimer = setInterval(() => {
     idleFrame = (idleFrame + 1) % IDLE_FRAMES.length;
-    sprite.src = `../assets/${IDLE_FRAMES[idleFrame]}`;
+    setSprite(IDLE_FRAMES[idleFrame]);
   }, IDLE_LOOP_MS);
 }
 
@@ -35,7 +57,8 @@ function stopIdleLoop() {
 }
 
 window.api.onReminder(({ greeting, snoozeMin }) => {
-  sprite.src = "../assets/idle.png";
+  setSprite("idle.png");
+  msg.classList.remove("fade");
   msg.textContent = greeting;
   snoozeBtn.textContent = `SNOOZE ${snoozeMin}m`;
   yesBtn.disabled = false;
@@ -64,10 +87,11 @@ snoozeBtn.addEventListener("click", () => {
 
 async function playDrinkSequence() {
   for (const frame of DRINK_SEQUENCE) {
-    sprite.src = `../assets/${frame}`;
+    setSprite(frame);
     await wait(DRINK_FRAME_MS);
   }
-  msg.textContent = await window.api.getCheer();
+  const cheer = await window.api.getCheer();
+  await setMessage(cheer);
   spawnConfetti();
   await wait(1100);
   walkOff("drank");
