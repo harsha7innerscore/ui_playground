@@ -7,7 +7,7 @@ const INTERVAL_OPTIONS = [15, 30, 45, 60, 90];
 const DEFAULT_CONFIG = {
   name: "",
   intervalMin: 60,
-  activeStartHour: 8,
+  activeStartHour: 10,
   activeEndHour: 22,
   snoozeMin: 10,
   paused: false,
