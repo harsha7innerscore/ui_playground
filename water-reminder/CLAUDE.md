@@ -10,7 +10,8 @@ Menu-bar companion app (macOS): Neo from The Matrix walks in from the bottom-lef
 
 ## Dev commands
 - `nvm use && npm install` — one-time setup
-- `npm start` (= `electron .`) — run the app
+- `npm start` (= `electron .`) — run the app for development
+- `./install-login-item.sh` — install as a LaunchAgent (`~/Library/LaunchAgents/com.harsha.waterreminder.plist`) that runs the compiled Electron binary directly at every login, so it's always running without a terminal. `./uninstall-login-item.sh` removes it. Quitting from the tray menu doesn't uninstall it — it just won't relaunch until next login.
 - Config is persisted to `~/Library/Application Support/water-reminder/config.json`, not in the repo. Delete it to re-trigger onboarding.
 
 ## Architecture

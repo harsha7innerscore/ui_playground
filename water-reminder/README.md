@@ -18,9 +18,21 @@ First launch opens a small "Welcome. I am Neo." window — set your name (option
 - When he walks in: **YES, I DRANK** swaps his pose, shows a cheer line, confetti, then he walks off (and the next reminder is scheduled `interval` minutes out). **SNOOZE** walks him off immediately and brings him back in `snooze` minutes.
 - Reminders only fire during your configured active hours.
 
-## Run at login (macOS)
+## Run all the time, automatically (macOS)
 
-System Settings → General → Login Items → **+** → pick a way to launch `npm start` in this folder (e.g. wrap it in a tiny shell script or Automator app), since this isn't packaged as a standalone `.app` yet.
+```bash
+./install-login-item.sh
+```
+
+Installs a LaunchAgent that starts the app immediately and again every time you log in — no need to run `npm start` yourself again. It runs the compiled Electron binary directly (not through `npm`/`nvm`), so it works the same whether a terminal is open or not.
+
+Quit it anytime from its tray menu; it won't restart until your next login. To stop it from auto-starting at login entirely:
+
+```bash
+./uninstall-login-item.sh
+```
+
+Logs: `/tmp/water-reminder.log`, `/tmp/water-reminder.err.log`.
 
 ## Assets
 
