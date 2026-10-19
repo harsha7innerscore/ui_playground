@@ -77,7 +77,7 @@ function fireCheck() {
 function createReminderWindow() {
   reminderWin = new BrowserWindow({
     width: 230,
-    height: 330,
+    height: 420,
     x: 0,
     y: 0,
     frame: false,
@@ -181,6 +181,7 @@ function openSettingsWindow(onboarding = false) {
     width: 380,
     height: 460,
     resizable: false,
+    show: false,
     title: onboarding ? "Welcome" : "Water Reminder Settings",
     webPreferences: {
       preload: path.join(__dirname, "renderer", "settings-preload.js"),
@@ -191,6 +192,12 @@ function openSettingsWindow(onboarding = false) {
   settingsWin.setMenuBarVisibility(false);
   settingsWin.loadFile(path.join(__dirname, "renderer", "settings.html"), {
     query: { onboarding: onboarding ? "1" : "0" },
+  });
+  settingsWin.once("ready-to-show", () => {
+    app.focus({ steal: true });
+    settingsWin.show();
+    settingsWin.moveTop();
+    settingsWin.focus();
   });
   settingsWin.on("closed", () => {
     settingsWin = null;
